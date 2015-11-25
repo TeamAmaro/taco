@@ -1,6 +1,6 @@
 public abstract class Utente {
 	
-	int userID;
+	int id;
 	String nome;
 	String cognome;
 	String email;

@@ -1,7 +1,7 @@
 public class Dipendente extends Utente {
 	
-	int idProgetto;
-	int idSede;
+	private int idProgetto;
+	private int idSede;
 	
 	void aggiungiAlCarrello(){};
 	
