@@ -1,7 +1,8 @@
+package it.unisalento.pps.model;
 
 public class Carrello {
-	
-	int[][] listaProdotti = new int[10][10]; //contiene l'id del prodotto e la quantità
+	/*
+	//int[][] listaProdotti = new int[10][10]; //contiene l'id del prodotto e la quantità
 	
 	
 	void generaOrdine(){}
@@ -15,5 +16,7 @@ public class Carrello {
 			totale += listaProdotti[i][i];
 		
 		return totale;
-	}
+	}*/
+	
+	
 }

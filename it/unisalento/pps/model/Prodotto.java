@@ -2,10 +2,10 @@
 public class Prodotto {
 	
 	int id;
-	String nome;
-	String descrizione;
-	double prezzo;
-	int maxQuantitaOrdine = 0; //default è zero e indica nessun limite
+	private String nome;
+	private String descrizione;
+	private double prezzo;
+	private Produttore produttore;
 
 	String produttore(int id){
 		
@@ -16,8 +16,4 @@ public class Prodotto {
 		
 		return nomeProduttore;
 	}
-	
-	void disponibilita(){}
-	void generaReclamo(){}
-
 }
