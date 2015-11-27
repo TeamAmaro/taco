@@ -1,4 +1,4 @@
-package it.unisalento.pps.dbconnections;
+package it.unisalento.taco.dbconnections;
 
 public class DBConnectionsDummy {
 	private DBConnectionsDummy(){};

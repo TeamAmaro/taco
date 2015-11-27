@@ -1,4 +1,4 @@
-package it.unisalento.pps.business;
+package it.unisalento.taco.business;
 
 public class BusinessDummy {
 	private BusinessDummy(){};

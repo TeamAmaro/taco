@@ -1,3 +1,4 @@
+package it.unisalento.taco.model;
 public class Magazziniere extends Utente {
 	
 	//int idMagazzino;

@@ -1,4 +1,4 @@
-package it.unisalento.pps.model;
+package it.unisalento.taco.model;
 
 public abstract class Utente {
 	
