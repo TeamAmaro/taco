@@ -11,10 +11,10 @@ public class DipendenteView {
 		System.out.println("Nome: " + nome);
 		System.out.println("Cognome: " + cognome);
 		System.out.println("Email: " + email);
-		if(progetto != null && sede != null) {
+		if(progetto != null)
 			System.out.println("Progetto: " + progetto.getNome());
+		if(sede != null)
 			System.out.println("Sede: " + sede);
-		}
 		System.out.println("");
 	}
 }
