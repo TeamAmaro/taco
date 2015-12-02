@@ -4,12 +4,14 @@ public class Prodotto {
 	
 	private final String nome;
 	private final String descrizione;
+	private final Categoria categoria;
 	private double prezzo;
 	private final Produttore produttore;
 
-	public Prodotto(String nome, String descrizione, double prezzo, Produttore produttore){
+	public Prodotto(String nome, String descrizione, Categoria categoria, double prezzo, Produttore produttore){
 		this.nome = nome;
 		this.descrizione = descrizione;
+		this.categoria = categoria;
 		this.prezzo = prezzo;
 		this.produttore = produttore;
 	}
@@ -20,6 +22,10 @@ public class Prodotto {
 	
 	public String getDescrizione() {
 		return descrizione;
+	}
+	
+	public Categoria getCategoria() {
+		return categoria;
 	}
 	
 	public double getPrezzo() {
