@@ -32,7 +32,7 @@ public class DipendenteController {
 	}
 	
 	public void updateView(){
-		//view.stampaDettagliDipendente(model);
+		view.stampaDettagliDipendente(model.getNome(), model.getCognome(), model.getEmail(), model.getProgetto(), model.getSede());
 	}
 	
 }
