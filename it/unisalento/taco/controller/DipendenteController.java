@@ -1,5 +1,6 @@
 package it.unisalento.taco.controller;
 
+import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Sede;
@@ -31,6 +32,9 @@ public class DipendenteController {
 		return model.getSede();
 	}
 	
+	public Carrello getCarrelloDipendente(){
+		return model.getCarrello();
+	}
 	public void updateView(){
 		view.stampaDettagliDipendente(model.getNome(), model.getCognome(), model.getEmail(), model.getProgetto(), model.getSede());
 	}
