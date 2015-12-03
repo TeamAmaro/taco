@@ -2,7 +2,6 @@ package it.unisalento.taco.model;
 
 public abstract class Utente {
 	
-	//int id;
 	private final String nome;
 	private final String cognome;
 	private String email;
