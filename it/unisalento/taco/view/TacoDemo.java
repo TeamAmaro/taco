@@ -1,26 +1,25 @@
 package it.unisalento.taco.view;
 
 import it.unisalento.taco.model.*;
-import it.unisalento.taco.controller.*;
+
+import java.sql.ResultSet;
+import it.unisalento.taco.dbconnections.*;
 
 public class TacoDemo {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception{
 		
-		//CapoProgetto con progetto
-		Progetto progetto = new Progetto("F U", 439.44);
-		CapoProgetto capoprogetto1 = new CapoProgetto("John", "Cena", "john.cena@wwe.com", progetto);
-		CapoProgettoView view1 = new CapoProgettoView();
-		CapoProgettoController controller1 = new CapoProgettoController(capoprogetto1, view1);
+		DBConnection conn = new DBConnection();
 		
-		controller1.updateView();
+		ResultSet queryResult = conn.queryDB("SELECT nome,cognome,email FROM utenti");
+		queryResult.next();
 		
-		//CapoProgetto senza progetto
-		CapoProgetto capoprogetto2 = new CapoProgetto("Luke", "Mynetti", "luke.mynetti@unimomento.it");
-		CapoProgettoView view2 = new CapoProgettoView();
-		CapoProgettoController controller2 = new CapoProgettoController(capoprogetto2, view2);
+		Dipendente dip = new Dipendente(queryResult.getString("nome"),queryResult.getString("cognome"),queryResult.getString("email"));
 		
-		controller2.updateView();
+		System.out.println("Dipendente");
+		System.out.println("Nome: " + dip.getNome());
+		System.out.println("Cognome: " + dip.getCognome());
+		System.out.println("Email: " + dip.getEmail());
 		
 	}
 }
