@@ -2,7 +2,7 @@ package it.unisalento.taco.model;
 
 public enum Fornitore {
 	
-	FORNITORE_A("Angolo del Fumello"),
+	FORNITORE_A("FornitoreA"),
 	FORNITORE_B("FornitoreB"),
 	FORNITORE_C("FornitoreC");
 	
