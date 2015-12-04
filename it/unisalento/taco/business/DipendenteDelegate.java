@@ -19,4 +19,5 @@ public class DipendenteDelegate {
 		Carrello carrello = controller.getCarrelloDipendente();
 		carrello.aggiungiProdotto(prodotto, quantita);
 	}
+	
 }
