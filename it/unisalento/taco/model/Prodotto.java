@@ -62,7 +62,7 @@ public class Prodotto {
 			this.nome = nome;
 			this.prezzo = prezzo;
 			this.produttore = produttore;
-			this.descrizione = " ";
+			this.descrizione = "Nessuna descrizione";
 			this.categoria = Categoria.CATEGORIA_0;
 			this.listaFornitori.add(Fornitore.FORNITORE_0);
 		}
