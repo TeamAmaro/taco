@@ -16,5 +16,9 @@ public enum Sede {
 	public String nome(){
 		return nome;
 	}
+	
+	@Override public String toString(){
+		return nome;
+	}
 
 }

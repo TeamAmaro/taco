@@ -2,10 +2,10 @@ package it.unisalento.taco.model;
 
 public abstract class Utente {
 	
-	private final int id;
-	private final String nome;
-	private final String cognome;
-	private String email;
+	protected final int id;
+	protected final String nome;
+	protected final String cognome;
+	protected String email;
 	
 	public Utente(int id, String nome, String cognome, String email){
 		this.id = id;
@@ -28,5 +28,11 @@ public abstract class Utente {
 	
 	public int getID(){
 		return id;
+	}
+	
+	@Override public String toString(){
+		StringBuilder stringUtente = new StringBuilder();
+		stringUtente.append(id + " " + nome + " " + cognome);
+		return stringUtente.toString();
 	}
 }
