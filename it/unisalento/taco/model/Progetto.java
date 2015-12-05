@@ -1,24 +1,29 @@
 package it.unisalento.taco.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Progetto {
 	
 	private final int id;
 	private final String nome;
-	private double saldo;
 	private final double budget;
+	private CapoProgetto capoProgetto;
 	
-	public Progetto(int id, String nome, double budget){
+	private double saldo;
+	private List<Dipendente> listaDipendenti = new ArrayList<Dipendente>();
+	
+	public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget) {
 		this.id = id;
 		this.nome = nome;
+		this.capoProgetto = capoProgetto;
 		this.budget = budget;
 		saldo = budget;
 	}
 	
-	public Progetto(int id, String nome, double saldo, double budget) {
-		this.id = id;
-		this.nome = nome;
-		this.saldo = saldo;
-		this.budget = budget;
+	public void aggiungiDipendente(Dipendente... args){
+		for(Dipendente val : args)
+			listaDipendenti.add(val);
 	}
 	
 	public int getID() {
@@ -37,14 +42,25 @@ public class Progetto {
 		return budget;
 	}
 	
-	public boolean aggiornaSaldo(double spesa){
-		if(saldo < spesa) 
-			return false;
-		else {
-			saldo -= spesa;
-			return true;
-		}
+	public CapoProgetto getCapoProgetto(){
+		return capoProgetto;
 	}
 	
+	public List<Dipendente> getListaDipendenti(){
+		return listaDipendenti;
+	}
+	
+	public String getListaDipendentiAsString(){
+		StringBuilder stringDipendenti = new StringBuilder();
+		for(Dipendente val : listaDipendenti)
+			stringDipendenti.append(val.toString() + " ");
+		return stringDipendenti.toString();
+	}
+	
+	@Override public String toString(){
+		StringBuilder stringProgetto = new StringBuilder();
+		stringProgetto.append(id + " " + nome + " " + budget + " " + capoProgetto + " " + saldo + " " + getListaDipendentiAsString());
+		return stringProgetto.toString();
+	}
 	
 }
