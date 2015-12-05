@@ -4,12 +4,12 @@ public class CapoProgetto extends Utente {
 
 	private Progetto progetto;
 
-	public CapoProgetto(String nome, String cognome, String email){
-		super(nome,cognome,email);
+	public CapoProgetto(int id, String nome, String cognome, String email){
+		super(id,nome,cognome,email);
 	}
 
-	public CapoProgetto(String nome, String cognome, String email, Progetto progetto) {
-		super(nome,cognome,email);
+	public CapoProgetto(int id, String nome, String cognome, String email, Progetto progetto) {
+		super(id,nome,cognome,email);
 		this.progetto = progetto;
 	}
 

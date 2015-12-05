@@ -5,12 +5,12 @@ public class Dipendente extends Utente {
 	private Sede sede;
 	private Carrello carrello;
 
-	public Dipendente(String nome, String cognome, String email){
-		super(nome,cognome,email);
+	public Dipendente(int id, String nome, String cognome, String email){
+		super(id,nome,cognome,email);
 	}
 
-	public Dipendente(String nome, String cognome, String email, Progetto progetto, Sede sede, Carrello carrello){
-		super(nome,cognome,email);
+	public Dipendente(int id, String nome, String cognome, String email, Progetto progetto, Sede sede, Carrello carrello){
+		super(id,nome,cognome,email);
 		this.progetto = progetto;
 		this.sede = sede;
 		this.carrello = carrello.getInstance();

@@ -9,7 +9,7 @@ public class Magazziniere extends Utente {
 	
 	private Magazzino magazzino;
 	
-	public Magazziniere(String nome,String cognome,String email){
-		super(nome,cognome,email);
+	public Magazziniere(int id, String nome,String cognome,String email){
+		super(id,nome,cognome,email);
 	}
 }
