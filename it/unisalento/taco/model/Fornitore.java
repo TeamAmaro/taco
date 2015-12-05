@@ -17,7 +17,7 @@ public enum Fornitore {
 		return nome;
 	}
 	
-	public String toString(){
+	@Override public String toString(){
 		return nome;
 	}
 	

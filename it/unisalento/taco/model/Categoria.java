@@ -18,7 +18,7 @@ public enum Categoria {
 		return nome;
 	}
 	
-	public String toString(){
+	@Override public String toString(){
 		return nome;
 	}
 
