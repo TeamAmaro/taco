@@ -2,6 +2,8 @@ package it.unisalento.taco.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 public class Progetto {
 	
@@ -11,7 +13,7 @@ public class Progetto {
 	private CapoProgetto capoProgetto;
 	
 	private double saldo;
-	private List<Dipendente> listaDipendenti = new ArrayList<Dipendente>();
+	private Set<Dipendente> listaDipendenti = new LinkedHashSet<Dipendente>();
 	
 	public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget) {
 		this.id = id;
@@ -46,7 +48,7 @@ public class Progetto {
 		return capoProgetto;
 	}
 	
-	public List<Dipendente> getListaDipendenti(){
+	public Set<Dipendente> getListaDipendenti(){
 		return listaDipendenti;
 	}
 	
