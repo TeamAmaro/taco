@@ -5,7 +5,8 @@ public enum Categoria {
 	CATEGORIA_A("Cancelleria"),
 	CATEGORIA_B("Elettronica"),
 	CATEGORIA_C("Ricambi"),
-	CATEGORIA_D("Stampanti");
+	CATEGORIA_D("Stampanti"),
+	CATEGORIA_0("Nessuna categoria");
 	
 	private final String nome;
 	
@@ -14,6 +15,10 @@ public enum Categoria {
 	}
 	
 	public String nome() {
+		return nome;
+	}
+	
+	public String toString(){
 		return nome;
 	}
 

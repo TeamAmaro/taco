@@ -4,7 +4,8 @@ public enum Fornitore {
 	
 	FORNITORE_A("FornitoreA"),
 	FORNITORE_B("FornitoreB"),
-	FORNITORE_C("FornitoreC");
+	FORNITORE_C("FornitoreC"),
+	FORNITORE_0("Fornitore sconosciuto");
 	
 	private final String nome;
 	
@@ -13,6 +14,10 @@ public enum Fornitore {
 	}
 	
 	public String nome() {
+		return nome;
+	}
+	
+	public String toString(){
 		return nome;
 	}
 	

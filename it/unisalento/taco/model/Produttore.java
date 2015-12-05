@@ -17,4 +17,8 @@ public enum Produttore {
 		return nome;
 	}
 	
+	public String toString(){
+		return nome;
+	}
+	
 }
