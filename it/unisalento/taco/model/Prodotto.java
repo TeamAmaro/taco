@@ -1,7 +1,7 @@
 package it.unisalento.taco.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Prodotto {
 	
@@ -10,7 +10,7 @@ public class Prodotto {
 	private final Produttore produttore;
 	private String descrizione;
 	private Categoria categoria;
-	private List<Fornitore> listaFornitori = new ArrayList<Fornitore>();
+	private Set<Fornitore> listaFornitori = new LinkedHashSet<Fornitore>();
 	
 	public String getNome() {
 		return nome;
@@ -32,7 +32,7 @@ public class Prodotto {
 		return produttore;
 	}
 	
-	public List<Fornitore> getListaFornitori(){
+	public Set<Fornitore> getListaFornitori(){
 		return listaFornitori;
 	}
 	
@@ -56,7 +56,7 @@ public class Prodotto {
 		private final Produttore produttore;
 		private String descrizione;
 		private Categoria categoria;
-		private List<Fornitore> listaFornitori = new ArrayList<Fornitore>();
+		private Set<Fornitore> listaFornitori = new LinkedHashSet<Fornitore>();
 		
 		public Builder(String nome, double prezzo, Produttore produttore){
 			this.nome = nome;
