@@ -32,6 +32,24 @@ public class Prodotto {
 		return produttore;
 	}
 	
+	public List<Fornitore> getListaFornitori(){
+		return listaFornitori;
+	}
+	
+	public String getListaFornitoriAsString(){
+		StringBuilder stringFornitori = new StringBuilder();
+		for(Fornitore val : listaFornitori)
+			stringFornitori.append(val.toString() + " ");
+		return stringFornitori.toString();
+		
+	}
+	
+	public void addFornitore(Fornitore fornitore){
+		if (listaFornitori.contains(Fornitore.FORNITORE_0))
+			listaFornitori.remove(Fornitore.FORNITORE_0);
+		listaFornitori.add(fornitore);
+	}
+	
 	public static class Builder{
 		private final String nome;
 		private final double prezzo;
@@ -46,6 +64,7 @@ public class Prodotto {
 			this.produttore = produttore;
 			this.descrizione = " ";
 			this.categoria = Categoria.CATEGORIA_0;
+			this.listaFornitori.add(Fornitore.FORNITORE_0);
 		}
 		
 		public Builder descrizione(String val){
@@ -59,6 +78,7 @@ public class Prodotto {
 		}
 		
 		public Builder listaFornitori(Fornitore... args){
+			listaFornitori.remove(Fornitore.FORNITORE_0);
 			for(Fornitore val : args)
 				listaFornitori.add(val);
 			return this;
@@ -78,4 +98,11 @@ public class Prodotto {
 		listaFornitori = build.listaFornitori;
 	}
 	
+	@Override public String toString(){
+		StringBuilder prodottoString = new StringBuilder();
+		prodottoString.append(nome + " " + prezzo + " " + produttore + " " + descrizione + " " + categoria 
+				+ " " + getListaFornitoriAsString());
+		
+		return prodottoString.toString();
+	}
 }
