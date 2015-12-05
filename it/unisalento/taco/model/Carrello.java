@@ -1,14 +1,11 @@
 package it.unisalento.taco.model;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Carrello {
 
-	private double prezzoTotale;
+	private double prezzoTotale = 0;
 	private Map<Prodotto,Integer> mappaProdotti = new LinkedHashMap<>();
 	
 	private static Carrello instance;
@@ -46,6 +43,19 @@ public class Carrello {
 		System.out.println("Il contenuto del carrello è");
 		for (Map.Entry<Prodotto, Integer> e : mappaProdotti.entrySet())
 		    System.out.println(e.getKey().getNome() + " x " + e.getValue());
+	}
+	
+	public void calcolaTotale(){
+		System.out.println("Calcolo prezzo totale");
+		for (Map.Entry<Prodotto, Integer> e : mappaProdotti.entrySet()){
+			prezzoTotale += e.getKey().getPrezzo() * e.getValue();
+			System.out.print(".");
+		}
+		
+		System.out.println("\nIl prezzo è " + prezzoTotale);
+	}
+	
+	public static class GeneratoreOrdini{
 		
 	}
 }
