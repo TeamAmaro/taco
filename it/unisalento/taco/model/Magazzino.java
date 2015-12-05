@@ -23,4 +23,9 @@ public enum Magazzino {
 		return sede.nome();
 	}
 	
+	@Override public String toString(){
+		StringBuilder stringMagazzino = new StringBuilder();
+		stringMagazzino.append(nome + sede);
+		return stringMagazzino.toString();
+	}
 }
