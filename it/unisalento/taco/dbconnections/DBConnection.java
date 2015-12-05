@@ -50,7 +50,11 @@ public class DBConnection {
 	         }
 	         rs.close();
 	         stmt.close();
-	      } catch (Exception e) { e.printStackTrace(); }
+	      } catch (Exception e) { 
+	    	  e.printStackTrace(); 
+	    	  } finally {
+	    		  disconnetti();
+	    	  }
 
 	      return a;
 	   }
@@ -65,6 +69,8 @@ public class DBConnection {
 	      } catch (Exception e) {
 	         e.printStackTrace();
 	         risultato = false;
+	      } finally {
+	    	  disconnetti();
 	      }
 	      return risultato;
 	   }
