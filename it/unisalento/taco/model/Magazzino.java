@@ -1,31 +1,53 @@
 package it.unisalento.taco.model;
 
-public enum Magazzino {
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-	MAGAZZINO_A("Magazzino A", Sede.SEDE_A),
-	MAGAZZINO_B("Produttore B", Sede.SEDE_B),
-	MAGAZZINO_C("Produttore C", Sede.SEDE_C),
-	MAGAZZINO_D("Produttore D", Sede.SEDE_D);
-	
+public class Magazzino {
 	private final String nome;
 	private final Sede sede;
+	public static int COSTO_SPEDIZIONE = 5;
+	private Map<Prodotto,Integer> inventario = new LinkedHashMap<>();
 	
-	private Magazzino(String nome, Sede sede) {
+	public Magazzino(String nome, Sede sede){
 		this.nome = nome;
 		this.sede = sede;
 	}
 	
-	public String nome(){
+	public String getNome(){
 		return nome;
 	}
 	
-	public String sede(){
-		return sede.nome();
+	public Sede getSede(){
+		return sede;
 	}
 	
-	@Override public String toString(){
-		StringBuilder stringMagazzino = new StringBuilder();
-		stringMagazzino.append(nome + sede);
-		return stringMagazzino.toString();
+	public void resocontoInventario(){
+		if(inventario.isEmpty()){
+			System.out.println("Non ci sono prodotti nell'inventario");
+			return;
+		}
+		System.out.println("Il contenuto dell'inventario è");
+		for (Map.Entry<Prodotto, Integer> e : inventario.entrySet())
+		    System.out.println(e.getKey().getNome() + " x " + e.getValue());
+	}
+	
+	public void aggiungiProdotto(Prodotto prodotto, int quantita){
+		System.out.println("Hai aggiunto " + quantita + " " + prodotto.getNome() + " all'inventario");
+		if(inventario.containsKey(prodotto))
+			inventario.put(prodotto, inventario.get(prodotto) + quantita);
+		else
+			inventario.put(prodotto, quantita);
+	}
+	
+	public void rimuoviProdotto(Prodotto prodotto, int quantita){
+		System.out.println("Hai rimosso " + quantita + " " + prodotto.getNome() + " dall'inventario");
+		if(inventario.containsKey(prodotto)){
+			int prevValue = inventario.get(prodotto);
+			if(prevValue - quantita <= 0)
+				inventario.remove(prodotto);
+			else
+				inventario.put(prodotto, prevValue - quantita);
+		}		
 	}
 }
