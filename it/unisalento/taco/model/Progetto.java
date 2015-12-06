@@ -15,12 +15,22 @@ public class Progetto {
 	private double saldo;
 	private Set<Dipendente> listaDipendenti = new LinkedHashSet<Dipendente>();
 	
+	//PER LA CREAZIONE DI UN NUOVO PROGETTO
 	public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget) {
 		this.id = id;
 		this.nome = nome;
 		this.capoProgetto = capoProgetto;
 		this.budget = budget;
 		saldo = budget;
+	}
+	
+	//PER PROGETTI GIA' ESISTENTI
+	public Progetto(int id, String nome, CapoProgetto capoProgetto, double saldo, double budget) {
+		this.id = id;
+		this.nome = nome;
+		this.capoProgetto = capoProgetto;
+		this.saldo = saldo;
+		this.budget = budget;
 	}
 	
 	public void aggiungiDipendente(Dipendente... args){
