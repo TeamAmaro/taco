@@ -20,5 +20,16 @@ public class TacoDemo {
 		System.out.println("Email: " + dip.getEmail());
 		System.out.println("Progetto: " + dip.getProgetto().getNome());
 		
+		System.out.println("");
+		
+		ProgettoDAO progDAO = new ProgettoDAOImpl();
+		Progetto prog = progDAO.getProgetto(1);
+		
+		System.out.println("Progetto");
+		System.out.println("Nome: " + prog.getNome());
+		System.out.println("Budget: " + prog.getBudget());
+		System.out.println("Saldo: " + prog.getSaldo());
+		System.out.println("Capo progetto: " + prog.getCapoProgetto().getNome() + " " + prog.getCapoProgetto().getCognome());
+		
 	}
 }
