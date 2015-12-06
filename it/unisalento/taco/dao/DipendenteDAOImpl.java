@@ -25,13 +25,11 @@ public class DipendenteDAOImpl implements DipendenteDAO {
 		Iterator<String[]> i = result.iterator();
 		String[] riga = i.next();
 		dip = new Dipendente(id, riga[1], riga[2], riga[3]);
-		/*
-		 * NON SO COME VEDERE SE LA RIGA[4] E' NULL O MENO
-		 * if(!riga[4].equals("null")) {
+		if(!riga[4].equals("null") || riga[4] != null) {
 			ProgettoDAO progDAO = new ProgettoDAOImpl();
 			int id_progetto = Integer.parseInt(riga[4]);
 			dip.setProgetto(progDAO.getProgetto(id_progetto));
-		}*/ 
+		} 
 		return dip; 
 	}
 
