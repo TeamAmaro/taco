@@ -2,26 +2,35 @@ package it.unisalento.taco.dao;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.model.Dipendente;
-import it.unisalento.taco.model.Progetto;
 
 public class DipendenteDAO {
 	
-	public Dipendente[] getAllDipendenti() {
+	private static DipendenteDAO instance;
+	public static DipendenteDAO getInstance(){
+		if(instance == null)
+			instance = new DipendenteDAO();
+		return instance;
+	}
+	
+	private DipendenteDAO(){};
+	
+	public List<Dipendente> getAllDipendenti() {
 		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.* FROM dipendenti,utenti WHERE id_utente = utenti.id");
 		Iterator<String[]> i = result.iterator();
-		Dipendente[] dipendenti = new Dipendente[result.size()];
-		int j = 0;
+		List<Dipendente> listDipendente = new ArrayList<>();
 		
 		while(i.hasNext()) {
 			String[] riga = i.next();
 			int id = Integer.parseInt(riga[0]);
-			dipendenti[j++] = new Dipendente(id, riga[1], riga[2], riga[3]);
+			Dipendente dipendente = new Dipendente(id, riga[1], riga[2], riga[3]);
+			listDipendente.add(dipendente);
 		}
 		
-		return dipendenti;
+		return listDipendente;
 	}
 
 	public Dipendente getDipendente(int id) {

@@ -2,6 +2,7 @@ package it.unisalento.taco.dao;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.model.CapoProgetto;
@@ -9,34 +10,26 @@ import it.unisalento.taco.model.Progetto;
 
 public class ProgettoDAO {
 	
-	public Progetto[] getAllProgetto() {
+	public List<Progetto> getAllProgetto() {
 		
 		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM progetti");
 		Iterator<String[]> i = result.iterator();
-		Progetto[] progetti = new Progetto[result.size()];
-		int j = 0;
+		List<Progetto> listProgetto = new ArrayList<>();
 		CapoProgettoDAO capProgDAO = new CapoProgettoDAO();
 		
 		
 		while(i.hasNext()) {
-			
 			String[] riga = i.next();
 			int id = Integer.parseInt(riga[0]);
 			double saldo = Double.parseDouble(riga[2]);
 			double budget = Double.parseDouble(riga[3]);
-			
-			progetti[j] = new Progetto(id, riga[1], null, saldo, budget);
-			CapoProgetto capProg = capProgDAO.getCapoProgetto(progetti[j]);
-			progetti[j].setCapoProgetto(capProg);
-			j++;
-			
-			/*
-			CapoProgetto capProg = capProgDAO.getCapoProgetto(id);
-			progetti[j] = new Progetto(id, riga[1], capProg, saldo, budget);
-			capProg.setProgetto(progetti[j++]);*/
+			Progetto progetto = new Progetto(id, riga[1], null, saldo, budget);
+			listProgetto.add(progetto);
+			CapoProgetto capProg = capProgDAO.getCapoProgetto(progetto);
+			progetto.setCapoProgetto(capProg);
 		}
 		
-		return progetti;
+		return listProgetto;
 	}
 
 	public Progetto getProgetto(int id) {
@@ -51,7 +44,9 @@ public class ProgettoDAO {
 		return prog;
 	}
 	
-	public void addProgetto() {}
+	public void addProgetto() {
+		
+	}
 
 	public void updateProgetto() {
 		// TODO Auto-generated method stub

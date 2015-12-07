@@ -3,6 +3,7 @@ package it.unisalento.taco.view;
 import it.unisalento.taco.model.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import it.unisalento.taco.dao.*;
 import it.unisalento.taco.dbconnections.*;
@@ -11,9 +12,13 @@ public class TacoDemo {
 
 	public static void main(String[] args) throws Exception{
 		
-		DipendenteDAO dipDAO = new DipendenteDAO();
-		Dipendente[] dips = dipDAO.getAllDipendenti();
+		List<Dipendente> dips = new ArrayList<>();
+		dips = DipendenteDAO.getInstance().getAllDipendenti();
 		
+		for(Dipendente i : dips){
+			System.out.println(i);
+		}
+		/*
 		for(int i = 0; i < dips.length; i++) {
 			System.out.println("Dipendente");
 			System.out.println("Nome: " + dips[i].getNome());
@@ -41,7 +46,7 @@ public class TacoDemo {
 			System.out.println("Saldo: " + progetti[i].getSaldo());
 			System.out.println("Budget: " + progetti[i].getBudget());
 			System.out.println("");
-		}
+		}*/
 		
 	}
 }
