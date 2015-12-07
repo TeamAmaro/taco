@@ -5,6 +5,7 @@ public class Dipendente extends Utente {
 	private Sede sede;
 	private Carrello carrello;
 
+	//DIPENDENTE BASE
 	public Dipendente(int id, String nome, String cognome, String email){
 		super(id,nome,cognome,email);
 	}

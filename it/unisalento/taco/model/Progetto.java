@@ -58,6 +58,10 @@ public class Progetto {
 		return capoProgetto;
 	}
 	
+	public void setCapoProgetto(CapoProgetto capProg) {
+		this.capoProgetto = capProg;
+	}
+	
 	public Set<Dipendente> getListaDipendenti(){
 		return listaDipendenti;
 	}
