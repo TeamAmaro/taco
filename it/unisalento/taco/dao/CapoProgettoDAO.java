@@ -14,6 +14,7 @@ public class CapoProgettoDAO {
 		return result;
 	}
 	
+	//OTTIENE IL CAPOPROGETTO TRAMITE IL PROGETTO
 	public CapoProgetto getCapoProgetto(Progetto progetto) {
 		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email FROM utenti,capiprogetto WHERE id_progetto = " + progetto.getID() + " AND utenti.id = capiprogetto.id_utente");
 		Iterator<String[]> i = result.iterator();
@@ -22,5 +23,15 @@ public class CapoProgettoDAO {
 		CapoProgetto capoProg = new CapoProgetto(id, riga[1], riga[2], riga[3], progetto);
 		return capoProg;
 	}
+	
+	/*//OTTIENE IL CAPOPROGETTO TRAMITE L'ID DEL PROGETTO
+	public CapoProgetto getCapoProgetto(int idProgetto) {
+		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.* FROM progetti,capiprogetto,utenti WHERE id_progetto = progetti.i AND id_progetto = " + idProgetto + " AND id_utente = utenti.id");
+		Iterator<String[]> i = result.iterator();
+		String[] riga = i.next();
+		int id = Integer.parseInt(riga[0]);
+		CapoProgetto capoProg = new CapoProgetto(id, riga[1], riga[2], riga[3]);
+		return capoProg;
+	}*/
 	
 }
