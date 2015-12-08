@@ -1,6 +1,8 @@
 package it.unisalento.taco.model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Carrello {
@@ -54,8 +56,25 @@ public class Carrello {
 		
 		System.out.println("\nIl prezzo è " + prezzoTotale);
 	}
-	
-	public static class GeneratoreOrdini{
+	static class GeneratoreOrdini{
 		
+		private List<Ordine> listaOrdini = new ArrayList<>();
+	
+		public void generaOrdini(){
+
+			
+			/*
+			 * Controlla elenco prodotti;  mappaProdotti
+			 * Controlla dipendente;	Client.DipendenteIstance()
+			 * Controlla progetto;	Client.DipendenteIstance().getProgetto();
+			 * Controlla i magazzini per i prodotti;	MagazzinoDelegate.cercaProdotto(prodotto) (foreach prodotto)
+			 * Crea una lista di ordini, raggruppando i prodotti per magazzino; Dividi la mappa in elenco di magazzini e prodotti
+			 * Aggiungi eventuali spese di spedizione;	calcolaTotale per ordine
+			 * Crea un file da stampare con la distinta;   documentoDAO stampa ricevuta
+			 * Associa gli ordini al progetto
+			 */
+			
+			
+		}
 	}
 }
