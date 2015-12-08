@@ -4,12 +4,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Magazzino {
+	private final int id;
 	private final String nome;
 	private final Sede sede;
 	public static int COSTO_SPEDIZIONE = 5;
 	private Map<Prodotto,Integer> inventario = new LinkedHashMap<>();
 	
-	public Magazzino(String nome, Sede sede){
+	public Magazzino(int id, String nome, Sede sede){
+		this.id = id;
 		this.nome = nome;
 		this.sede = sede;
 	}
@@ -20,6 +22,10 @@ public class Magazzino {
 	
 	public Sede getSede(){
 		return sede;
+	}
+	
+	public int getID(){
+		return id;
 	}
 	
 	public void resocontoInventario(){
@@ -49,5 +55,13 @@ public class Magazzino {
 			else
 				inventario.put(prodotto, prevValue - quantita);
 		}		
+	}
+	
+	public int cercaProdotto(Prodotto prodotto, int quantita){
+		for (Map.Entry<Prodotto, Integer> e : inventario.entrySet())
+			if(e.getKey() == prodotto)
+				return e.getValue();
+		//Se non trova corrispondenze, ovvero il prodotto non è contenuto nell'inventario
+		return 0;
 	}
 }
