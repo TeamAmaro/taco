@@ -1,5 +1,9 @@
 package it.unisalento.taco.business;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Prodotto;
 
@@ -24,4 +28,21 @@ public class MagazziniereDelegate {
 	public void spedisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
 		magazzino.rimuoviProdotto(prodotto, quantita);
 	};
+	
+	//Cerca prodotti nei magazzini
+	public List<Magazzino> cercaProdotto(Prodotto prodotto){
+		List<Magazzino> listaRisultati = new ArrayList<>();
+		/*
+		 * algoritmo di ricerca da implementare
+		 */
+		
+		return listaRisultati;
+	}
+	
+	//Chiede prodotto al magazzino
+	public int chiediProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
+		return magazzino.cercaProdotto(prodotto, quantita);
+	}
+	
+	
 }
