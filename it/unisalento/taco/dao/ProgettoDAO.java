@@ -10,6 +10,16 @@ import it.unisalento.taco.model.Progetto;
 
 public class ProgettoDAO {
 	
+	private static ProgettoDAO instance;
+	
+	public static ProgettoDAO getInstance(){
+		if(instance == null)
+			instance = new ProgettoDAO();
+		return instance;
+	}
+	private ProgettoDAO (){};
+	
+	
 	public List<Progetto> getAllProgetto() {
 		
 		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM progetti");

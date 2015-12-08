@@ -40,7 +40,7 @@ public class DipendenteDAO {
 		String[] riga = i.next();
 		dip = new Dipendente(id, riga[1], riga[2], riga[3]);
 		if(!riga[4].equals("null") || riga[4] != null) {
-			ProgettoDAO progDAO = new ProgettoDAO();
+			ProgettoDAO progDAO = ProgettoDAO.getInstance();
 			int id_progetto = Integer.parseInt(riga[4]);
 			dip.setProgetto(progDAO.getProgetto(id_progetto));
 		} 
