@@ -39,6 +39,29 @@ INSERT INTO `capiprogetto` VALUES (2,1),(3,2);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `carrelli`
+--
+
+DROP TABLE IF EXISTS `carrelli`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `carrelli` (
+  `id_dipendente` int(11) DEFAULT NULL,
+  `id_prodotto` int(11) DEFAULT NULL,
+  `quantita` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `carrelli`
+--
+
+LOCK TABLES `carrelli` WRITE;
+/*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `dipendenti`
 --
 
@@ -60,6 +83,155 @@ LOCK TABLES `dipendenti` WRITE;
 /*!40000 ALTER TABLE `dipendenti` DISABLE KEYS */;
 INSERT INTO `dipendenti` VALUES (1,1,NULL);
 /*!40000 ALTER TABLE `dipendenti` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `magazzini`
+--
+
+DROP TABLE IF EXISTS `magazzini`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `magazzini` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(60) DEFAULT NULL,
+  `id_sede` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `magazzini`
+--
+
+LOCK TABLES `magazzini` WRITE;
+/*!40000 ALTER TABLE `magazzini` DISABLE KEYS */;
+/*!40000 ALTER TABLE `magazzini` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `magazzinieri`
+--
+
+DROP TABLE IF EXISTS `magazzinieri`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `magazzinieri` (
+  `id_utente` int(11) DEFAULT NULL,
+  `id_magazzino` int(11) DEFAULT NULL,
+  UNIQUE KEY `id_utente` (`id_utente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `magazzinieri`
+--
+
+LOCK TABLES `magazzinieri` WRITE;
+/*!40000 ALTER TABLE `magazzinieri` DISABLE KEYS */;
+/*!40000 ALTER TABLE `magazzinieri` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ordini`
+--
+
+DROP TABLE IF EXISTS `ordini`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ordini` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_dipendente` int(11) DEFAULT NULL,
+  `id_sede` int(11) DEFAULT NULL,
+  `id_progetto` int(11) DEFAULT NULL,
+  `id_magazzino` int(11) DEFAULT NULL,
+  `id_prodotto` int(11) DEFAULT NULL,
+  `quantita` int(11) DEFAULT NULL,
+  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `spedito` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ordini`
+--
+
+LOCK TABLES `ordini` WRITE;
+/*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prod_mag`
+--
+
+DROP TABLE IF EXISTS `prod_mag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `prod_mag` (
+  `id_magazzino` int(11) DEFAULT NULL,
+  `id_prodotto` int(11) DEFAULT NULL,
+  `quantita` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prod_mag`
+--
+
+LOCK TABLES `prod_mag` WRITE;
+/*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prodotti`
+--
+
+DROP TABLE IF EXISTS `prodotti`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `prodotti` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(60) DEFAULT NULL,
+  `categoria` varchar(60) DEFAULT NULL,
+  `descrizione` text,
+  `prezzo` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prodotti`
+--
+
+LOCK TABLES `prodotti` WRITE;
+/*!40000 ALTER TABLE `prodotti` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prodotti` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `produttore`
+--
+
+DROP TABLE IF EXISTS `produttore`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `produttore` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_prodotto` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `produttore`
+--
+
+LOCK TABLES `produttore` WRITE;
+/*!40000 ALTER TABLE `produttore` DISABLE KEYS */;
+/*!40000 ALTER TABLE `produttore` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -89,6 +261,30 @@ INSERT INTO `progetti` VALUES (1,'Progetto Taco',10.34,6700),(2,'Progetto Pizza'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sedi`
+--
+
+DROP TABLE IF EXISTS `sedi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sedi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(60) DEFAULT NULL,
+  `indirizzo` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sedi`
+--
+
+LOCK TABLES `sedi` WRITE;
+/*!40000 ALTER TABLE `sedi` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sedi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `utenti`
 --
 
@@ -102,7 +298,8 @@ CREATE TABLE `utenti` (
   `email` varchar(60) NOT NULL,
   `password` varchar(128) NOT NULL,
   `data_reg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,4 +322,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-08 16:38:06
+-- Dump completed on 2015-12-09 18:14:57
