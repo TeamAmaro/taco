@@ -27,7 +27,7 @@ public class MagazzinoDAO {
         return instance;
     }
     
-    private MagazzinoDAO() {}
+    private MagazzinoDAO(){}
     
     public Map<Prodotto,Integer> getInventario(Magazzino magazzino) {
 
@@ -39,8 +39,11 @@ public class MagazzinoDAO {
         while(i.hasNext()) {
             String[] riga = i.next();
             double prezzo = Double.parseDouble(riga[4]);
-            Prodotto prodotto = new Prodotto.Builder(riga[1], prezzo, Produttore.PRODUTTORE_A).categoria(Categoria.CATEGORIA_D).descrizione(riga[3]).build();
+            Prodotto prodotto = new Prodotto.Builder(Integer.parseInt(riga[0]), riga[1], prezzo, Produttore.PRODUTTORE_A).categoria(Categoria.CATEGORIA_D).descrizione(riga[3]).build();
             int quantita = Integer.parseInt(riga[5]);
+            if(quantita == 0) {
+                continue;
+            }
             inventario.put(prodotto,quantita);
         }
         return inventario;
@@ -59,6 +62,9 @@ public class MagazzinoDAO {
         /*
         RESTITUISCO I MAGAZZINI CHE CONTENGONO IL PRODOTTO
         */
+        String uberQuery = "select magazzini.nome from magazzini, prod_mag, prodotti where prodotti.id = " + prodotto.getID() + " AND prod_mag.id_prodotto = prodotti.id AND prod_mag.id_magazzino = magazzini.id";
+        ArrayList<String[]> = DBConnection.getInstance().queryDB(uberQuery);
+        
         List<Magazzino> magazzini = new ArrayList<>();
         return magazzini;
     }
