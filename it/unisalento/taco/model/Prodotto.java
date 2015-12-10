@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class Prodotto {
 	
+        private final int id;
 	private final String nome;
 	private final double prezzo;
 	private final Produttore produttore;
@@ -12,6 +13,9 @@ public class Prodotto {
 	private Categoria categoria;
 	private Set<Fornitore> listaFornitori = new LinkedHashSet<Fornitore>();
 	
+        public int getID(){
+            return id;
+        }
 	public String getNome() {
 		return nome;
 	}
@@ -51,6 +55,7 @@ public class Prodotto {
 	}
 	
 	public static class Builder{
+                private final int id;
 		private final String nome;
 		private final double prezzo;
 		private final Produttore produttore;
@@ -58,7 +63,8 @@ public class Prodotto {
 		private Categoria categoria;
 		private Set<Fornitore> listaFornitori = new LinkedHashSet<Fornitore>();
 		
-		public Builder(String nome, double prezzo, Produttore produttore){
+		public Builder(int id, String nome, double prezzo, Produttore produttore){
+                        this.id = id;
 			this.nome = nome;
 			this.prezzo = prezzo;
 			this.produttore = produttore;
@@ -90,6 +96,7 @@ public class Prodotto {
 	}
 	
 	private Prodotto(Builder build){
+                id = build.id;
 		nome = build.nome;
 		prezzo = build.prezzo;
 		descrizione = build.descrizione;
@@ -100,7 +107,7 @@ public class Prodotto {
 	
 	@Override public String toString(){
 		StringBuilder prodottoString = new StringBuilder();
-		prodottoString.append(nome + " " + prezzo + " " + produttore + " " + descrizione + " " + categoria 
+		prodottoString.append(id + " " + nome + " " + prezzo + " " + produttore + " " + descrizione + " " + categoria 
 				+ " " + getListaFornitoriAsString());
 		
 		return prodottoString.toString();
