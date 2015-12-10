@@ -97,7 +97,7 @@ CREATE TABLE `magazzini` (
   `nome` varchar(60) DEFAULT NULL,
   `id_sede` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,6 +106,7 @@ CREATE TABLE `magazzini` (
 
 LOCK TABLES `magazzini` WRITE;
 /*!40000 ALTER TABLE `magazzini` DISABLE KEYS */;
+INSERT INTO `magazzini` VALUES (1,'Magazzino del Sole',NULL),(2,'Magazzino della Luna',NULL);
 /*!40000 ALTER TABLE `magazzini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,6 +183,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
+INSERT INTO `prod_mag` VALUES (1,1,12),(2,2,7);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,7 +201,7 @@ CREATE TABLE `prodotti` (
   `descrizione` text,
   `prezzo` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,30 +210,33 @@ CREATE TABLE `prodotti` (
 
 LOCK TABLES `prodotti` WRITE;
 /*!40000 ALTER TABLE `prodotti` DISABLE KEYS */;
+INSERT INTO `prodotti` VALUES (1,'Stampante MultiJet C460','Stampanti','Stampante con scanner, NFC, WIFI e USB',399.99),(2,'Stampante Jackpot','Stampanti','Stampante con porta USB e collegamento ethernet',99.99);
 /*!40000 ALTER TABLE `prodotti` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `produttore`
+-- Table structure for table `produttori`
 --
 
-DROP TABLE IF EXISTS `produttore`;
+DROP TABLE IF EXISTS `produttori`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produttore` (
+CREATE TABLE `produttori` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(60) DEFAULT NULL,
   `id_prodotto` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `produttore`
+-- Dumping data for table `produttori`
 --
 
-LOCK TABLES `produttore` WRITE;
-/*!40000 ALTER TABLE `produttore` DISABLE KEYS */;
-/*!40000 ALTER TABLE `produttore` ENABLE KEYS */;
+LOCK TABLES `produttori` WRITE;
+/*!40000 ALTER TABLE `produttori` DISABLE KEYS */;
+INSERT INTO `produttori` VALUES (1,'SunSang',1),(2,'Kyoto',2);
+/*!40000 ALTER TABLE `produttori` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -322,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-09 18:14:57
+-- Dump completed on 2015-12-10  9:15:12
