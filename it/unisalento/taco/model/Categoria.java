@@ -22,4 +22,16 @@ public enum Categoria {
 		return nome;
 	}
 
+        public static Categoria parseCategoria(String categoria){
+            if(categoria.equals(CATEGORIA_A.nome))
+                return CATEGORIA_A;
+            else if(categoria.equals(CATEGORIA_B.nome))
+                return CATEGORIA_B;
+            else if(categoria.equals(CATEGORIA_C.nome))
+                return CATEGORIA_C;
+            else if(categoria.equals(CATEGORIA_D.nome))
+                return CATEGORIA_D;
+            else
+                return CATEGORIA_0;
+        }
 }
