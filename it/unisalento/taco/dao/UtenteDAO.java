@@ -30,11 +30,11 @@ public class UtenteDAO {
 			 * Controlla nel database l'informazione che contraddistingue utente nelle categorie 
 			 * dipendente - capoprogetto - magazziniere
 			 * 
-			 * Dopodiché basta istanziare DOPO il model corrispondente.
+			 * Dopodichï¿½ basta istanziare DOPO il model corrispondente.
 			 * 
 			 * Attenzione:
 			 * non dobbiamo istanziare tutti i dati del database come model! Questa cosa si fa solo quando
-			 * è richiesto, ad esempio, se il superadmin ha bisogno di una lista completa di utenti e deve 
+			 * ï¿½ richiesto, ad esempio, se il superadmin ha bisogno di una lista completa di utenti e deve 
 			 * effettuare un'operazione su uno di essi.
 			 * 
 			 * Esempio di istanziazionee
@@ -52,4 +52,15 @@ public class UtenteDAO {
 		return listUtente;
 	}
 	
+        public int getID(String[] email, String[] psw) {
+            ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = " + email + " AND password = " + psw);
+            Iterator<String[]> i = result.iterator();
+            if(i.hasNext()){
+                String[] riga = i.next();
+                return Integer.parseInt(riga[0]);
+            }
+            else
+                return 0;
+        }
+        
 }
