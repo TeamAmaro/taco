@@ -86,6 +86,29 @@ INSERT INTO `dipendenti` VALUES (1,1,NULL);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `fornitori`
+--
+
+DROP TABLE IF EXISTS `fornitori`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fornitori` (
+  `nome` varchar(60) DEFAULT NULL,
+  `id_prodotto` int(10) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fornitori`
+--
+
+LOCK TABLES `fornitori` WRITE;
+/*!40000 ALTER TABLE `fornitori` DISABLE KEYS */;
+INSERT INTO `fornitori` VALUES ('Fornitore A',NULL),('Fornitore B',NULL),('Fornitore C',NULL),('Fornitore D',NULL);
+/*!40000 ALTER TABLE `fornitori` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `magazzini`
 --
 
@@ -130,6 +153,7 @@ CREATE TABLE `magazzinieri` (
 
 LOCK TABLES `magazzinieri` WRITE;
 /*!40000 ALTER TABLE `magazzinieri` DISABLE KEYS */;
+INSERT INTO `magazzinieri` VALUES (4,1),(5,2);
 /*!40000 ALTER TABLE `magazzinieri` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,11 +246,9 @@ DROP TABLE IF EXISTS `produttori`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produttori` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(60) DEFAULT NULL,
-  `id_prodotto` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `id_prodotto` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +257,7 @@ CREATE TABLE `produttori` (
 
 LOCK TABLES `produttori` WRITE;
 /*!40000 ALTER TABLE `produttori` DISABLE KEYS */;
-INSERT INTO `produttori` VALUES (1,'SunSang',1),(2,'Kyoto',2);
+INSERT INTO `produttori` VALUES ('Produttore A',1),('Produttore B',2),('Produttore C',NULL);
 /*!40000 ALTER TABLE `produttori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,10 +295,8 @@ DROP TABLE IF EXISTS `sedi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sedi` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(60) DEFAULT NULL,
-  `indirizzo` text,
-  PRIMARY KEY (`id`)
+  `indirizzo` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -305,7 +325,7 @@ CREATE TABLE `utenti` (
   `data_reg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +334,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','asd123','2015-12-03 12:37:21'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','asd123','2015-12-05 11:06:15'),(3,'Mario','Rossi','mario.rossi@asd.asd','asd123','2015-12-07 12:44:15');
+INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','asd123','2015-12-03 12:37:21'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','asd123','2015-12-05 11:06:15'),(3,'Mario','Rossi','mario.rossi@asd.asd','asd123','2015-12-07 12:44:15'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','asd123','2015-12-11 18:25:35'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','asd123','2015-12-11 18:26:04');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -327,4 +347,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-10  9:15:12
+-- Dump completed on 2015-12-12 16:47:12
