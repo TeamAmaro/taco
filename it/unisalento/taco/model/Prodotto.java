@@ -1,5 +1,6 @@
 package it.unisalento.taco.model;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public class Prodotto {
 	private final Produttore produttore;
 	private String descrizione;
 	private Categoria categoria;
-	private Set<Fornitore> listaFornitori = new LinkedHashSet<Fornitore>();
+	private Set<Fornitore> listaFornitori = new LinkedHashSet<>();
 	
         public int getID(){
             return id;
@@ -43,10 +44,18 @@ public class Prodotto {
 	public String getListaFornitoriAsString(){
 		StringBuilder stringFornitori = new StringBuilder();
 		for(Fornitore val : listaFornitori)
-			stringFornitori.append(val.toString() + " ");
+			stringFornitori.append(val.toString()).append(" ");
 		return stringFornitori.toString();
 		
 	}
+        
+        public void setDescrizione(String descrizione){
+            this.descrizione = descrizione;
+        }
+        
+        public void setCategoria(Categoria categoria){
+            this.categoria = categoria;
+        }
 	
 	public void addFornitore(Fornitore fornitore){
 		if (listaFornitori.contains(Fornitore.FORNITORE_0))
@@ -61,14 +70,14 @@ public class Prodotto {
 		private final Produttore produttore;
 		private String descrizione;
 		private Categoria categoria;
-		private Set<Fornitore> listaFornitori = new LinkedHashSet<Fornitore>();
+		private Set<Fornitore> listaFornitori = new LinkedHashSet<>();
 		
 		public Builder(int id, String nome, double prezzo, Produttore produttore){
                         this.id = id;
 			this.nome = nome;
 			this.prezzo = prezzo;
 			this.produttore = produttore;
-			this.descrizione = "Nessuna descrizione";
+			this.descrizione = "Nessuna descrizione per il prodotto";
 			this.categoria = Categoria.CATEGORIA_0;
 			this.listaFornitori.add(Fornitore.FORNITORE_0);
 		}
@@ -85,8 +94,7 @@ public class Prodotto {
 		
 		public Builder listaFornitori(Fornitore... args){
 			listaFornitori.remove(Fornitore.FORNITORE_0);
-			for(Fornitore val : args)
-				listaFornitori.add(val);
+                        listaFornitori.addAll(Arrays.asList(args));
 			return this;
 		}
 		
@@ -107,9 +115,10 @@ public class Prodotto {
 	
 	@Override public String toString(){
 		StringBuilder prodottoString = new StringBuilder();
-		prodottoString.append(id + " " + nome + " " + prezzo + " " + produttore + " " + descrizione + " " + categoria 
-				+ " " + getListaFornitoriAsString());
-		
+		prodottoString.append("ID: ").append(id).append(", Nome: ").append(nome).append(", Prezzo: ").
+                        append(prezzo).append(", Produttore: ").append(produttore).append(", Descrizione: ").
+                        append(descrizione).append(", Categoria: ").append(categoria).append(", Fornitori: ").
+                        append(getListaFornitoriAsString());
 		return prodottoString.toString();
 	}
 }
