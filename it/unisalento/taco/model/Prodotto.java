@@ -44,7 +44,9 @@ public class Prodotto {
 	public String getListaFornitoriAsString(){
 		StringBuilder stringFornitori = new StringBuilder();
 		for(Fornitore val : listaFornitori)
-			stringFornitori.append(val.toString()).append(" ");
+			stringFornitori.append(val.toString()).append(", ");
+                int last = stringFornitori.lastIndexOf(",");
+                stringFornitori.delete(last, last + 1);
 		return stringFornitori.toString();
 		
 	}
