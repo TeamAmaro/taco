@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
+import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Utente;
 
 public class UtenteDAO {
@@ -52,7 +53,7 @@ public class UtenteDAO {
 		return listUtente;
 	}
 	
-        public int getID(String[] email, String[] psw) {
+        public int getID(String email, String psw) {
             ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = " + email + " AND password = " + psw);
             Iterator<String[]> i = result.iterator();
             if(i.hasNext()){
@@ -63,4 +64,19 @@ public class UtenteDAO {
                 return 0;
         }
         
+        //SI SUPPONE CHE L'ID ESISTA
+        public Utente getLogin(int id){
+            
+            ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM dipendenti WHERE id_utente = " + id);
+            Iterator<String[]> i = result.iterator();
+            String[] riga = i.next();
+            
+            //if(i.hasNext())
+                return DipendenteDAO.getInstance().getDipendente(Integer.parseInt(riga[0]));
+            /*
+            result = DBConnection.getInstance().queryDB("SELECT * FROM capiprogetto WHERE id_utente = " + id);
+            if(i.hasNext())
+                return CapoProgettoDAO.getInstance().getCapoProgetto(Integer.parseInt(riga[0]));
+            */
+        }
 }
