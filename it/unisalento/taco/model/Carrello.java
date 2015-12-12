@@ -8,53 +8,49 @@ import java.util.Map;
 public class Carrello {
 
 	private double prezzoTotale = 0;
-	private Map<Prodotto,Integer> mappaProdotti = new LinkedHashMap<>();
-	
-	private static Carrello instance;
-	public static Carrello getInstance(){
-		if(instance == null)
-			instance = new Carrello();
-		return instance;
-	}
-	private Carrello(){};
+	private Map<Prodotto,Integer> listaProdotti = new LinkedHashMap<>();
+        
+        public Carrello(Map<Prodotto,Integer> listaProdotti){
+            this.listaProdotti = listaProdotti;
+        }
 	
 	public void aggiungiProdotto(Prodotto prodotto, int quantita){
 		System.out.println("Hai acquistato " + quantita + " " + prodotto.getNome());
-		if(mappaProdotti.containsKey(prodotto))
-			mappaProdotti.put(prodotto, mappaProdotti.get(prodotto) + quantita);
+		if(listaProdotti.containsKey(prodotto))
+			listaProdotti.put(prodotto, listaProdotti.get(prodotto) + quantita);
 		else
-			mappaProdotti.put(prodotto, quantita);
+			listaProdotti.put(prodotto, quantita);
 	}
 	
 	public void rimuoviProdotto(Prodotto prodotto, int quantita){
 		System.out.println("Hai rimosso " + quantita + " " + prodotto.getNome());
-		if(mappaProdotti.containsKey(prodotto)){
-			int prevValue = mappaProdotti.get(prodotto);
+		if(listaProdotti.containsKey(prodotto)){
+			int prevValue = listaProdotti.get(prodotto);
 			if(prevValue - quantita <= 0)
-				mappaProdotti.remove(prodotto);
+				listaProdotti.remove(prodotto);
 			else
-				mappaProdotti.put(prodotto, prevValue - quantita);
+				listaProdotti.put(prodotto, prevValue - quantita);
 		}		
 	}
 	
 	public void stampaListaProdotti(){
-		if(mappaProdotti.isEmpty()){
-			System.out.println("Il carrello è vuoto");
+		if(listaProdotti.isEmpty()){
+			System.out.println("Il carrello Ã¨ vuoto");
 			return;
 		}
-		System.out.println("Il contenuto del carrello è");
-		for (Map.Entry<Prodotto, Integer> e : mappaProdotti.entrySet())
+		System.out.println("Il contenuto del carrello Ã¨");
+		for (Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet())
 		    System.out.println(e.getKey().getNome() + " x " + e.getValue());
 	}
 	
 	public void calcolaTotale(){
 		System.out.println("Calcolo prezzo totale");
-		for (Map.Entry<Prodotto, Integer> e : mappaProdotti.entrySet()){
+		for (Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet()){
 			prezzoTotale += e.getKey().getPrezzo() * e.getValue();
 			System.out.print(".");
 		}
 		
-		System.out.println("\nIl prezzo è " + prezzoTotale);
+		System.out.println("\nIl prezzo ï¿½ " + prezzoTotale);
 	}
 	static class GeneratoreOrdini{
 		
