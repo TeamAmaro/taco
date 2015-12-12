@@ -32,7 +32,7 @@ public abstract class Utente {
 	
 	@Override public String toString(){
 		StringBuilder stringUtente = new StringBuilder();
-		stringUtente.append(id + " " + nome + " " + cognome);
+		stringUtente.append(id + " " + nome + " " + cognome + " " + email);
 		return stringUtente.toString();
 	}
 }
