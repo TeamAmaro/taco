@@ -31,7 +31,7 @@ public class Prodotto {
 	public double getPrezzo() {
 		return prezzo;
 	}
-	
+        
 	public Produttore getProduttore() {
 		return produttore;
 	}
