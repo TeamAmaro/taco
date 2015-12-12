@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
+import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Utente;
 
@@ -53,15 +54,17 @@ public class UtenteDAO {
 		return listUtente;
 	}
 	
-        public int getID(String email, String psw) {
+        public int getID(String email, String psw) throws NoSuchUserException{
+            
             ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = " + email + " AND password = " + psw);
             Iterator<String[]> i = result.iterator();
             if(i.hasNext()){
                 String[] riga = i.next();
                 return Integer.parseInt(riga[0]);
             }
-            else
-                return 0;
+            else {
+                throw new NoSuchUserException("Login: Nessuna corrispondenza tra mail e password.");
+            }
         }
         
         //SI SUPPONE CHE L'ID ESISTA
