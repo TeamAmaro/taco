@@ -12,9 +12,9 @@ public class TacoDemo {
 
 	public static void main(String[] args) throws Exception{
 		
-            Magazzino magazzino = new Magazzino(1,"Magazzino del Sole", Sede.SEDE_A);
+            Utente x = UtenteDAO.getInstance().getLogin(1);
             
-            System.out.println(MagazzinoDAO.getInstance().getInventario(magazzino));
+            System.out.println(x);
 		
 	}
 }
