@@ -1,24 +1,28 @@
 package it.unisalento.taco.model;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 public class CapoProgetto extends Utente {
 
-	private Progetto progetto;
+	private Set<Progetto> listaProgetti = new LinkedHashSet<>();
 
 	public CapoProgetto(int id, String nome, String cognome, String email){
 		super(id,nome,cognome,email);
 	}
 
-	public CapoProgetto(int id, String nome, String cognome, String email, Progetto progetto) {
+	public CapoProgetto(int id, String nome, String cognome, String email, Progetto... args) {
 		super(id,nome,cognome,email);
-		this.progetto = progetto;
+                for(Progetto val : args)
+                    listaProgetti.add(val);
 	}
 
-	public Progetto getProgetto() {
-		return progetto;
+	public Set<Progetto> getProgetto() {
+		return listaProgetti;
 	}
 
-	public void setProgetto(Progetto progetto) {
-		this.progetto = progetto;
+	public void addProgetto(Progetto progetto) {
+		listaProgetti.add(progetto);
 	}
 
 }
