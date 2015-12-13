@@ -20,6 +20,10 @@ public class Dipendente extends Utente {
     public void setSede(Sede sede) {
         this.sede = sede;
     }
+    
+    public void setCarrello(Carrello carrello) {
+        this.carrello = carrello;
+    }
 
     public Progetto getProgetto() {
         return progetto;
