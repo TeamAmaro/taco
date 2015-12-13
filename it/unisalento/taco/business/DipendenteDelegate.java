@@ -23,7 +23,7 @@ public class DipendenteDelegate {
 		dipendente.getCarrello().rimuoviProdotto(prodotto, quantita);
 	}
 	
-	public void acquista(){
+	public void acquista(Dipendente dipendente){
 		//Dipendente.getCarrello().acquista();
 	}
 	

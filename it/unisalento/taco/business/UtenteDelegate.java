@@ -37,7 +37,7 @@ public class UtenteDelegate {
         }
     }
     
-    public boolean login(String email, String password){
+    public Utente login(String email, String password){
         
         //Codifica la password con algoritmo MD5
         try{
@@ -52,12 +52,11 @@ public class UtenteDelegate {
             int idUtente = UtenteDAO.getInstance().getID(email, password);
             //Se l'ID è stato trovato, istanzia il client con il modello corrispondente
             Utente client = UtenteDAO.getInstance().getLogin(idUtente);
+            return client;
         }
         catch(NoSuchUserException e){
             //Nessuna corrispondenza, lancia NoSuchUserExc.
         }
-        boolean value = false;
-        return value;
-       
+        return null;
     }
 }
