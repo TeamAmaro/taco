@@ -6,12 +6,6 @@ public class Dipendente extends Utente {
     private Sede sede;  
     private Carrello carrello;
 
-    //Costruttore di base per il dipendente
-    public Dipendente(int id, String nome, String cognome, String email, Sede sede){
-        super(id,nome,cognome,email);
-        this.sede = sede;
-    }
-
     public Dipendente(int id, String nome, String cognome, String email, Sede sede, Progetto progetto, Carrello carrello){
         super(id,nome,cognome,email);
         this.progetto = progetto;
