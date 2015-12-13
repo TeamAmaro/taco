@@ -14,8 +14,10 @@ import it.unisalento.taco.model.Produttore;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MagazzinoDAO {
 
@@ -58,14 +60,14 @@ public class MagazzinoDAO {
         return quantita;
     }*/
     
-    public List<Magazzino> cercaProdotto(Prodotto prodotto) {
+    public Set<Magazzino> cercaProdotto(Prodotto prodotto) {
         /*
         RESTITUISCO I MAGAZZINI CHE CONTENGONO IL PRODOTTO
         
         String uberQuery = "select magazzini.nome from magazzini, prod_mag, prodotti where prodotti.id = " + prodotto.getID() + " AND prod_mag.id_prodotto = prodotti.id AND prod_mag.id_magazzino = magazzini.id";
         ArrayList<String[]> = DBConnection.getInstance().queryDB(uberQuery);
         */
-        List<Magazzino> magazzini = new ArrayList<>();
+        Set<Magazzino> magazzini = new LinkedHashSet<>();
         return magazzini;
     }
     
