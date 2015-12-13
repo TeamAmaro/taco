@@ -11,15 +11,15 @@ public enum Fornitore {
     private final String nome;
 
     private Fornitore(String nome){
-            this.nome = nome;
+        this.nome = nome;
     }
 
     public String nome() {
-            return nome;
+        return nome;
     }
 
     @Override public String toString(){
-            return nome;
+        return nome;
     }
 
     public static Fornitore parseFornitore(String fornitore){
