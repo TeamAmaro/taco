@@ -39,10 +39,12 @@ public class UtenteDelegate {
             }
         }
         //Codifica la password con algoritmo MD5
+        
         try{
             password = new Password(password).hash();
         }
         catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
+            e.printStackTrace();
         }
         
         //Cerca l'utente nel database. Ci sono corrispondenze?
@@ -54,7 +56,7 @@ public class UtenteDelegate {
             return client;
         }
         catch(NoSuchUserException e){
-            //Nessuna corrispondenza, lancia NoSuchUserExc.
+            System.err.println(e.getMessage());
         }
         return null;
     }

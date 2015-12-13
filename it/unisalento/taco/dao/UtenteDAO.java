@@ -56,7 +56,7 @@ public class UtenteDAO {
 	
         public int getID(String email, String psw) throws NoSuchUserException{
             
-            ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = " + email + " AND password = " + psw);
+            ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = '" + email + "' AND password = '" + psw +"'");
             Iterator<String[]> i = result.iterator();
             if(i.hasNext()){
                 String[] riga = i.next();
