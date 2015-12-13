@@ -23,15 +23,15 @@ import java.util.Set;
 public class MagazzinoDAO {
 
     private static MagazzinoDAO instance;
-    
+
     public static MagazzinoDAO getInstance() {
         if(instance == null)
             instance = new MagazzinoDAO();
         return instance;
     }
-    
+
     private MagazzinoDAO(){}
-    
+
     //RESTITUISCE TUTTI I PRODOTTI DI UN MAGAZZINO
     public Map<Prodotto,Integer> getInventario(Magazzino magazzino) {
 
@@ -39,7 +39,7 @@ public class MagazzinoDAO {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB(uberQuery);
         Iterator<String[]> i = result.iterator();
         Map<Prodotto,Integer> inventario = new LinkedHashMap<>();
-        
+
         while(i.hasNext()) {
             String[] riga = i.next();
             Prodotto prodotto = new Prodotto.Builder(Integer.parseInt(riga[1]), riga[2], Double.parseDouble(riga[5]), Produttore.parseProduttore(riga[0])).categoria(Categoria.parseCategoria(riga[3])).descrizione(riga[4]).build();
@@ -50,7 +50,7 @@ public class MagazzinoDAO {
         }
         return inventario;
     }
-    
+
     //RESTITUISCE LA QUANTITA DI UN PRODOTTO IN UN MAGAZZINO
     public int getQuantita(Magazzino magazzino, Prodotto prodotto) {
 
@@ -63,7 +63,7 @@ public class MagazzinoDAO {
         }
         return quantita;
     }
-    
+
     //RESTITUISCE I MAGAZZINI IN CUI E' PRESENTE UN PRODOTTO
     public Set<Magazzino> cercaProdotto(Prodotto prodotto) {
         String uberQuery = "SELECT * from magazzini, prod_mag, prodotti WHERE prodotti.id = "
@@ -71,15 +71,18 @@ public class MagazzinoDAO {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB(uberQuery);
         Iterator<String[]> i = result.iterator();
         Set<Magazzino> magazzini = new LinkedHashSet<>();
-        
+
         while(i.hasNext()){
             String[] riga = i.next();
+            //SE LA QUANTITA' E' 0, SALTA IL MAGAZZINO
+            if(Integer.parseInt(riga[5]) == 0)
+                continue;
             Magazzino magazzino = new Magazzino(Integer.parseInt(riga[0]), riga[1], Sede.parseSede(riga[2]));
             magazzini.add(magazzino);
         }
         return magazzini;
     }
-    
-    
-    
+
+
+
 }
