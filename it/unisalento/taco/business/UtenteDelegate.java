@@ -19,29 +19,28 @@ public class UtenteDelegate {
     
     private UtenteDelegate(){}
     
-    class Password {
-        private String password;
-        
-        private Password(String password){
-            this.password = password;
-        }
-        
-        private String hash() throws NoSuchAlgorithmException, UnsupportedEncodingException{
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            byte[] bytes = password.getBytes("UTF-8");
-            digest.update(bytes);
-            byte[] hash = digest.digest(bytes);
-            BigInteger big = new BigInteger(1,hash);
-            password = big.toString(16);
-            return password;
-        }
-    }
-    
     public Utente login(String email, String password){
-        
+
+        class Password {
+            private String password;
+
+            private Password(String password){
+                this.password = password;
+            }
+
+            private String hash() throws NoSuchAlgorithmException, UnsupportedEncodingException{
+                MessageDigest digest = MessageDigest.getInstance("MD5");
+                byte[] bytes = password.getBytes("UTF-8");
+                digest.update(bytes);
+                byte[] hash = digest.digest(bytes);
+                BigInteger big = new BigInteger(1,hash);
+                password = big.toString(16);
+                return password;
+            }
+        }
         //Codifica la password con algoritmo MD5
         try{
-        password = new Password(password).hash();
+            password = new Password(password).hash();
         }
         catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
         }
