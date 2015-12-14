@@ -20,7 +20,7 @@ public class DipendenteDAO {
 	private DipendenteDAO(){};
 	
 	public List<Dipendente> getAllDipendenti() {
-		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.*, id_sede FROM dipendenti,utenti WHERE id_utente = utenti.id");
+		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.*, nome_sede FROM dipendenti,utenti WHERE id_utente = utenti.id");
 		Iterator<String[]> i = result.iterator();
 		List<Dipendente> listDipendente = new ArrayList<>();
 		
@@ -37,7 +37,7 @@ public class DipendenteDAO {
 
 	public Dipendente getDipendente(int id) {
 		Dipendente dip;
-		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email,id_progetto,id_sede FROM utenti,dipendenti WHERE id = id_utente AND id = " + id);
+		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email,id_progetto,nome_sede FROM utenti,dipendenti WHERE id = id_utente AND id = " + id);
 		Iterator<String[]> i = result.iterator();
 		String[] riga = i.next();
                 //CREA IL DIPENDENTE CON CARRELLO E PROGETTO NULL
