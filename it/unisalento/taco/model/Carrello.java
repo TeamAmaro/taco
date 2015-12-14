@@ -57,4 +57,16 @@ public class Carrello {
 
         System.out.println("\nIl prezzo è " + prezzoTotale);
     }
+    
+    @Override public String toString(){
+        StringBuilder stringCarrello = new StringBuilder();
+        if(listaProdotti.isEmpty()){
+            stringCarrello.append("Il carrello è vuoto");
+            return stringCarrello.toString();
+        }
+        stringCarrello.append("Il contenuto del carrello è : \n");
+        for (Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet())
+            stringCarrello.append(e.getKey().getNome()).append(" x ").append(e.getValue()).append("\n");
+        return stringCarrello.toString();
+    }
 }
