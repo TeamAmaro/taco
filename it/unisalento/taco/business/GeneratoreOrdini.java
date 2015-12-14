@@ -6,7 +6,10 @@ import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Sede;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -66,9 +69,15 @@ public class GeneratoreOrdini{
         return magPerProd;
     }
     
-    public Set<Ordine> generaOrdini(Map<Magazzino,Map<Prodotto,Integer>> magPerProd){
+    public Set<Ordine> generaOrdini(Dipendente dipendente, Map<Magazzino,Map<Prodotto,Integer>> magPerProd){
+        //Lista degli ordini
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
-        
+        //Per ogni magazzino si fa un ordine diverso
+        for(Map.Entry<Magazzino,Map<Prodotto,Integer>> mag : magPerProd.entrySet()){
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            Ordine ordine = new Ordine(dipendente, dipendente.getProgetto(), mag.getKey(), mag.getValue(), date);
+        }
         
         return listaOrdini;
     }
