@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-class GeneratoreOrdini{
+public class GeneratoreOrdini{
 		
     private static GeneratoreOrdini instance;
     public static GeneratoreOrdini getInstance(){
@@ -25,34 +25,51 @@ class GeneratoreOrdini{
         instance = null;
     }
     private GeneratoreOrdini(){}
-    
-    private List<Ordine> listaOrdini = new ArrayList<>();
-    private Map<Magazzino,Map<Prodotto, Integer>> magazzinoPerProdotti= new LinkedHashMap<>();
-    private Map<Prodotto, Integer> quantitaProdPerMag = new LinkedHashMap<>();
-    
-    
-    public void generaOrdini(Dipendente dipendente){
+
+    public Map<Magazzino,Map<Prodotto,Integer>> magazzinoPerProdotto(Dipendente dipendente){
         //Recupero il contenuto del carrello
         Map<Prodotto,Integer> contenutoCarrello = dipendente.getCarrello().getListaProdotti();
         //Ottengo la sede del dipendente
         Sede sede = dipendente.getSede();
         //Cerco il magazzino più vicino al dipendente
-        Magazzino magazzinoVicino = MagazzinoDAO.getInstance().getMagazzino(sede);
-        //Per ogni prodotto e relativa quantita
-        for (Map.Entry<Prodotto, Integer> e : contenutoCarrello.entrySet()){
-            int quantita = MagazzinoDAO.getInstance().getQuantita(magazzinoVicino, e.getKey());
-        }
+        Magazzino magVicino = MagazzinoDAO.getInstance().getMagazzino(sede);
+        //Mappo la quantita di ogni prodotto nel magazzino corrispondente. La struttura è un po' artificiosa ma,
+        // [Magazzino, [Prodotto, Integer][Prodotto, Integer]....]
+        //Per ogni magazzino ci sono i seguenti prodotti con le rispettive quantita
+        //Tuttavia, non è necessario chiedere a magazzini esterni la disponibilità del prodotto se 
+        //E' gia disponbile nel magazzino della sede, (magVicino)
+        Map<Magazzino,Map<Prodotto,Integer>> magPerProd = new LinkedHashMap<>();
+        Map<Prodotto,Integer> prodPerQuant = new LinkedHashMap<>();
         
-
-        /*
-         * Controlla elenco prodotti;  mappaProdotti
-         * Controlla dipendente;	Client.DipendenteIstance()
-         * Controlla progetto;	Client.DipendenteIstance().getProgetto();
-         * Controlla i magazzini per i prodotti;	MagazzinoDelegate.cercaProdotto(prodotto) (foreach prodotto)
-         * Crea una lista di ordini, raggruppando i prodotti per magazzino; Dividi la mappa in elenco di magazzini e prodotti
-         * Aggiungi eventuali spese di spedizione;	calcolaTotale per ordine
-         * Crea un file da stampare con la distinta;   documentoDAO stampa ricevuta
-         * Associa gli ordini al progetto
-         */
+        //Per ogni prodotto e relativa quantita nel carrello
+        for (Map.Entry<Prodotto, Integer> e : contenutoCarrello.entrySet()){
+            Prodotto prod = e.getKey(); //Prodotto nel carrello
+            int quantCar = e.getValue(); //Quantita nel carrello
+            //Prelevo la quantita
+            int quantMag = MagazzinoDAO.getInstance().getQuantita(magVicino, prod); //Quantita nel magazzino
+            prodPerQuant.put(prod, quantMag); //Aggiungo la quantita
+            magPerProd.put(magVicino, prodPerQuant); //Aggiungo nel magazzino vicino
+            //Se la quantita di prodotti nel magazzino più vicino non soddisfa la richiesta
+            if (quantMag < quantCar){
+                //Chiedo i magazzini esterni che hanno il prodotto
+                Set<Magazzino> magConProd = MagazzinoDAO.getInstance().cercaProdotto(prod);
+                //Rimuovo il magazzino vicino
+                magConProd.remove(magVicino);
+                //Chiedo la quantita di prodotto nei magazzini esterni
+                for(Magazzino magExt : magConProd){
+                    int quantMagExt = MagazzinoDAO.getInstance().getQuantita(magExt, prod);
+                    prodPerQuant.put(prod, quantMagExt);
+                    magPerProd.put(magExt, prodPerQuant);
+                }
+            } 
+        }
+        return magPerProd;
+    }
+    
+    public Set<Ordine> generaOrdini(Map<Magazzino,Map<Prodotto,Integer>> magPerProd){
+        Set<Ordine> listaOrdini = new LinkedHashSet<>();
+        
+        
+        return listaOrdini;
     }
 }
