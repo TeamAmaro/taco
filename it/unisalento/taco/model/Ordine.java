@@ -1,43 +1,93 @@
 package it.unisalento.taco.model;
 
-import java.sql.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Date;
+import java.util.Map;
 
 public class Ordine {
 
-	private final Dipendente dipendente;
-	private final Progetto progetto;
-	private final Magazzino magazzino;
-	private final Set<Prodotto> listaProdotti;
-	private final Date data;
-	private boolean spedito;
-	
-	public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, Set<Prodotto> listaProdotti, Date data) {
-		this.dipendente = dipendente;
-                this.progetto = progetto;
-                this.magazzino = magazzino;
-                this.listaProdotti = listaProdotti;
-                this.data = data;
-	}
-	
-	//public void stampaDistinta();
-	private String getListaProdottiAsString(){
-		StringBuilder stringProdotti = new StringBuilder();
-		for(Prodotto val : listaProdotti)
-			stringProdotti.append(val.toString()).append(", ");
-                int last = stringProdotti.lastIndexOf(",");
-                stringProdotti.delete(last, last + 1);
-		return stringProdotti.toString();
-	
-        }
+
+    private final Dipendente dipendente;
+    private final Progetto progetto;
+    private final Magazzino magazzino;
+    private final Map<Prodotto,Integer> listaProdotti;
+    private final long data;
+    private boolean spedito;
+
+    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, long data, Map<Prodotto,Integer> listaProdotti) {
+            this.dipendente = dipendente;
+            this.progetto = progetto;
+            this.magazzino = magazzino;
+            this.data = data;
+            this.listaProdotti = listaProdotti;
+            spedito = false;
+    }
+
+    public Dipendente getDipendente(){
+        return dipendente;
+    }
+
+    public Progetto getProgetto(){
+        return progetto;
+    }
+
+    public Magazzino getMagazzino(){
+        return magazzino;
+    }
+
+    public Map<Prodotto,Integer> getListaProdotti(){
+        return listaProdotti;
+    }
+
+    public long getData(){
+        return data;
+    }
+
+    public void setSpedito(boolean bool){
+        spedito = bool;
+    }
+
+    public boolean getSpedito(){
+        return spedito;
+    }
+
+    @Override public boolean equals(Object obj){
+
+        if(obj == null)
+            return false;
+        else if(getClass() != obj.getClass())
+            return false;
+
+        final Ordine other = (Ordine) obj;
+        return other.data == data && other.dipendente == dipendente &&
+                other.progetto == progetto & other.listaProdotti == listaProdotti &&
+                other.magazzino == magazzino;
+    }
+
+    @Override public int hashCode() {
+        int hash = 1;
+        hash = 31 * hash + dipendente.getID();
+        hash = 31 * hash + progetto.getID();
+        hash = 31 * hash + magazzino.getID();
+        hash = 31 * hash + (int) (data^(data >>> 32));
+        hash = 31 * hash + listaProdotti.hashCode();
+        return hash;
+    }
+   
+    private String getListaProdottiAsString(){
+        StringBuilder stringProdotti = new StringBuilder();
+        for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet())
+                stringProdotti.append(val.getKey()).append(" x ").append(val.getValue()).append("\n");
+        int last = stringProdotti.lastIndexOf(",");
+        if(last != 1)
+            stringProdotti.delete(last, last + 2);
+        return stringProdotti.toString();
+    }
         
-        @Override public String toString(){
-            StringBuilder ordineString = new StringBuilder();
-            ordineString.append("Dipendente: ").append(dipendente).append(", Progetto: ").append(progetto).
-                    append(", Magazzino: ").append(magazzino).append(", Lista Prodotti: ").append(getListaProdottiAsString()).
-                    append(", Eseguito in data: ").append(data);
-            return ordineString.toString();
-        }
-	
+    @Override public String toString(){
+        StringBuilder ordineString = new StringBuilder();
+        ordineString.append("Dipendente: ").append(dipendente).append(", Progetto: ").append(progetto).
+                append(", Magazzino: ").append(magazzino).append(", \nLista Prodotti: ").append(getListaProdottiAsString()).
+                append("Data: ").append(data);
+        return ordineString.toString();
+    }   
 }
