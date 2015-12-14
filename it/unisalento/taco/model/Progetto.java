@@ -77,7 +77,9 @@ public class Progetto {
         for(Dipendente val : listaDipendenti)
             stringDipendenti.append(val.toString()).append(", ");
         int last = stringDipendenti.lastIndexOf(",");
+        if(last != -1){
         stringDipendenti.delete(last, last + 2);
+        }
         return stringDipendenti.toString();
     }
 
