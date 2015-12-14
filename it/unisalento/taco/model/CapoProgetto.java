@@ -16,6 +16,11 @@ public class CapoProgetto extends Utente {
         listaProgetti.addAll(Arrays.asList(args));
     }
     
+    public CapoProgetto(int id, String nome, String cognome, String email, Set<Progetto> listaProgetti){
+        super(id, nome, cognome, email);
+        this.listaProgetti = listaProgetti;
+    }
+    
     public void setListaProgetti(Set<Progetto> listaProgetti){
         this.listaProgetti = listaProgetti;
     }
