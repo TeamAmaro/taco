@@ -69,17 +69,28 @@ public class UtenteDAO {
         
         //SI SUPPONE CHE L'ID ESISTA
         public Utente getLogin(int id){
+            String tabella = "";
+            for(int i = 0; i < 3; i++){
+                switch(i){
+                    case 0: tabella = "dipendenti";
+                        break;
+                    case 1: tabella = "capiprogetto";
+                        break;
+                    case 2: tabella = "magazzinieri";
+                        break;                    
+                }
+                
+                ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM " + tabella + " WHERE id_utente = " + id);
+                Iterator<String[]> j = result.iterator();
+                if(j.hasNext())
+                    switch(i){
+                        case 0: return DipendenteDAO.getInstance().getDipendente(id);
+                        case 1: return CapoProgettoDAO.getInstance().getCapoProgetto(id);
+                        case 2: return MagazziniereDAO.getInstance().getMagazziniere(id);
+                    }
+                
+            }
+            return null;
             
-            ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM dipendenti WHERE id_utente = " + id);
-            Iterator<String[]> i = result.iterator();
-            String[] riga = i.next();
-            
-            //if(i.hasNext())
-                return DipendenteDAO.getInstance().getDipendente(Integer.parseInt(riga[0]));
-            /*
-            result = DBConnection.getInstance().queryDB("SELECT * FROM capiprogetto WHERE id_utente = " + id);
-            if(i.hasNext())
-                return CapoProgettoDAO.getInstance().getCapoProgetto(Integer.parseInt(riga[0]));
-            */
         }
 }
