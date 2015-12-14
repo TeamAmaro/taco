@@ -119,9 +119,9 @@ DROP TABLE IF EXISTS `magazzini`;
 CREATE TABLE `magazzini` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(60) DEFAULT NULL,
-  `id_sede` int(11) DEFAULT NULL,
+  `nome_sede` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `magazzini` (
 
 LOCK TABLES `magazzini` WRITE;
 /*!40000 ALTER TABLE `magazzini` DISABLE KEYS */;
-INSERT INTO `magazzini` VALUES (1,'Magazzino del Sole',NULL),(2,'Magazzino della Luna',NULL);
+INSERT INTO `magazzini` VALUES (1,'Magazzino del Sole','Sede A'),(2,'Magazzino della Luna','Sede B'),(3,'Magazzino delle Stelle','Sede C'),(4,'Magazzino del Cielo','Sede D');
 /*!40000 ALTER TABLE `magazzini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +208,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
-INSERT INTO `prod_mag` VALUES (1,1,12),(2,2,7);
+INSERT INTO `prod_mag` VALUES (1,1,12),(2,2,7),(1,2,30);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,6 +307,7 @@ CREATE TABLE `sedi` (
 
 LOCK TABLES `sedi` WRITE;
 /*!40000 ALTER TABLE `sedi` DISABLE KEYS */;
+INSERT INTO `sedi` VALUES ('Sede A','Parco della Vittoria 5'),('Sede B','Viale dei Giardini 7'),('Sede C','Largo Augusto 10'),('Sede D','Corso Impero 22');
 /*!40000 ALTER TABLE `sedi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-13 18:22:28
+-- Dump completed on 2015-12-14 11:16:43
