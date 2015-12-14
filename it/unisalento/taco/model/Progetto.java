@@ -9,27 +9,30 @@ public class Progetto {
     private final int id;
     private final String nome;
     private final double budget;
-    private CapoProgetto capoProgetto;
-
     private double saldo;
-    private Set<Dipendente> listaDipendenti = new LinkedHashSet<Dipendente>();
+    
+    private CapoProgetto capoProgetto;
+    private Set<Ordine> listaOrdini = new LinkedHashSet<>();
+    private Set<Dipendente> listaDipendenti = new LinkedHashSet<>();
 
     //PER LA CREAZIONE DI UN NUOVO PROGETTO
-    public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget) {
+    public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget, Set<Ordine> listaOrdini) {
         this.id = id;
         this.nome = nome;
         this.capoProgetto = capoProgetto;
         this.budget = budget;
+        this.listaOrdini = listaOrdini;
         saldo = budget;
     }
 
     //PER PROGETTI GIA' ESISTENTI
-    public Progetto(int id, String nome, CapoProgetto capoProgetto, double saldo, double budget) {
+    public Progetto(int id, String nome, CapoProgetto capoProgetto, double saldo, double budget, Set<Ordine> listaOrdini) {
         this.id = id;
         this.nome = nome;
         this.capoProgetto = capoProgetto;
         this.saldo = saldo;
         this.budget = budget;
+        this.listaOrdini = listaOrdini;
     }
     
     public void setSaldo(double saldo){
@@ -39,6 +42,14 @@ public class Progetto {
     public void setCapoProgetto(CapoProgetto capProg) {
         this.capoProgetto = capProg;
     }
+    
+    public void setListaOrdini(Set<Ordine> listaOrdini){
+        this.listaOrdini = listaOrdini;
+    }
+    
+    public void setListaDipendenti(Set<Dipendente> listaDipendenti){
+        this.listaDipendenti = listaDipendenti;
+    }
 
     public void aggiungiDipendente(Set<Dipendente> listaAggiuntiva){
         listaDipendenti.addAll(listaAggiuntiva);
@@ -46,6 +57,14 @@ public class Progetto {
     
     public void aggiungiDipendente(Dipendente... args){
         listaDipendenti.addAll(Arrays.asList(args));
+    }
+
+    public void aggiungiOrdine(Set<Ordine> listaAggiuntiva){
+        listaOrdini.addAll(listaAggiuntiva);
+    }
+    
+    public void aggiungiOrdine(Ordine... args){
+        listaOrdini.addAll(Arrays.asList(args));
     }
 
     public int getID() {
