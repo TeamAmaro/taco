@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `dipendenti`;
 CREATE TABLE `dipendenti` (
   `id_utente` int(11) DEFAULT NULL,
   `id_progetto` int(11) DEFAULT NULL,
-  `id_sede` int(11) DEFAULT NULL
+  `nome_sede` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,7 +82,7 @@ CREATE TABLE `dipendenti` (
 
 LOCK TABLES `dipendenti` WRITE;
 /*!40000 ALTER TABLE `dipendenti` DISABLE KEYS */;
-INSERT INTO `dipendenti` VALUES (1,1,NULL);
+INSERT INTO `dipendenti` VALUES (1,1,'Sede A');
 /*!40000 ALTER TABLE `dipendenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,7 +336,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','asd123','2015-12-03 12:37:21'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','asd123','2015-12-05 11:06:15'),(3,'Mario','Rossi','mario.rossi@asd.asd','asd123','2015-12-07 12:44:15'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','asd123','2015-12-11 18:25:35'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','asd123','2015-12-11 18:26:04');
+INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817','2015-12-14 11:20:56'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866','2015-12-14 11:22:19'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3','2015-12-14 11:22:42'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc','2015-12-14 11:22:56'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3','2015-12-14 11:23:09');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -349,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-14 11:16:43
+-- Dump completed on 2015-12-14 12:58:01
