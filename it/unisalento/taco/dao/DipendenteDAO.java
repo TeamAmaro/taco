@@ -41,7 +41,7 @@ public class DipendenteDAO {
 		Iterator<String[]> i = result.iterator();
 		String[] riga = i.next();
                 //CREA IL DIPENDENTE CON CARRELLO E PROGETTO NULL
-		dip = new Dipendente(id, riga[1], riga[2], riga[3], Sede.parseSede(riga[4]), null, null);
+		dip = new Dipendente(id, riga[1], riga[2], riga[3], Sede.parseSede(riga[5]), null, null);
                 //VEDE SE HA UN PROGETTO DAL DATABASE
 		if(!riga[4].equals("null") || riga[4] != null) {
                         //OTTIENE LE INFORMAZIONI SUL PROGETTO DAL DATABASE E GLIELO ASSOCIA
