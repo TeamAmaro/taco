@@ -86,7 +86,6 @@ public class MagazzinoDAO {
     public Magazzino getMagazzino(Sede sede) {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE nome_sede = \"" + sede.nome() + "\"");
         Iterator<String[]> i = result.iterator();
-        int quantita = 0;
         Magazzino magazzino;
         if(i.hasNext()) {
             String[] riga = i.next();
