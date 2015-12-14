@@ -83,6 +83,17 @@ public class MagazzinoDAO {
         return magazzini;
     }
 
-
-
+    public Magazzino getMagazzino(Sede sede) {
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE nome_sede = \"" + sede.nome() + "\"");
+        Iterator<String[]> i = result.iterator();
+        int quantita = 0;
+        Magazzino magazzino;
+        if(i.hasNext()) {
+            String[] riga = i.next();
+            magazzino = new Magazzino(Integer.parseInt(riga[0]), riga[1], Sede.parseSede(riga[2]));
+        }
+        else
+            magazzino = null;
+        return magazzino;
+    }
 }

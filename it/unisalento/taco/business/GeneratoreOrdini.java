@@ -1,9 +1,11 @@
 package it.unisalento.taco.business;
 
+import it.unisalento.taco.dao.MagazzinoDAO;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
+import it.unisalento.taco.model.Sede;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -25,15 +27,22 @@ class GeneratoreOrdini{
     private GeneratoreOrdini(){}
     
     private List<Ordine> listaOrdini = new ArrayList<>();
-    private Map<Magazzino,Prodotto[]> magazzinoPerListaProdotti = new LinkedHashMap<>();
+    private Map<Magazzino,Map<Prodotto, Integer>> magazzinoPerProdotti= new LinkedHashMap<>();
+    private Map<Prodotto, Integer> quantitaProdPerMag = new LinkedHashMap<>();
+    
     
     public void generaOrdini(Dipendente dipendente){
+        //Recupero il contenuto del carrello
         Map<Prodotto,Integer> contenutoCarrello = dipendente.getCarrello().getListaProdotti();
+        //Ottengo la sede del dipendente
+        Sede sede = dipendente.getSede();
+        //Cerco il magazzino più vicino al dipendente
+        Magazzino magazzinoVicino = MagazzinoDAO.getInstance().getMagazzino(sede);
+        //Per ogni prodotto e relativa quantita
+        for (Map.Entry<Prodotto, Integer> e : contenutoCarrello.entrySet()){
+            int quantita = MagazzinoDAO.getInstance().getQuantita(magazzinoVicino, e.getKey());
+        }
         
-
-
-
-
 
         /*
          * Controlla elenco prodotti;  mappaProdotti
@@ -45,7 +54,5 @@ class GeneratoreOrdini{
          * Crea un file da stampare con la distinta;   documentoDAO stampa ricevuta
          * Associa gli ordini al progetto
          */
-
-
     }
 }
