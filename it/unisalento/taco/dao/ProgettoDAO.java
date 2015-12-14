@@ -6,6 +6,7 @@ import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.model.CapoProgetto;
+import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -52,7 +53,9 @@ public class ProgettoDAO {
 		double budget = Double.parseDouble(riga[3]);
 		int capoProgID = Integer.parseInt(riga[4]);
 		CapoProgetto capoProg = new CapoProgetto(capoProgID, riga[5], riga[6], riga[7]);
-		Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget);
+		Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget, new LinkedHashSet<Ordine>());
+                //Cerco Ordini nel database per quell'ordine
+                prog.setListaOrdini(OrdineDAO.getInstance().getListaOrdini(prog));
 		return prog;
 	}
         
@@ -62,7 +65,8 @@ public class ProgettoDAO {
             Set<Progetto> listaProgetti = new LinkedHashSet<>();
             while(i.hasNext()) {
                 String[] riga = i.next();
-                Progetto progetto = new Progetto(Integer.parseInt(riga[0]), riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]));
+                //DA IMPLEMENTARE !
+                Progetto progetto = new Progetto(Integer.parseInt(riga[0]), riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), ... );
                 listaProgetti.add(progetto);
             }
             
