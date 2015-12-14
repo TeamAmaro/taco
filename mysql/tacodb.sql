@@ -166,16 +166,16 @@ DROP TABLE IF EXISTS `ordini`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ordini` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `codice` varchar(60) DEFAULT NULL,
   `id_dipendente` int(11) DEFAULT NULL,
-  `id_sede` int(11) DEFAULT NULL,
+  `nome_sede` varchar(60) DEFAULT NULL,
   `id_progetto` int(11) DEFAULT NULL,
   `id_magazzino` int(11) DEFAULT NULL,
   `id_prodotto` int(11) DEFAULT NULL,
   `quantita` int(11) DEFAULT NULL,
   `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `spedito` tinyint(4) DEFAULT '0',
-  PRIMARY KEY (`id`)
+  UNIQUE KEY `codice` (`codice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -226,7 +226,7 @@ CREATE TABLE `prodotti` (
   `descrizione` text,
   `prezzo` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +235,7 @@ CREATE TABLE `prodotti` (
 
 LOCK TABLES `prodotti` WRITE;
 /*!40000 ALTER TABLE `prodotti` DISABLE KEYS */;
-INSERT INTO `prodotti` VALUES (1,'Stampante MultiJet C460','Stampanti','Stampante con scanner, NFC, WIFI e USB',399.99),(2,'Stampante Jackpot','Stampanti','Stampante con porta USB e collegamento ethernet',99.99);
+INSERT INTO `prodotti` VALUES (1,'Stampante MultiJet C460','Stampanti','Stampante con scanner, NFC, WIFI e USB',399.99),(2,'Stampante Jackpot','Stampanti','Stampante con porta USB e collegamento ethernet',99.99),(3,'Toner Nero','Ricambi','Toner di colore nero per stampanti',9.99),(4,'Toner Rosso','Ricambi','Toner di colore rosso per stampanti',9.99),(5,'Toner Blu','Ricambi','Toner di colore blu per stampanti',9.99),(6,'Toner Giallo','Ricambi','Toner di colore giallo per stampanti',9.99),(7,'Toner Verde','Ricambi','Toner di colore verde per stampanti',9.99),(8,'Matita HB','Cancelleria','Matita HB',0.99),(9,'Penna Stilo Blu','Cancelleria','Penna Stilo Blu',1.49),(10,'Penna Stilo Nera','Cancelleria','Penna Stilo Nera',1.49),(11,'Penna Stilo Rossa','Cancelleria','Penna Stilo Rossa',1.49),(12,'Righello 15 cm','Cancelleria','Righello in plastica lungo 15 cm',1.2),(13,'Righello 1 m','Cancelleria','Righello in plastica lungo 1 m',2.5),(14,'Righello di metallo da 20 cm','Cancelleria','Righello di metallo lungo 20 cm',3),(16,'Hard Disk 500GB 2.5\'\'','Elettronica','Hard Disk da 500GB da 2.5\'\'',39.99),(17,'Hard Disk 1TB 2.5\'\'','Elettronica','Hard Disk da 1TB da 2.5\'\'',69.99),(18,'SSD 1TB 2.5\'\'','Elettronica','SSD da 1TB da 2.5\'\'',399.99),(19,'SSD 500GB 2.5\'\'','Elettronica','SSD da 500GB da 2.5\'\'',299.99),(20,'Tastiera Meccanica Pok3r','Elettronica','Tastiera meccanica Pok3r con ingresso micro-USB (cavo incluso)',149.99),(21,'Tastiera con numpad','Elettronica','Tastiera per computer con numpad con ingresso USB (cavo incluso)',29.99),(22,'Cavo USB-microUSB 50cm','Elettronica','Cavo USB-microUSB lungo mezzo metro',3.99),(23,'Cavo USB-typeC 50cm','Elettronica','Cavo USB-typeC lungo mezzo metro',5.99);
 /*!40000 ALTER TABLE `prodotti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-14 12:58:01
+-- Dump completed on 2015-12-14 14:08:07
