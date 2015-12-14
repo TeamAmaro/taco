@@ -69,16 +69,17 @@ public class GeneratoreOrdini{
         return magPerProd;
     }
     
-    public Set<Ordine> generaOrdini(Dipendente dipendente, Map<Magazzino,Map<Prodotto,Integer>> magPerProd){
+    public void generaOrdini(Dipendente dipendente, Map<Magazzino,Map<Prodotto,Integer>> magPerProd){
         //Lista degli ordini
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
         //Per ogni magazzino si fa un ordine diverso
+        //Recupero l'ora di creazione
+        Date date = new Date();
+        long unixTime = date.getTime();
         for(Map.Entry<Magazzino,Map<Prodotto,Integer>> mag : magPerProd.entrySet()){
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date();
-            Ordine ordine = new Ordine(dipendente, dipendente.getProgetto(), mag.getKey(), mag.getValue(), date);
+            Ordine ordine = new Ordine(dipendente, dipendente.getProgetto(), mag.getKey(), unixTime, mag.getValue());
+            listaOrdini.add(ordine);
         }
-        
-        return listaOrdini;
+        //Controlla possibilità del dipendente di effettuare l'ordine
     }
 }
