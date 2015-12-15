@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.JFrame;
 import it.unisalento.taco.business.GeneratoreOrdini;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public class TacoDemo {
 
@@ -24,5 +26,7 @@ public class TacoDemo {
                 System.out.println(guga.getProgetto());
                 Map<Magazzino,Map<Prodotto,Integer>> mappa = GeneratoreOrdini.getInstance().magazzinoPerProdotto(guga);
                 System.out.println(mappa);
+                GeneratoreOrdini.getInstance().generaOrdini(guga, mappa);
+                
 	}
 }

@@ -1,5 +1,11 @@
 package it.unisalento.taco.model;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -41,12 +47,16 @@ public class Ordine {
     public long getData(){
         return data;
     }
+    
+    public Date getReadableData(){
+        return new Date(data);
+    }
 
-    public void setSpedito(boolean bool){
+    public void spedito(boolean bool){
         spedito = bool;
     }
 
-    public boolean getSpedito(){
+    public boolean isSpedito(){
         return spedito;
     }
 
@@ -76,17 +86,17 @@ public class Ordine {
     private String getListaProdottiAsString(){
         StringBuilder stringProdotti = new StringBuilder();
         for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet())
-                stringProdotti.append(val.getKey()).append(" x ").append(val.getValue()).append("\n");
+                stringProdotti.append(val.getKey().getNome()).append(" x ").append(val.getValue()).append("\n");
         int last = stringProdotti.lastIndexOf(",");
-        if(last != 1)
+        if(last != -1)
             stringProdotti.delete(last, last + 2);
         return stringProdotti.toString();
     }
         
     @Override public String toString(){
         StringBuilder ordineString = new StringBuilder();
-        ordineString.append("Dipendente: ").append(dipendente).append(", Progetto: ").append(progetto).
-                append(", Magazzino: ").append(magazzino).append(", \nLista Prodotti: ").append(getListaProdottiAsString()).
+        ordineString.append("Dipendente: ").append(dipendente).append(", Progetto: ").append(progetto.getNome()).
+                append(", Magazzino: ").append(magazzino.getNome()).append(", \nLista Prodotti: ").append(getListaProdottiAsString()).
                 append("Data: ").append(data);
         return ordineString.toString();
     }   
