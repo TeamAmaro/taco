@@ -78,8 +78,11 @@ public class Ordine {
         hash = 31 * hash + dipendente.getID();
         hash = 31 * hash + progetto.getID();
         hash = 31 * hash + magazzino.getID();
-        hash = 31 * hash + (int) (data^(data >>> 32));
-        hash = 31 * hash + listaProdotti.hashCode();
+        hash = 31 * hash + (int) (data ^ (data >>> 32));
+        for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet()){
+            hash = 31 * hash + val.getKey().getID();
+            hash = 31 * hash + val.getValue();
+        }
         return hash;
     }
    
