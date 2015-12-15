@@ -24,4 +24,19 @@ public class ProdottoDAO {
     
     private ProdottoDAO(){}
     
+    public Prodotto getProdotto(int idProdotto){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT prodotti.*, produttori.nome from prodotti, produttori WHERE produttori.id_prodotto = id AND id = " + idProdotto);
+        Iterator<String[]> i = result.iterator();
+        Prodotto prodotto;
+        if(i.hasNext()) {
+            String[] riga = i.next();
+            Produttore produttore = Produttore.parseProduttore(riga[5]);
+            //SEMPLIFICATO
+            prodotto = new Prodotto.Builder(idProdotto, riga[1], Double.parseDouble(riga[4]), produttore).build();
+        }
+        else
+            prodotto = null;
+        return prodotto;
+    }
+    
 }
