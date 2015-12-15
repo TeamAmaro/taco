@@ -44,13 +44,20 @@ public class OrdineDAO {
             Dipendente dip = DipendenteDAO.getInstance().getDipendente(Integer.parseInt(riga[1]));
             Progetto prog = ProgettoDAO.getInstance().getProgetto(Integer.parseInt(riga[4]));
             Magazzino mag = MagazzinoDAO.getInstance().getMagazzino(Integer.parseInt(riga[5]));
-            Prodotto prod = ProdottoDAO.getInstance().getProdotto(Integer.parseInt(riga[6]));
-            int quantProd = Integer.parseInt(riga[7]);
-            Map<Prodotto,Integer> listaProd = new LinkedHashMap<>();
             long data = Long.parseLong(riga[8]);
+            Map<Prodotto,Integer> listaProd = new LinkedHashMap<>();
+            result = DBConnection.getInstance().queryDB("SELECT id_prodotto, quantita FROM ordini WHERE codice = " + hashCode);
+            i = result.iterator();
+            if(i.hasNext()){
+                riga = i.next();
+                Prodotto prod = ProdottoDAO.getInstance().getProdotto(Integer.parseInt(riga[0]));
+                int quantProd = Integer.parseInt(riga[1]);
+                listaProd.put(prod, quantProd);
+            }
             Ordine ordine = new Ordine(dip, prog, mag, data, listaProd);
             return ordine;
         }
+
         return null;
     }
     
