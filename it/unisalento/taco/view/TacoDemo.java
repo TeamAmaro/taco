@@ -1,32 +1,20 @@
 package it.unisalento.taco.view;
 
 import it.unisalento.taco.model.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import it.unisalento.taco.dao.*;
 import it.unisalento.taco.dbconnections.*;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import it.unisalento.taco.dao.*;
 import java.util.Map;
-import java.util.Set;
-import javax.swing.JFrame;
 import it.unisalento.taco.business.GeneratoreOrdini;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 public class TacoDemo {
 
 	public static void main(String[] args){
 		//new LoginWindow();
                 Dipendente guga = DipendenteDAO.getInstance().getDipendente(1);
-                System.out.println(guga);
-                System.out.println(guga.getCarrello());
-                System.out.println(guga.getProgetto());
                 Map<Magazzino,Map<Prodotto,Integer>> mappa = GeneratoreOrdini.getInstance().magazzinoPerProdotto(guga);
-                System.out.println(mappa);
                 GeneratoreOrdini.getInstance().generaOrdini(guga, mappa);
-                
+                Ordine dao = OrdineDAO.getInstance().getOrdine(-1820136442);
+                System.out.println("CODICE INSERITO: -1820136442 / CODICE HASH OTTENUTO : " + dao.hashCode());
+                System.out.println("Se sono uguali il sistema funziona");
 	}
 }
