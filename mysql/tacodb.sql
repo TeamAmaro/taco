@@ -105,7 +105,7 @@ CREATE TABLE `fornitori` (
 
 LOCK TABLES `fornitori` WRITE;
 /*!40000 ALTER TABLE `fornitori` DISABLE KEYS */;
-INSERT INTO `fornitori` VALUES ('Fornitore A',NULL),('Fornitore B',NULL),('Fornitore C',NULL),('Fornitore D',NULL);
+INSERT INTO `fornitori` VALUES ('Fornitore A',1),('Fornitore B',1),('Fornitore C',NULL),('Fornitore D',NULL);
 /*!40000 ALTER TABLE `fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,15 +166,15 @@ DROP TABLE IF EXISTS `ordini`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ordini` (
-  `codice` varchar(60) DEFAULT NULL,
+  `codice` varchar(128) DEFAULT NULL,
   `id_dipendente` int(11) DEFAULT NULL,
   `nome_sede` varchar(60) DEFAULT NULL,
   `id_progetto` int(11) DEFAULT NULL,
   `id_magazzino` int(11) DEFAULT NULL,
   `id_prodotto` int(11) DEFAULT NULL,
   `quantita` int(11) DEFAULT NULL,
-  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `spedito` tinyint(4) DEFAULT '0',
+  `data` bigint(20) DEFAULT NULL,
   UNIQUE KEY `codice` (`codice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -185,6 +185,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
+INSERT INTO `ordini` VALUES ('7fd428e3f01ea7ad645220daf55039d8',1,'Sede A',1,1,1,12,0,1450179553624);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +285,7 @@ CREATE TABLE `progetti` (
 
 LOCK TABLES `progetti` WRITE;
 /*!40000 ALTER TABLE `progetti` DISABLE KEYS */;
-INSERT INTO `progetti` VALUES (1,'Progetto Taco',10.34,6700),(2,'Progetto Pizza',4500,4500);
+INSERT INTO `progetti` VALUES (1,'Progetto Taco',1000,6700),(2,'Progetto Pizza',4500,4500);
 /*!40000 ALTER TABLE `progetti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,4 +350,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-14 14:08:07
+-- Dump completed on 2015-12-15 20:53:40
