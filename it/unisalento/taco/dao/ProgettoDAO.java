@@ -29,14 +29,14 @@ public class ProgettoDAO {
 		Iterator<String[]> i = result.iterator();
 		List<Progetto> listProgetto = new ArrayList<>();
 		CapoProgettoDAO capProgDAO = CapoProgettoDAO.getInstance();
-		
+		Set<Ordine> listaOrdini = new LinkedHashSet<>();
 		
 		while(i.hasNext()) {
 			String[] riga = i.next();
 			int id = Integer.parseInt(riga[0]);
 			double saldo = Double.parseDouble(riga[2]);
 			double budget = Double.parseDouble(riga[3]);
-			Progetto progetto = new Progetto(id, riga[1], null, saldo, budget);
+			Progetto progetto = new Progetto(id, riga[1], null, saldo, budget, listaOrdini);
 			listProgetto.add(progetto);
 			CapoProgetto capProg = capProgDAO.getCapoProgetto(progetto);
 			progetto.setCapoProgetto(capProg);
@@ -63,10 +63,11 @@ public class ProgettoDAO {
             ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.* FROM progetti,capiprogetto WHERE id_progetto = progetti.id AND id_utente =" + capoProgetto.getID());
             Iterator<String[]> i = result.iterator();
             Set<Progetto> listaProgetti = new LinkedHashSet<>();
+            Set<Ordine> listaOrdini = new LinkedHashSet<>();
             while(i.hasNext()) {
                 String[] riga = i.next();
-                //DA IMPLEMENTARE !
-                Progetto progetto = new Progetto(Integer.parseInt(riga[0]), riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), ... );
+                Progetto progetto = new Progetto(Integer.parseInt(riga[0]), riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), listaOrdini );
+                
                 listaProgetti.add(progetto);
             }
             
