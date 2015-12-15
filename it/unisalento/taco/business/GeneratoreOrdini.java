@@ -6,13 +6,9 @@ import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Sede;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -80,6 +76,7 @@ public class GeneratoreOrdini{
             Ordine ordine = new Ordine(dipendente, dipendente.getProgetto(), mag.getKey(), unixTime, mag.getValue());
             listaOrdini.add(ordine);
         }
+        
         //Controlla possibilità del dipendente di effettuare l'ordine
     }
 }
