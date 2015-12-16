@@ -7,11 +7,7 @@
 package it.unisalento.taco.exceptions;
 
 public class NoIDMatchException extends Exception{
-    public NoIDMatchException(){
-        super();
-    }
-    
-    public NoIDMatchException(String message){
-        super(message);
+    public NoIDMatchException(Object obj){
+        super(obj.getClass().getSimpleName() + " : Nessuna corrispondenza nel database per ID (2)");
     }
 }
