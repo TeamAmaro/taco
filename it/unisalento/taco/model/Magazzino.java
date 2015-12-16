@@ -1,7 +1,7 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.MagazzinoDAO;
-import java.util.LinkedHashMap;
+import it.unisalento.taco.exceptions.NoQueryMatchException;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,12 +10,13 @@ public class Magazzino {
     private final String nome;
     private final Sede sede;
     public static int COSTO_SPEDIZIONE = 5;
-    private Map<Prodotto,Integer> inventario = new LinkedHashMap<>();
+    private Map<Prodotto,Integer> inventario;
 
-    public Magazzino(int id, String nome, Sede sede){
+    public Magazzino(int id, String nome, Sede sede, Map<Prodotto,Integer> inventario){
         this.id = id;
         this.nome = nome;
         this.sede = sede;
+        this.inventario = inventario;
     }
 
     public String getNome(){
@@ -29,15 +30,9 @@ public class Magazzino {
     public int getID(){
         return id;
     }
-
-    public void resocontoInventario(){
-        if(inventario.isEmpty()){
-            System.out.println("Non ci sono prodotti nell'inventario");
-            return;
-        }
-        System.out.println("Il contenuto dell'inventario è");
-        for (Map.Entry<Prodotto, Integer> e : inventario.entrySet())
-            System.out.println(e.getKey().getNome() + " x " + e.getValue());
+    
+    public Map<Prodotto,Integer> getInventario(){
+        return inventario;
     }
 
     public void aggiungiProdotto(Prodotto prodotto, int quantita){
@@ -70,15 +65,22 @@ public class Magazzino {
     @Override public String toString(){
         StringBuilder stringMag = new StringBuilder();
         stringMag.append("ID : ").append(id).append(", Nome: ").append(nome).append(", Sede: ").append(sede);
+        stringMag.append("\nInventario:\n");
+        if(inventario.isEmpty()){
+            stringMag.append("Non ci sono prodotti nell'inventario");
+        }
+        else
+            for (Map.Entry<Prodotto, Integer> e : inventario.entrySet())
+            stringMag.append(e.getKey().getNome() + " x " + e.getValue());
         return stringMag.toString();
     }
     
-    public static Magazzino getMagazzino(Sede sede){
+    public static Magazzino getMagazzino(Sede sede) throws NoQueryMatchException{
         return MagazzinoDAO.getInstance().getMagazzino(sede);
     }
     
     public static int getQuantita(Magazzino magazzino, Prodotto prodotto){
-        return MagazzinoDAO.getInstance().getQuantita(magazzino, prodotto);
+        return MagazzinoDAO.getInstance().getQuantitaProdotto(magazzino, prodotto);
     }
     
     public static Set<Magazzino> cercaProdotto(Prodotto prodotto){
