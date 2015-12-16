@@ -10,9 +10,10 @@ public class Prodotto {
     private final String nome;
     private final double prezzo;
     private final Produttore produttore;
+    
     private String descrizione;
     private Categoria categoria;
-    private Set<Fornitore> listaFornitori = new LinkedHashSet<>();
+    private Set<Fornitore> listaFornitori;
 
     public int getID(){
         return id;
@@ -46,7 +47,8 @@ public class Prodotto {
         for(Fornitore val : listaFornitori)
                 stringFornitori.append(val.toString()).append(", ");
         int last = stringFornitori.lastIndexOf(",");
-        stringFornitori.delete(last, last + 2);
+        if(last != -1)
+            stringFornitori.delete(last, last + 2);
         return stringFornitori.toString();
 
     }
@@ -70,9 +72,10 @@ public class Prodotto {
         private final String nome;
         private final double prezzo;
         private final Produttore produttore;
+        
         private String descrizione;
         private Categoria categoria;
-        private Set<Fornitore> listaFornitori = new LinkedHashSet<>();
+        private Set<Fornitore> listaFornitori;
 
         public Builder(int id, String nome, double prezzo, Produttore produttore){
             this.id = id;
@@ -81,7 +84,8 @@ public class Prodotto {
             this.produttore = produttore;
             this.descrizione = "Nessuna descrizione per il prodotto";
             this.categoria = Categoria.CATEGORIA_0;
-            this.listaFornitori.add(Fornitore.FORNITORE_0);
+            listaFornitori = new LinkedHashSet<>();
+            listaFornitori.add(Fornitore.FORNITORE_0);
         }
 
         public Builder descrizione(String val){
