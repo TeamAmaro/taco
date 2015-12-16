@@ -8,7 +8,7 @@ import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Sede;
 
-public class DipendenteDAO {
+public class DipendenteDAO implements DAOInterface{
 	
 	private static DipendenteDAO instance;
 	public static DipendenteDAO getInstance(){
@@ -35,7 +35,7 @@ public class DipendenteDAO {
 		return listDipendente;
 	}
 
-	public Dipendente getDipendente(int id) {
+	@Override public Dipendente getByID(int id) {
 		Dipendente dip;
 		ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email,id_progetto,nome_sede FROM utenti,dipendenti WHERE id = id_utente AND id = " + id);
 		Iterator<String[]> i = result.iterator();

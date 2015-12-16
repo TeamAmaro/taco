@@ -1,5 +1,8 @@
 package it.unisalento.taco.model;
 
+import it.unisalento.taco.dao.UtenteDAO;
+import it.unisalento.taco.exceptions.NoSuchUserException;
+
 public abstract class Utente {
 	
     protected final int id;
@@ -29,7 +32,14 @@ public abstract class Utente {
     public int getID(){
         return id;
     }
+    
+    public static int getID(String email, String psw) throws NoSuchUserException{
+        return UtenteDAO.getInstance().getID(email,psw);
+    }
 
+    public static Utente getLogin(int id){
+        return UtenteDAO.getInstance().getLogin(id);
+    }
     @Override public String toString(){
         StringBuilder stringUtente = new StringBuilder();
         stringUtente.append("ID: ").append(id).append(", Nome: ").append(nome).

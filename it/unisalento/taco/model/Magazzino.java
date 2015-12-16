@@ -1,7 +1,9 @@
 package it.unisalento.taco.model;
 
+import it.unisalento.taco.dao.MagazzinoDAO;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Magazzino {
     private final int id;
@@ -70,4 +72,17 @@ public class Magazzino {
         stringMag.append("ID : ").append(id).append(", Nome: ").append(nome).append(", Sede: ").append(sede);
         return stringMag.toString();
     }
+    
+    public static Magazzino getMagazzino(Sede sede){
+        return MagazzinoDAO.getInstance().getMagazzino(sede);
+    }
+    
+    public static int getQuantita(Magazzino magazzino, Prodotto prodotto){
+        return MagazzinoDAO.getInstance().getQuantita(magazzino, prodotto);
+    }
+    
+    public static Set<Magazzino> cercaProdotto(Prodotto prodotto){
+        return MagazzinoDAO.getInstance().cercaProdotto(prodotto);
+    }
+    
 }

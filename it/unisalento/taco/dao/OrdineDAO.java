@@ -30,7 +30,7 @@ public class OrdineDAO {
         Iterator<String[]> i = result.iterator();
         while(i.hasNext()) {
             String[] riga = i.next();
-            Dipendente dip = DipendenteDAO.getInstance().getDipendente(Integer.parseInt(riga[1]));
+            Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
             Progetto prog = ProgettoDAO.getInstance().getProgetto(Integer.parseInt(riga[3]));
             Magazzino mag = MagazzinoDAO.getInstance().getMagazzino(Integer.parseInt(riga[4]));
             long data = Long.parseLong(riga[8]);
@@ -46,7 +46,7 @@ public class OrdineDAO {
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
-            Dipendente dip = DipendenteDAO.getInstance().getDipendente(Integer.parseInt(riga[1]));
+            Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
             Progetto prog = ProgettoDAO.getInstance().getProgetto(Integer.parseInt(riga[4]));
             Magazzino mag = MagazzinoDAO.getInstance().getMagazzino(Integer.parseInt(riga[5]));
             long data = Long.parseLong(riga[8]);

@@ -36,7 +36,7 @@ public class ProgettoDAO {
 			int id = Integer.parseInt(riga[0]);
 			double saldo = Double.parseDouble(riga[2]);
 			double budget = Double.parseDouble(riga[3]);
-			Progetto progetto = new Progetto(id, riga[1], null, saldo, budget, listaOrdini);
+			Progetto progetto = new Progetto(id, riga[1], null, saldo, budget);
 			listProgetto.add(progetto);
 			CapoProgetto capProg = capProgDAO.getCapoProgetto(progetto);
 			progetto.setCapoProgetto(capProg);

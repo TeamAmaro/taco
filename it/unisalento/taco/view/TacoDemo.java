@@ -10,7 +10,7 @@ public class TacoDemo {
 
 	public static void main(String[] args){
 		//new LoginWindow();
-                Dipendente guga = DipendenteDAO.getInstance().getDipendente(1);
+                Dipendente guga = DipendenteDAO.getInstance().getByID(1);
                 Map<Magazzino,Map<Prodotto,Integer>> mappa = GeneratoreOrdini.getInstance().magazzinoPerProdotto(guga);
                 GeneratoreOrdini.getInstance().generaOrdini(guga, mappa);
                 Ordine dao = OrdineDAO.getInstance().getOrdine(-1820136442);

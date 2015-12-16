@@ -32,16 +32,6 @@ public class MagazziniereDelegate {
             magazzino.rimuoviProdotto(prodotto, quantita);
     };
 
-    //Cerca prodotti nei magazzini
-    public Set<Magazzino> cercaProdotto(Prodotto prodotto){
-            Set<Magazzino> listaRisultati = new LinkedHashSet<>();
-            /*
-             * algoritmo di ricerca da implementare
-             */
-
-            return listaRisultati;
-    }
-
     //Chiede prodotto al magazzino
     public int chiediProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
             return magazzino.cercaProdotto(prodotto, quantita);

@@ -1,6 +1,5 @@
 package it.unisalento.taco.business;
 
-import it.unisalento.taco.dao.MagazzinoDAO;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
@@ -31,7 +30,7 @@ public class GeneratoreOrdini{
         //Ottengo la sede del dipendente
         Sede sede = dipendente.getSede();
         //Cerco il magazzino più vicino al dipendente
-        Magazzino magVicino = MagazzinoDAO.getInstance().getMagazzino(sede);
+        Magazzino magVicino = Magazzino.getMagazzino(sede);
         //Mappo la quantita di ogni prodotto nel magazzino corrispondente. La struttura è un po' artificiosa ma,
         // [Magazzino, [Prodotto, Integer][Prodotto, Integer]....]
         //Per ogni magazzino ci sono i seguenti prodotti con le rispettive quantita
@@ -45,18 +44,18 @@ public class GeneratoreOrdini{
             Prodotto prod = e.getKey(); //Prodotto nel carrello
             int quantCar = e.getValue(); //Quantita nel carrello
             //Prelevo la quantita
-            int quantMag = MagazzinoDAO.getInstance().getQuantita(magVicino, prod); //Quantita nel magazzino
+            int quantMag = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
             prodPerQuant.put(prod, quantMag); //Aggiungo la quantita
             magPerProd.put(magVicino, prodPerQuant); //Aggiungo nel magazzino vicino
             //Se la quantita di prodotti nel magazzino più vicino non soddisfa la richiesta
             if (quantMag < quantCar){
                 //Chiedo i magazzini esterni che hanno il prodotto
-                Set<Magazzino> magConProd = MagazzinoDAO.getInstance().cercaProdotto(prod);
+                Set<Magazzino> magConProd = Magazzino.cercaProdotto(prod);
                 //Rimuovo il magazzino vicino
                 magConProd.remove(magVicino);
                 //Chiedo la quantita di prodotto nei magazzini esterni
                 for(Magazzino magExt : magConProd){
-                    int quantMagExt = MagazzinoDAO.getInstance().getQuantita(magExt, prod);
+                    int quantMagExt = Magazzino.getQuantita(magExt, prod);
                     prodPerQuant.put(prod, quantMagExt);
                     magPerProd.put(magExt, prodPerQuant);
                 }

@@ -1,6 +1,5 @@
 package it.unisalento.taco.business;
 
-import it.unisalento.taco.dao.UtenteDAO;
 import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Utente;
 import java.io.UnsupportedEncodingException;
@@ -48,9 +47,9 @@ public class UtenteDelegate {
         //Cerca l'utente nel database. Ci sono corrispondenze?
         try{
             //Trova ID dell'utente nel database
-            int idUtente = UtenteDAO.getInstance().getID(email, password);
+            int idUtente = Utente.getID(email, password);
             //Se l'ID è stato trovato, istanzia il client con il modello corrispondente
-            Utente client = UtenteDAO.getInstance().getLogin(idUtente);
+            Utente client = Utente.getLogin(idUtente);
             return client;
         }
         catch(NoSuchUserException e){

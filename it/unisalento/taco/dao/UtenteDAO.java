@@ -84,8 +84,8 @@ public class UtenteDAO {
                 Iterator<String[]> j = result.iterator();
                 if(j.hasNext())
                     switch(i){
-                        case 0: return DipendenteDAO.getInstance().getDipendente(id);
-                        case 1: return CapoProgettoDAO.getInstance().getCapoProgetto(id);
+                        case 0: return DipendenteDAO.getInstance().getByID(id);
+                        case 1: return CapoProgettoDAO.getInstance().getByID(id);
                         case 2: return MagazziniereDAO.getInstance().getMagazziniere(id);
                     }
                 
