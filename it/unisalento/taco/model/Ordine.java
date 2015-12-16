@@ -1,16 +1,9 @@
 package it.unisalento.taco.model;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
 public class Ordine {
-
 
     private final Dipendente dipendente;
     private final Progetto progetto;
