@@ -2,7 +2,6 @@ package it.unisalento.taco.model;
 
 import java.util.Arrays;
 import java.util.Set;
-import java.util.LinkedHashSet;
 
 public class Progetto {
 	
@@ -11,42 +10,40 @@ public class Progetto {
     private final double budget;
     private double saldo;
     
-    private CapoProgetto capoProgetto;
-    private Set<Dipendente> listaDipendenti = new LinkedHashSet<>();
-
-    public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget) {
+    private final CapoProgetto capoProgetto;
+    private Set<Dipendente> listaDipendenti;
+    
+    public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget, Set<Dipendente> listaDipendenti){
         this.id = id;
         this.nome = nome;
         this.capoProgetto = capoProgetto;
         this.budget = budget;
-        saldo = budget;
+        this.listaDipendenti = listaDipendenti;
+        budget = saldo;
     }
     
-    public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget, double saldo){
+    public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget, double saldo, Set<Dipendente> listaDipendenti){
         this.id = id;
         this.nome = nome;
         this.capoProgetto = capoProgetto;
         this.budget = budget;
         this.saldo = saldo;
+        this.listaDipendenti = listaDipendenti;
     }
-    
+        
     public void setSaldo(double saldo){
         this.saldo = saldo;
     }
-    
-    public void setCapoProgetto(CapoProgetto capProg) {
-        this.capoProgetto = capProg;
-    }
-    
+
     public void setListaDipendenti(Set<Dipendente> listaDipendenti){
         this.listaDipendenti = listaDipendenti;
     }
 
-    public void aggiungiDipendente(Set<Dipendente> listaAggiuntiva){
+    public void addListaDipendenti(Set<Dipendente> listaAggiuntiva){
         listaDipendenti.addAll(listaAggiuntiva);
     }
     
-    public void aggiungiDipendente(Dipendente... args){
+    public void addDipendente(Dipendente... args){
         listaDipendenti.addAll(Arrays.asList(args));
     }
 
@@ -75,12 +72,14 @@ public class Progetto {
     }
 
     public String getListaDipendentiAsString(){
+        if(listaDipendenti.isEmpty())
+            return "Nessun dipendente";
         StringBuilder stringDipendenti = new StringBuilder();
         for(Dipendente val : listaDipendenti)
             stringDipendenti.append(val.toString()).append(", ");
         int last = stringDipendenti.lastIndexOf(",");
         if(last != -1){
-        stringDipendenti.delete(last, last + 2);
+            stringDipendenti.delete(last, last + 2);
         }
         return stringDipendenti.toString();
     }
