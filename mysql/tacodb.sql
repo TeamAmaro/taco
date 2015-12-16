@@ -174,8 +174,7 @@ CREATE TABLE `ordini` (
   `id_prodotto` int(11) DEFAULT NULL,
   `quantita` int(11) DEFAULT NULL,
   `spedito` tinyint(4) DEFAULT '0',
-  `data` bigint(20) DEFAULT NULL,
-  UNIQUE KEY `codice` (`codice`)
+  `data` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -185,7 +184,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
-INSERT INTO `ordini` VALUES ('-1820136442',1,'Sede A',1,1,1,12,0,1450212300682);
+INSERT INTO `ordini` VALUES ('-1820136442',1,'Sede A',1,1,1,12,0,1450212300682),('-1820136442',1,'Sede A',1,2,2,1,0,1450212300682);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -350,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-15 21:50:51
+-- Dump completed on 2015-12-16 11:28:47
