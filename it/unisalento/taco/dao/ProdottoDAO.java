@@ -7,12 +7,13 @@
 package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ProdottoDAO {
+public class ProdottoDAO implements DAOInterface{
     
     private static ProdottoDAO instance;
     
@@ -24,19 +25,21 @@ public class ProdottoDAO {
     
     private ProdottoDAO(){}
     
-    public Prodotto getProdotto(int idProdotto){
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT prodotti.*, produttori.nome from prodotti, produttori WHERE produttori.id_prodotto = id AND id = " + idProdotto);
+    @Override public Prodotto getByID(int id) throws NoIDMatchException{
+        
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT prodotti.*, produttori.nome from prodotti, produttori WHERE produttori.id_prodotto = id AND id = " + id);
         Iterator<String[]> i = result.iterator();
-        Prodotto prodotto;
+
         if(i.hasNext()) {
             String[] riga = i.next();
             Produttore produttore = Produttore.parseProduttore(riga[5]);
-            //SEMPLIFICATO
-            prodotto = new Prodotto.Builder(idProdotto, riga[1], Double.parseDouble(riga[4]), produttore).build();
+            //SI DEVE OTTENERE LA LISTA DEI FORNITORI, LA CATEGORIA, ECC..
+            Prodotto prodotto = new Prodotto.Builder(id, riga[1], Double.parseDouble(riga[4]), produttore).build();
+            return prodotto;
         }
-        else
-            prodotto = null;
-        return prodotto;
+        else {
+            throw new NoIDMatchException(this);
+        }
     }
     
 }
