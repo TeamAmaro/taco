@@ -1,14 +1,15 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.UtenteDAO;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
 
 public abstract class Utente {
 	
-    protected final int id;
-    protected final String nome;
-    protected final String cognome;
-    protected String email;
+    private final int id;
+    private final String nome;
+    private final String cognome;
+    private String email;
 
     public Utente(int id, String nome, String cognome, String email){
         this.id = id;
@@ -33,13 +34,14 @@ public abstract class Utente {
         return id;
     }
     
-    public static int getID(String email, String psw) throws NoSuchUserException{
-        return UtenteDAO.getInstance().getID(email,psw);
+    public static int login(String email, String psw) throws NoSuchUserException{
+        return UtenteDAO.getInstance().login(email,psw);
     }
 
-    public static Utente getLogin(int id){
-        return UtenteDAO.getInstance().getLogin(id);
+    public static Utente getByID(int id) throws NoIDMatchException{
+        return UtenteDAO.getInstance().getByID(id);
     }
+    
     @Override public String toString(){
         StringBuilder stringUtente = new StringBuilder();
         stringUtente.append("ID: ").append(id).append(", Nome: ").append(nome).
