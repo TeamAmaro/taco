@@ -3,7 +3,7 @@ package it.unisalento.taco.model;
 import java.util.Date;
 import java.util.Map;
 
-public class Ordine {
+public class Ordine{
 
     private final Dipendente dipendente;
     private final Progetto progetto;
@@ -20,7 +20,13 @@ public class Ordine {
             this.listaProdotti = listaProdotti;
             spedito = false;
     }
-
+    
+    //DA AGGIUNGERE NEL CASO IN CUI ORDINE DEVE CONTENERE IL CODICE
+    /*
+    @Override public int getID(){
+        return codice;
+    }*/
+    
     public Dipendente getDipendente(){
         return dipendente;
     }
