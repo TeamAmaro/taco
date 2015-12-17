@@ -8,6 +8,7 @@ import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
+import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Sede;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -49,7 +50,7 @@ public class DipendenteDAO implements DAOInterface{
         if(i.hasNext()){
             String[] riga = i.next();
             Carrello carrello = CarrelloDAO.getInstance().getByID(id);
-            Dipendente dip = new Dipendente(id, riga[1], riga[2], riga[3], Sede.parseSede(riga[4]), carrello);
+            Dipendente dip = new Dipendente(id, riga[1], riga[2], riga[3], Sede.parseSede(riga[4]));
             return dip; 
         }
         else {
@@ -75,11 +76,17 @@ public class DipendenteDAO implements DAOInterface{
         return listaDipendenti;
     }
 
-    public void updateDipendente(Dipendente dipendente) {
-        DBConnection.getInstance().updateDB("UPDATE utenti SET nome =" + dipendente.getNome() + ", cognome = " + dipendente.getCognome() + ", email = " + dipendente.getEmail() + " WHERE id = " + dipendente.getID());
+    public void addDipendente(Dipendente dip){
+        //DA AGGIORNARE PER ID_PROGETTO
+        //DBConnection.getInstance().updateDB("INSERT INTO dipendenti(id_utente, id_progetto, nome_sede) VALUES(" + dip.getID() + "," + IDPROGETTO + ",'" + dip.getSede() + "')");
+    }
+    
+    public void update(Dipendente dip) {
+        //DA AGGIORNARE PER ID_PROGETTO
+        //DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_utente = " + dip.getID() + ", id_progetto = " + IDPROGETTO + ", nome_sede = " + dip.getSede() + "WHERE id = " + dip.getID());
     }
 
-    public void deleteDipendente(Dipendente dipendente) {
-        // DA SCRIVERE QUANDO SERVIRA'
+    @Override public void delete(IdentificabileID obj) {
+        DBConnection.getInstance().updateDB("DELETE FROM dipendenti WHERE id_utente = " + obj.getID());
     }
 }
