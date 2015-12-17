@@ -22,7 +22,7 @@ public class Progetto {
         budget = saldo;
     }
     
-    public Progetto(int id, String nome, CapoProgetto capoProgetto, double budget, double saldo, Set<Dipendente> listaDipendenti){
+    public Progetto(int id, String nome, CapoProgetto capoProgetto, double saldo, double budget, Set<Dipendente> listaDipendenti){
         this.id = id;
         this.nome = nome;
         this.capoProgetto = capoProgetto;
