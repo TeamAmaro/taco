@@ -15,8 +15,8 @@ public class TacoDemo {
                     Dipendente guga = DipendenteDAO.getInstance().getByID(1);
                     Map<Magazzino,Map<Prodotto,Integer>> mappa = GeneratoreOrdini.getInstance().magazzinoPerProdotto(guga);
                     GeneratoreOrdini.getInstance().generaOrdini(guga, mappa);
-                    Ordine dao = OrdineDAO.getInstance().getByID(-1820136442);
-                    System.out.println("CODICE INSERITO: -1820136442 / CODICE HASH OTTENUTO : " + dao.hashCode());
+                    Ordine dao = OrdineDAO.getInstance().getByID(-1099431227);
+                    System.out.println("CODICE INSERITO: -1099431227 / CODICE HASH OTTENUTO : " + dao.hashCode());
                     System.out.println("Se sono uguali il sistema funziona");
                     System.out.println("Se non sono uguali controlla il database!");
                 }
