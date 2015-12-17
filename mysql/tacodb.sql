@@ -23,8 +23,7 @@ DROP TABLE IF EXISTS `capiprogetto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `capiprogetto` (
-  `id_utente` int(10) unsigned DEFAULT NULL,
-  `id_progetto` int(10) unsigned DEFAULT NULL
+  `id_utente` int(10) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -34,7 +33,7 @@ CREATE TABLE `capiprogetto` (
 
 LOCK TABLES `capiprogetto` WRITE;
 /*!40000 ALTER TABLE `capiprogetto` DISABLE KEYS */;
-INSERT INTO `capiprogetto` VALUES (2,1),(3,2);
+INSERT INTO `capiprogetto` VALUES (2),(3);
 /*!40000 ALTER TABLE `capiprogetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +183,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
-INSERT INTO `ordini` VALUES ('-1820136442',1,'Sede A',1,1,1,12,0,1450212300682),('-1820136442',1,'Sede A',1,2,2,1,0,1450212300682);
+INSERT INTO `ordini` VALUES ('-1099431227',1,'Sede A',1,1,1,12,0,1450212300682),('-1099431227',1,'Sede A',1,2,2,1,0,1450212300682);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,6 +271,7 @@ DROP TABLE IF EXISTS `progetti`;
 CREATE TABLE `progetti` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(60) DEFAULT NULL,
+  `id_capoprog` int(10) unsigned DEFAULT NULL,
   `saldo` double DEFAULT NULL,
   `budget` double DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -284,7 +284,7 @@ CREATE TABLE `progetti` (
 
 LOCK TABLES `progetti` WRITE;
 /*!40000 ALTER TABLE `progetti` DISABLE KEYS */;
-INSERT INTO `progetti` VALUES (1,'Progetto Taco',1000,6700),(2,'Progetto Pizza',4500,4500);
+INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,1000,6700),(2,'Progetto Pizza',3,4500,4500);
 /*!40000 ALTER TABLE `progetti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,7 +327,7 @@ CREATE TABLE `utenti` (
   `data_reg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-16 11:28:47
+-- Dump completed on 2015-12-17 14:05:38
