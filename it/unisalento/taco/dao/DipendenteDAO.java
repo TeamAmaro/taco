@@ -49,7 +49,7 @@ public class DipendenteDAO implements DAOInterface{
         if(i.hasNext()){
             String[] riga = i.next();
             Carrello carrello = CarrelloDAO.getInstance().getByID(id);
-            Dipendente dip = new Dipendente(id, riga[1], riga[2], riga[3], Sede.parseSede(riga[5]), carrello);
+            Dipendente dip = new Dipendente(id, riga[1], riga[2], riga[3], Sede.parseSede(riga[4]), carrello);
             return dip; 
         }
         else {

@@ -6,6 +6,7 @@ import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Ordine;
@@ -73,6 +74,24 @@ public class ProgettoDAO implements DAOInterface{
         else {
             throw new NoIDMatchException(this);
         }
+    }
+    
+    public Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id_progetto FROM dipendenti WHERE id_utente = " + dipendente.getID());
+        Iterator<String[]> i = result.iterator();
+        if(i.hasNext()){
+            String[] riga = i.next();
+            int idProgetto = Integer.parseInt(riga[0]);
+            try{
+                Progetto progetto = getByID(idProgetto);
+                return progetto;
+            }
+            catch(NoIDMatchException e){
+                throw e;
+            }
+        }
+        else
+            throw new NoQueryMatchException(this);
     }
 
     public Set<Progetto> getListaProgetti(CapoProgetto capoProgetto) throws NoIDMatchException{

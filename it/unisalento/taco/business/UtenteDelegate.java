@@ -1,5 +1,6 @@
 package it.unisalento.taco.business;
 
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Utente;
 import java.io.UnsupportedEncodingException;
@@ -47,12 +48,12 @@ public class UtenteDelegate {
         //Cerca l'utente nel database. Ci sono corrispondenze?
         try{
             //Trova ID dell'utente nel database
-            int idUtente = Utente.getID(email, password);
+            int idUtente = Utente.login(email, password);
             //Se l'ID è stato trovato, istanzia il client con il modello corrispondente
-            Utente client = Utente.getLogin(idUtente);
+            Utente client = Utente.getByID(idUtente);
             return client;
         }
-        catch(NoSuchUserException e){
+        catch(NoSuchUserException | NoIDMatchException e){
             System.err.println(e.getMessage());
         }
         return null;

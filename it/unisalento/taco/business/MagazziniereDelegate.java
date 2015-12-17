@@ -20,10 +20,6 @@ public class MagazziniereDelegate {
     }
     private MagazziniereDelegate(){};
 
-    public void chiediResocontoMagazzino(Magazzino magazzino){
-            magazzino.resocontoInventario();
-    }
-
     public void rifornisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
             magazzino.aggiungiProdotto(prodotto, quantita);
     };
@@ -31,6 +27,11 @@ public class MagazziniereDelegate {
     public void spedisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
             magazzino.rimuoviProdotto(prodotto, quantita);
     };
+
+    
+    public Map<Prodotto,Integer> chiediInventario(Magazzino magazzino){
+            return magazzino.getInventario();
+    }
 
     //Chiede prodotto al magazzino
     public int chiediProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){

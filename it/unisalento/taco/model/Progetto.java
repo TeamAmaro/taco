@@ -1,5 +1,8 @@
 package it.unisalento.taco.model;
 
+import it.unisalento.taco.dao.ProgettoDAO;
+import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoQueryMatchException;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -84,6 +87,10 @@ public class Progetto {
         return stringDipendenti.toString();
     }
 
+    public static Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
+        return ProgettoDAO.getInstance().getProgetto(dipendente);
+    }
+    
     @Override public String toString(){
         StringBuilder stringProgetto = new StringBuilder();
         stringProgetto.append("ID: ").append(id).append(", Nome: ").append(nome).append(", Capoprogetto: ").

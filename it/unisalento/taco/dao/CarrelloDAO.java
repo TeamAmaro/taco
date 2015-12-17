@@ -59,8 +59,8 @@ public class CarrelloDAO implements DAOInterface{
     //RESTITUISCE IL CARRELLO
     public Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{
         try{
-        Carrello carrello = new Carrello(getListaProdotti(dipendente.getID()));
-        return carrello;
+            Carrello carrello = new Carrello(getListaProdotti(dipendente.getID()));
+            return carrello;
         }
         catch (NoIDMatchException e){
             throw e;
@@ -73,8 +73,8 @@ public class CarrelloDAO implements DAOInterface{
     //Perché se il dipendente esiste, esiste anche il suo carrello.
     @Override public Carrello getByID(int idDip) throws NoIDMatchException{
         try {
-        Carrello carrello = new Carrello(getListaProdotti(idDip));
-        return carrello;
+            Carrello carrello = new Carrello(getListaProdotti(idDip));
+            return carrello;
         }
         catch (NoIDMatchException e){
             throw e;
