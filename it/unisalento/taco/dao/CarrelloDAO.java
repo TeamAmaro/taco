@@ -10,6 +10,7 @@ import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
+import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Prodotto;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -59,7 +60,7 @@ public class CarrelloDAO implements DAOInterface{
     //RESTITUISCE IL CARRELLO
     public Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{
         try{
-            Carrello carrello = new Carrello(getListaProdotti(dipendente.getID()));
+            Carrello carrello = new Carrello(dipendente, getListaProdotti(dipendente.getID()));
             return carrello;
         }
         catch (NoIDMatchException e){
@@ -73,7 +74,8 @@ public class CarrelloDAO implements DAOInterface{
     //Perché se il dipendente esiste, esiste anche il suo carrello.
     @Override public Carrello getByID(int idDip) throws NoIDMatchException{
         try {
-            Carrello carrello = new Carrello(getListaProdotti(idDip));
+            Dipendente dipendente = DipendenteDAO.getInstance().getByID(idDip);
+            Carrello carrello = new Carrello(dipendente, getListaProdotti(idDip));
             return carrello;
         }
         catch (NoIDMatchException e){
@@ -81,9 +83,26 @@ public class CarrelloDAO implements DAOInterface{
         }
     }
     
-    public void updateCarrello(Carrello carrello) {
-        //LEGGERE REQUEST
+    public void addCarrello(Carrello carrello) {
+        for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
+            DBConnection.getInstance().updateDB("INSERT INTO carrelli values(" + carrello.getDipendente().getID() + "," + val.getKey().getID() + "," + val.getValue() + ")");
+        }
     }
+    
+    public void updateCarrello(Carrello carrello) {
+        for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
+            DBConnection.getInstance().updateDB("UPDATE carrelli SET id_dipendente = " + carrello.getDipendente().getID() + ", id_prodotto = " + val.getKey().getID() + ", quantita = " + val.getValue());
+        }
+    }
+    
+    public void delete(Carrello obj){
+        DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + obj.getDipendente().getID());
+    }
+    
+    @Override public void delete(IdentificabileID obj){
+        //IL CARRELLO NON E' IDENTIFICATO DA UN ID
+    }
+    
     
 }
 

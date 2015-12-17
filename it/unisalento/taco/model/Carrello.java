@@ -9,11 +9,17 @@ import java.util.Set;
 
 public class Carrello {
 
+    private final Dipendente dipendente;
     private double prezzoTotale = 0;
     private Map<Prodotto,Integer> listaProdotti = new LinkedHashMap<>();
 
-    public Carrello(Map<Prodotto,Integer> listaProdotti){
+    public Carrello(Dipendente dipendente, Map<Prodotto,Integer> listaProdotti){
+        this.dipendente = dipendente;
         this.listaProdotti = listaProdotti;
+    }
+    
+    public Dipendente getDipendente(){
+        return dipendente;
     }
     
     public Map<Prodotto, Integer> getListaProdotti(){
