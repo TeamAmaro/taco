@@ -7,6 +7,7 @@ import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Dipendente;
+import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
@@ -94,6 +95,17 @@ public class OrdineDAO implements DAOInterface{
             listaProdotti.put(prodotto, quantita);
         }
         return listaProdotti;
+    }
+    
+    public void addOrdine(Ordine ordine){
+        for(Map.Entry<Prodotto,Integer> val : ordine.getListaProdotti().entrySet()) {
+            DBConnection.getInstance().updateDB("INSERT INTO ordini(codice,id_dipendente,nome_sede,id_progetto,id_magazzino,id_prodotto,quantita,data) values(codice = " + ordine.hashCode() + ", id_dipendente = " + ordine.getDipendente().getID() + ", id_progetto = " + ordine.getProgetto().getID() + ", id_magazzino = " + ordine.getMagazzino().getID() + ", id_prodotto = " + val.getKey().getID() + ", quantita = " + val.getValue() + ", data = " + ordine.getData() + ")");
+        }
+    }
+    
+    //CODICE NON IMPLEMENTA getID(), COME FARE?
+    @Override public void delete(IdentificabileID obj){
+        //DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
     }
     
 }

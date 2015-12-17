@@ -8,6 +8,7 @@ package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
 import java.util.ArrayList;
@@ -40,6 +41,18 @@ public class ProdottoDAO implements DAOInterface{
         else {
             throw new NoIDMatchException(this);
         }
+    }
+    
+    public void addProdotto(String nome, String categoria, String descrizione, double prezzo){
+        DBConnection.getInstance().updateDB("INSERT INTO prodotti(nome,categoria,descrizione,prezzo) VALUES('" + nome + "','" + categoria + "','" + descrizione + "'," + prezzo + ")");
+    }
+    
+    public void updateProdotto(Prodotto prodotto){
+        DBConnection.getInstance().updateDB("UPDATE prodotti SET nome = " + prodotto.getNome() + ", categoria = " + prodotto.getCategoria() + ", descrizione = " + prodotto.getDescrizione() + ", prezzo = " + prodotto.getPrezzo() + " WHERE id = " + prodotto.getID());
+    }
+    
+    @Override public void delete(IdentificabileID obj){
+        DBConnection.getInstance().updateDB("DELETE FROM prodotti WHERE id = " + obj.getID());
     }
     
 }

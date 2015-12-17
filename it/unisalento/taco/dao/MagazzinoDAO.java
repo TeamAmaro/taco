@@ -10,6 +10,7 @@ import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Categoria;
+import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
@@ -111,5 +112,13 @@ public class MagazzinoDAO implements DAOInterface{
         else {
             throw new NoIDMatchException(this);
         }
+    }
+    
+    public void addMagazzino(String nome, String nome_sede){
+        DBConnection.getInstance().updateDB("INSERT INTO magazzini(nome,nome_sede) VALUES('" + nome + "','" + nome_sede + "')");
+    }
+    
+    @Override public void delete(IdentificabileID obj){
+        DBConnection.getInstance().updateDB("DELETE FROM magazzini WHERE id = " + obj.getID());
     }
 }

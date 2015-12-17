@@ -9,6 +9,7 @@ import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Dipendente;
+import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;
 import java.util.LinkedHashSet;
@@ -62,10 +63,10 @@ public class ProgettoDAO implements DAOInterface{
             double budget = Double.parseDouble(riga[3]);
             int capoProgID = Integer.parseInt(riga[4]);
             try {
-            CapoProgetto capoProg = CapoProgettoDAO.getInstance().getByID(capoProgID);
-            Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
-            Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget, listaDipendenti);
-            return prog;
+                CapoProgetto capoProg = CapoProgettoDAO.getInstance().getByID(capoProgID);
+                Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
+                Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget, listaDipendenti);
+                return prog;
             }
             catch (NoIDMatchException e){
                 throw e;
@@ -102,9 +103,9 @@ public class ProgettoDAO implements DAOInterface{
             String[] riga = i.next();
             int idProg = Integer.parseInt(riga[0]);
             try{
-            Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(idProg);
-            Progetto progetto = new Progetto(idProg, riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), listaDipendenti);
-            listaProgetti.add(progetto);
+                Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(idProg);
+                Progetto progetto = new Progetto(idProg, riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), listaDipendenti);
+                listaProgetti.add(progetto);
             }
             catch (NoIDMatchException e) {
                 throw e;
@@ -113,14 +114,16 @@ public class ProgettoDAO implements DAOInterface{
         return listaProgetti;
     }
 
-    public void updateProgetto() {
-        // TODO Auto-generated method stub
-
+    public void addProgetto(Progetto prog){
+        DBConnection.getInstance().updateDB("INSERT INTO progetti(nome,id_capoprog,saldo,budget) VALUES(nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getID() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget() + ")");
+    }
+    
+    public void updateProgetto(Progetto prog) {
+        DBConnection.getInstance().updateDB("UPDATE progetti SET nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getID() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget());
     }
 
-    public void deleteProgetto() {
-        // TODO Auto-generated method stub
-
+    @Override public void delete(IdentificabileID obj) {
+        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE id = " + obj.getID());
     }
 	
 }

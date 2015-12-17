@@ -7,6 +7,7 @@ import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
+import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Progetto;
 import java.util.Set;
 
@@ -54,5 +55,14 @@ public class CapoProgettoDAO implements DAOInterface{
         else {
             throw new NoIDMatchException(this);
         }
-    }	
+    }
+    
+    public void addCapoProgetto(CapoProgetto capoprog){
+        DBConnection.getInstance().updateDB("INSERT INTO capiprogetto(id_utente) VALUES(" + capoprog.getID() + ")");
+    }
+    
+    @Override public void delete(IdentificabileID obj){
+        DBConnection.getInstance().updateDB("DELETE FROM capiprogetto WHERE id_utente = " + obj.getID());
+    }
+    
 }
