@@ -1,5 +1,5 @@
 package it.unisalento.taco.model;
-public class Magazziniere extends Utente {
+public class Magazziniere extends Utente  implements IdentificabileID {
 	
     private final Magazzino magazzino;
 	

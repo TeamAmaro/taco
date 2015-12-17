@@ -4,7 +4,7 @@ import it.unisalento.taco.dao.UtenteDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
 
-public abstract class Utente {
+public abstract class Utente implements IdentificabileID {
 	
     private final int id;
     private final String nome;
@@ -30,7 +30,7 @@ public abstract class Utente {
         return email;
     }
 
-    public int getID(){
+    @Override public int getID(){
         return id;
     }
     

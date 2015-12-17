@@ -5,7 +5,7 @@ import it.unisalento.taco.exceptions.NoQueryMatchException;
 import java.util.Map;
 import java.util.Set;
 
-public class Magazzino {
+public class Magazzino  implements IdentificabileID {
     private final int id;
     private final String nome;
     private final Sede sede;
@@ -27,7 +27,7 @@ public class Magazzino {
         return sede;
     }
 
-    public int getID(){
+    @Override public int getID(){
         return id;
     }
     

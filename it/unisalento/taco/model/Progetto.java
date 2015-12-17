@@ -6,7 +6,7 @@ import it.unisalento.taco.exceptions.NoQueryMatchException;
 import java.util.Arrays;
 import java.util.Set;
 
-public class Progetto {
+public class Progetto implements IdentificabileID {
 	
     private final int id;
     private final String nome;
@@ -50,7 +50,7 @@ public class Progetto {
         listaDipendenti.addAll(Arrays.asList(args));
     }
 
-    public int getID() {
+    @Override public int getID() {
         return id;
     }
 

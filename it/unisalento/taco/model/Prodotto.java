@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Prodotto {
+public class Prodotto implements IdentificabileID {
 	
     private final int id;
     private final String nome;
@@ -15,7 +15,7 @@ public class Prodotto {
     private Categoria categoria;
     private Set<Fornitore> listaFornitori;
 
-    public int getID(){
+    @Override public int getID(){
         return id;
     }
     public String getNome() {
