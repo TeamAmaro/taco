@@ -27,7 +27,7 @@ public class OrdineDAO implements DAOInterface{
     }
     private OrdineDAO(){}
     
-    public Set<Ordine> getListaOrdini(Progetto progetto) throws NoQueryMatchException{
+    public Set<Ordine> getListaOrdini(Progetto progetto) throws NoIDMatchException{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_progetto = " + progetto.getID());
         Iterator<String[]> i = result.iterator();
@@ -43,7 +43,7 @@ public class OrdineDAO implements DAOInterface{
                 listaOrdini.add(ordine);
             } 
             catch(NoIDMatchException e) {
-                e.printStackTrace();
+                throw e;
             }
         }
         return listaOrdini;
@@ -74,7 +74,7 @@ public class OrdineDAO implements DAOInterface{
                 return ordine;
             }
             catch(NoIDMatchException e) {
-                throw new NoIDMatchException(this);
+                throw e;
             }
         }
         else {

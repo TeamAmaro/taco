@@ -7,11 +7,10 @@
 package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.Carrello;
-import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Prodotto;
-import it.unisalento.taco.model.Produttore;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -31,7 +30,7 @@ public class CarrelloDAO implements DAOInterface{
 
     //RESTITUISCE SOLO LA LISTA DEI PRODOTTI NEL CARRELLO DEL DIPENDENTE
     
-    public Map<Prodotto,Integer> getListaProdotti(int idDip){
+    public Map<Prodotto,Integer> getListaProdotti(int idDip) throws NoIDMatchException{
         
         String uberQuery = "SELECT produttori.nome,prodotti.*,carrelli.quantita FROM prodotti,carrelli,produttori,dipendenti WHERE carrelli.id_prodotto = prodotti.id AND dipendenti.id_utente = " + idDip + " AND produttori.id_prodotto = prodotti.id";
         ArrayList<String[]> result = DBConnection.getInstance().queryDB(uberQuery);
@@ -41,29 +40,45 @@ public class CarrelloDAO implements DAOInterface{
         //Non si restituisce null ma un carrello vuoto.
         while(i.hasNext()) {
             String[] riga = i.next();
-            Prodotto prodotto = new Prodotto.Builder(Integer.parseInt(riga[1]), riga[2], Double.parseDouble(riga[5]), Produttore.parseProduttore(riga[0])).categoria(Categoria.parseCategoria(riga[3])).descrizione(riga[4]).build();
-            int quantita = Integer.parseInt(riga[6]);
-            if(quantita == 0)
-                continue;
-            listaProdotti.put(prodotto,quantita);
+            try{
+                int idProdotto = Integer.parseInt(riga[1]);
+                Prodotto prodotto = ProdottoDAO.getInstance().getByID(idProdotto);
+                int quantita = Integer.parseInt(riga[6]);
+                if(quantita == 0)
+                    continue;
+                listaProdotti.put(prodotto,quantita);
+            }
+            catch (NoIDMatchException e){
+                throw e;
+            }
         }
         
         return listaProdotti;
     }
     
     //RESTITUISCE IL CARRELLO
-    public Carrello getCarrello(Dipendente dipendente) {
+    public Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{
+        try{
         Carrello carrello = new Carrello(getListaProdotti(dipendente.getID()));
         return carrello;
+        }
+        catch (NoIDMatchException e){
+            throw e;
+        }
     }
     
     //L'id che accetta come parametro è quello del dipendente,
     //infatti, per ogni dipendente c'è un solo ed unico carrello.
     //Non ha senso per questa funzione lanciare un'eccezione 
     //Perché se il dipendente esiste, esiste anche il suo carrello.
-    @Override public Carrello getByID(int idDip){
+    @Override public Carrello getByID(int idDip) throws NoIDMatchException{
+        try {
         Carrello carrello = new Carrello(getListaProdotti(idDip));
         return carrello;
+        }
+        catch (NoIDMatchException e){
+            throw e;
+        }
     }
     
     public void updateCarrello(Carrello carrello) {

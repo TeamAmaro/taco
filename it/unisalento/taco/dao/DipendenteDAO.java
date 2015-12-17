@@ -9,6 +9,8 @@ import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Sede;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class DipendenteDAO implements DAOInterface{
 	
@@ -22,7 +24,7 @@ public class DipendenteDAO implements DAOInterface{
 
     private DipendenteDAO(){};
 
-    public List<Dipendente> getAllDipendenti() {
+    public List<Dipendente> getAllDipendenti() throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.*, nome_sede FROM dipendenti,utenti WHERE id_utente = utenti.id");
         Iterator<String[]> i = result.iterator();
         List<Dipendente> listaDipendenti = new ArrayList<>();
@@ -35,7 +37,7 @@ public class DipendenteDAO implements DAOInterface{
             listaDipendenti.add(dipendente);
             }
             catch(NoIDMatchException e){
-                e.printStackTrace();
+                throw e;
             }
         }
         return listaDipendenti;
@@ -53,6 +55,24 @@ public class DipendenteDAO implements DAOInterface{
         else {
             throw new NoIDMatchException(this);
         }
+    }
+    
+    
+    public Set<Dipendente> getListaDipendenti(int idProg) throws NoIDMatchException{
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM dipendenti WHERE id_progetto = " + idProg);
+        Iterator<String[]> i = result.iterator();
+        Set<Dipendente> listaDipendenti = new LinkedHashSet<>();
+        while(i.hasNext()){
+            try{
+                String[] riga = i.next();
+                Dipendente dipendente = getByID(Integer.parseInt(riga[0]));
+                listaDipendenti.add(dipendente);
+            }
+            catch (NoIDMatchException e){
+                throw e;
+            }
+        }
+        return listaDipendenti;
     }
 
     public void updateDipendente(Dipendente dipendente) {
