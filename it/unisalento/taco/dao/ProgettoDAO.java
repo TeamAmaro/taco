@@ -7,6 +7,7 @@ import java.util.List;
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.CapoProgetto;
+import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;
 import java.util.LinkedHashSet;
@@ -24,9 +25,9 @@ public class ProgettoDAO implements DAOInterface{
     private ProgettoDAO (){};
 
 
-    public List<Progetto> getAllProgetto() {
+    public List<Progetto> getAllProgetto() throws NoIDMatchException{
 
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM progetti");
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM progetti. capiprogetto where id_progetto = id");
         Iterator<String[]> i = result.iterator();
         List<Progetto> listProgetto = new ArrayList<>();
         CapoProgettoDAO capProgDAO = CapoProgettoDAO.getInstance();
@@ -37,10 +38,17 @@ public class ProgettoDAO implements DAOInterface{
             int id = Integer.parseInt(riga[0]);
             double saldo = Double.parseDouble(riga[2]);
             double budget = Double.parseDouble(riga[3]);
-            Progetto progetto = new Progetto(id, riga[1], null, saldo, budget);
-            listProgetto.add(progetto);
+            int idCapo = Integer.parseInt(riga[4]);
+            try{
+                Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
+                CapoProgetto capoProgetto = CapoProgettoDAO.getInstance().getByID(idCapo);
+                Progetto progetto = new Progetto(id, riga[1], capoProgetto, saldo, budget, listaDipendenti);
+                listProgetto.add(progetto);
+            }
+            catch (NoIDMatchException e){
+                throw e;
+            }
         }
-
         return listProgetto;
     }
 
@@ -52,31 +60,39 @@ public class ProgettoDAO implements DAOInterface{
             double saldo = Double.parseDouble(riga[2]);
             double budget = Double.parseDouble(riga[3]);
             int capoProgID = Integer.parseInt(riga[4]);
-            CapoProgetto capoProg = new CapoProgetto(capoProgID, riga[5], riga[6], riga[7]);
-            Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget);
-            //Cerco Ordini nel database per quell'ordine
+            try {
+            CapoProgetto capoProg = CapoProgettoDAO.getInstance().getByID(capoProgID);
+            Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
+            Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget, listaDipendenti);
             return prog;
+            }
+            catch (NoIDMatchException e){
+                throw e;
+            }
         }
         else {
             throw new NoIDMatchException(this);
         }
     }
 
-    public Set<Progetto> getProgetto(CapoProgetto capoProgetto) {
+    public Set<Progetto> getListaProgetti(CapoProgetto capoProgetto) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.* FROM progetti,capiprogetto WHERE id_progetto = progetti.id AND id_utente =" + capoProgetto.getID());
         Iterator<String[]> i = result.iterator();
         Set<Progetto> listaProgetti = new LinkedHashSet<>();
-        Set<Ordine> listaOrdini = new LinkedHashSet<>();
         while(i.hasNext()) {
             String[] riga = i.next();
-            Progetto progetto = new Progetto(Integer.parseInt(riga[0]), riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), listaOrdini );
-
+            int idProg = Integer.parseInt(riga[0]);
+            try{
+            Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(idProg);
+            Progetto progetto = new Progetto(idProg, riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), listaDipendenti);
             listaProgetti.add(progetto);
+            }
+            catch (NoIDMatchException e) {
+                throw e;
+            }
         }
-
         return listaProgetti;
     }
-
 
     public void updateProgetto() {
         // TODO Auto-generated method stub
