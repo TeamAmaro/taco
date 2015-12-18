@@ -8,11 +8,15 @@ package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import static it.unisalento.taco.model.Categoria.parseCategoria;
+import it.unisalento.taco.model.Fornitore;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class ProdottoDAO implements DAOInterface<Prodotto>{
     
@@ -27,31 +31,16 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
     private ProdottoDAO(){}
     
     @Override public Prodotto getByID(int id) throws NoIDMatchException{
-        
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT prodotti.*, produttori.nome from prodotti, produttori WHERE produttori.id_prodotto = id AND id = " + id);
+        //FUN FACT: QUESTA NUOVA QUERY E' PIU' ELEGANTE DI QUELLA DI PRIMA DEL 67%
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT produttori.nome,prodotti.* FROM prodotti JOIN produttori ON id_prodotto = id WHERE id = " + id);
         Iterator<String[]> i = result.iterator();
 
         if(i.hasNext()) {
             String[] riga = i.next();
-            Produttore produttore = Produttore.parseProduttore(riga[5]);
-            //SI DEVE OTTENERE LA LISTA DEI FORNITORI, LA CATEGORIA, ECC..
-            
-            /*
-                ░░░░░░░░░░░░░░░░░░░░░
-                ░░░░░░░░░░░░▄▀▀▀▀▄░░░
-                ░░░░░░░░░░▄▀░░▄░▄░█░░
-                ░▄▄░░░░░▄▀░░░░▄▄▄▄█░░
-                █░░▀▄░▄▀░░░░░░░░░░█░░
-                ░▀▄░░▀▄░░░░█░░░░░░█░░
-                ░░░▀▄░░▀░░░█░░░░░░█░░
-                ░░░▄▀░░░░░░█░░░░▄▀░░░
-                ░░░▀▄▀▄▄▀░░█▀░▄▀░░░░░
-                ░░░░░░░░█▀▀█▀▀░░░░░░░
-                ░░░░░░░░▀▀░▀▀░░░░░░░░
-            */
-            
-            //DORCOPIO
-            Prodotto prodotto = new Prodotto.Builder(id, riga[1], Double.parseDouble(riga[4]), produttore).build();
+            Produttore produttore = Produttore.parseProduttore(riga[0]);
+            Prodotto prodotto = new Prodotto.Builder(id, riga[2], Double.parseDouble(riga[5]), produttore).descrizione(riga[4]).categoria(parseCategoria(riga[2])).build();
+            Set<Fornitore> listaFornitori = getFornitore(prodotto);
+            prodotto.setListaFornitori(listaFornitori);
             return prodotto;
         }
         else {
@@ -59,10 +48,20 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
         }
     }
     
+    public Set<Fornitore> getFornitore(Prodotto prodotto){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM fornitori WHERE id_prodotto = " + prodotto.getID());
+        Iterator<String[]> i = result.iterator();
+        Set<Fornitore> listaFornitori = new LinkedHashSet<>();
+        while(i.hasNext()){
+            String[] riga = i.next();
+            listaFornitori.add(Fornitore.parseFornitore(riga[0]));
+        }
+        
+        return listaFornitori;
+    }
+    
     @Override public void create(Prodotto prodotto){
-        //DBConnection.getInstance().updateDB("INSERT INTO prodotti(nome,categoria,descrizione,prezzo) VALUES('" + nome + "','" + categoria + "','" + descrizione + "'," + prezzo + ")");
-        //Ma che?
-        //Usa il builder prima..
+        DBConnection.getInstance().updateDB("INSERT INTO prodotti(nome,categoria,descrizione,prezzo) VALUES('" + prodotto.getNome() + "','" + prodotto.getCategoria() + "','" + prodotto.getDescrizione() + "'," + prodotto.getPrezzo() + ")");
     }
     
     @Override public void update(Prodotto prodotto){
