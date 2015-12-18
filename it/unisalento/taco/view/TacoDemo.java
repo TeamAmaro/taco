@@ -17,11 +17,11 @@ public class TacoDemo {
                     Dipendente guga = DipendenteDAO.getInstance().getByID(1);
                     Map<Magazzino,Map<Prodotto,Integer>> mappa = GeneratoreOrdini.getInstance().magazzinoPerProdotto(guga);
                     System.out.println(Carrello.getByID(guga.getID()));
-                    System.out.println(mappa);
+                    //System.out.println(mappa);
                     Progetto progetto = Progetto.getProgetto(guga);
-                    System.out.println(progetto);
+                    //System.out.println(progetto);
                     GeneratoreOrdini.getInstance().generaOrdini(guga, mappa);
-                    System.out.println(progetto);
+                    //System.out.println(progetto);
                 }
                 catch(NoIDMatchException | InsufficientFundException | NoQueryMatchException e) {
                     System.err.println(e.getMessage());
