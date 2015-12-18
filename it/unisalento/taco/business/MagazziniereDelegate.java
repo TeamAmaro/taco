@@ -21,11 +21,11 @@ public class MagazziniereDelegate {
     private MagazziniereDelegate(){};
 
     public void rifornisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
-            magazzino.aggiungiProdotto(prodotto, quantita);
+            magazzino.addProdotto(prodotto, quantita);
     };
 
     public void spedisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
-            magazzino.rimuoviProdotto(prodotto, quantita);
+            magazzino.removeProdotto(prodotto, quantita);
     };
 
     
