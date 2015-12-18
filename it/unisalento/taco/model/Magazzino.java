@@ -34,8 +34,18 @@ public class Magazzino  implements IdentificabileID {
     public Map<Prodotto,Integer> getInventario(){
         return inventario;
     }
+    
+    public void setInventario(Map<Prodotto,Integer> inventario){
+        this.inventario = inventario;
+    }
+    
+    public void removeFromInventario(Map<Prodotto,Integer> listaProdotti){
+        for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet()){
+            removeProdotto(val.getKey(),val.getValue());
+        }
+    }
 
-    public void aggiungiProdotto(Prodotto prodotto, int quantita){
+    public void addProdotto(Prodotto prodotto, int quantita){
         System.out.println("Hai aggiunto " + quantita + " " + prodotto.getNome() + " all'inventario");
         if(inventario.containsKey(prodotto))
             inventario.put(prodotto, inventario.get(prodotto) + quantita);
@@ -43,7 +53,7 @@ public class Magazzino  implements IdentificabileID {
             inventario.put(prodotto, quantita);
     }
 
-    public void rimuoviProdotto(Prodotto prodotto, int quantita){
+    public void removeProdotto(Prodotto prodotto, int quantita){
         System.out.println("Hai rimosso " + quantita + " " + prodotto.getNome() + " dall'inventario");
         if(inventario.containsKey(prodotto)){
             int prevValue = inventario.get(prodotto);
