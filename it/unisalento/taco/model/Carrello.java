@@ -1,41 +1,51 @@
 package it.unisalento.taco.model;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
+import it.unisalento.taco.dao.CarrelloDAO;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import java.util.Map;
-import java.util.Set;
 
-public class Carrello {
+public class Carrello implements IdentificabileID{
 
+    private double totale;
+    private Map<Prodotto,Integer> listaProdotti;
+    
     private final Dipendente dipendente;
-    private double prezzoTotale = 0;
-    private Map<Prodotto,Integer> listaProdotti = new LinkedHashMap<>();
 
     public Carrello(Dipendente dipendente, Map<Prodotto,Integer> listaProdotti){
+        this.listaProdotti = listaProdotti;
         this.dipendente = dipendente;
+        calcolaTotale();
+    }
+    
+    public int getID(){
+        return dipendente.getID();
+    }
+
+    public Dipendente getDipendente(){
+        return dipendente;
+    }
+    public void setListaProdotti(Map<Prodotto,Integer> listaProdotti){
         this.listaProdotti = listaProdotti;
     }
     
-    public Dipendente getDipendente(){
-        return dipendente;
+    public void removeListaProdotti(Map<Prodotto,Integer> listaProdotti){
+        for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet()){
+            removeProdotto(val.getKey(),val.getValue());
+        }
     }
     
     public Map<Prodotto, Integer> getListaProdotti(){
         return listaProdotti;
     }
 
-    public void aggiungiProdotto(Prodotto prodotto, int quantita){
-        System.out.println("Hai acquistato " + quantita + " " + prodotto.getNome());
+    public void addProdotto(Prodotto prodotto, int quantita){
         if(listaProdotti.containsKey(prodotto))
             listaProdotti.put(prodotto, listaProdotti.get(prodotto) + quantita);
         else
             listaProdotti.put(prodotto, quantita);
     }
 
-    public void rimuoviProdotto(Prodotto prodotto, int quantita){
-        System.out.println("Hai rimosso " + quantita + " " + prodotto.getNome());
+    public void removeProdotto(Prodotto prodotto, int quantita){
         if(listaProdotti.containsKey(prodotto)){
             int prevValue = listaProdotti.get(prodotto);
             if(prevValue - quantita <= 0)
@@ -45,24 +55,17 @@ public class Carrello {
         }		
     }
 
-    public void stampaListaProdotti(){
-        if(listaProdotti.isEmpty()){
-            System.out.println("Il carrello è vuoto");
-            return;
-        }
-        System.out.println("Il contenuto del carrello è");
-        for (Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet())
-            System.out.println(e.getKey().getNome() + " x " + e.getValue());
-    }
-
     public void calcolaTotale(){
-        System.out.println("Calcolo prezzo totale");
+        totale = 0;
         for(Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet()){
-            prezzoTotale += e.getKey().getPrezzo() * e.getValue();
+            totale += e.getKey().getPrezzo() * e.getValue();
         }
-
-        System.out.println("\nIl prezzo è " + prezzoTotale);
     }
+    
+    public static Carrello getByID(int id) throws NoIDMatchException{
+        return CarrelloDAO.getInstance().getByID(id);
+    }
+    
     
     @Override public String toString(){
         StringBuilder stringCarrello = new StringBuilder();
@@ -70,9 +73,11 @@ public class Carrello {
             stringCarrello.append("Il carrello è vuoto");
             return stringCarrello.toString();
         }
-        stringCarrello.append("Il contenuto del carrello è : \n");
+        stringCarrello.append("Lista Prodotti: \n");
         for (Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet())
             stringCarrello.append(e.getKey().getNome()).append(" x ").append(e.getValue()).append("\n");
+        
+        stringCarrello.append("Totale :" + totale);
         return stringCarrello.toString();
     }
 }
