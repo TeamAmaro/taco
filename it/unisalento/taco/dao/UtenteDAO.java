@@ -77,6 +77,16 @@ public class UtenteDAO implements DAOInterface<Utente>{
         throw new NoIDMatchException(this);
     }
     
+    public int getID(Utente utente) throws NoIDMatchException{
+        ArrayList<String[]> result =DBConnection.getInstance().queryDB("SELECT utenti.id FROM utenti WHERE email = " + utente.getEmail());
+        Iterator<String[]> i = result.iterator();
+        if(i.hasNext()) {
+            String[] riga = i.next();
+            return Integer.parseInt(riga[0]);
+        }
+        throw new NoIDMatchException(this);
+    }
+    
     public void setPsw (Utente utente, String psw){
         //Implementare
         //HOW DO I IMPLEMENTARE??
