@@ -14,17 +14,15 @@ public class DipendenteDelegate {
 	private DipendenteDelegate(){};
 	
 	public void aggiungiProdotto(Dipendente dipendente, Prodotto prodotto, int quantita){
-		System.out.println("Il delegato ha aggiunto " + quantita + " " + prodotto + "al carrello");
-		dipendente.getCarrello().aggiungiProdotto(prodotto, quantita);
+		
 	}
 	
 	public void rimuoviProdotto(Dipendente dipendente, Prodotto prodotto, int quantita){
-		System.out.println("Il delegato ha rimosso " + quantita + " " + prodotto.getNome() + " dal carrello");
-		dipendente.getCarrello().rimuoviProdotto(prodotto, quantita);
-	}
+
+        }
 	
 	public void acquista(Dipendente dipendente){
-		//Dipendente.getCarrello().acquista();
+		//Generatore Ordini
 	}
 	
 }
