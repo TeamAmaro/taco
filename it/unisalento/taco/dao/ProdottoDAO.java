@@ -14,7 +14,7 @@ import it.unisalento.taco.model.Produttore;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ProdottoDAO implements DAOInterface{
+public class ProdottoDAO implements DAOInterface<Prodotto>{
     
     private static ProdottoDAO instance;
     
@@ -35,6 +35,22 @@ public class ProdottoDAO implements DAOInterface{
             String[] riga = i.next();
             Produttore produttore = Produttore.parseProduttore(riga[5]);
             //SI DEVE OTTENERE LA LISTA DEI FORNITORI, LA CATEGORIA, ECC..
+            
+            /*
+                ░░░░░░░░░░░░░░░░░░░░░
+                ░░░░░░░░░░░░▄▀▀▀▀▄░░░
+                ░░░░░░░░░░▄▀░░▄░▄░█░░
+                ░▄▄░░░░░▄▀░░░░▄▄▄▄█░░
+                █░░▀▄░▄▀░░░░░░░░░░█░░
+                ░▀▄░░▀▄░░░░█░░░░░░█░░
+                ░░░▀▄░░▀░░░█░░░░░░█░░
+                ░░░▄▀░░░░░░█░░░░▄▀░░░
+                ░░░▀▄▀▄▄▀░░█▀░▄▀░░░░░
+                ░░░░░░░░█▀▀█▀▀░░░░░░░
+                ░░░░░░░░▀▀░▀▀░░░░░░░░
+            */
+            
+            //DORCOPIO
             Prodotto prodotto = new Prodotto.Builder(id, riga[1], Double.parseDouble(riga[4]), produttore).build();
             return prodotto;
         }
@@ -43,11 +59,13 @@ public class ProdottoDAO implements DAOInterface{
         }
     }
     
-    public void addProdotto(String nome, String categoria, String descrizione, double prezzo){
-        DBConnection.getInstance().updateDB("INSERT INTO prodotti(nome,categoria,descrizione,prezzo) VALUES('" + nome + "','" + categoria + "','" + descrizione + "'," + prezzo + ")");
+    @Override public void create(Prodotto prodotto){
+        //DBConnection.getInstance().updateDB("INSERT INTO prodotti(nome,categoria,descrizione,prezzo) VALUES('" + nome + "','" + categoria + "','" + descrizione + "'," + prezzo + ")");
+        //Ma che?
+        //Usa il builder prima..
     }
     
-    public void updateProdotto(Prodotto prodotto){
+    @Override public void update(Prodotto prodotto){
         DBConnection.getInstance().updateDB("UPDATE prodotti SET nome = " + prodotto.getNome() + ", categoria = " + prodotto.getCategoria() + ", descrizione = " + prodotto.getDescrizione() + ", prezzo = " + prodotto.getPrezzo() + " WHERE id = " + prodotto.getID());
     }
     

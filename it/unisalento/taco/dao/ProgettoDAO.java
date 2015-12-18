@@ -15,7 +15,7 @@ import it.unisalento.taco.model.Progetto;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class ProgettoDAO implements DAOInterface{
+public class ProgettoDAO implements DAOInterface<Progetto>{
 	
     private static ProgettoDAO instance;
 
@@ -114,11 +114,11 @@ public class ProgettoDAO implements DAOInterface{
         return listaProgetti;
     }
 
-    public void addProgetto(Progetto prog){
+    @Override public void create(Progetto prog){
         DBConnection.getInstance().updateDB("INSERT INTO progetti(nome,id_capoprog,saldo,budget) VALUES(nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getID() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget() + ")");
     }
     
-    public void updateProgetto(Progetto prog) {
+    @Override public void update(Progetto prog) {
         DBConnection.getInstance().updateDB("UPDATE progetti SET nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getID() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget());
     }
 

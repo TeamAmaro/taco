@@ -10,7 +10,7 @@ import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Utente;
 
-public class UtenteDAO implements DAOInterface{
+public class UtenteDAO implements DAOInterface<Utente>{
 	
     private static UtenteDAO instance;
     public static UtenteDAO getInstance(){
@@ -77,15 +77,19 @@ public class UtenteDAO implements DAOInterface{
         throw new NoIDMatchException(this);
     }
     
-    public void addUtente(String nome, String cognome, String email, String psw){
-        DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email,psw) VALUES('" + nome + "','" + cognome + "','" + email + "','" + psw + "')");
+    public void setPsw (Utente utente, String psw){
+        //Implementare
     }
     
-    public void updateUtente(){
-        //DA SCRIVERE
+    @Override public void create(Utente utente){
+        DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "')");
     }
     
-    @Override public void delete(IdentificabileID obj){
-        DBConnection.getInstance().updateDB("DELETE FROM utenti WHERE id = " + obj.getID());
+    @Override public void update(Utente utente){
+        //DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email,psw) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "','" + psw + "')");
+    }
+    
+    @Override public void delete(IdentificabileID utente){
+        DBConnection.getInstance().updateDB("DELETE FROM utenti WHERE id = " + utente.getID());
     }
 }

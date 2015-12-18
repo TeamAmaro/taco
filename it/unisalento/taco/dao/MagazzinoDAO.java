@@ -22,7 +22,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class MagazzinoDAO implements DAOInterface{
+public class MagazzinoDAO implements DAOInterface<Magazzino>{
 
     private static MagazzinoDAO instance;
 
@@ -114,8 +114,12 @@ public class MagazzinoDAO implements DAOInterface{
         }
     }
     
-    public void addMagazzino(String nome, String nome_sede){
-        DBConnection.getInstance().updateDB("INSERT INTO magazzini(nome,nome_sede) VALUES('" + nome + "','" + nome_sede + "')");
+    @Override public void create(Magazzino magazzino){
+        DBConnection.getInstance().updateDB("INSERT INTO magazzini(nome,nome_sede) VALUES('" + magazzino.getNome() + "','" + magazzino.getSede() + "')");
+    }
+    
+    @Override public void update(Magazzino magazzino){
+        //Da scrivere;
     }
     
     @Override public void delete(IdentificabileID obj){

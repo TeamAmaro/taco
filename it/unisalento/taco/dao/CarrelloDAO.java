@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CarrelloDAO implements DAOInterface{
+public class CarrelloDAO implements DAOInterface<Carrello>{
     
     private static CarrelloDAO instance;
     
@@ -83,24 +83,21 @@ public class CarrelloDAO implements DAOInterface{
         }
     }
     
-    public void addCarrello(Carrello carrello) {
+    @Override public void create(Carrello carrello) {
         for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
             DBConnection.getInstance().updateDB("INSERT INTO carrelli values(" + carrello.getDipendente().getID() + "," + val.getKey().getID() + "," + val.getValue() + ")");
         }
     }
     
-    public void updateCarrello(Carrello carrello) {
+    @Override public void update(Carrello carrello) {
         for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
             DBConnection.getInstance().updateDB("UPDATE carrelli SET id_dipendente = " + carrello.getDipendente().getID() + ", id_prodotto = " + val.getKey().getID() + ", quantita = " + val.getValue());
         }
     }
     
-    public void delete(Carrello obj){
-        DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + obj.getDipendente().getID());
-    }
-    
-    @Override public void delete(IdentificabileID obj){
-        //IL CARRELLO NON E' IDENTIFICATO DA UN ID
+    @Override public void delete(IdentificabileID dipendente){
+        if(dipendente instanceof Dipendente)
+            DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + dipendente.getID());
     }
     
     

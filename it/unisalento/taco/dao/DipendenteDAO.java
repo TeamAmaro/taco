@@ -13,7 +13,7 @@ import it.unisalento.taco.model.Sede;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class DipendenteDAO implements DAOInterface{
+public class DipendenteDAO implements DAOInterface<Dipendente>{
 	
     private static DipendenteDAO instance;
 
@@ -49,7 +49,6 @@ public class DipendenteDAO implements DAOInterface{
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
-            Carrello carrello = CarrelloDAO.getInstance().getByID(id);
             Dipendente dip = new Dipendente(id, riga[1], riga[2], riga[3], Sede.parseSede(riga[4]));
             return dip; 
         }
@@ -76,12 +75,12 @@ public class DipendenteDAO implements DAOInterface{
         return listaDipendenti;
     }
 
-    public void addDipendente(Dipendente dip){
+    @Override public void create(Dipendente dip){
         //DA AGGIORNARE PER ID_PROGETTO
         //DBConnection.getInstance().updateDB("INSERT INTO dipendenti(id_utente, id_progetto, nome_sede) VALUES(" + dip.getID() + "," + IDPROGETTO + ",'" + dip.getSede() + "')");
     }
     
-    public void update(Dipendente dip) {
+    @Override public void update(Dipendente dip) {
         //DA AGGIORNARE PER ID_PROGETTO
         //DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_utente = " + dip.getID() + ", id_progetto = " + IDPROGETTO + ", nome_sede = " + dip.getSede() + "WHERE id = " + dip.getID());
     }

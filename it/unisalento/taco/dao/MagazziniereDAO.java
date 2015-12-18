@@ -15,7 +15,7 @@ import it.unisalento.taco.model.Sede;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MagazziniereDAO implements DAOInterface{
+public class MagazziniereDAO implements DAOInterface<Magazziniere>{
     
     private static MagazziniereDAO instance;
     
@@ -42,12 +42,16 @@ public class MagazziniereDAO implements DAOInterface{
         }
     }
     
-    public void addMagazziniere(Magazziniere magazziniere){
+    @Override public void create(Magazziniere magazziniere){
         DBConnection.getInstance().updateDB("INSERT INTO magazzinieri VALUES(" + magazziniere.getID() + "," + magazziniere.getMagazzino().getID() + ")");
     }
     
     @Override public void delete(IdentificabileID obj){
         DBConnection.getInstance().updateDB("DELETE FROM magazzinieri WHERE id_utente = " + obj.getID());
+    }
+    
+    @Override public void update(Magazziniere magazziniere){
+        //da implementare;
     }
     
 }

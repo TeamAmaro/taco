@@ -2,7 +2,6 @@ package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;
@@ -18,7 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class OrdineDAO implements DAOInterface{
+public class OrdineDAO implements DAOInterface<Ordine>{
     private static OrdineDAO instance;
     
     public static OrdineDAO getInstance(){
@@ -97,13 +96,19 @@ public class OrdineDAO implements DAOInterface{
         return listaProdotti;
     }
     
-    public void addOrdine(Ordine ordine){
+    @Override public void update(Ordine ordine){
+        //Implementami pls
+    }
+    
+    @Override public void create(Ordine ordine){
         for(Map.Entry<Prodotto,Integer> val : ordine.getListaProdotti().entrySet()) {
             DBConnection.getInstance().updateDB("INSERT INTO ordini(codice,id_dipendente,nome_sede,id_progetto,id_magazzino,id_prodotto,quantita,data) values(codice = " + ordine.hashCode() + ", id_dipendente = " + ordine.getDipendente().getID() + ", id_progetto = " + ordine.getProgetto().getID() + ", id_magazzino = " + ordine.getMagazzino().getID() + ", id_prodotto = " + val.getKey().getID() + ", quantita = " + val.getValue() + ", data = " + ordine.getData() + ")");
         }
     }
     
-    //CODICE NON IMPLEMENTA getID(), COME FARE?
+    //Questa funzione va chiamata passando come parametro Ordine.hashCode();
+    //Ma perché mai dovremmo permettere di cancellare un ordine dal db?
+    //Tecnicamente parlando, è una cosa che non dovrebbe fare neanche il superadmin 
     @Override public void delete(IdentificabileID obj){
         //DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
     }
