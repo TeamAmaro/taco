@@ -44,7 +44,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
     }
 
     @Override public CapoProgetto getByID(int id) throws NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.id,utenti.nome,utenti.cognome,utenti.email,progetti.id,progetti.nome FROM utenti,progetti,capiprogetto WHERE utenti.id = " + id + " AND utenti.id = id_utente AND id_progetto = progetti.id");
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.id,utenti.nome,utenti.cognome,utenti.email FROM utenti WHERE utenti.id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();

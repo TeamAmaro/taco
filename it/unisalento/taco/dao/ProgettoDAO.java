@@ -55,15 +55,14 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     }
 
     @Override public Progetto getByID(int id) throws NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.id,progetti.nome,progetti.saldo,progetti.budget,utenti.id,utenti.nome,utenti.cognome,utenti.email FROM utenti,progetti,capiprogetto WHERE capiprogetto.id_progetto = " + id + " AND capiprogetto.id_utente = utenti.id");
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.*,utenti.nome,cognome,email FROM progetti JOIN utenti ON id_capoprog = utenti.id WHERE progetti.id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
-            double saldo = Double.parseDouble(riga[2]);
-            double budget = Double.parseDouble(riga[3]);
-            int capoProgID = Integer.parseInt(riga[4]);
+            double saldo = Double.parseDouble(riga[3]);
+            double budget = Double.parseDouble(riga[4]);
             try {
-                CapoProgetto capoProg = CapoProgettoDAO.getInstance().getByID(capoProgID);
+                CapoProgetto capoProg = new CapoProgetto(Integer.parseInt(riga[2]), riga[5], riga[6], riga[7]);
                 Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
                 Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget, listaDipendenti);
                 return prog;
