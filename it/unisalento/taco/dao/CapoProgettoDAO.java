@@ -61,7 +61,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
     }
     
     @Override public void update(CapoProgetto capoProgetto){
-        //Da implementare
+        //LA TABELLA CAPIPROGETTO HA SOLO L'ID DEL'UTENTE, NON DOVRA' MAI ESSERE AGGIORNATA
     }
     
     @Override public void delete(IdentificabileID obj){
