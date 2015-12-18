@@ -3,7 +3,7 @@ package it.unisalento.taco.model;
 import java.util.Date;
 import java.util.Map;
 
-public class Ordine{
+public class Ordine {
 
     private final Dipendente dipendente;
     private final Progetto progetto;
@@ -11,22 +11,30 @@ public class Ordine{
     private final Map<Prodotto,Integer> listaProdotti;
     private final long data;
     private boolean spedito;
+    private final double totale;
+    private final double spesaSpedizione;
 
-    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, long data, Map<Prodotto,Integer> listaProdotti) {
-            this.dipendente = dipendente;
-            this.progetto = progetto;
-            this.magazzino = magazzino;
-            this.data = data;
-            this.listaProdotti = listaProdotti;
-            spedito = false;
+    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, Long data, Map<Prodotto,Integer> listaProdotti, double totale, double spesaSpedizione){
+        this.dipendente = dipendente;
+        this.progetto = progetto;
+        this.magazzino = magazzino;
+        this.data = data;
+        this.listaProdotti = listaProdotti;
+        this.totale = totale;
+        this.spesaSpedizione = spesaSpedizione;
     }
     
-    //DA AGGIUNGERE NEL CASO IN CUI ORDINE DEVE CONTENERE IL CODICE
-    /*
-    @Override public int getID(){
-        return codice;
-    }*/
-    
+    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, long data, Map<Prodotto,Integer> listaProdotti) {
+        this.dipendente = dipendente;
+        this.progetto = progetto;
+        this.magazzino = magazzino;
+        this.data = data;
+        this.listaProdotti = listaProdotti;
+        spedito = false;
+        totale = calcolaTotale();
+        spesaSpedizione = calcolaSpesaSpedizione();
+    }
+
     public Dipendente getDipendente(){
         return dipendente;
     }
@@ -57,6 +65,14 @@ public class Ordine{
 
     public boolean isSpedito(){
         return spedito;
+    }
+    
+    public double getTotale(){
+        return totale;
+    }
+    
+    public double getSpesaSpedizione(){
+        return spesaSpedizione;
     }
 
     @Override public boolean equals(Object obj){
@@ -102,4 +118,45 @@ public class Ordine{
                 append("Data: ").append(data);
         return ordineString.toString();
     }   
+    
+    private double calcolaTotale(){
+        int totale = 0;
+        //Preleva le informazioni dell'ordine
+
+        //Scorri i prodotti e calcola il totale
+        for(Map.Entry<Prodotto, Integer> val : listaProdotti.entrySet())
+            totale += val.getKey().getPrezzo() * val.getValue();
+        
+        return totale;
+    }
+    
+    private double calcolaSpesaSpedizione(){
+        int spesaSpedizione = 0;
+        
+        //Calcolo le spese di spedizione
+        //Controllo la sede del magazzino e quella del dipendente
+        if(magazzino.getSede() == dipendente.getSede()){
+            //Se sono uguali, la spesa di spedizione è una tantum (1€)
+            spesaSpedizione = 1;
+        }
+        else{
+            int quantitaProdotti = 0;
+
+            for(Integer val : listaProdotti.values())
+                quantitaProdotti += val;
+
+            //Se il magazzino è esterno, la spesa di spedizione è (2€) 
+            //più una percentuale su quanti prodotti sono spediti
+
+            spesaSpedizione = 2;
+            spesaSpedizione += (quantitaProdotti / 10);
+
+            //La spesa di spedizione raggiunge un massimo di 10€ oltre un certo
+            //numero di articoli ordinati
+
+            if(spesaSpedizione > 10)
+                spesaSpedizione = 10;
+        }
+        return spesaSpedizione;
+    }
 }
