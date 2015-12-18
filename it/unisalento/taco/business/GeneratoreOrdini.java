@@ -1,7 +1,9 @@
 package it.unisalento.taco.business;
 
+import it.unisalento.taco.exceptions.InsufficientFundException;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
@@ -33,7 +35,8 @@ public class GeneratoreOrdini{
         Map<Prodotto,Integer> prodPerQuant = new LinkedHashMap<>();
         try{
             //Recupero il contenuto del carrello
-            Map<Prodotto,Integer> contenutoCarrello = dipendente.getCarrello().getListaProdotti();
+            Carrello carrello = Carrello.getByID(dipendente.getID());
+            Map<Prodotto,Integer> contenutoCarrello  = carrello.getListaProdotti();
             //Ottengo la sede del dipendente
             Sede sede = dipendente.getSede();
             //Cerco il magazzino più vicino al dipendente
@@ -74,7 +77,7 @@ public class GeneratoreOrdini{
         }
     }
     
-    public void generaOrdini(Dipendente dipendente, Map<Magazzino,Map<Prodotto,Integer>> magPerProd){
+    public void generaOrdini(Dipendente dipendente, Map<Magazzino,Map<Prodotto,Integer>> magPerProd) throws InsufficientFundException{
         //Lista degli ordini
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
         //Per ogni magazzino si fa un ordine diverso
@@ -90,7 +93,61 @@ public class GeneratoreOrdini{
         catch(NoQueryMatchException | NoIDMatchException e){
             e.printStackTrace();
         }
-        
         //Controlla possibilità del dipendente di effettuare l'ordine
+        //Calcolare il TOTALE
+        
+        double totale = 0;
+        
+        //Per ogni ordine
+        for(Ordine val : listaOrdini){
+            //aggiungi il totale di ogni ordine
+            totale += val.getTotale();
+            //aggiungi la spesa di spedizione
+            totale += val.getSpesaSpedizione();
+        }
+        
+        try{
+            //prendi il progetto e il saldo
+            Progetto progetto = Progetto.getProgetto(dipendente);
+            double saldo = progetto.getSaldo();
+            //Se il progetto non ha fondi sufficienti interrompi l'acquisto
+            if(saldo <= totale){ 
+                throw new InsufficientFundException("Acquisto: Impossibile completare l'acquisto per insufficienza di fondi. \nControlla il budget e riprova.");
+            }
+            else {
+                //FINALIZZO L'ACQUISTO
+                //cambia il saldo del progetto corrispondente
+                progetto.setSaldo(saldo - totale);
+                //rimuovi la merce acquistata dal carrello effettuando un'intersezione tra la merce passata in input e quella attualmente presente
+                Carrello cart = Carrello.getByID(dipendente.getID());
+                Map<Prodotto,Integer> prodottiChiesti = new LinkedHashMap<>();
+                
+                for(Map<Prodotto,Integer> map : magPerProd.values()){
+                    for(Map.Entry<Prodotto,Integer> val : map.entrySet())
+                        if(prodottiChiesti.containsKey(val.getKey()))
+                            prodottiChiesti.put(val.getKey(), prodottiChiesti.get(val.getKey()) + val.getValue());
+                        else
+                            prodottiChiesti.put(val.getKey(), val.getValue());
+                }
+                //Rimuovo dal carrello i prodotti comprati
+                cart.removeListaProdotti(prodottiChiesti);
+                //Recupero i magazzini
+                Set<Magazzino> magazzini = magPerProd.keySet();
+                for(Magazzino mag : magazzini){
+                    //Rimuovo da ogni magazzino i prodotti acquistati
+                    Map<Prodotto,Integer> sold = magPerProd.get(mag);
+                    mag.removeFromInventario(sold);
+                }
+                //Aggiorno il database inviando tutte le informazioni.
+            }
+        }
+        catch(NoQueryMatchException | NoIDMatchException e){
+            e.printStackTrace();
+        }
+        
+        
+        
     }
+    
+
 }
