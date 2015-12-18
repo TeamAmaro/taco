@@ -60,6 +60,10 @@ public class Prodotto implements IdentificabileID {
     public void setCategoria(Categoria categoria){
         this.categoria = categoria;
     }
+    
+    public void setListaFornitori(Set<Fornitore> listaFornitori){
+        this.listaFornitori = listaFornitori;
+    }
 
     public void addFornitore(Fornitore fornitore){
         if (listaFornitori.contains(Fornitore.FORNITORE_0))
