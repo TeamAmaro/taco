@@ -79,6 +79,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
     
     public void setPsw (Utente utente, String psw){
         //Implementare
+        //HOW DO I IMPLEMENTARE??
     }
     
     @Override public void create(Utente utente){
@@ -86,7 +87,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
     }
     
     @Override public void update(Utente utente){
-        //DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email,psw) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "','" + psw + "')");
+        DBConnection.getInstance().updateDB("UPDATE utenti SET nome = " + utente.getNome() + ", cognome = " + utente.getCognome() + ", email = " + utente.getEmail() + "WHERE id = " + utente.getID());
     }
     
     @Override public void delete(IdentificabileID utente){
