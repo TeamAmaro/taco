@@ -89,11 +89,11 @@ public class UtenteDAO implements DAOInterface<Utente>{
     
     public void setPsw (Utente utente, String psw){
         //Implementare
-        //HOW DO I IMPLEMENTARE??
     }
     
     @Override public void create(Utente utente){
-        DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "')");
+        if(utente.getID() == 0)
+            DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "')");
     }
     
     @Override public void update(Utente utente){
