@@ -60,6 +60,14 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
         return listaFornitori;
     }
     
+    public void addProduttore(Produttore produttore, Prodotto prodotto){
+        DBConnection.getInstance().updateDB("INSERT INTO produttori(nome,id_prodotto) VALUES(nome = '" + produttore.nome() + "', id_prodotto = " + prodotto.getID() + ")");
+    }
+    
+    public void addFornitore(Fornitore fornitore, Prodotto prodotto){
+        DBConnection.getInstance().updateDB("INSERT INTO fornitori(nome, id_prodotto) VALUES(nome = '" + fornitore.nome() + "', id_prodotto = " + prodotto.getID() + ")");
+    }
+    
     @Override public void create(Prodotto prodotto){
         DBConnection.getInstance().updateDB("INSERT INTO prodotti(nome,categoria,descrizione,prezzo) VALUES('" + prodotto.getNome() + "','" + prodotto.getCategoria() + "','" + prodotto.getDescrizione() + "'," + prodotto.getPrezzo() + ")");
     }
