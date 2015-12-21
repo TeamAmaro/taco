@@ -18,6 +18,13 @@ public class Magazzino  implements IdentificabileID {
         this.sede = sede;
         this.inventario = inventario;
     }
+    
+    public Magazzino(String nome, Sede sede){
+        //ID FITTIZIO
+        id = 0;
+        this.nome = nome;
+        this.sede = sede;
+    }
 
     public String getNome(){
         return nome;
@@ -95,6 +102,10 @@ public class Magazzino  implements IdentificabileID {
     
     public static Set<Magazzino> cercaProdotto(Prodotto prodotto){
         return MagazzinoDAO.getInstance().cercaProdotto(prodotto);
+    }
+    
+    public void addNewToDB(Magazzino mag){
+        MagazzinoDAO.getInstance().create(mag);
     }
     
 }
