@@ -42,6 +42,10 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
         }
     }
     
+    public void setMagazzino(Magazzino magazzino){
+        DBConnection.getInstance().updateDB("UPDATE magazziniere SET id_magazzino = " + magazzino.getID());
+    }
+    
     @Override public void create(Magazziniere magazziniere){
         DBConnection.getInstance().updateDB("INSERT INTO magazzinieri VALUES(" + magazziniere.getID() + "," + magazziniere.getMagazzino().getID() + ")");
     }
@@ -51,7 +55,7 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
     }
     
     @Override public void update(Magazziniere magazziniere){
-        //da implementare;
+        //nulla da scrivere al momento
     }
     
 }
