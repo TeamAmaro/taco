@@ -1,5 +1,7 @@
 package it.unisalento.taco.model;
 
+import it.unisalento.taco.dao.ProdottoDAO;
+import it.unisalento.taco.dbconnections.DBConnection;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -122,6 +124,18 @@ public class Prodotto implements IdentificabileID {
         categoria = build.categoria;
         listaFornitori = build.listaFornitori;
     }
+    
+    public void addToDB(Prodotto prodotto){
+        ProdottoDAO.getInstance().create(prodotto);
+    }
+    
+    public void addProduttore(Produttore produttore, Prodotto prodotto){
+        ProdottoDAO.getInstance().addProduttore(produttore, prodotto);
+    }
+    
+    public void addFornitore(Fornitore fornitore, Prodotto prodotto){
+        ProdottoDAO.getInstance().addFornitore(fornitore, prodotto);
+    }
 
     @Override public String toString(){
         StringBuilder prodottoString = new StringBuilder();
@@ -131,4 +145,6 @@ public class Prodotto implements IdentificabileID {
                        append(getListaFornitoriAsString());
         return prodottoString.toString();
     }
+    
+    
 }
