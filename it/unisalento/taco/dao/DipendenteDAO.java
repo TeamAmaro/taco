@@ -9,6 +9,7 @@ import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.IdentificabileID;
+import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Sede;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -74,15 +75,17 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
         }
         return listaDipendenti;
     }
+    
+    public void setProgetto(Dipendente dip, Progetto progetto){
+        DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_progetto = " + progetto.getID() + " WHERE id_utente = " + dip.getID());
+    }
 
     @Override public void create(Dipendente dip){
-        //DA AGGIORNARE PER ID_PROGETTO
-        //DBConnection.getInstance().updateDB("INSERT INTO dipendenti(id_utente, id_progetto, nome_sede) VALUES(" + dip.getID() + "," + IDPROGETTO + ",'" + dip.getSede() + "')");
+        DBConnection.getInstance().updateDB("INSERT INTO dipendenti(id_utente, nome_sede) VALUES(" + dip.getID() + ",'" + dip.getSede() + "')");
     }
     
     @Override public void update(Dipendente dip) {
-        //DA AGGIORNARE PER ID_PROGETTO
-        //DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_utente = " + dip.getID() + ", id_progetto = " + IDPROGETTO + ", nome_sede = " + dip.getSede() + "WHERE id = " + dip.getID());
+        DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_utente = " + dip.getID() + ", nome_sede = " + dip.getSede() + "WHERE id = " + dip.getID());
     }
 
     @Override public void delete(IdentificabileID obj) {
