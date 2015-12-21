@@ -19,7 +19,7 @@ public class UtenteDelegate {
     
     private UtenteDelegate(){}
     
-    public Utente login(String email, String password){
+    public Utente login(String email, String password) throws NoSuchUserException, NoIDMatchException{
 
         class Password {
             private String password;
@@ -54,8 +54,7 @@ public class UtenteDelegate {
             return client;
         }
         catch(NoSuchUserException | NoIDMatchException e){
-            System.err.println(e.getMessage());
+            throw e;
         }
-        return null;
     }
 }
