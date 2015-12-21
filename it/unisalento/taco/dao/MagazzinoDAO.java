@@ -64,20 +64,18 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         return quantita;
     }
 
-    //RESTITUISCE I MAGAZZINI IN CUI E' PRESENTE UN PRODOTTO
+    //RESTITUISCE UN SET DI MAGAZZINI IN CUI E' PRESENTE UN PRODOTTO ORDINATI IN ORDINE DISCENDENTE
     //Non è necessario lanciare eccezzioni in quanto viene restituita una lista vuota se
     //non ci sono corrispondenze.
     public Set<Magazzino> cercaProdotto(Prodotto prodotto){
-        String uberQuery = "SELECT * from magazzini, prod_mag, prodotti WHERE prodotti.id = "
-                + prodotto.getID() + " AND prod_mag.id_prodotto = prodotti.id AND prod_mag.id_magazzino = magazzini.id";
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB(uberQuery);
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT m.*,pm.quantita FROM magazzini m JOIN prod_mag pm ON m.id = pm.id_magazzino JOIN prodotti p ON p.id = pm.id_prodotto WHERE p.id = " + prodotto.getID() + " GROUP BY quantita DESC");
         Iterator<String[]> i = result.iterator();
         Set<Magazzino> magazzini = new LinkedHashSet<>();
 
         while(i.hasNext()){
             String[] riga = i.next();
             //SE LA QUANTITA' E' 0, SALTA IL MAGAZZINO
-            if(Integer.parseInt(riga[5]) == 0)
+            if(Integer.parseInt(riga[3]) == 0)
                 continue;
             int idMag = Integer.parseInt(riga[0]);
             Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag));
