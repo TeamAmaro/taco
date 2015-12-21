@@ -6,18 +6,19 @@ import it.unisalento.taco.exceptions.NoSuchUserException;
 
 public abstract class Utente implements IdentificabileID {
 	
-    private int id;
+    private final int id;
     private final String nome;
     private final String cognome;
     private String email;
     
     public Utente(String nome, String cognome, String email){
+        id = 0;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
     }
 
-    public Utente(int id, String nome, String cognome, String email){
+    public Utente (int id, String nome, String cognome, String email){
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
