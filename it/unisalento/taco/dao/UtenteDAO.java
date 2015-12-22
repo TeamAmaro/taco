@@ -10,6 +10,9 @@ import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Admin;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Utente;
+import it.unisalento.taco.security.Password;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public class UtenteDAO implements DAOInterface<Utente>{
 	
@@ -104,8 +107,14 @@ public class UtenteDAO implements DAOInterface<Utente>{
         throw new NoIDMatchException(this);
     }
     
-    public void setPsw (Utente utente, String psw){
-        //DA IMPLEMENTARE
+    public void setPsw (Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        try {
+            psw = new Password(psw).hash();
+        }
+        catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
+            throw e;
+        }
+        DBConnection.getInstance().updateDB("UPDATE utenti SET password = " + psw + " WHERE id = " + utente.getID());
     }
     
     @Override public void create(Utente utente){
