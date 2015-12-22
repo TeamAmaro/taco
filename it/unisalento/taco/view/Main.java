@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -36,7 +37,7 @@ public class Main extends Application{
         
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
-        
+        stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
         loginLevel();
         stage.show(); 
     } 
