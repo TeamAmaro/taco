@@ -49,6 +49,14 @@ public abstract class Utente implements IdentificabileID {
         return UtenteDAO.getInstance().getByID(id);
     }
     
+    public void setPassword(Utente utente, String psw){
+        UtenteDAO.getInstance().setPsw(utente, psw);
+    }
+    
+    public void addNewToDB(Utente utente){
+        UtenteDAO.getInstance().create(utente);
+    }
+    
     @Override public String toString(){
         StringBuilder stringUtente = new StringBuilder();
         stringUtente.append("ID: ").append(id).append(", Nome: ").append(nome).

@@ -21,8 +21,8 @@ public class Progetto implements IdentificabileID {
         this.nome = nome;
         this.capoProgetto = capoProgetto;
         this.budget = budget;
+        this.saldo = budget;
         this.listaDipendenti = listaDipendenti;
-        budget = saldo;
     }
     
     public Progetto(int id, String nome, CapoProgetto capoProgetto, double saldo, double budget, Set<Dipendente> listaDipendenti){
@@ -32,6 +32,14 @@ public class Progetto implements IdentificabileID {
         this.budget = budget;
         this.saldo = saldo;
         this.listaDipendenti = listaDipendenti;
+    }
+    
+    public Progetto(String nome, CapoProgetto capoProgetto, double budget){
+        id = 0;
+        this.nome = nome;
+        this.capoProgetto = capoProgetto;
+        this.budget = budget;
+        this.saldo = budget;
     }
         
     public void setSaldo(double saldo){
@@ -49,6 +57,12 @@ public class Progetto implements IdentificabileID {
     public void addDipendente(Dipendente... args){
         listaDipendenti.addAll(Arrays.asList(args));
     }
+    
+    /*
+    NOTA BENE
+    L'OGGETTO PROGETTO HA LISTADIPENDENTI MA NEL DB E' DIPENDENTE AD AVERE L'ID DEL PROGETTO
+    LA FUNZIONE setProgetto() PER IL DB E' LOCATA IN DIPENDENTEDAO
+    */
 
     @Override public int getID() {
         return id;
@@ -89,6 +103,10 @@ public class Progetto implements IdentificabileID {
 
     public static Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
         return ProgettoDAO.getInstance().getProgetto(dipendente);
+    }
+    
+    public void addToDB(Progetto progetto){
+        ProgettoDAO.getInstance().create(progetto);
     }
     
     @Override public String toString(){

@@ -8,7 +8,7 @@ public class DipendenteDelegate {
 	
 	public static DipendenteDelegate getInstance(){
 		if(instance == null)
-			instance = new DipendenteDelegate();
+                    instance = new DipendenteDelegate();
 		return instance;
 	}
 	private DipendenteDelegate(){};

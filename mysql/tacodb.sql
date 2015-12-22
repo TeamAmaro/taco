@@ -207,7 +207,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
-INSERT INTO `prod_mag` VALUES (1,1,12),(2,2,7),(1,2,30);
+INSERT INTO `prod_mag` VALUES (1,1,2),(2,2,7),(1,2,14);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,6 +312,28 @@ INSERT INTO `sedi` VALUES ('Sede A','Parco della Vittoria 5'),('Sede B','Viale d
 UNLOCK TABLES;
 
 --
+-- Table structure for table `superadmin`
+--
+
+DROP TABLE IF EXISTS `superadmin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `superadmin` (
+  `id_utente` int(10) unsigned DEFAULT NULL,
+  UNIQUE KEY `id_utente` (`id_utente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `superadmin`
+--
+
+LOCK TABLES `superadmin` WRITE;
+/*!40000 ALTER TABLE `superadmin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `superadmin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `utenti`
 --
 
@@ -324,10 +346,10 @@ CREATE TABLE `utenti` (
   `cognome` varchar(60) NOT NULL,
   `email` varchar(60) NOT NULL,
   `password` varchar(128) NOT NULL,
-  `data_reg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `email_2` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,7 +358,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817','2015-12-14 11:20:56'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866','2015-12-14 11:22:19'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3','2015-12-14 11:22:42'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc','2015-12-14 11:22:56'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3','2015-12-14 11:23:09');
+INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -349,4 +371,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-17 14:05:38
+-- Dump completed on 2015-12-21 18:09:20
