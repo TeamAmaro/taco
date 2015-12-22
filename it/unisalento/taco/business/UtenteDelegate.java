@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import it.unisalento.taco.security.Password;
 
 public class UtenteDelegate {
     private static UtenteDelegate instance;
@@ -21,29 +22,12 @@ public class UtenteDelegate {
     
     public Utente login(String email, String password) throws NoSuchUserException, NoIDMatchException{
 
-        class Password {
-            private String password;
-
-            private Password(String password){
-                this.password = password;
-            }
-
-            private String hash() throws NoSuchAlgorithmException, UnsupportedEncodingException{
-                MessageDigest digest = MessageDigest.getInstance("MD5");
-                byte[] bytes = password.getBytes("UTF-8");
-                digest.update(bytes);
-                byte[] hash = digest.digest(bytes);
-                BigInteger big = new BigInteger(1,hash);
-                password = big.toString(16);
-                return password;
-            }
-        }
         //Codifica la password con algoritmo MD5
         try{
             password = new Password(password).hash();
         }
         catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         //Cerca l'utente nel database. Ci sono corrispondenze?
         try{
