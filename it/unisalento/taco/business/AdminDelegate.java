@@ -6,7 +6,6 @@
 
 package it.unisalento.taco.business;
 
-import it.unisalento.taco.dao.ProgettoDAO;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Dipendente;
@@ -17,7 +16,8 @@ import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Sede;
-import it.unisalento.taco.model.Utente;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public class AdminDelegate {
 
@@ -31,26 +31,34 @@ public class AdminDelegate {
     
     private AdminDelegate(){};
     
-    public void creaDipendente(String nome, String cognome, String email, String psw, String nomeSede){
-        //CREA L'OGGETTO
+    public void creaDipendente(String nome, String cognome, String email, String psw, String nomeSede) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        //CREA L'OGGETTO SENZA ID
         Dipendente dip = new Dipendente(nome, cognome, email, Sede.parseSede(nomeSede));
-        //CREA NEL DATABASE UNA NUOVA RIGA CON NOME,COGNOME,EMAIL
-        dip.addNewToDB(dip);
+        //SALVA LA SEDE
+        Sede sede = dip.getSede();
+        //CREA NELLA TABELLA utenti UNA NUOVA RIGA CON NOME,COGNOME,EMAIL
+        Dipendente.addNewToDB(dip);
+        //OTTIENE IL NUOVO DIPENDENTE CON ID DAL DATABASE
+        dip = Dipendente.getDipendente(dip.getEmail());
+        //AGGIUNGE LA SEDE AL DIPENDENTE
+        dip.setSede(sede);
         //CREA LA PASSWORD CRIPTATA E LA IMPOSTA
         dip.setPassword(dip, psw);
         //AGGIUNGE IL DIPENDENTE ALLA TABELLA DIPENDENTI DEL DB
-        dip.addToDB(dip);
+        Dipendente.addDipendente(dip);
     }
     
-    public void creaMagazziniere(String nome, String cognome, String email, String psw){
+    public void creaMagazziniere(String nome, String cognome, String email, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{
         //CREA L'OGGETTO SENZA MAGAZZINO
         Magazziniere mag = new Magazziniere(nome, cognome, email);
         //CREA NEL DATABASE UNA NUOVA RIGA CON NOME,COGNOME,EMAIL
-        mag.addNewToDB(mag);
+        Magazziniere.addNewToDB(mag);
+        //OTTIENE IL NUOVO MAGAZZINIERE CON ID
+        mag = Magazziniere.getMagazziniere(mag.getEmail());
         //CREA LA PASSWORD CRIPTATA E LA IMPOSTA
         mag.setPassword(mag, psw);
         //AGGIUNGE IL MAGAZZINIERE ALLA TABELLA MAGAZZINIERI DEL DB CON MAGAZZINO NULL
-        mag.addToDB(mag);
+        Magazziniere.addMagazziniere(mag);
         //RICORDARSI POI DI USARE setMagazzino()
     }
     
@@ -60,7 +68,7 @@ public class AdminDelegate {
     }
     
     public void setMagazzino(Magazziniere magazziniere, Magazzino magazzino){
-        magazziniere.setMagazzino(magazzino);
+        Magazziniere.setMagazzino(magazziniere, magazzino);
     }
     
     public void creaCapoProgetto(String nome, String cognome, String email, String psw){
