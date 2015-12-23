@@ -58,6 +58,14 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
         }
     }
     
+    public Dipendente getDipendente(String email){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = '" + email + "'");
+        Iterator<String[]> i = result.iterator();
+        String[] riga = i.next();
+        Dipendente dip = new Dipendente(Integer.parseInt(riga[0]), riga[1], riga[2], riga[3], null);
+        return dip;
+    }
+    
     
     public Set<Dipendente> getListaDipendenti(int idProg) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM dipendenti WHERE id_progetto = " + idProg);

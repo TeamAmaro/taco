@@ -42,12 +42,23 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
         }
     }
     
-    public void setMagazzino(Magazzino magazzino){
-        DBConnection.getInstance().updateDB("UPDATE magazziniere SET id_magazzino = " + magazzino.getID());
+    public Magazziniere getMagazziniere(String email){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = '" + email + "'");
+        Iterator<String[]> i = result.iterator();
+        String[] riga = i.next();
+        Magazziniere mag = new Magazziniere(Integer.parseInt(riga[0]), riga[1], riga[2], riga[3], null);
+        return mag;
+    }
+    
+    public void setMagazzino(Magazziniere magazziniere, Magazzino magazzino){
+        DBConnection.getInstance().updateDB("UPDATE magazzinieri SET id_magazzino = " + magazzino.getID() + " WHERE id_utente = " + magazziniere.getID());
     }
     
     @Override public void create(Magazziniere magazziniere){
-        DBConnection.getInstance().updateDB("INSERT INTO magazzinieri VALUES(" + magazziniere.getID() + "," + magazziniere.getMagazzino().getID() + ")");
+        if(magazziniere.getMagazzino() != null)
+            DBConnection.getInstance().updateDB("INSERT INTO magazzinieri VALUES(" + magazziniere.getID() + "," + magazziniere.getMagazzino().getID() + ")");
+        else
+            DBConnection.getInstance().updateDB("INSERT INTO magazzinieri VALUES(" + magazziniere.getID() + ", 0)");
     }
     
     @Override public void delete(IdentificabileID obj){

@@ -112,6 +112,14 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         }
     }
     
+    public Magazzino getMagazzino(int id){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id = " + id);
+        Iterator<String[]> i = result.iterator();
+        String[] riga = i.next();
+        Magazzino mag = new Magazzino(Integer.parseInt(riga[0]), riga[1], Sede.parseSede(riga[2]), null);
+        return mag;
+    }
+    
     @Override public void create(Magazzino magazzino){
         DBConnection.getInstance().updateDB("INSERT INTO magazzini(nome,nome_sede) VALUES('" + magazzino.getNome() + "','" + magazzino.getSede() + "')");
     }
