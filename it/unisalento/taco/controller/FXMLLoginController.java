@@ -12,46 +12,32 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-
-/**
- * Login Controller.
- */
 public class FXMLLoginController extends AnchorPane implements Initializable {
 
-    @FXML
-    TextField userId;
-    @FXML
-    PasswordField password;
-    @FXML
-    Button login;
-    @FXML
-    Label errorMessage;
+    @FXML TextField emailField;
+    @FXML PasswordField passwordField;
+    @FXML Button loginButton;
+    @FXML Label errorMessage;
 
     private Main application;
-    
     
     public void setApp(Main application){
         this.application = application;
     }
     
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @Override public void initialize(URL location, ResourceBundle resources) {
         errorMessage.setText("");
-        userId.setPromptText("demo");
-        password.setPromptText("demo");
+        emailField.setPromptText("Email");
+        passwordField.setPromptText("Username");
         
     }
     
     
-    public void processLogin(ActionEvent event) {
-        if (application == null){
-            // We are running in isolated FXML, possibly in Scene Builder.
-            // NO-OP.
-            errorMessage.setText("Hello " + userId.getText());
-        } else {
-            if (!application.login(userId.getText(), password.getText())){
-                errorMessage.setText("Username/Password is incorrect");
-            }
+    public void effettuaLogin(ActionEvent event) {
+        if (!application.login(emailField.getText(), passwordField.getText())){
+            errorMessage.setText("Combinazione Email/Password non corretta!");
         }
+        else 
+            errorMessage.setText("Benvenuto a TACO " + emailField.getText());
     }
 }
