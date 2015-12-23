@@ -20,11 +20,15 @@ public class Magazziniere extends Utente  implements IdentificabileID {
         return magazzino;
     }
     
-    public void setMagazzino(Magazzino magazzino){
-        MagazziniereDAO.getInstance().setMagazzino(magazzino);
+    public static void setMagazzino(Magazziniere magazziniere, Magazzino magazzino){
+        MagazziniereDAO.getInstance().setMagazzino(magazziniere, magazzino);
     }
     
-    public void addToDB(Magazziniere mag){
+    public static void addMagazziniere(Magazziniere mag){
         MagazziniereDAO.getInstance().create(mag);
+    }
+    
+    public static Magazziniere getMagazziniere(String email){
+        return MagazziniereDAO.getInstance().getMagazziniere(email);
     }
 }

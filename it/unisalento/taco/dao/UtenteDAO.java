@@ -114,12 +114,12 @@ public class UtenteDAO implements DAOInterface<Utente>{
         catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
             throw e;
         }
-        DBConnection.getInstance().updateDB("UPDATE utenti SET password = " + psw + " WHERE id = " + utente.getID());
+        DBConnection.getInstance().updateDB("UPDATE utenti SET password = '" + psw + "' WHERE id = " + utente.getID());
     }
     
     @Override public void create(Utente utente){
         if(utente.getID() == 0)
-            DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "')");
+            DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email,password) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "', 'asd')");
     }
     
     @Override public void update(Utente utente){

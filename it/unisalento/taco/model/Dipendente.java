@@ -24,7 +24,11 @@ public class Dipendente extends Utente  implements IdentificabileID {
         return sede;
     }
     
-    public void addToDB(Dipendente dipendente){
+    public static void addDipendente(Dipendente dipendente){
         DipendenteDAO.getInstance().create(dipendente);
+    }
+    
+    public static Dipendente getDipendente(String email){
+        return DipendenteDAO.getInstance().getDipendente(email);
     }
 }

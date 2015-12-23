@@ -3,6 +3,8 @@ package it.unisalento.taco.model;
 import it.unisalento.taco.dao.UtenteDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class Utente implements IdentificabileID {
 	
@@ -49,11 +51,11 @@ public abstract class Utente implements IdentificabileID {
         return UtenteDAO.getInstance().getByID(id);
     }
     
-    public void setPassword(Utente utente, String psw){
+    public void setPassword(Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         UtenteDAO.getInstance().setPsw(utente, psw);
     }
     
-    public void addNewToDB(Utente utente){
+    public static void addNewToDB(Utente utente){
         UtenteDAO.getInstance().create(utente);
     }
     
