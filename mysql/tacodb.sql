@@ -33,7 +33,7 @@ CREATE TABLE `capiprogetto` (
 
 LOCK TABLES `capiprogetto` WRITE;
 /*!40000 ALTER TABLE `capiprogetto` DISABLE KEYS */;
-INSERT INTO `capiprogetto` VALUES (2),(3);
+INSERT INTO `capiprogetto` VALUES (2),(3),(23);
 /*!40000 ALTER TABLE `capiprogetto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +81,7 @@ CREATE TABLE `dipendenti` (
 
 LOCK TABLES `dipendenti` WRITE;
 /*!40000 ALTER TABLE `dipendenti` DISABLE KEYS */;
-INSERT INTO `dipendenti` VALUES (1,1,'Sede A');
+INSERT INTO `dipendenti` VALUES (1,1,'Sede A'),(16,NULL,'Sede B'),(17,NULL,'Sede B');
 /*!40000 ALTER TABLE `dipendenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +153,7 @@ CREATE TABLE `magazzinieri` (
 
 LOCK TABLES `magazzinieri` WRITE;
 /*!40000 ALTER TABLE `magazzinieri` DISABLE KEYS */;
-INSERT INTO `magazzinieri` VALUES (4,1),(5,2);
+INSERT INTO `magazzinieri` VALUES (4,1),(5,2),(20,3);
 /*!40000 ALTER TABLE `magazzinieri` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +275,7 @@ CREATE TABLE `progetti` (
   `saldo` double DEFAULT NULL,
   `budget` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,7 +349,7 @@ CREATE TABLE `utenti` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `email_2` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,7 +358,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3');
+INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3'),(16,'Jim','Questions','jim.questions@ask.com','e7af1c75730aa1184fa928dae1bdf8e'),(17,'John','Cena','john.cena@wwe.com','e7af1c75730aa1184fa928dae1bdf8e'),(20,'Paolino','Paperino','paolino.paperino@topolino.it','e7af1c75730aa1184fa928dae1bdf8e'),(23,'Alfonso','Verde','alfonso.verde@green.ve','2d91bf040b3919d9f743ee80b12377e5');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -371,4 +371,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-21 18:09:20
+-- Dump completed on 2015-12-24 13:41:06
