@@ -34,9 +34,23 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
         }
         return capiProgetto;
     }
+    
+    public CapoProgetto getCapoProgetto(String email) throws NoQueryMatchException {
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = '" + email + "'");
+        Iterator<String[]> i = result.iterator();
+        if(i.hasNext()){
+            String[] riga = i.next();
+            int id = Integer.parseInt(riga[0]);
+            CapoProgetto capoProg = new CapoProgetto(id, riga[1], riga[2], riga[3]);
+            return capoProg;
+        }
+        else {
+            throw new NoQueryMatchException(this);
+        }
+    }
 
     //OTTIENE IL CAPOPROGETTO TRAMITE IL PROGETTO
-    public CapoProgetto getByProgetto(Progetto progetto) throws NoQueryMatchException {
+    public CapoProgetto getCapoProgetto(Progetto progetto) throws NoQueryMatchException {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email FROM utenti,capiprogetto WHERE id_progetto = " + progetto.getID() + " AND utenti.id = capiprogetto.id_utente");
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
