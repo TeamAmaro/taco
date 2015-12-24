@@ -105,8 +105,16 @@ public class Progetto implements IdentificabileID {
         return ProgettoDAO.getInstance().getProgetto(dipendente);
     }
     
-    public void addToDB(Progetto progetto){
+    public static Progetto getProgetto(String nome){
+        return ProgettoDAO.getInstance().getProgetto(nome);
+    }
+    
+    public static void addProgetto(Progetto progetto){
         ProgettoDAO.getInstance().create(progetto);
+    }
+    
+    public static void setCapoProgetto(Progetto prog, CapoProgetto capo){
+        ProgettoDAO.getInstance().setCapoProgetto(prog, capo);
     }
     
     @Override public String toString(){
