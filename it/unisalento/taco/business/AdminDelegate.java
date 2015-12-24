@@ -6,6 +6,7 @@
 
 package it.unisalento.taco.business;
 
+import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Dipendente;
@@ -71,28 +72,34 @@ public class AdminDelegate {
         Magazziniere.setMagazzino(magazziniere, magazzino);
     }
     
-    public void creaCapoProgetto(String nome, String cognome, String email, String psw){
+    public void creaCapoProgetto(String nome, String cognome, String email, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException{
         CapoProgetto capo = new CapoProgetto(nome,cognome,email);
-        capo.addNewToDB(capo);
-        capo.addToDB(capo);
+        CapoProgetto.addNewToDB(capo);
+        capo = CapoProgetto.getCapoProgetto(capo.getEmail());
+        capo.setPassword(capo, psw);
+        CapoProgetto.addCapoProgetto(capo);
     }
     
     public void creaProgetto(String nome, CapoProgetto capo, double budget){
         Progetto progetto = new Progetto(nome, capo, budget);
-        progetto.addToDB(progetto);
+        Progetto.addProgetto(progetto);
+    }
+    
+    public void setCapoProgetto(Progetto prog, CapoProgetto capo){
+        Progetto.setCapoProgetto(prog, capo);
     }
     
     public void creaProdotto(String nome, double prezzo, Produttore produttore, String descrizione, Categoria categoria){
         Prodotto prodotto = new Prodotto.Builder(0, nome, prezzo, produttore).descrizione(descrizione).categoria(categoria).build();
-        prodotto.addToDB(prodotto);
+        Prodotto.addProdotto(prodotto);
     }
     
     public void addProduttore(Produttore produttore, Prodotto prodotto){
-        prodotto.addProduttore(produttore, prodotto);
+        Prodotto.addProduttore(produttore, prodotto);
     }
     
     public void addFornitore(Fornitore fornitore, Prodotto prodotto){
-        prodotto.addFornitore(fornitore, prodotto);
+        Prodotto.addFornitore(fornitore, prodotto);
     }
     
 }
