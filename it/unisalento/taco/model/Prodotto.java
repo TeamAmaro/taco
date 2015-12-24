@@ -125,15 +125,15 @@ public class Prodotto implements IdentificabileID {
         listaFornitori = build.listaFornitori;
     }
     
-    public void addToDB(Prodotto prodotto){
+    public static void addProdotto(Prodotto prodotto){
         ProdottoDAO.getInstance().create(prodotto);
     }
     
-    public void addProduttore(Produttore produttore, Prodotto prodotto){
+    public static void addProduttore(Produttore produttore, Prodotto prodotto){
         ProdottoDAO.getInstance().addProduttore(produttore, prodotto);
     }
     
-    public void addFornitore(Fornitore fornitore, Prodotto prodotto){
+    public static void addFornitore(Fornitore fornitore, Prodotto prodotto){
         ProdottoDAO.getInstance().addFornitore(fornitore, prodotto);
     }
 
