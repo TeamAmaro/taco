@@ -12,6 +12,7 @@ import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;
+import it.unisalento.taco.model.Sede;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -93,6 +94,28 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
         else
             throw new NoQueryMatchException(this);
     }
+    
+    public Progetto getProgetto(String nome){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT p.*,u.* FROM progetti p JOIN utenti u ON u.id = p.id_capoprog WHERE p.nome = '" + nome + "'");
+        Iterator<String[]> i = result.iterator();
+        String[] riga = i.next();
+        CapoProgetto capo = new CapoProgetto(Integer.parseInt(riga[5]), riga[6], riga[7], riga[8]);
+        Progetto progetto =  new Progetto(Integer.parseInt(riga[0]), riga[1], capo, Double.parseDouble(riga[3]), Double.parseDouble(riga[4]), null);
+        progetto.setListaDipendenti(getListaDipendenti(progetto));
+        return progetto;
+    }
+    
+    public Set<Dipendente> getListaDipendenti(Progetto prog){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT u.*,d.nome_sede FROM utenti u JOIN dipendenti d ON u.id = d.id_utente WHERE d.id_progetto = " + prog.getID());
+        Iterator<String[]> i = result.iterator();
+        Set<Dipendente> listaDipendenti = new LinkedHashSet<>();
+        while(i.hasNext()){
+            String[] riga = i.next();
+            Dipendente dipendente = new Dipendente(Integer.parseInt(riga[0]), riga[1], riga[2], riga[3], Sede.parseSede(riga[4]));
+            listaDipendenti.add(dipendente);
+        }
+        return listaDipendenti;
+    }
 
     public Set<Progetto> getListaProgetti(CapoProgetto capoProgetto) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.* FROM progetti,capiprogetto WHERE id_progetto = progetti.id AND id_utente =" + capoProgetto.getID());
@@ -111,6 +134,10 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
             }
         }
         return listaProgetti;
+    }
+    
+    public void setCapoProgetto(Progetto prog, CapoProgetto capo){
+        DBConnection.getInstance().updateDB("UPDATE progetti SET id_capoprog = " + capo.getID() + " WHERE id = " + prog.getID());
     }
 
     @Override public void create(Progetto prog){
