@@ -13,13 +13,13 @@
 <AnchorPane  xmlns:fx="http://javafx.com/fxml/1" id="AnchorPAIN" styleClass="green" 
              fx:controller="it.unisalento.taco.controller.FXMLLoginController">
     <children>
-        <VBox alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="0" prefHeight="200" styleClass="blue">
+        <HBox alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="0" prefHeight="200" styleClass="blue">
             <ImageView id="app-login-logo">
               <image>
                 <Image url="@../img/logo1.jpg" preserveRatio="true" smooth="true" />
               </image>
             </ImageView>
-        </VBox>
+        </HBox>
         <GridPane alignment="center" hgap="10" vgap="10" AnchorPane.topAnchor ="230" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" 
                   AnchorPane.bottomAnchor="10" styleClass="yellow">
             <children>
