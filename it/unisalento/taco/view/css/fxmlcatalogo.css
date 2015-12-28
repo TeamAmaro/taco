@@ -5,3 +5,42 @@
 .mainFxmlClass {
 
 }
+
+.blue {
+    -fx-background-color: blue;
+}
+
+.red {
+    -fx-background-color: red;
+}
+
+.yellow {
+    -fx-background-color: yellow;
+}
+
+.green {
+    -fx-background-color: green;
+}
+
+.top-bar-label {
+    -fx-font-family: Arial, Verdana, sans-serif;
+    -fx-font-size: 18;
+}
+
+.left-menu-label {
+    -fx-font-family: Arial, Verdana, sans-serif;
+    -fx-font-size: 18;
+}
+
+.search-bar {
+    -fx-border: none;
+    -fx-background-color: transparent;
+    -fx-font-size: 30;
+    -fx-font-family: Arial, Verdana, sans-serif;
+}
+
+
+.search-bar:active {
+    -fx-border: none;
+    -fx-background-color: transparent;
+}
