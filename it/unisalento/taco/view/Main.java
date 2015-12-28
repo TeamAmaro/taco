@@ -23,8 +23,8 @@ public class Main extends Application{
     private Stage stage;
     private Utente client;
     
-    private final double MINIMUM_WINDOW_WIDTH = 500.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 450.0;
+    private final double MINIMUM_WINDOW_WIDTH = 400.0;
+    private final double MINIMUM_WINDOW_HEIGHT = 400.0;
     
     public static void main(String[] args) { 
         launch(args); 
@@ -38,15 +38,15 @@ public class Main extends Application{
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
-        loginLevel();
+        catalogoLevel();
         stage.show(); 
     } 
  
     private void loginLevel(){
         try {
-            FXMLLoginController login = (FXMLLoginController) replaceSceneContent("fxml/FXMLLogin.fxml");
+            FXMLLoginController login = (FXMLLoginController) cambiaLivello("fxml/FXMLLogin.fxml", 400.0, 600.0);
             login.setApp(this);
-            //stage.setResizable(false);
+            stage.setResizable(false);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,8 +54,7 @@ public class Main extends Application{
     
     private void catalogoLevel(){
         try {
-            FXMLCatalogoController catalogo = (FXMLCatalogoController) replaceSceneContent("fxml/FXMLCatalogo.fxml");
-            catalogo.setApp(this);
+            FXMLCatalogoController catalogo = (FXMLCatalogoController) cambiaLivello("fxml/FXMLCatalogo.fxml");
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,7 +80,7 @@ public class Main extends Application{
         loginLevel();
     }
     
-    private Initializable replaceSceneContent(String fxml) throws Exception {
+    private Initializable cambiaLivello(String fxml) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         InputStream in = Main.class.getResourceAsStream(fxml);
         loader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -92,7 +91,24 @@ public class Main extends Application{
         } finally {
             in.close();
         } 
-        Scene scene = new Scene(root, 500.0, 450.0);
+        Scene scene = new Scene(root, 800.0, 600.0);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        return (Initializable) loader.getController();
+    }
+    
+    private Initializable cambiaLivello(String fxml, double width, double height) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        InputStream in = Main.class.getResourceAsStream(fxml);
+        loader.setBuilderFactory(new JavaFXBuilderFactory());
+        loader.setLocation(Main.class.getResource(fxml));
+        Pane root;
+        try {
+            root = (Pane) loader.load(in);
+        } finally {
+            in.close();
+        } 
+        Scene scene = new Scene(root, width, height);
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();
