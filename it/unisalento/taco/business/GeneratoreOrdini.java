@@ -66,6 +66,12 @@ public class GeneratoreOrdini{
                         prodPerQuant.put(prod, quantMagExt);
                         magPerProd.put(magExt, prodPerQuant);
                     }
+                    //Effettuare la selezione degli acquisti
+                    Map<Magazzino,Map<Prodotto,Integer>> listaDef = new LinkedHashMap<>();
+                    Map<Prodotto,Integer> listaProdDef = new LinkedHashMap<>();
+                    for(Map.Entry<Magazzino,Map<Prodotto,Integer>> mag : magPerProd.entrySet())
+                        ;
+                    
                 } 
             }
         }
