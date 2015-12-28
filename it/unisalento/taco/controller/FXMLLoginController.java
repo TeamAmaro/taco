@@ -32,7 +32,6 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
         
     }
     
-    
     public void effettuaLogin(ActionEvent event) {
         if (!application.login(emailField.getText(), passwordField.getText())){
             errorMessage.setText("Combinazione Email/Password non corretta!");
