@@ -14,9 +14,10 @@ public class Carrello implements IdentificabileID{
     public Carrello(Dipendente dipendente, Map<Prodotto,Integer> listaProdotti){
         this.listaProdotti = listaProdotti;
         this.dipendente = dipendente;
-        calcolaTotale();
+        this.totale = calcolaTotale();
     }
     
+    @Override
     public int getID(){
         return dipendente.getID();
     }
@@ -24,8 +25,13 @@ public class Carrello implements IdentificabileID{
     public Dipendente getDipendente(){
         return dipendente;
     }
+    
     public void setListaProdotti(Map<Prodotto,Integer> listaProdotti){
         this.listaProdotti = listaProdotti;
+    }
+    
+    public void setTotale(){
+        this.totale = calcolaTotale();
     }
     
     public void removeListaProdotti(Map<Prodotto,Integer> listaProdotti){
@@ -43,6 +49,7 @@ public class Carrello implements IdentificabileID{
             listaProdotti.put(prodotto, listaProdotti.get(prodotto) + quantita);
         else
             listaProdotti.put(prodotto, quantita);
+        setTotale();
     }
 
     public void removeProdotto(Prodotto prodotto, int quantita){
@@ -55,15 +62,28 @@ public class Carrello implements IdentificabileID{
         }		
     }
 
-    public void calcolaTotale(){
+    public double calcolaTotale(){
         totale = 0;
         for(Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet()){
             totale += e.getKey().getPrezzo() * e.getValue();
         }
+        return totale;
     }
     
     public static Carrello getByID(int id) throws NoIDMatchException{
         return CarrelloDAO.getInstance().getByID(id);
+    }
+    
+    public static void addProdotto(Carrello carrello, Prodotto prodotto, int quantita){
+        CarrelloDAO.getInstance().addProdotto(carrello, prodotto, quantita);
+    }
+    
+    public static void deleteProdotto(Carrello carrello, Prodotto prodotto){
+        CarrelloDAO.getInstance().deleteProdotto(carrello, prodotto);
+    }
+    
+    public static Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{
+        return CarrelloDAO.getInstance().getCarrello(dipendente);
     }
     
     
@@ -77,7 +97,7 @@ public class Carrello implements IdentificabileID{
         for (Map.Entry<Prodotto, Integer> e : listaProdotti.entrySet())
             stringCarrello.append(e.getKey().getNome()).append(" x ").append(e.getValue()).append("\n");
         
-        stringCarrello.append("Totale :" + totale);
+        stringCarrello.append("Totale : " + totale);
         return stringCarrello.toString();
     }
 }
