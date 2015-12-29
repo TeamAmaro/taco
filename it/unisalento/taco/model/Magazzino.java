@@ -54,21 +54,29 @@ public class Magazzino  implements IdentificabileID {
 
     public void addProdotto(Prodotto prodotto, int quantita){
         System.out.println("Hai aggiunto " + quantita + " " + prodotto.getNome() + " all'inventario");
-        if(inventario.containsKey(prodotto))
+        if(inventario.containsKey(prodotto)){
             inventario.put(prodotto, inventario.get(prodotto) + quantita);
-        else
+            MagazzinoDAO.getInstance().updateQuantita(this, prodotto, inventario.get(prodotto) + quantita);
+        }
+        else {
             inventario.put(prodotto, quantita);
+            MagazzinoDAO.getInstance().addProdotto(this, prodotto, quantita);
+        }
     }
 
     public void removeProdotto(Prodotto prodotto, int quantita){
-        System.out.println("Hai rimosso " + quantita + " " + prodotto.getNome() + " dall'inventario");
         if(inventario.containsKey(prodotto)){
             int prevValue = inventario.get(prodotto);
-            if(prevValue - quantita <= 0)
+            if(prevValue - quantita <= 0){
                 inventario.remove(prodotto);
-            else
+                MagazzinoDAO.getInstance().deleteProdotto(this, prodotto);
+            }
+            else {
                 inventario.put(prodotto, prevValue - quantita);
-        }		
+                MagazzinoDAO.getInstance().updateQuantita(this, prodotto, prevValue - quantita);
+            }
+            System.out.println("Hai rimosso " + quantita + " " + prodotto.getNome() + " dall'inventario");
+        }
     }
 
     public int cercaProdotto(Prodotto prodotto, int quantita){
