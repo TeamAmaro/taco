@@ -1,14 +1,9 @@
 package it.unisalento.taco.business;
 
-import it.unisalento.taco.dao.MagazzinoDAO;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Prodotto;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 public class MagazziniereDelegate {
 	
