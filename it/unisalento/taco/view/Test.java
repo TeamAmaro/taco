@@ -7,23 +7,33 @@
 package it.unisalento.taco.view;
 
 import it.unisalento.taco.business.AdminDelegate;
+import it.unisalento.taco.business.CarrelloDelegate;
+import it.unisalento.taco.dao.CarrelloDAO;
+import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.dao.MagazzinoDAO;
 import it.unisalento.taco.dao.MagazziniereDAO;
+import it.unisalento.taco.dao.ProdottoDAO;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
+import it.unisalento.taco.model.Carrello;
+import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Magazziniere;
 import it.unisalento.taco.model.Magazzino;
+import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 public class Test {
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException{
-        CapoProgetto capo = CapoProgetto.getCapoProgetto("alfonso.verde@green.ve");
-        AdminDelegate.getInstance().creaProgetto("Progetto Zero", capo, 20000);
-        Progetto prog = Progetto.getProgetto("Progetto Zero");
-        AdminDelegate.getInstance().setCapoProgetto(prog, capo);
+    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException, NoIDMatchException{
+        Dipendente guga = DipendenteDAO.getInstance().getByID(1);
+        Carrello carrello = CarrelloDAO.getInstance().getCarrello(guga);
+        System.out.println(carrello);
+        Prodotto prodotto = ProdottoDAO.getInstance().getByID(9);
+        CarrelloDelegate.getInstance().addProdotto(carrello, prodotto, 1);
+        System.out.println(carrello);
     }
     
     
