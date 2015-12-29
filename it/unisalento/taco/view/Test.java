@@ -32,7 +32,8 @@ public class Test {
         Carrello carrello = CarrelloDAO.getInstance().getCarrello(guga);
         System.out.println(carrello);
         Prodotto prodotto = ProdottoDAO.getInstance().getByID(9);
-        CarrelloDelegate.getInstance().addProdotto(carrello, prodotto, 1);
+        //CarrelloDelegate.getInstance().removeProdotto(carrello, prodotto, 1);
+        carrello.removeProdotto(prodotto, 1);
         System.out.println(carrello);
     }
     
