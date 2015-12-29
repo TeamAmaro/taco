@@ -87,28 +87,26 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
         DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getID() + "," + prodotto.getID() + "," + quantita + ")");
     }
     
+    public void updateQuantita(Carrello carrello, Prodotto prodotto, int quantita){
+        DBConnection.getInstance().updateDB("UPDATE carrelli SET quantita = " + quantita + " WHERE id_dipendente = " + carrello.getDipendente().getID() + " AND id_prodotto = " + prodotto.getID());
+    }
+    
+    public void deleteProdotto(Carrello carrello, Prodotto prodotto){
+        DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + carrello.getDipendente().getID() + " AND id_prodotto = " + prodotto.getID());
+    }
+    
+    //QUESTA QUERY E' DA UTILIZZARE SOLO AI FINI DI TEST
     @Override public void create(Carrello carrello) {
         for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
             DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getID() + "," + val.getKey().getID() + "," + val.getValue() + ")");
         }
     }
     
-    //QUESTA FUNZIONE DI PRECISO COSA DOVREBBE FARE? COME STA SCRITTA E' PERICOLOSA/VELENOSA
+    //NON USARE MAI QUESTO METODO
     @Override public void update(Carrello carrello) {
         for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
             //DBConnection.getInstance().updateDB("UPDATE carrelli SET id_dipendente = " + carrello.getDipendente().getID() + ", id_prodotto = " + val.getKey().getID() + ", quantita = " + val.getValue());
         }
-    }
-    
-    //ELIMINA COMPLETAMNETE UN PRODOTTO DAL CARRELLO
-    public void deleteProdotto(Carrello carrello, Prodotto prodotto){
-        DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + carrello.getDipendente().getID() + " AND id_prodotto = " + prodotto.getID());
-    }
-    
-    public void updateQuantita(Carrello carrello, Prodotto prodotto){
-        //DEVO PRENDERE LA QUANTITA DI UN DETERMINATO PRODOTTO DALLA LISTAPRODOTTI E DIMINUIRLA DI UNO PER PASSARLA ALLA QUERY
-        //int quantita = carrello.getListaProdotti().getValue();
-        //DBConnection.getInstance().updateDB("UPDATE carrelli SET  id_dipendente = " + carrello.getDipendente().getID() + " AND id_prodotto = " + prodotto.getID());
     }
     
     //ELIMINA TUTTO IL CARRELLO
