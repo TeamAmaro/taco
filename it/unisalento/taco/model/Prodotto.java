@@ -4,6 +4,7 @@ import it.unisalento.taco.dao.ProdottoDAO;
 import it.unisalento.taco.dbconnections.DBConnection;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Prodotto implements IdentificabileID {
@@ -146,5 +147,20 @@ public class Prodotto implements IdentificabileID {
         return prodottoString.toString();
     }
     
+    @Override public boolean equals(Object obj){
+
+        if(obj == null)
+            return false;
+        else if(getClass() != obj.getClass())
+            return false;
+
+        final Prodotto other = (Prodotto) obj;
+        return other.id == id;
+    }
+
+    @Override public int hashCode() {
+        //PARACULATA
+        return id;
+    }
     
 }
