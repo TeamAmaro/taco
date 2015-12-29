@@ -120,6 +120,18 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         return mag;
     }
     
+    public void addProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
+        DBConnection.getInstance().updateDB("INSERT INTO prod_mag VALUES(" + magazzino.getID() + ", " + prodotto.getID() + ", " + quantita + ")");
+    }
+    
+    public void updateQuantita(Magazzino magazzino, Prodotto prodotto, int quantita){
+        DBConnection.getInstance().updateDB("UPDATE prod_mag SET quantita = " + quantita + " WHERE id_magazzino = " + magazzino.getID() + " AND id_prodotto = " + prodotto.getID());
+    }
+    
+    public void deleteProdotto(Magazzino magazzino, Prodotto prodotto){
+        DBConnection.getInstance().updateDB("DELETE FROM prod_mag WHERE id_magazzino = " + magazzino.getID() + " AND id_prodotto = " + prodotto.getID());
+    }
+    
     @Override public void create(Magazzino magazzino){
         DBConnection.getInstance().updateDB("INSERT INTO magazzini(nome,nome_sede) VALUES('" + magazzino.getNome() + "','" + magazzino.getSede() + "')");
     }
