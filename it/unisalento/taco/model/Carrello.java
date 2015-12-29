@@ -45,21 +45,29 @@ public class Carrello implements IdentificabileID{
     }
 
     public void addProdotto(Prodotto prodotto, int quantita){
-        if(listaProdotti.containsKey(prodotto))
+        if(listaProdotti.containsKey(prodotto)) {
             listaProdotti.put(prodotto, listaProdotti.get(prodotto) + quantita);
-        else
+            CarrelloDAO.getInstance().updateQuantita(this, prodotto, listaProdotti.get(prodotto) + quantita);
+        }
+        else {
             listaProdotti.put(prodotto, quantita);
+            CarrelloDAO.getInstance().addProdotto(this, prodotto, quantita);
+        }
         setTotale();
     }
 
     public void removeProdotto(Prodotto prodotto, int quantita){
-        if(listaProdotti.containsKey(prodotto)){
+        //if(listaProdotti.containsKey(prodotto)){
             int prevValue = listaProdotti.get(prodotto);
-            if(prevValue - quantita <= 0)
+            if(prevValue - quantita <= 0){
                 listaProdotti.remove(prodotto);
-            else
+                CarrelloDAO.getInstance().deleteProdotto(this, prodotto);
+            }
+            else {
                 listaProdotti.put(prodotto, prevValue - quantita);
-        }		
+                CarrelloDAO.getInstance().updateQuantita(this, prodotto, (prevValue - quantita));
+            }
+        //}		
     }
 
     public double calcolaTotale(){
@@ -72,14 +80,6 @@ public class Carrello implements IdentificabileID{
     
     public static Carrello getByID(int id) throws NoIDMatchException{
         return CarrelloDAO.getInstance().getByID(id);
-    }
-    
-    public static void addProdotto(Carrello carrello, Prodotto prodotto, int quantita){
-        CarrelloDAO.getInstance().addProdotto(carrello, prodotto, quantita);
-    }
-    
-    public static void deleteProdotto(Carrello carrello, Prodotto prodotto){
-        CarrelloDAO.getInstance().deleteProdotto(carrello, prodotto);
     }
     
     public static Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{
