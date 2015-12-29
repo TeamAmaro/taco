@@ -83,6 +83,10 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
         }
     }
     
+    public void addProdotto(Carrello carrello, Prodotto prodotto, int quantita){
+        DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getID() + "," + prodotto.getID() + "," + quantita + ")");
+    }
+    
     @Override public void create(Carrello carrello) {
         for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
             DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getID() + "," + val.getKey().getID() + "," + val.getValue() + ")");
