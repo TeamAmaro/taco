@@ -57,7 +57,7 @@ public class Carrello implements IdentificabileID{
     }
 
     public void removeProdotto(Prodotto prodotto, int quantita){
-        //if(listaProdotti.containsKey(prodotto)){
+        if(listaProdotti.containsKey(prodotto)){
             int prevValue = listaProdotti.get(prodotto);
             if(prevValue - quantita <= 0){
                 listaProdotti.remove(prodotto);
@@ -67,7 +67,7 @@ public class Carrello implements IdentificabileID{
                 listaProdotti.put(prodotto, prevValue - quantita);
                 CarrelloDAO.getInstance().updateQuantita(this, prodotto, (prevValue - quantita));
             }
-        //}		
+        }		
     }
 
     public double calcolaTotale(){
