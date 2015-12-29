@@ -21,13 +21,13 @@ public class CarrelloDelegate {
     private CarrelloDelegate(){};
     
     public void addProdotto(Carrello carrello, Prodotto prodotto, int quantita){
-        Carrello.addProdotto(carrello, prodotto, quantita);
         carrello.addProdotto(prodotto, quantita);
     }
     
-    public void deleteProdotto(Carrello carrello, Prodotto prodotto){
-        Carrello.deleteProdotto(carrello, prodotto);
-        carrello.removeProdotto(prodotto, 1);
+    //Questo metodo riduce la quantità di un prodotto nel carrello del valore passato,
+    //se il valore è maggiore o uguale a quello presente, il prodotto verrà completamente eliminato
+    public void removeProdotto(Carrello carrello, Prodotto prodotto, int quantita){
+        carrello.removeProdotto(prodotto, quantita);
     }
     
 }
