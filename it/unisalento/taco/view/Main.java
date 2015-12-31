@@ -1,8 +1,7 @@
 package it.unisalento.taco.view;
 
 import it.unisalento.taco.business.UtenteDelegate;
-import it.unisalento.taco.controller.FXMLCatalogoController;
-import it.unisalento.taco.controller.FXMLLoginController;
+import it.unisalento.taco.controller.*;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Utente;
@@ -33,12 +32,12 @@ public class Main extends Application{
     @Override public void start(Stage primaryStage) { 
         stage = primaryStage;
         
-        stage.setTitle("Taco Login");
+        stage.setTitle("Taco");
         
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
-        catalogoLevel();
+        carrelloLevel();
         stage.show(); 
     } 
  
@@ -59,6 +58,71 @@ public class Main extends Application{
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void prodottoLevel(){
+        try {
+            FXMLProdottoController prodotto = (FXMLProdottoController) cambiaLivello("fxml/FXMLProdotto.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void carrelloLevel(){
+        try {
+            FXMLCarrelloController carrello = (FXMLCarrelloController) cambiaLivello("fxml/FXMLCarrello.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void progettoLevel(){
+        try {
+            FXMLProgettoController progetto = (FXMLProgettoController) cambiaLivello("fxml/FXMLProgetto.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void progettoElencoLevel(){
+        try {
+            FXMLProgettoElencoController progettoElenco = (FXMLProgettoElencoController) cambiaLivello("fxml/FXMLProgettoElenco.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void magazzinoLevel(){
+        try {
+            FXMLMagazzinoController magazzino = (FXMLMagazzinoController) cambiaLivello("fxml/FXMLMagazzino.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void inventarioLevel(){
+        try {
+            FXMLInventarioController carrello = (FXMLInventarioController) cambiaLivello("fxml/FXMLInventario.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void ordineDettaglioLevel(){
+        try {
+            FXMLOrdineDettaglioController ordineDettaglio = (FXMLOrdineDettaglioController) cambiaLivello("fxml/FXMLOrdineDettaglio.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void ordineElencoLevel(){
+        try {
+            FXMLOrdineElencoController ordineElenco = (FXMLOrdineElencoController) cambiaLivello("fxml/FXMLOrdineElenco.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     public Utente getClient(){
         return client;
