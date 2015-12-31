@@ -2,6 +2,69 @@
  * Empty Stylesheet file.
  */
 
-.mainFxmlClass {
 
+.mainFxmlClass {
+    -fx-font-family: Arial, Verdana, sans-serif;
+}
+
+.blue {
+    -fx-background-color: blue;
+}
+
+.red {
+    -fx-background-color: red;
+}
+
+.yellow {
+    -fx-background-color: yellow;
+}
+
+.green {
+    -fx-background-color: green;
+}
+
+.top-bar-label {
+    -fx-font-size: 18;
+}
+
+.left-menu-label {
+    -fx-font-size: 18;
+}
+
+.search-bar {
+    -fx-border: none;
+    -fx-background-color: transparent;
+    -fx-font-size: 30;
+}
+
+
+.search-bar:active {
+    -fx-border: none;
+    -fx-background-color: transparent;
+}
+
+.nome-prodotto{
+    -fx-font-size: 24;
+}
+
+.prezzo-prodotto {
+    -fx-font-size: 18;
+}
+
+.disponibile {
+    -fx-font-size: 14;
+    -fx-text-fill: greenyellow;
+}
+
+.non-disponibile {
+    -fx-font-size: 14;
+    -fx-text-fill: red;
+}
+
+.prod-prodotto {
+    -fx-font-size: 18;
+    
+}
+.descrizione {
+    -fx-font-size: 18;
 }
