@@ -3,5 +3,33 @@
  */
 
 .mainFxmlClass {
+    -fx-font-family: Arial, Verdana, sans-serif;
+}
 
+.blue {
+    -fx-background-color: blue;
+}
+
+.red {
+    -fx-background-color: red;
+}
+
+.yellow {
+    -fx-background-color: yellow;
+}
+
+.green {
+    -fx-background-color: green;
+}
+
+.top-bar-label {
+    -fx-font-size: 18;
+}
+
+.titolo {
+    -fx-font-size: 30;
+}
+
+.content {
+    -fx-font-size: 20;
 }
