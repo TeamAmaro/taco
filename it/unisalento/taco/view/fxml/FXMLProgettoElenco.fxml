@@ -6,8 +6,40 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLProgettoElencoController">
+    <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+        <children>
+            <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
+              <image>
+                <Image url="@../img/logo2.jpg" smooth="true" />
+              </image>
+            </ImageView>
+            <Label styleClass="top-bar-label" fx:id="nomeClient" text="Tizio Caio"/>    
+        </children>
+    </HBox>
+    <ScrollPane fx:id="scrollPane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+        <content>
+            <VBox fx:id="scrollContent" spacing="10"  fillWidth="true">
+                <padding>
+                    <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                </padding> 
+                <Label styleClass="titolo" text="Progetti di Tizio Caio"/>
+                <GridPane alignment="CENTER" vgap="10" hgap="10">
+                    <Label text="Progetto" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="300.0" />
+                    <Label text="Budget" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="150.0"/>    
+                    <Label text="Saldo" GridPane.columnIndex="2" GridPane.rowIndex="0" minWidth="150.0"/>
+                   
+                    <Label styleClass="content" text="Progetto Taco" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label styleClass="content" text="1000.0€" GridPane.columnIndex="1" GridPane.rowIndex="1"/>    
+                    <Label styleClass="content" text="300.0€" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                </GridPane>
+            </VBox>
+        </content>
+    </ScrollPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlprogettoelenco.css"/>
     </stylesheets>
