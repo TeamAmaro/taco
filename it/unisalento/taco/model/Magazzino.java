@@ -116,4 +116,20 @@ public class Magazzino  implements IdentificabileID {
         MagazzinoDAO.getInstance().create(mag);
     }
     
+    @Override public boolean equals(Object obj){
+
+        if(obj == null)
+            return false;
+        else if(getClass() != obj.getClass())
+            return false;
+
+        final Magazzino other = (Magazzino) obj;
+        return other.id == id;
+    }
+
+    @Override public int hashCode() {
+        //PARACULATA
+        return id;
+    }
+    
 }

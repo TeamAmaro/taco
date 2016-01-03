@@ -43,6 +43,10 @@ public abstract class Utente implements IdentificabileID {
         return id;
     }
     
+    public static void updateEmail(Utente utente, String email){
+        UtenteDAO.getInstance().updateEmail(utente, email);
+    }
+    
     public static int login(String email, String psw) throws NoSuchUserException{
         return UtenteDAO.getInstance().login(email,psw);
     }
@@ -51,7 +55,7 @@ public abstract class Utente implements IdentificabileID {
         return UtenteDAO.getInstance().getByID(id);
     }
     
-    public void setPassword(Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public static void setPassword(Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         UtenteDAO.getInstance().setPsw(utente, psw);
     }
     
@@ -64,5 +68,21 @@ public abstract class Utente implements IdentificabileID {
         stringUtente.append("ID: ").append(id).append(", Nome: ").append(nome).
                      append(", Cognome: ").append(cognome).append(", Email: ").append(email);
         return stringUtente.toString();
+    }
+    
+    @Override public boolean equals(Object obj){
+
+        if(obj == null)
+            return false;
+        else if(getClass() != obj.getClass())
+            return false;
+
+        final Utente other = (Utente) obj;
+        return other.id == id;
+    }
+
+    @Override public int hashCode() {
+        //PARACULATA
+        return id;
     }
 }
