@@ -14,6 +14,7 @@ import it.unisalento.taco.dao.MagazzinoDAO;
 import it.unisalento.taco.dao.MagazziniereDAO;
 import it.unisalento.taco.dao.ProdottoDAO;
 import it.unisalento.taco.dao.ProgettoDAO;
+import it.unisalento.taco.exceptions.InsufficientFundException;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
@@ -28,11 +29,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class Test {
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException, NoIDMatchException{
+    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException, NoIDMatchException, InsufficientFundException{
         Dipendente guga = DipendenteDAO.getInstance().getByID(1);
-        Carrello carrello = CarrelloDAO.getInstance().getCarrello(guga);
-        Progetto progetto = ProgettoDAO.getInstance().getByID(1);
-        Magazzino magazzino = MagazzinoDAO.getInstance().getByID(1);
+        
+        CarrelloDelegate.getInstance().acquista(guga, CarrelloDelegate.getInstance().generaOrdini(guga));
         
         
     }

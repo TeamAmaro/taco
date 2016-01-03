@@ -122,6 +122,10 @@ public class Progetto implements IdentificabileID {
         ProgettoDAO.getInstance().setCapoProgetto(prog, capo);
     }
     
+    public static void updateSaldo(Progetto prog, double saldo){
+        ProgettoDAO.getInstance().updateSaldo(prog, saldo);
+    }
+    
     @Override public String toString(){
         StringBuilder stringProgetto = new StringBuilder();
         stringProgetto.append("ID: ").append(id).append(", Nome: ").append(nome).append(", Capoprogetto: ").
