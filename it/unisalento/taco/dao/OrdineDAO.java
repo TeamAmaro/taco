@@ -97,12 +97,14 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     }
     
     @Override public void update(Ordine ordine){
-        //Un ordine non può essere modificato dopo che è stato completato
+        DBConnection.getInstance().updateDB("UPDATE ordini SET spedizione = 1 WHERE codice = " + ordine.hashCode());
     }
     
+    //Non funziona e non capisco perché
     @Override public void create(Ordine ordine){
         for(Map.Entry<Prodotto,Integer> val : ordine.getListaProdotti().entrySet()) {
-            DBConnection.getInstance().updateDB("INSERT INTO ordini(codice,id_dipendente,nome_sede,id_progetto,id_magazzino,id_prodotto,quantita,data) values(codice = " + ordine.hashCode() + ", id_dipendente = " + ordine.getDipendente().getID() + ", id_progetto = " + ordine.getProgetto().getID() + ", id_magazzino = " + ordine.getMagazzino().getID() + ", id_prodotto = " + val.getKey().getID() + ", quantita = " + val.getValue() + ", data = " + ordine.getData() + ")");
+            int hashCode = ordine.hashCode();
+            DBConnection.getInstance().updateDB("INSERT INTO ordini VALUES(" + hashCode + ", " + ordine.getDipendente().getID() + ", " + ordine.getProgetto().getID() + ", " + ordine.getMagazzino().getID() + ", " + val.getKey().getID() + ", " + val.getValue() + ", " + 0 + ", " + ordine.getData() + ")");
         }
     }
     
