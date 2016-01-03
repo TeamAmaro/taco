@@ -67,7 +67,7 @@ public class CarrelloDelegate {
                 int quantCar = e.getValue(); //Quantita nel carrello
                 //Prelevo la quantita
                 int quantMag = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
-                prodPerQuant.put(prod, quantMag); //Aggiungo la quantita
+                prodPerQuant.put(prod, quantCar); //Aggiungo la quantita
                 magPerProd.put(magVicino, prodPerQuant); //Aggiungo nel magazzino vicino
                 //Se la quantita di prodotti nel magazzino più vicino non soddisfa la richiesta
                 if (quantMag < quantCar){
@@ -141,14 +141,17 @@ public class CarrelloDelegate {
                 //FINALIZZO L'ACQUISTO
                 //cambia il saldo del progetto corrispondente
                 progetto.setSaldo(saldo - totale);
+                Progetto.updateSaldo(progetto, saldo - totale);
                 //rimuovi la merce acquistata dal carrello
                 Carrello cart = Carrello.getByID(dipendente.getID());
                 for(Ordine ordine : listaOrdini){
                     cart.removeListaProdotti(ordine.getListaProdotti());
                     Magazzino mag = ordine.getMagazzino();
                     mag.removeFromInventario(ordine.getListaProdotti());
+                    Ordine.addOrdine(ordine);
                 }
                 //Aggiorno il database inviando tutte le informazioni.
+                System.out.println("Ordine completato, nigga!");
             }
         }
         catch(NoQueryMatchException | NoIDMatchException e){
