@@ -38,6 +38,7 @@ public class Carrello implements IdentificabileID{
         for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet()){
             removeProdotto(val.getKey(),val.getValue());
         }
+        CarrelloDAO.getInstance().delete(this.getDipendente());
     }
     
     public Map<Prodotto, Integer> getListaProdotti(){
@@ -67,7 +68,8 @@ public class Carrello implements IdentificabileID{
                 listaProdotti.put(prodotto, prevValue - quantita);
                 CarrelloDAO.getInstance().updateQuantita(this, prodotto, (prevValue - quantita));
             }
-        }		
+        }
+        setTotale();
     }
 
     public double calcolaTotale(){
