@@ -4,6 +4,7 @@ import it.unisalento.taco.dao.ProgettoDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public class Progetto implements IdentificabileID {
@@ -107,6 +108,10 @@ public class Progetto implements IdentificabileID {
     
     public static Progetto getProgetto(String nome){
         return ProgettoDAO.getInstance().getProgetto(nome);
+    }
+    
+    public static List<Progetto> getProgetto(CapoProgetto capoProgetto){
+        return ProgettoDAO.getInstance().getProgetto(capoProgetto);
     }
     
     public static void addProgetto(Progetto progetto){
