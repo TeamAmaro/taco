@@ -9,3 +9,15 @@
 .green {
     -fx-background-color: green;
 }
+
+.blue {
+    -fx-background-color: blue;
+}
+
+.titolo {
+    -fx-font-size: 30;
+}
+
+.content {
+    -fx-font-size: 18;
+}
