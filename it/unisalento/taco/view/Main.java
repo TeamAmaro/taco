@@ -4,6 +4,7 @@ import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
+import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -37,7 +38,7 @@ public class Main extends Application{
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
-        carrelloLevel();
+        progettoElencoLevel();
         stage.show(); 
     } 
  
@@ -129,7 +130,7 @@ public class Main extends Application{
     }
     
     
-    public boolean login(String email, String password){
+    public boolean setClient(String email, String password){
         try {
             client = UtenteDelegate.getInstance().login(email, password);
             return true;
@@ -137,6 +138,18 @@ public class Main extends Application{
         catch (NoSuchUserException | NoIDMatchException e) {
             return false;
         }
+    }
+    
+    public void dipendenteView(){
+        catalogoLevel();
+    }
+    
+    public void capoProgettoView(){
+        progettoElencoLevel();
+    }
+    
+    public void magazziniereView(){
+        magazzinoLevel();
     }
     
     public void logout(){
