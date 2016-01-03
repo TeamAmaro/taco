@@ -117,6 +117,10 @@ public class UtenteDAO implements DAOInterface<Utente>{
         DBConnection.getInstance().updateDB("UPDATE utenti SET password = '" + psw + "' WHERE id = " + utente.getID());
     }
     
+    public void updateEmail(Utente utente, String email){
+        DBConnection.getInstance().updateDB("UPDATE utenti SET email = '" + email + "' WHERE id = " + utente.getID());
+    }
+    
     @Override public void create(Utente utente){
         if(utente.getID() == 0)
             DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email,password) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "', 'asd')");
