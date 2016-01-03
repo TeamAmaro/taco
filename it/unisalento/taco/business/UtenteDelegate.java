@@ -41,4 +41,10 @@ public class UtenteDelegate {
             throw e;
         }
     }
+    
+    public void updatePassword(Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        Utente.setPassword(utente, psw);
+    }
+
+
 }
