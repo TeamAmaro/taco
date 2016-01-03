@@ -13,6 +13,7 @@ import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.dao.MagazzinoDAO;
 import it.unisalento.taco.dao.MagazziniereDAO;
 import it.unisalento.taco.dao.ProdottoDAO;
+import it.unisalento.taco.dao.ProgettoDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
@@ -30,11 +31,10 @@ public class Test {
     public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException, NoIDMatchException{
         Dipendente guga = DipendenteDAO.getInstance().getByID(1);
         Carrello carrello = CarrelloDAO.getInstance().getCarrello(guga);
-        System.out.println(carrello);
-        Prodotto prodotto = ProdottoDAO.getInstance().getByID(9);
-        //CarrelloDelegate.getInstance().removeProdotto(carrello, prodotto, 1);
-        carrello.removeProdotto(prodotto, 1);
-        System.out.println(carrello);
+        Progetto progetto = ProgettoDAO.getInstance().getByID(1);
+        Magazzino magazzino = MagazzinoDAO.getInstance().getByID(1);
+        
+        
     }
     
     

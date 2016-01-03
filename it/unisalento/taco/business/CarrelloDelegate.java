@@ -11,12 +11,11 @@ import it.unisalento.taco.model.Prodotto;
 
 public class CarrelloDelegate {
     
-    private static CarrelloDelegate instance ;
-
+    private static CarrelloDelegate instance;
     public static CarrelloDelegate getInstance(){
-            if(instance == null)
-                instance = new CarrelloDelegate();
-            return instance;
+        if(instance == null)
+            instance = new CarrelloDelegate();
+        return instance;
     }
     private CarrelloDelegate(){};
     
