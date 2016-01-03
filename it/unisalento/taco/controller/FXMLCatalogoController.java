@@ -5,6 +5,7 @@
  */
 package it.unisalento.taco.controller;
 
+import it.unisalento.taco.view.Main;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -24,6 +25,12 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML Label nomeProgetto;
     @FXML Label saldoProgetto;
     @FXML Label carrello;
+    
+    private Main application;
+    
+    public void setApp(Main application){
+        this.application = application;
+    }
     
     @Override public void initialize(URL location, ResourceBundle resources){
         //Da implementare
