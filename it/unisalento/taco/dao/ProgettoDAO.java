@@ -152,6 +152,10 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     public void setCapoProgetto(Progetto prog, CapoProgetto capo){
         DBConnection.getInstance().updateDB("UPDATE progetti SET id_capoprog = " + capo.getID() + " WHERE id = " + prog.getID());
     }
+    
+    public void updateSaldo(Progetto prog, double saldo){
+        DBConnection.getInstance().updateDB("UPDATE progetti SET saldo = " + saldo + " WHERE id = " + prog.getID());
+    }
 
     @Override public void create(Progetto prog){
         DBConnection.getInstance().updateDB("INSERT INTO progetti(nome,id_capoprog,saldo,budget) VALUES(nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getID() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget() + ")");
