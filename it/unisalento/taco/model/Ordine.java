@@ -1,5 +1,6 @@
 package it.unisalento.taco.model;
 
+import it.unisalento.taco.dao.OrdineDAO;
 import java.util.Date;
 import java.util.Map;
 
@@ -120,12 +121,14 @@ public class Ordine {
     }   
     
     private double calcolaTotale(){
-        int totale = 0;
+        double totale = 0;
         //Preleva le informazioni dell'ordine
-
         //Scorri i prodotti e calcola il totale
-        for(Map.Entry<Prodotto, Integer> val : listaProdotti.entrySet())
-            totale += val.getKey().getPrezzo() * val.getValue();
+        for(Map.Entry<Prodotto, Integer> val : listaProdotti.entrySet()){
+            double prezzo = val.getKey().getPrezzo();
+            int quantita = val.getValue();
+            totale += prezzo * quantita;
+        }
         
         return totale;
     }
@@ -158,5 +161,9 @@ public class Ordine {
                 spesaSpedizione = 10;
         }
         return spesaSpedizione;
+    }
+    
+    public static void addOrdine(Ordine ordine){
+        OrdineDAO.getInstance().create(ordine);
     }
 }
