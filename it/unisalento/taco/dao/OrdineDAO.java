@@ -97,7 +97,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     }
     
     @Override public void update(Ordine ordine){
-        //Implementami pls
+        //Un ordine non può essere modificato dopo che è stato completato
     }
     
     @Override public void create(Ordine ordine){
@@ -106,11 +106,9 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         }
     }
     
-    //Questa funzione va chiamata passando come parametro Ordine.hashCode();
-    //Ma perché mai dovremmo permettere di cancellare un ordine dal db?
-    //Tecnicamente parlando, è una cosa che non dovrebbe fare neanche il superadmin 
+    //Da utilizzare ai soli fini di debug
     @Override public void delete(IdentificabileID obj){
-        //DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
     }
     
 }
