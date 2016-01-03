@@ -17,6 +17,7 @@ import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Sede;
+import it.unisalento.taco.model.Utente;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
@@ -32,6 +33,10 @@ public class AdminDelegate {
     
     private AdminDelegate(){};
     
+    public void updateEmail(Utente utente, String email){
+        Utente.updateEmail(utente, email);
+    }
+    
     public void creaDipendente(String nome, String cognome, String email, String psw, String nomeSede) throws NoSuchAlgorithmException, UnsupportedEncodingException{
         //CREA L'OGGETTO SENZA ID
         Dipendente dip = new Dipendente(nome, cognome, email, Sede.parseSede(nomeSede));
@@ -44,7 +49,7 @@ public class AdminDelegate {
         //AGGIUNGE LA SEDE AL DIPENDENTE
         dip.setSede(sede);
         //CREA LA PASSWORD CRIPTATA E LA IMPOSTA
-        dip.setPassword(dip, psw);
+        Utente.setPassword(dip, psw);
         //AGGIUNGE IL DIPENDENTE ALLA TABELLA DIPENDENTI DEL DB
         Dipendente.addDipendente(dip);
     }
@@ -57,7 +62,7 @@ public class AdminDelegate {
         //OTTIENE IL NUOVO MAGAZZINIERE CON ID
         mag = Magazziniere.getMagazziniere(mag.getEmail());
         //CREA LA PASSWORD CRIPTATA E LA IMPOSTA
-        mag.setPassword(mag, psw);
+        Utente.setPassword(mag, psw);
         //AGGIUNGE IL MAGAZZINIERE ALLA TABELLA MAGAZZINIERI DEL DB CON MAGAZZINO NULL
         Magazziniere.addMagazziniere(mag);
         //RICORDARSI POI DI USARE setMagazzino()
@@ -76,7 +81,7 @@ public class AdminDelegate {
         CapoProgetto capo = new CapoProgetto(nome,cognome,email);
         CapoProgetto.addNewToDB(capo);
         capo = CapoProgetto.getCapoProgetto(capo.getEmail());
-        capo.setPassword(capo, psw);
+        Utente.setPassword(capo, psw);
         CapoProgetto.addCapoProgetto(capo);
     }
     
