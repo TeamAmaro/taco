@@ -105,6 +105,19 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
         return progetto;
     }
     
+    public List<Progetto> getProgetto(CapoProgetto capoProgetto){
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT p.*,u.* FROM progetti p JOIN utenti u ON u.id = p.id_capoprog WHERE id_capoprog = " + capoProgetto.getID());
+        Iterator<String[]> i = result.iterator();
+        List<Progetto> listaProgetti = new ArrayList<>();
+        while(i.hasNext()){
+            String[] riga = i.next();
+            Progetto progetto =  new Progetto(Integer.parseInt(riga[0]), riga[1], capoProgetto, Double.parseDouble(riga[3]), Double.parseDouble(riga[4]), null);
+            progetto.setListaDipendenti(getListaDipendenti(progetto));
+            listaProgetti.add(progetto);
+        }
+        return listaProgetti;
+    }
+    
     public Set<Dipendente> getListaDipendenti(Progetto prog){
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT u.*,d.nome_sede FROM utenti u JOIN dipendenti d ON u.id = d.id_utente WHERE d.id_progetto = " + prog.getID());
         Iterator<String[]> i = result.iterator();
