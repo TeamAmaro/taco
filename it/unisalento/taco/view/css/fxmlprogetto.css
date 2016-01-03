@@ -5,3 +5,7 @@
 .mainFxmlClass {
 
 }
+
+.green {
+    -fx-background-color: green;
+}
