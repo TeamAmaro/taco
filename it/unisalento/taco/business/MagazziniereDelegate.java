@@ -8,29 +8,29 @@ import it.unisalento.taco.model.Prodotto;
 public class MagazziniereDelegate {
 	
     private static MagazziniereDelegate instance;
+    
     public static MagazziniereDelegate getInstance(){
-            if(instance == null)
-                    instance = new MagazziniereDelegate();
-            return instance;
+        if(instance == null)
+                instance = new MagazziniereDelegate();
+        return instance;
     }
     private MagazziniereDelegate(){};
 
     public void rifornisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
-            magazzino.addProdotto(prodotto, quantita);
+        magazzino.addProdotto(prodotto, quantita);
     };
 
     public void spedisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
-            magazzino.removeProdotto(prodotto, quantita);
+        magazzino.removeProdotto(prodotto, quantita);
     };
 
     
     public Map<Prodotto,Integer> chiediInventario(Magazzino magazzino){
-            return magazzino.getInventario();
+        return magazzino.getInventario();
     }
 
-    //Chiede prodotto al magazzino
     public int chiediProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
-            return magazzino.cercaProdotto(prodotto, quantita);
+        return magazzino.cercaProdotto(prodotto, quantita);
     }
         
 	
