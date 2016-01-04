@@ -104,7 +104,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     @Override public void create(Ordine ordine){
         for(Map.Entry<Prodotto,Integer> val : ordine.getListaProdotti().entrySet()) {
             int hashCode = ordine.hashCode();
-            DBConnection.getInstance().updateDB("INSERT INTO ordini VALUES(" + hashCode + ", " + ordine.getDipendente().getID() + ", " + ordine.getProgetto().getID() + ", " + ordine.getMagazzino().getID() + ", " + val.getKey().getID() + ", " + val.getValue() + ", " + 0 + ", " + ordine.getData() + ")");
+            DBConnection.getInstance().updateDB("INSERT INTO ordini VALUES(" + hashCode + ", " + ordine.getDipendente().getID() + ", '" + ordine.getDipendente().getSede() + "', " + ordine.getProgetto().getID() + ", " + ordine.getMagazzino().getID() + ", " + val.getKey().getID() + ", " + val.getValue() + ", " + 0 + ", " + ordine.getData() + ")");
         }
     }
     

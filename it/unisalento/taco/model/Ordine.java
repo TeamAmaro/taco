@@ -12,10 +12,10 @@ public class Ordine {
     private final Map<Prodotto,Integer> listaProdotti;
     private final long data;
     private boolean spedito;
-    private final double totale;
-    private final double spesaSpedizione;
+    private double totale;
+    private int spesaSpedizione;
 
-    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, Long data, Map<Prodotto,Integer> listaProdotti, double totale, double spesaSpedizione){
+    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, Long data, Map<Prodotto,Integer> listaProdotti, double totale, int spesaSpedizione){
         this.dipendente = dipendente;
         this.progetto = progetto;
         this.magazzino = magazzino;
@@ -32,8 +32,8 @@ public class Ordine {
         this.data = data;
         this.listaProdotti = listaProdotti;
         spedito = false;
-        totale = calcolaTotale();
-        spesaSpedizione = calcolaSpesaSpedizione();
+        calcolaTotale();
+        calcolaSpesaSpedizione();
     }
 
     public Dipendente getDipendente(){
@@ -120,8 +120,8 @@ public class Ordine {
         return ordineString.toString();
     }   
     
-    private double calcolaTotale(){
-        double totale = 0;
+    private void calcolaTotale(){
+        totale = 0;
         //Preleva le informazioni dell'ordine
         //Scorri i prodotti e calcola il totale
         for(Map.Entry<Prodotto, Integer> val : listaProdotti.entrySet()){
@@ -129,12 +129,10 @@ public class Ordine {
             int quantita = val.getValue();
             totale += prezzo * quantita;
         }
-        
-        return totale;
     }
     
-    private double calcolaSpesaSpedizione(){
-        int spesaSpedizione = 0;
+    private void calcolaSpesaSpedizione(){
+        spesaSpedizione = 0;
         
         //Calcolo le spese di spedizione
         //Controllo la sede del magazzino e quella del dipendente
@@ -160,7 +158,6 @@ public class Ordine {
             if(spesaSpedizione > 10)
                 spesaSpedizione = 10;
         }
-        return spesaSpedizione;
     }
     
     public static void addOrdine(Ordine ordine){
