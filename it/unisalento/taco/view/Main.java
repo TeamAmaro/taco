@@ -4,7 +4,6 @@ import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
-import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -20,8 +19,15 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     
-    private Stage stage;
-    private Utente client;
+    private static Main instance;
+    public static Main getInstance(){
+        if(instance == null)
+            instance = new Main();
+        return instance;
+    }
+    
+    private static Stage stage;
+    private static Utente client;
     
     private final double MINIMUM_WINDOW_WIDTH = 400.0;
     private final double MINIMUM_WINDOW_HEIGHT = 400.0;
@@ -38,15 +44,15 @@ public class Main extends Application{
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
-        progettoElencoLevel();
+        
+        loginLevel();
+        
         stage.show(); 
     } 
  
     private void loginLevel(){
         try {
-            FXMLLoginController login = (FXMLLoginController) cambiaLivello("fxml/FXMLLogin.fxml", 400.0, 600.0);
-            login.setApp(this);
-            stage.setResizable(false);
+            FXMLLoginController login = (FXMLLoginController) cambiaLivello("fxml/FXMLLogin.fxml");
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -78,7 +84,7 @@ public class Main extends Application{
     
     private void progettoLevel(){
         try {
-            FXMLProgettoController progetto = (FXMLProgettoController) cambiaLivello("fxml/FXMLProgetto.fxml");
+            FXMLProgettoController progetto = (FXMLProgettoController) cambiaLivello("fxml/FXMLProgetto.fxml", 1080.0, 720.0);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -153,6 +159,7 @@ public class Main extends Application{
     }
     
     public void logout(){
+        System.out.println(client);
         client = null;
         loginLevel();
     }
