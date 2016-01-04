@@ -2,6 +2,7 @@ package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.ProdottoDAO;
 import it.unisalento.taco.dbconnections.DBConnection;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -138,6 +139,14 @@ public class Prodotto implements IdentificabileID {
         ProdottoDAO.getInstance().addFornitore(fornitore, prodotto);
     }
 
+    public static Set<Prodotto> cerca(String ricerca) throws NoIDMatchException{
+        try {
+            return ProdottoDAO.getInstance().cerca(ricerca);
+        }catch(NoIDMatchException e){
+            throw e;
+        }
+    }
+    
     @Override public String toString(){
         StringBuilder prodottoString = new StringBuilder();
         prodottoString.append("ID: ").append(id).append(", Nome: ").append(nome).append(", Prezzo: ").
