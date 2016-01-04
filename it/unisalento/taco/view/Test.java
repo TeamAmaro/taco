@@ -7,7 +7,6 @@
 package it.unisalento.taco.view;
 
 import it.unisalento.taco.business.AdminDelegate;
-import it.unisalento.taco.business.CarrelloDelegate;
 import it.unisalento.taco.dao.CarrelloDAO;
 import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.dao.MagazzinoDAO;
@@ -33,7 +32,7 @@ public class Test {
         Dipendente guga = DipendenteDAO.getInstance().getByID(1);
         Carrello carrello = CarrelloDAO.getInstance().getByID(1);
         System.out.println(carrello);
-        CarrelloDelegate.getInstance().acquista(guga, CarrelloDelegate.getInstance().generaOrdini(guga));
+        //CarrelloDelegate.getInstance().acquista(guga, CarrelloDelegate.getInstance().generaOrdini(guga));
         
         
     }
