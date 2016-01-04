@@ -102,4 +102,11 @@ public class Carrello implements IdentificabileID{
         stringCarrello.append("Totale : " + totale);
         return stringCarrello.toString();
     }
+
+    public int numeroProdotti() {
+        int n = 0;
+        for(Prodotto p : listaProdotti.keySet())
+            n++;
+        return n;
+    }
 }
