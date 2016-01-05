@@ -57,7 +57,6 @@ CREATE TABLE `carrelli` (
 
 LOCK TABLES `carrelli` WRITE;
 /*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
-INSERT INTO `carrelli` VALUES (1,1,2),(1,9,1);
 /*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +182,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
-INSERT INTO `ordini` VALUES ('-1099431227',1,'Sede A',1,1,1,12,0,1450212300682),('-1099431227',1,'Sede A',1,2,2,1,0,1450212300682);
+INSERT INTO `ordini` VALUES ('-1099431227',1,'Sede A',1,1,1,12,0,1450212300682),('-1099431227',1,'Sede A',1,2,2,1,0,1450212300682),('2022783208',1,'Sede A',1,1,9,1,0,1451901214018);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +206,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
-INSERT INTO `prod_mag` VALUES (1,1,2),(2,2,7),(1,2,14);
+INSERT INTO `prod_mag` VALUES (1,1,2),(2,2,7),(1,2,14),(1,9,3);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +256,7 @@ CREATE TABLE `produttori` (
 
 LOCK TABLES `produttori` WRITE;
 /*!40000 ALTER TABLE `produttori` DISABLE KEYS */;
-INSERT INTO `produttori` VALUES ('Produttore A',1),('Produttore B',2),('Produttore C',9);
+INSERT INTO `produttori` VALUES ('Samsung',1),('Kyocera',2),('Bic',9),('Bic',8),('Bic',10),('Bic',11),('Bic',12),('Bic',13),('Bic',14),('Toni',3),('Toni',4),('Toni',5),('Toni',6),('Toni',7),('Samsung',16),('Samsung',17),('Samsung',18),('Samsung',19),('Kyocera',20),('Kyocera',21),('Kyocera',22),('Kyocera',23);
 /*!40000 ALTER TABLE `produttori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +283,7 @@ CREATE TABLE `progetti` (
 
 LOCK TABLES `progetti` WRITE;
 /*!40000 ALTER TABLE `progetti` DISABLE KEYS */;
-INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,1000,6700),(2,'Progetto Pizza',3,4500,4500);
+INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,982.53,6700),(2,'Progetto Pizza',3,4500,4500);
 /*!40000 ALTER TABLE `progetti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,4 +370,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-29 20:26:16
+-- Dump completed on 2016-01-05 13:56:57

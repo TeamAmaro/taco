@@ -2,10 +2,10 @@ package it.unisalento.taco.model;
 
 public enum Produttore {
 	
-    PRODUTTORE_A("Produttore A"),
-    PRODUTTORE_B("Produttore B"),
-    PRODUTTORE_C("Produttore C"),
-    PRODUTTORE_D("Produttore D"),
+    PRODUTTORE_A("Samsung"),
+    PRODUTTORE_B("Kyocera"),
+    PRODUTTORE_C("Toni"),
+    PRODUTTORE_D("Bic"),
     PRODUTTORE_0("Produttore sconosciuto");
 
     private final String nome;

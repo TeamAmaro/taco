@@ -99,8 +99,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     @Override public void update(Ordine ordine){
         DBConnection.getInstance().updateDB("UPDATE ordini SET spedizione = 1 WHERE codice = " + ordine.hashCode());
     }
-    
-    //Non funziona e non capisco perché
+
     @Override public void create(Ordine ordine){
         for(Map.Entry<Prodotto,Integer> val : ordine.getListaProdotti().entrySet()) {
             int hashCode = ordine.hashCode();

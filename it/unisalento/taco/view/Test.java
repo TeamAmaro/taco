@@ -30,10 +30,10 @@ import java.security.NoSuchAlgorithmException;
 public class Test {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException, NoIDMatchException, InsufficientFundException{
-        Dipendente guga = DipendenteDAO.getInstance().getByID(1);
-        Carrello carrello = CarrelloDAO.getInstance().getByID(1);
-        System.out.println(carrello);
-        CarrelloDelegate.getInstance().acquista(guga, CarrelloDelegate.getInstance().generaOrdini(guga));
+        
+        Prodotto prodotto = ProdottoDAO.getInstance().getByID(6);
+        
+        System.out.println(prodotto);
         
         
     }
