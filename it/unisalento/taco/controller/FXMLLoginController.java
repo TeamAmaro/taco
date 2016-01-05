@@ -23,7 +23,11 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
     @FXML Button loginButton;
     @FXML Label errorMessage;
 
-    private Main application = Main.getInstance();
+    private Main application;
+    
+    public void setApplication(Main application){
+        this.application = application;
+    }
     
     @Override public void initialize(URL location, ResourceBundle resources) {
         errorMessage.setText("");
@@ -33,19 +37,19 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
     }
     
     public void effettuaLogin(ActionEvent event) {
-        if (!application.setClient(emailField.getText(), passwordField.getText())){
+        if (!application.setUtente(emailField.getText(), passwordField.getText())){
             errorMessage.setText("Combinazione Email/Password non corretta!");
         }
         else {
             errorMessage.setText("Benvenuto a TACO " + emailField.getText());
             
-            if(application.getClient() instanceof Dipendente)
+            if(application.getUtente() instanceof Dipendente)
                 application.dipendenteView();
-            else if(application.getClient() instanceof CapoProgetto)
+            else if(application.getUtente() instanceof CapoProgetto)
                 application.capoProgettoView();
-            else if(application.getClient() instanceof Magazziniere)
+            else if(application.getUtente() instanceof Magazziniere)
                 application.magazziniereView();
-            else if(application.getClient() instanceof Admin)
+            else if(application.getUtente() instanceof Admin)
                ;//application.adminView();
         }
     }
