@@ -22,41 +22,38 @@
         </children>
     </HBox>
     <GridPane hgap="10" vgap="20" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" styleClass="green">
-        <Label styleClass="titolo" text="Progetto Taco" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <Label styleClass="content" text="Budget" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <Label styleClass="content" text="1000.0€" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <Label styleClass="content" text="Saldo" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-        <Label styleClass="content" text="300.0€" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label styleClass="titolo" text="Progetto Taco" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4" />
+        <Label styleClass="content" text="Budget:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <Label styleClass="content" text="1000.0€" GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="100.0" />
+        <Label styleClass="content" text="Saldo:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <Label styleClass="content" text="300.0€" GridPane.columnIndex="3" GridPane.rowIndex="1" minWidth="100.0"/>
 
-        <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2" >
+        <Label styleClass="titolo-tabella" GridPane.columnIndex="0" GridPane.rowIndex="2" text="Lista dei dipendenti"/>
+        <TableView fx:id="tableViewDip" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
                  <TableColumn text="Nome">
                  </TableColumn>
                  <TableColumn text="Cognome">
                  </TableColumn>
                  <TableColumn text="Email">
+                 </TableColumn>
+                 <TableColumn text="">
                  </TableColumn>
             </columns>  
        </TableView>
        
-       <TableView fx:id="tableView1" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" >
+       <Label styleClass="tabella-titolo" GridPane.columnIndex="5" GridPane.rowIndex="2" text="Ultimi ordini"/>
+       <TableView fx:id="tableViewOrd" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
-                 <TableColumn text="Nome">
+                 <TableColumn text="Costo">
                  </TableColumn>
-                 <TableColumn text="Cognome">
+                 <TableColumn text="Dipendente">
                  </TableColumn>
-                 <TableColumn text="Email">
+                 <TableColumn text="Prodotto">
                  </TableColumn>
-            </columns>  
-       </TableView>
-       
-       <TableView fx:id="tableView2" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" >
-            <columns>
-                 <TableColumn text="Nome">
+                 <TableColumn text="Quantità">
                  </TableColumn>
-                 <TableColumn text="Cognome">
-                 </TableColumn>
-                 <TableColumn text="Email">
+                 <TableColumn text="Data">
                  </TableColumn>
             </columns>  
        </TableView>

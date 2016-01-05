@@ -7,7 +7,6 @@
 package it.unisalento.taco.view;
 
 import it.unisalento.taco.business.AdminDelegate;
-import it.unisalento.taco.business.CarrelloDelegate;
 import it.unisalento.taco.dao.CarrelloDAO;
 import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.dao.MagazzinoDAO;
@@ -30,10 +29,6 @@ import java.security.NoSuchAlgorithmException;
 public class Test {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException, NoIDMatchException, InsufficientFundException{
-        
-        Prodotto prodotto = ProdottoDAO.getInstance().getByID(6);
-        
-        System.out.println(prodotto);
         
         
     }

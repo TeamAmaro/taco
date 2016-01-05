@@ -59,3 +59,12 @@
     -fx-font-size: 14;
     -fx-text-fill: red;
 }
+
+.logout-button {
+    -fx-font-size: 18;
+}
+
+.logout-button:hover, .left-menu-label:hover, #search-icon:hover  {
+    -fx-cursor: hand;
+}
+

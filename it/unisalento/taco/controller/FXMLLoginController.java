@@ -23,11 +23,7 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
     @FXML Button loginButton;
     @FXML Label errorMessage;
 
-    private Main application;
-    
-    public void setApp(Main application){
-        this.application = application;
-    }
+    private Main application = Main.getInstance();
     
     @Override public void initialize(URL location, ResourceBundle resources) {
         errorMessage.setText("");

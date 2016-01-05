@@ -1,0 +1,21 @@
+<ScrollPane fx:id="scrollPane" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+    <content>
+        <VBox alignment="center" fx:id="scrollContent" spacing="10">
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+            </padding> 
+            <HBox alignment="CENTER_LEFT" prefHeight="100" spacing="20.0">
+                <ImageView fitHeight="100" preserveRatio="true">
+                  <image>
+                    <Image url="@../img/thumbnail.jpg" smooth="true" />
+                  </image>
+                </ImageView>
+                <VBox spacing="10" alignment="CENTER_LEFT" >
+                    <Label styleClass="nome-prodotto" text="Prodotto A"/>
+                    <Label styleClass="prezzo-prodotto" text="9.9€"/>
+                    <Label styleClass="disponibile" text="Disponibile"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

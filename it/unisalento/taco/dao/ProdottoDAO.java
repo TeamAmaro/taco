@@ -56,7 +56,6 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
             String[] riga = i.next();
             listaFornitori.add(Fornitore.parseFornitore(riga[0]));
         }
-        
         return listaFornitori;
     }
     
@@ -78,6 +77,24 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
     
     @Override public void delete(IdentificabileID obj){
         DBConnection.getInstance().updateDB("DELETE FROM prodotti WHERE id = " + obj.getID());
+    }
+
+    public Set<Prodotto> cerca(String ricerca) throws NoIDMatchException {
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id FROM prodotti WHERE nome LIKE '%" + ricerca + "%'");
+        Iterator<String[]> i = result.iterator();
+        Set<Prodotto> listaProdotti = new LinkedHashSet<>();
+        int j = 0;
+        while(i.hasNext() && j < 100){
+            String[] riga = i.next();
+            try{
+                listaProdotti.add(getByID(Integer.parseInt(riga[0])));
+            }catch(NoIDMatchException e){
+                throw e;
+            }
+            //TROVARE UN MODO PIU' ELENGANTE 
+            j++;
+        }
+        return listaProdotti;
     }
     
 }

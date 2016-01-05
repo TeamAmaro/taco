@@ -10,7 +10,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="anchorPane" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLCatalogoController">
+<AnchorPane fx:id="content" xmlns:fx="http://javafx.com/fxml/1" id="anchorPane" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLCatalogoController">
     <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
         <children>
             <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
@@ -18,9 +18,9 @@
                 <Image url="@../img/logo2.jpg" smooth="true" />
               </image>
             </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient" text="Tizio Caio"/>
-            <Label styleClass="top-bar-label" fx:id="nomeProgetto" text="Progetto Taco"/>    
-            <Label styleClass="top-bar-label" fx:id="saldoProgetto" text="999.9€"/>        
+            <Label styleClass="top-bar-label" fx:id="nomeClient" text=""/>
+            <Label styleClass="top-bar-label" fx:id="nomeProgetto" text=""/>    
+            <Label styleClass="top-bar-label" fx:id="saldoProgetto" text=""/>        
         </children>
     </HBox>
     <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
@@ -31,6 +31,7 @@
                     <Image url="@../img/cart.jpg" smooth="true" />
                 </image>
             </ImageView>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
     <VBox AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" prefWidth="200.0" styleClass="red" alignment="TOP_LEFT" spacing="5.0" >
@@ -38,34 +39,20 @@
             <Insets bottom="10.0" left="20.0" right="10.0" top="20.0" />
         </padding> 
         <children>
-            <Label styleClass="left-menu-label" fx:id="categoriaA" text="Categoria A"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaB" text="Categoria B"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaC" text="Categoria C"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaD" text="Categoria D"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaE" text="Categoria E"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaA" text="Cancelleria"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaB" text="Elettronica"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaC" text="Ricambi"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaD" text="Stampanti"/>
         </children>
     </VBox>
-    <ScrollPane fx:id="scrollPane" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0"   styleClass="green">
-        <content>
-            <VBox alignment="center" fx:id="scrollContent" spacing="10">
-                <padding>
-                    <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-                </padding> 
-                <HBox alignment="CENTER_LEFT" prefHeight="100" spacing="20.0">
-                    <ImageView fitHeight="100" preserveRatio="true">
-                      <image>
-                        <Image url="@../img/thumbnail.jpg" smooth="true" />
-                      </image>
-                    </ImageView>
-                    <VBox spacing="10" alignment="CENTER_LEFT" >
-                        <Label styleClass="nome-prodotto" text="Prodotto A"/>
-                        <Label styleClass="prezzo-prodotto" text="9.9€"/>
-                        <Label styleClass="disponibile" text="Disponibile"/>
-                    </VBox>
-                </HBox>
-            </VBox>
-        </content>
-    </ScrollPane>
+    <GridPane fx:id="gridPane" alignment="CENTER" hgap="5"  AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+        <TextField GridPane.columnIndex="0"  prefHeight="50.0" promptText="Cerca un prodotto.." fx:id="searchBar" styleClass="search-bar" focusTraversable="false" /> 
+        <ImageView GridPane.columnIndex="1" fitHeight="50.0" preserveRatio="true" id="search-icon" fx:id="searchIcon">
+              <image>
+                <Image url="@../img/search.jpg" smooth="true" />
+              </image>
+        </ImageView>
+    </GridPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlcatalogo.css"/>
     </stylesheets>
