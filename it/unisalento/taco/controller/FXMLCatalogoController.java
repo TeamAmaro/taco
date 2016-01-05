@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.DipendenteDelegate;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.view.Main;
@@ -19,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -51,30 +48,44 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML GridPane gridPane;
     @FXML AnchorPane content;
     
-    VBox vb;
-    ScrollPane sp;
+    @FXML VBox leftMenu;
+    
+    private ScrollPane sp;
+    private VBox vb;
     
     private Main application = Main.getInstance();
     private DipendenteDelegate delegate = DipendenteDelegate.getInstance();
     
     @Override public void initialize(URL location, ResourceBundle resources){
-        //Da implementare
         
+        //Definisce lo ScrollPane e il VBox per ospitare gli elementi già da subito e una volta sola.
+        sp = new ScrollPane();
+        vb = new VBox();
+        
+        vb.setAlignment(Pos.CENTER);
+        vb.setSpacing(10.0);
+        vb.setPadding(new Insets(10.0,20.0,10.0,10.0));
+        
+        sp.getStyleClass().add("green");
+        sp.setContent(vb);        
+
         nomeClient.setText(application.getClient().getNome() + " " + application.getClient().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
         double saldo = 0.0;
+        
         try{
             nomeProg = delegate.getProgetto((Dipendente) application.getClient()).getNome();
             saldo = delegate.getProgetto((Dipendente) application.getClient()).getSaldo();
             numeroProd = delegate.getCarrello((Dipendente) application.getClient()).numeroProdotti();
         }
         catch(NoIDMatchException e){
-            System.exit(1);
+            System.exit(1); //ERRORE GRAVE
         }
         catch(NoQueryMatchException e){
-
-        }finally {
+            //Non fare nulla
+        }
+        finally{
             nomeProgetto.setText(nomeProg);
             saldoProgetto.setText(Double.toString(saldo) +"€");
             carrello.setText(Integer.toString(numeroProd));
@@ -86,103 +97,115 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             }
         });
         
-        categoriaA.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                //Da implementare
-                System.out.println("Hai cliccato su categoria A");
-            }
-        });
+        for(final Node label : leftMenu.getChildren()){
+            label.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    Categoria cat;
+                    switch(label.getId()){
+                        case "categoriaA":
+                            cat = Categoria.CATEGORIA_A;
+                            break;
+                        case "categoriaB":
+                            cat = Categoria.CATEGORIA_B;
+                            break;
+                        case "categoriaC":
+                            cat= Categoria.CATEGORIA_C;
+                            break;
+                        case "categoriaD":
+                            cat = Categoria.CATEGORIA_D;
+                            break;
+                        default :
+                            cat = Categoria.CATEGORIA_0;
+                            break;
+                   }
+                    try {
+                        Set<Prodotto> listaProdotti = Prodotto.cerca(cat);
+                        displayProdotti(listaProdotti);
+                    }
+                    catch(NoIDMatchException e){
+                        System.err.println(e.getMessage());
+                    }
+                }
+            });
+        }
         
-        categoriaB.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                //Da implementare
-                System.out.println("Hai cliccato su categoria B");
-
-            }
-        });
-        
-        categoriaC.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                //Da implementare
-                System.out.println("Hai cliccato su categoria C");
-            }
-        });
-        
-        categoriaD.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                //Da implementare
-                System.out.println("Hai cliccato su categoria D");
-            }
-        });
         
         searchIcon.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                //Da implementare
-                System.out.println("Hai cliccato sull'avvio ricerca");
-                System.out.println("Ricerco prodotti ... " + searchBar.getText());
+
                 if(searchBar.getText().isEmpty())
                     return;
                 
-                content.getChildren().remove(gridPane);
-
-                sp = new ScrollPane();
-                vb = new VBox();
-
-                vb.setAlignment(Pos.CENTER);
-                vb.setSpacing(10.0);
-                vb.setPadding(new Insets(10.0,20.0,10.0,10.0)); //bozzom="10.0"left="20.0"right="10.0"top="10.0"
-                
                 try {
                     Set<Prodotto> listaProdotti = delegate.cercaProdotti(searchBar.getText());
-                    for(Prodotto p : listaProdotti){
-                        System.out.println("Faccio");
-                        HBox hb = new HBox();
-                        
-                        hb.setAlignment(Pos.CENTER_LEFT);
-                        hb.setPrefHeight(100.0);
-                        hb.setSpacing(20.0);
-                        
-                        ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/thumbnail.jpg"));
-                        iv.setFitHeight(100.0);
-                        iv.setPreserveRatio(true);
-                        
-                        VBox valori = new VBox();
-                        Label nome = new Label(p.getNome());
-                        Label prezzo = new Label(Double.toString(p.getPrezzo()) + "€");
-                        Label descrizione = new Label();
-                        
-                        try{
-                            int quantita = delegate.chiediDisponibilità((Dipendente) application.getClient(), p);
-                            if(quantita < 10)
-                               descrizione.setText("In esaurimento");
-                            else if(quantita == 0)
-                                descrizione.setText("Non disponibile nel magazzino vicino.");
-                            else 
-                                descrizione.setText("Disponibile");
-                        }
-                        catch(NoQueryMatchException e){
-                            descrizione.setText("Impossibile reperire disponibilità");
-                        }
-                        valori.getChildren().addAll(nome, prezzo, descrizione);
-                        hb.getChildren().addAll(iv, valori);
-                        vb.getChildren().add(hb);
-                    }
-
+                    displayProdotti(listaProdotti);
                 }
                 catch (NoIDMatchException e){
-                    System.err.println("OUCH!");
+                    System.err.println(e.getMessage());
                 }
-                System.out.println("Fatto");
-                sp.setStyle("-fx-background-color: green");
-                sp.setContent(vb);
-
-                content.getChildren().add(sp);
-                content.setTopAnchor(sp,50.0);
-                content.setLeftAnchor(sp, 200.0);
-                content.setRightAnchor(sp, 0.0);
-                content.setBottomAnchor(sp, 0.0);
-
             }
-        });
+        });        
+    }
+    
+    private void displayProdotti(Set<Prodotto> listaProdotti){
+        
+        if(content.getChildren().contains(gridPane))
+            content.getChildren().remove(gridPane);
+        
+        if(content.getChildren().contains(sp))
+            content.getChildren().remove(sp);
+        
+        vb.getChildren().clear();
+        
+        for(Prodotto p : listaProdotti){
+
+            HBox hb = new HBox();
+
+            hb.setAlignment(Pos.CENTER_LEFT);
+            hb.setPrefHeight(100.0);
+            hb.setSpacing(20.0);
+
+            ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/thumbnail.jpg"));
+            iv.setFitHeight(100.0);
+            iv.setPreserveRatio(true);
+
+            VBox valori = new VBox();
+            Label nome = new Label(p.getNome());
+            nome.getStyleClass().add("nome-prodotto");
+            Label prezzo = new Label(Double.toString(p.getPrezzo()) + "€");
+            prezzo.getStyleClass().add("prezzo-prodotto");
+            Label descrizione = new Label();
+
+            try{
+                int quantita = delegate.chiediDisponibilità((Dipendente) application.getClient(), p);
+                if(quantita < 10){
+                    descrizione.setText("In esaurimento");
+                    descrizione.getStyleClass().add("esaurimento");
+                }
+                else if(quantita == 0){
+                    descrizione.setText("Non disponibile");
+                    descrizione.getStyleClass().add("non-disponibile");
+                }
+                else{ 
+                    descrizione.setText("Disponibile");
+                    descrizione.getStyleClass().add("disponibile");
+                }
+            }
+            catch(NoQueryMatchException e){
+                descrizione.setText("Impossibile reperire disponibilità");
+                descrizione.getStyleClass().add("non-disponibile");
+            }
+            
+            valori.getChildren().addAll(nome, prezzo, descrizione);
+            hb.getChildren().addAll(iv, valori);
+            vb.getChildren().add(hb);
+        }
+        
+        content.getChildren().add(sp);
+        
+        content.setTopAnchor(sp,50.0);
+        content.setLeftAnchor(sp, 200.0);
+        content.setRightAnchor(sp, 0.0);
+        content.setBottomAnchor(sp, 0.0);
     }
 }
