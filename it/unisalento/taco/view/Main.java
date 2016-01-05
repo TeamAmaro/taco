@@ -4,6 +4,7 @@ import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
+import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -19,15 +20,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     
-    private static Main instance;
-    public static Main getInstance(){
-        if(instance == null)
-            instance = new Main();
-        return instance;
-    }
-    
-    private static Stage stage;
-    private static Utente client;
+    private Stage stage;
+    private Utente utente;
     
     private final double MINIMUM_WINDOW_WIDTH = 400.0;
     private final double MINIMUM_WINDOW_HEIGHT = 400.0;
@@ -53,6 +47,7 @@ public class Main extends Application{
     private void loginLevel(){
         try {
             FXMLLoginController login = (FXMLLoginController) cambiaLivello("fxml/FXMLLogin.fxml");
+            login.setApplication(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -61,14 +56,19 @@ public class Main extends Application{
     private void catalogoLevel(){
         try {
             FXMLCatalogoController catalogo = (FXMLCatalogoController) cambiaLivello("fxml/FXMLCatalogo.fxml");
+            catalogo.setApplication(this);
+            catalogo.initData();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void prodottoLevel(){
-        try {
-            FXMLProdottoController prodotto = (FXMLProdottoController) cambiaLivello("fxml/FXMLProdotto.fxml");
+    private void prodottoLevel(Prodotto prodotto){
+        try{
+            FXMLProdottoController prodottoController = (FXMLProdottoController) cambiaLivello("fxml/FXMLProdotto.fxml");
+            prodottoController.setApplication(this);
+            prodottoController.setProdotto(prodotto);
+            prodottoController.initData();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,7 +84,7 @@ public class Main extends Application{
     
     private void progettoLevel(){
         try {
-            FXMLProgettoController progetto = (FXMLProgettoController) cambiaLivello("fxml/FXMLProgetto.fxml", 1080.0, 720.0);
+            FXMLProgettoController progetto = (FXMLProgettoController) cambiaLivello("fxml/FXMLProgetto.fxml");
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,15 +130,17 @@ public class Main extends Application{
         }
     }
     
-    
-    public Utente getClient(){
-        return client;
+    public Utente getUtente(){
+        return utente;
     }
     
+    public Stage getStage(){
+        return stage;
+    }
     
-    public boolean setClient(String email, String password){
+    public boolean setUtente(String email, String password){
         try {
-            client = UtenteDelegate.getInstance().login(email, password);
+            utente = UtenteDelegate.getInstance().login(email, password);
             return true;
         }
         catch (NoSuchUserException | NoIDMatchException e) {
@@ -157,11 +159,14 @@ public class Main extends Application{
     public void magazziniereView(){
         magazzinoLevel();
     }
-    
+        
     public void logout(){
-        System.out.println(client);
-        client = null;
+        utente = null;
         loginLevel();
+    }
+    
+    public void getDetails(Prodotto prodotto){
+        prodottoLevel(prodotto);
     }
     
     private Initializable cambiaLivello(String fxml) throws Exception {
@@ -178,23 +183,7 @@ public class Main extends Application{
         Scene scene = new Scene(root, 800.0, 600.0);
         stage.setScene(scene);
         stage.sizeToScene();
-        return (Initializable) loader.getController();
-    }
-    
-    private Initializable cambiaLivello(String fxml, double width, double height) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        InputStream in = Main.class.getResourceAsStream(fxml);
-        loader.setBuilderFactory(new JavaFXBuilderFactory());
-        loader.setLocation(Main.class.getResource(fxml));
-        Pane root;
-        try {
-            root = (Pane) loader.load(in);
-        } finally {
-            in.close();
-        } 
-        Scene scene = new Scene(root, width, height);
-        stage.setScene(scene);
-        stage.sizeToScene();
+        stage.centerOnScreen();
         return (Initializable) loader.getController();
     }
     
