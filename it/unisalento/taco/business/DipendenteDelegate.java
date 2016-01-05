@@ -4,6 +4,7 @@ import it.unisalento.taco.exceptions.InsufficientFundException;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
+import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
@@ -28,27 +29,19 @@ public class DipendenteDelegate {
     private DipendenteDelegate(){};
 
     public Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
-        try{
-            return Progetto.getProgetto(dipendente);
-        }catch(NoQueryMatchException | NoIDMatchException e){
-            throw e;
-        }
+        return Progetto.getProgetto(dipendente);
     }
     
     public Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{
-        try {
-            return Carrello.getCarrello(dipendente);
-        }catch(NoIDMatchException e){
-            throw e;
-        }
+        return Carrello.getCarrello(dipendente);
     }
     
     public Set<Prodotto> cercaProdotti(String ricerca) throws NoIDMatchException{
-        try {
-            return Prodotto.cerca(ricerca);
-        }catch(NoIDMatchException e){
-            throw e;
-        }
+        return Prodotto.cerca(ricerca);
+    }
+    
+    public Set<Prodotto> cercaProdotti(Categoria categoria) throws NoIDMatchException{
+        return Prodotto.cerca(categoria);
     }
     
     public void addProdotto(Carrello carrello, Prodotto prodotto, int quantita){
@@ -66,13 +59,10 @@ public class DipendenteDelegate {
         try{
             Magazzino magVicino = Magazzino.getMagazzino(sede);
             return Magazzino.getQuantita(magVicino, prodotto);
-            
         }catch(NoQueryMatchException e){
             throw e;
         }
-        
     }
-    
     
     public Set<Ordine> generaOrdini(Dipendente dipendente) throws NoIDMatchException, NoQueryMatchException{
         
@@ -186,7 +176,7 @@ public class DipendenteDelegate {
             }
         }
         catch(NoQueryMatchException | NoIDMatchException e){
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         
     }
