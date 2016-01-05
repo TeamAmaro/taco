@@ -44,6 +44,7 @@
 
 .nome-prodotto{
     -fx-font-size: 16;
+    
 }
 
 .prezzo-prodotto {
@@ -69,7 +70,7 @@
     -fx-font-size: 18;
 }
 
-.logout-button:hover, .left-menu-label:hover, #search-icon:hover  {
+.logout-button:hover, .left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover {
     -fx-cursor: hand;
 }
 
