@@ -8,6 +8,7 @@ package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.model.Categoria;
 import static it.unisalento.taco.model.Categoria.parseCategoria;
 import it.unisalento.taco.model.Fornitore;
 import it.unisalento.taco.model.IdentificabileID;
@@ -44,6 +45,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
             return prodotto;
         }
         else {
+            System.err.println("ID incriminato:" + id);
             throw new NoIDMatchException(this);
         }
     }
@@ -93,6 +95,21 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
             }
             //TROVARE UN MODO PIU' ELENGANTE 
             j++;
+        }
+        return listaProdotti;
+    }
+    
+    public Set<Prodotto> cerca(Categoria categoria) throws NoIDMatchException {
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id FROM prodotti WHERE categoria = \"" + categoria + "\"");
+        Iterator<String[]> i = result.iterator();
+        Set<Prodotto> listaProdotti = new LinkedHashSet<>();
+        while(i.hasNext()){
+            String[] riga = i.next();
+            try{
+                listaProdotti.add(getByID(Integer.parseInt(riga[0])));
+            }catch(NoIDMatchException e){
+                throw e;
+            }
         }
         return listaProdotti;
     }

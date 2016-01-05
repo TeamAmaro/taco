@@ -140,11 +140,11 @@ public class Prodotto implements IdentificabileID {
     }
 
     public static Set<Prodotto> cerca(String ricerca) throws NoIDMatchException{
-        try {
-            return ProdottoDAO.getInstance().cerca(ricerca);
-        }catch(NoIDMatchException e){
-            throw e;
-        }
+        return ProdottoDAO.getInstance().cerca(ricerca);
+    }
+    
+    public static Set<Prodotto> cerca(Categoria categoria) throws NoIDMatchException{
+        return ProdottoDAO.getInstance().cerca(categoria);
     }
     
     @Override public String toString(){
