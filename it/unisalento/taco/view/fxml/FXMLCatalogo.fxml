@@ -25,7 +25,7 @@
     </HBox>
     <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
         <children>
-            <Label styleClass="top-bar-label" fx:id="carrello" text="2"/>
+            <Label styleClass="top-bar-label" fx:id="carrello" text=""/>
             <ImageView  id="icona-carrello" fitHeight="50.0" preserveRatio="true">
                 <image>
                     <Image url="@../img/cart.jpg" smooth="true" />
