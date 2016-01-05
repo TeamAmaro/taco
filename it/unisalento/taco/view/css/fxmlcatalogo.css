@@ -60,6 +60,11 @@
     -fx-text-fill: red;
 }
 
+.esaurimento {
+    -fx-font-size: 14;
+    -fx-text-fill: orangered;
+}
+
 .logout-button {
     -fx-font-size: 18;
 }
