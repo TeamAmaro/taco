@@ -30,11 +30,6 @@ import javafx.scene.layout.VBox;
 
 public class FXMLCatalogoController extends AnchorPane implements Initializable{
     
-    @FXML Label categoriaA;
-    @FXML Label categoriaB;
-    @FXML Label categoriaC;
-    @FXML Label categoriaD;
-
     @FXML Label nomeClient;
     @FXML Label nomeProgetto;
     @FXML Label saldoProgetto;
@@ -53,8 +48,9 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     private ScrollPane sp;
     private VBox vb;
     
-    private Main application = Main.getInstance();
+    private Main application;
     private DipendenteDelegate delegate = DipendenteDelegate.getInstance();
+    
     
     @Override public void initialize(URL location, ResourceBundle resources){
         
@@ -68,16 +64,24 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         
         sp.getStyleClass().add("green");
         sp.setContent(vb);        
+        
+    }
+    
+    public void setApplication(Main application) {
+        this.application = application;
+    }
 
-        nomeClient.setText(application.getClient().getNome() + " " + application.getClient().getCognome());
+    public void initData() {
+        
+        nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
         double saldo = 0.0;
         
         try{
-            nomeProg = delegate.getProgetto((Dipendente) application.getClient()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getClient()).getSaldo();
-            numeroProd = delegate.getCarrello((Dipendente) application.getClient()).numeroProdotti();
+            nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
+            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getSaldo();
+            numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
             System.exit(1); //ERRORE GRAVE
@@ -90,7 +94,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             saldoProgetto.setText(Double.toString(saldo) +"€");
             carrello.setText(Integer.toString(numeroProd));
         }
-
+        
         logout.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.logout();
@@ -129,7 +133,6 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             });
         }
         
-        
         searchIcon.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
 
@@ -144,8 +147,9 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                     System.err.println(e.getMessage());
                 }
             }
-        });        
+        });     
     }
+    
     
     private void displayProdotti(Set<Prodotto> listaProdotti){
         
@@ -157,13 +161,14 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         
         vb.getChildren().clear();
         
-        for(Prodotto p : listaProdotti){
+        for(final Prodotto p : listaProdotti){
 
             HBox hb = new HBox();
 
             hb.setAlignment(Pos.CENTER_LEFT);
             hb.setPrefHeight(100.0);
             hb.setSpacing(20.0);
+            hb.setMaxWidth(350.0);
 
             ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/thumbnail.jpg"));
             iv.setFitHeight(100.0);
@@ -172,12 +177,19 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             VBox valori = new VBox();
             Label nome = new Label(p.getNome());
             nome.getStyleClass().add("nome-prodotto");
+            
+            nome.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    application.getDetails(p);
+                }
+            });
+            
             Label prezzo = new Label(Double.toString(p.getPrezzo()) + "€");
             prezzo.getStyleClass().add("prezzo-prodotto");
             Label descrizione = new Label();
 
             try{
-                int quantita = delegate.chiediDisponibilità((Dipendente) application.getClient(), p);
+                int quantita = delegate.chiediDisponibilità((Dipendente) application.getUtente(), p);
                 if(quantita < 10){
                     descrizione.setText("In esaurimento");
                     descrizione.getStyleClass().add("esaurimento");
@@ -205,7 +217,14 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         
         content.setTopAnchor(sp,50.0);
         content.setLeftAnchor(sp, 200.0);
-        content.setRightAnchor(sp, 0.0);
         content.setBottomAnchor(sp, 0.0);
+        System.out.println(application.getStage().getWidth());
+        if(application.getStage().getWidth() < 1000.0)
+            content.setRightAnchor(sp, 0.0);
+        else{
+            content.setRightAnchor(sp, 500.0);
+        }
     }
+    
+
 }
