@@ -18,34 +18,23 @@
                 <Image url="@../img/logo2.jpg" smooth="true" />
               </image>
             </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient" text="Tizio Caio"/>
-            <Label styleClass="top-bar-label" fx:id="nomeProgetto" text="Progetto Taco"/>    
-            <Label styleClass="top-bar-label" fx:id="saldoProgetto" text="999.9€"/>        
+            <Label styleClass="top-bar-label" fx:id="nomeClient" text=""/>
+            <Label styleClass="top-bar-label" fx:id="nomeProgetto" text=""/>    
+            <Label styleClass="top-bar-label" fx:id="saldoProgetto" text=""/>        
         </children>
     </HBox>
     <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
         <children>
-            <Label styleClass="top-bar-label" fx:id="carrello" text="2"/>
+            <Label styleClass="top-bar-label" fx:id="carrello" text=""/>
             <ImageView  id="icona-carrello" fitHeight="50.0" preserveRatio="true">
                 <image>
                     <Image url="@../img/cart.jpg" smooth="true" />
                 </image>
             </ImageView>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
-    <VBox AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" prefWidth="200.0" styleClass="red" alignment="TOP_LEFT" spacing="5.0" >
-        <padding>
-            <Insets bottom="10.0" left="20.0" right="10.0" top="20.0" />
-        </padding> 
-        <children>
-            <Label styleClass="left-menu-label" fx:id="categoriaA" text="Categoria A"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaB" text="Categoria B"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaC" text="Categoria C"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaD" text="Categoria D"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaE" text="Categoria E"/>
-        </children>
-    </VBox>
-    <GridPane hgap="20" vgap="10" alignment="TOP_CENTER" fx:id="scrollPane" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+    <GridPane hgap="20" vgap="10" alignment="TOP_CENTER" fx:id="scrollPane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
         </padding> 
@@ -54,25 +43,20 @@
                 <Image url="@../img/thumbnail.jpg" smooth="true" />
             </image>
         </ImageView>
-        <Label styleClass="nome-prodotto" text="Prodotto A" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="150"/>
-        <Label styleClass="prezzo-prodotto" text="9.9€" GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="150"/>
-        <Label styleClass="prod-prodotto" text="Produttore A" GridPane.columnIndex="1" GridPane.rowIndex="2" minWidth="150"/>
-        <Label styleClass="disponibile" text="Disponibile" GridPane.columnIndex="1" GridPane.rowIndex="3" minWidth="150"/>
+        <Label fx:id="nomeProdotto" styleClass="nome-prodotto" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="150"/>
+        <Label fx:id="prezzoProdotto" styleClass="prezzo-prodotto" GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="150"/>
+        <Label text="Produttore" styleClass="prod-prodotto" GridPane.columnIndex="1" GridPane.rowIndex="2" minWidth="150"/>
+        <Label fx:id="prodProdotto" styleClass="prod-prodotto" GridPane.columnIndex="1" GridPane.rowIndex="3" minWidth="150"/>
+        <Label fx:id="disponibilita" styleClass="disponibile" GridPane.columnIndex="1" GridPane.rowIndex="4" minWidth="150"/>
         <HBox GridPane.columnIndex="2" GridPane.rowIndex="1" minWidth="150" maxWidth="150" GridPane.halignment="RIGHT"  spacing="10">
             <Label styleClass="quantita" text="Quantità:"/>
             <TextField minHeight="20" prefHeight="20" prefWidth="90" />
         </HBox>
         <Button text="Aggiungi al carrello" minWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.halignment="RIGHT"/> 
-        <Label styleClass="descrizione" text="Descrizione" GridPane.columnIndex="0" GridPane.rowIndex="5" minWidth="150"/>
+        <Label text="Descrizione" styleClass="descrizione" GridPane.columnIndex="0" GridPane.rowIndex="5" minWidth="150"/>
         <HBox GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="3" maxWidth="1000" >
-            <Label styleClass="descrizione" wrapText="true">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            </Label>
+            <Label fx:id="descrizione" styleClass="descrizione" wrapText="true"/>
         </HBox>
-        
     </GridPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlprodotto.css"/>
