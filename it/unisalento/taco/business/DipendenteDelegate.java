@@ -54,6 +54,10 @@ public class DipendenteDelegate {
         carrello.removeProdotto(prodotto, quantita);
     }
     
+    public void removeProdotto(Carrello carrello, Prodotto prodotto){
+        carrello.removeProdotto(prodotto);
+    }
+    
     public int chiediDisponibilità(Dipendente dipendente, Prodotto prodotto) throws NoQueryMatchException{
         Sede sede = dipendente.getSede();
         try{
