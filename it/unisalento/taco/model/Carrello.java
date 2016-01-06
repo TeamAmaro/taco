@@ -71,6 +71,14 @@ public class Carrello implements IdentificabileID{
         }
         setTotale();
     }
+    
+    public void removeProdotto(Prodotto prodotto){
+        if(listaProdotti.containsKey(prodotto)){
+                listaProdotti.remove(prodotto);
+                CarrelloDAO.getInstance().deleteProdotto(this, prodotto);
+        }
+        setTotale();
+    }
 
     public double calcolaTotale(){
         totale = 0;
