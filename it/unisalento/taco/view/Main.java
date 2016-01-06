@@ -23,6 +23,7 @@ public class Main extends Application{
     
     private Stage stage;
     private Utente utente;
+    private Scene lastScene;
     
     private final double MINIMUM_WINDOW_WIDTH = 800.0;
     private final double MINIMUM_WINDOW_HEIGHT = 600.0;
@@ -41,8 +42,8 @@ public class Main extends Application{
         
         stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
         
-        stage.setWidth(800.0);
-        stage.setHeight(600.0);
+        stage.setWidth(MINIMUM_WINDOW_WIDTH);
+        stage.setHeight(MINIMUM_WINDOW_HEIGHT);
         
         loginLevel();
         
@@ -173,10 +174,12 @@ public class Main extends Application{
     }
     
     public void getDetails(Prodotto prodotto){
+        lastScene = stage.getScene();
         prodottoLevel(prodotto);
     }
     
     public void getCarrello(){
+        lastScene = stage.getScene();
         carrelloLevel();
     }
     
@@ -191,10 +194,17 @@ public class Main extends Application{
         } finally {
             in.close();
         } 
-        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+        //Non so perché, ma ci sono 15 px di differenza ..
+        Scene scene = new Scene(root, stage.getWidth() - 15, stage.getHeight() - 15);
         stage.setScene(scene);
         stage.centerOnScreen();
         return (Initializable) loader.getController();
+    }
+
+    public void lastView() {
+        stage.setScene(lastScene);
+        stage.setHeight(lastScene.getHeight());
+        stage.setWidth(lastScene.getWidth());
     }
     
 }
