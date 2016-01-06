@@ -102,6 +102,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             }
         });
 
+        
 
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
@@ -196,6 +197,9 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         if(content.getChildren().contains(scrollLeft))
             content.getChildren().remove(scrollLeft);
 
+        if(content.getChildren().contains(gridRight))
+            content.getChildren().remove(gridRight);
+
         vbLeft.getChildren().clear();
 
         for(final Prodotto p : listaProdotti){
@@ -256,7 +260,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             hb.getChildren().addAll(iv, valori);
             vbLeft.getChildren().add(hb);
         }
-
+    
         content.getChildren().add(scrollLeft);
         content.getChildren().add(gridRight);
 
@@ -269,7 +273,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         content.setBottomAnchor(gridRight, 0.0);
         content.setRightAnchor(gridRight, 0.0);
 
-        if(application.getStage().getWidth() < 1000.0){
+        if(application.getStage().getWidth() < 1130.0){
             content.setRightAnchor(scrollLeft, 0.0);
             gridRight.setVisible(false);
         }
@@ -284,6 +288,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     private void showOnRightPanel(final Prodotto prodotto){
 
         gridRight.getChildren().clear();
+        
         
         ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/thumbnail.jpg"));
         //iv.setFitHeight(200.0);
@@ -311,22 +316,30 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.add(produttore, 1, 3);
         gridRight.add(new Label("Descrizione"), 0, 6);
         gridRight.add(descrizione, 0, 7);
-        gridRight.add(new Label("Inserire quantità:"), 0, 8);
+        gridRight.add(new Label("Inserire quantità da ordinare (es. 20):"), 0, 8);
         gridRight.add(quantita, 1, 8);
         GridPane.setValignment(quantita, VPos.CENTER);
         GridPane.setHalignment(quantita, HPos.RIGHT);
         gridRight.add(add, 1, 9);
         
+        if(application.getStage().getWidth() < 1130.0){
+            content.setRightAnchor(scrollLeft, 400.0);
+            application.getStage().setWidth(1130.0);
+            gridRight.setVisible(true);
+        }
+
         add.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 int q = Integer.parseInt(quantita.getText());
-                try{
-                    Carrello carrello = delegate.getCarrello((Dipendente) application.getUtente());
-                    delegate.addProdotto(carrello, prodotto, q);
-                    add.setDisable(true);
-                    add.setText("Aggiunto!");
-                } catch (NoIDMatchException e){
-                    System.err.println(e.getMessage());
+                if(q > 0){
+                    try{
+                        Carrello carrello = delegate.getCarrello((Dipendente) application.getUtente());
+                        delegate.addProdotto(carrello, prodotto, q);
+                        add.setDisable(true);
+                        add.setText("Aggiunto!");
+                    } catch (NoIDMatchException e){
+                        System.err.println(e.getMessage());
+                    }
                 }
             }
         });
