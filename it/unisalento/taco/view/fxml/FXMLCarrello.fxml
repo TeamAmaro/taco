@@ -11,7 +11,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLCarrelloController">
-    <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
         <children>
             <ImageView fx:id="leftLogo" fitHeight="50" preserveRatio="true" id="left-menu-logo">
               <image>
