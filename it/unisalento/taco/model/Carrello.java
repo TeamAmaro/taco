@@ -34,6 +34,10 @@ public class Carrello implements IdentificabileID{
         this.totale = calcolaTotale();
     }
     
+    public double getTotale(){
+        return totale;
+    }
+    
     public void removeListaProdotti(Map<Prodotto,Integer> listaProdotti){
         for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet()){
             removeProdotto(val.getKey(),val.getValue());
