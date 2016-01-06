@@ -8,28 +8,29 @@ package it.unisalento.taco.controller;
 import it.unisalento.taco.business.DipendenteDelegate;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
-import it.unisalento.taco.model.Categoria;
+import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.view.Main;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Set;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+
 
 public class FXMLProdottoController implements Initializable {
 
@@ -51,6 +52,14 @@ public class FXMLProdottoController implements Initializable {
     @FXML Label logout;
     @FXML ImageView leftLogo;
     
+    @FXML HBox topLeft;
+    
+    @FXML ImageView iv;
+    @FXML Button addButton;
+    @FXML TextField quantita;
+    
+    @FXML ImageView iconaCarrello;
+    
     public void setApplication(Main application){
         this.application = application;
     }
@@ -61,7 +70,24 @@ public class FXMLProdottoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-           //TO-DO
+        
+        iv = new ImageView(new Image("it/unisalento/taco/view/img/back.jpg"));
+        iv.setFitHeight(50.0);
+        iv.setPreserveRatio(true);
+        
+        topLeft.getChildren().add(0, iv);
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000));
+        ft.setFromValue(0.3f);
+        ft.setToValue(1.0f);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
+        tt.setFromX(-100f);
+        tt.setToX(0);
+        
+        ParallelTransition pt = new ParallelTransition(iv, ft, tt);
+        pt.play();
+        
+        
     }    
 
     public void initData(){
@@ -102,6 +128,34 @@ public class FXMLProdottoController implements Initializable {
                 @Override public void handle(MouseEvent arg0) {
                     application.dipendenteView();
                 }
+        });
+        
+        iv.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    application.lastView();
+                }
+        });
+
+        addButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    int q = Integer.parseInt(quantita.getText());
+                if(q > 0){
+                    try{
+                        Carrello carrello = delegate.getCarrello((Dipendente) application.getUtente());
+                        delegate.addProdotto(carrello, prodotto, q);
+                        addButton.setDisable(true);
+                        addButton.setText("Aggiunto!");
+                    } catch (NoIDMatchException e){
+                        System.err.println(e.getMessage());
+                    }
+                }
+            }
+        });
+        
+        iconaCarrello.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.getCarrello();
+            }
         });
     }
 
