@@ -4,6 +4,7 @@ import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
+import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
@@ -23,8 +24,8 @@ public class Main extends Application{
     private Stage stage;
     private Utente utente;
     
-    private final double MINIMUM_WINDOW_WIDTH = 400.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 400.0;
+    private final double MINIMUM_WINDOW_WIDTH = 800.0;
+    private final double MINIMUM_WINDOW_HEIGHT = 600.0;
     
     public static void main(String[] args) { 
         launch(args); 
@@ -37,7 +38,11 @@ public class Main extends Application{
         
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
+        
         stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
+        
+        stage.setWidth(800.0);
+        stage.setHeight(600.0);
         
         loginLevel();
         
@@ -77,6 +82,8 @@ public class Main extends Application{
     private void carrelloLevel(){
         try {
             FXMLCarrelloController carrello = (FXMLCarrelloController) cambiaLivello("fxml/FXMLCarrello.fxml");
+            carrello.setApplication(this);
+            carrello.initData();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -169,6 +176,10 @@ public class Main extends Application{
         prodottoLevel(prodotto);
     }
     
+    public void getCarrello(){
+        carrelloLevel();
+    }
+    
     private Initializable cambiaLivello(String fxml) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         InputStream in = Main.class.getResourceAsStream(fxml);
@@ -180,9 +191,8 @@ public class Main extends Application{
         } finally {
             in.close();
         } 
-        Scene scene = new Scene(root, 800.0, 600.0);
+        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
         stage.setScene(scene);
-        stage.sizeToScene();
         stage.centerOnScreen();
         return (Initializable) loader.getController();
     }
