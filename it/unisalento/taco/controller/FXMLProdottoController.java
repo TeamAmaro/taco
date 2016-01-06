@@ -49,6 +49,7 @@ public class FXMLProdottoController implements Initializable {
     @FXML Label disponibilita;
     
     @FXML Label logout;
+    @FXML ImageView leftLogo;
     
     public void setApplication(Main application){
         this.application = application;
@@ -97,7 +98,11 @@ public class FXMLProdottoController implements Initializable {
             }
         });
         
-        
+        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    application.dipendenteView();
+                }
+        });
     }
 
 
