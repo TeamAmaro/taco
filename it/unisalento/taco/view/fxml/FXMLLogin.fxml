@@ -16,7 +16,7 @@
         <HBox alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="0" prefHeight="200" styleClass="blue">
             <ImageView id="app-login-logo">
               <image>
-                <Image url="@../img/logo1.jpg" preserveRatio="true" smooth="true" />
+                <Image url="@../img/UuGUwDY.gif" preserveRatio="true" smooth="true" />
               </image>
             </ImageView>
         </HBox>

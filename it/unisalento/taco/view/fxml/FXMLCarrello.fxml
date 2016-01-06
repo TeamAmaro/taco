@@ -13,7 +13,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLCarrelloController">
     <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
         <children>
-            <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
+            <ImageView fx:id="leftLogo" fitHeight="50" preserveRatio="true" id="left-menu-logo">
               <image>
                 <Image url="@../img/logo2.jpg" smooth="true" />
               </image>
@@ -23,33 +23,27 @@
             <Label styleClass="top-bar-label" fx:id="saldoProgetto" text="999.9€"/>        
         </children>
     </HBox>
-    <ScrollPane fx:id="scrollPane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+        <children>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
+        </children>
+    </HBox>
+    <ScrollPane AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
         <content>
-            <VBox fx:id="scrollContent" spacing="10"  fillWidth="true">
+            <VBox spacing="10" fillWidth="true">
                 <padding>
                     <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                 </padding> 
-                <Label styleClass="titolo" text="Carrello"/>
-                <GridPane alignment="CENTER" vgap="10" hgap="10">
-                    <Label styleClass="text" text="Prodotto" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="400.0" />
-                    <Label styleClass="text" text="Quantità" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="100.0"/>    
-                    <Label styleClass="text" text="Disponibilità" GridPane.columnIndex="2" GridPane.rowIndex="0" minWidth="100.0"/>
-                    <HBox alignment="CENTER_LEFT" prefHeight="100" spacing="20.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        <ImageView fitHeight="100" preserveRatio="true">
-                          <image>
-                            <Image url="@../img/thumbnail.jpg" smooth="true" />
-                          </image>
-                        </ImageView>
-                        <VBox spacing="10" alignment="CENTER_LEFT"  >
-                            <Label styleClass="nome-prodotto" text="Prodotto A"/>
-                            <Label styleClass="prezzo-prodotto" text="9.9€"/>
-                            <Label styleClass="prod-prodotto" text="Produttore A"/>
-                        </VBox>
-                    </HBox>
-                    <Label styleClass="text" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1"/>    
-                    <Label styleClass="text" text="Sì" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                    <Button styleClass="remove-button" GridPane.columnIndex="3" GridPane.rowIndex="1" text="Rimuovi"/>
-                    <Button styleClass="ordina-button" GridPane.columnIndex="1" GridPane.rowIndex="2" text="Ordina" />
+                <HBox spacing="50.0">
+                    <Label styleClass="titolo" text="Carrello"/>                    
+                 </HBox>
+                <GridPane fx:id="content" alignment="CENTER" vgap="10" hgap="10">
+                    <Label fx:id="totale" styleClass="totale" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="400" alignment="CENTER"/>
+                        <Button fx:id="ordinaButton" styleClass="ordina-button" text="Completa Ordine" alignment="BOTTOM_CENTER" 
+                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Label styleClass="info-text" text="Prodotto" GridPane.columnIndex="0" GridPane.rowIndex="1" minWidth="400.0" />
+                    <Label styleClass="info-text" text="Quantità" GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="100.0"/>    
+                    <Label styleClass="info-text" text="Disponibilità" GridPane.columnIndex="2" GridPane.rowIndex="1" minWidth="100.0"/>
                 </GridPane>
             </VBox>
         </content>
