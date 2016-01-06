@@ -116,7 +116,7 @@ public class Ordine {
         StringBuilder ordineString = new StringBuilder();
         ordineString.append("Dipendente: ").append(dipendente).append(", Progetto: ").append(progetto.getNome()).
                 append(", Magazzino: ").append(magazzino.getNome()).append(", \nLista Prodotti: ").append(getListaProdottiAsString()).
-                append("Data: ").append(data);
+                append("Data: ").append(getReadableData());
         return ordineString.toString();
     }   
     
