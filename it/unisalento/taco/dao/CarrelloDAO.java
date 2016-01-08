@@ -44,7 +44,7 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
             try{
                 int idProdotto = Integer.parseInt(riga[1]);
                 Prodotto prodotto = ProdottoDAO.getInstance().getByID(idProdotto);
-                int quantita = Integer.parseInt(riga[6]);
+                int quantita = Integer.parseInt(riga[7]);
                 if(quantita == 0)
                     continue;
                 listaProdotti.put(prodotto,quantita);
