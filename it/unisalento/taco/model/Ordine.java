@@ -4,7 +4,7 @@ import it.unisalento.taco.dao.OrdineDAO;
 import java.util.Date;
 import java.util.Map;
 
-public class Ordine {
+public final class Ordine {
 
     private final Dipendente dipendente;
     private final Progetto progetto;
@@ -13,9 +13,11 @@ public class Ordine {
     private final long data;
     private boolean spedito;
     private double totale;
-    private int spesaSpedizione;
+    private double spesaSpedizione;
 
-    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, Long data, Map<Prodotto,Integer> listaProdotti, double totale, int spesaSpedizione){
+    private final int codice;
+    
+    public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, Long data, Map<Prodotto,Integer> listaProdotti, double totale, double spesaSpedizione){
         this.dipendente = dipendente;
         this.progetto = progetto;
         this.magazzino = magazzino;
@@ -23,6 +25,7 @@ public class Ordine {
         this.listaProdotti = listaProdotti;
         this.totale = totale;
         this.spesaSpedizione = spesaSpedizione;
+        codice = hashCode();
     }
     
     public Ordine(Dipendente dipendente, Progetto progetto, Magazzino magazzino, long data, Map<Prodotto,Integer> listaProdotti) {
@@ -34,6 +37,7 @@ public class Ordine {
         spedito = false;
         calcolaTotale();
         calcolaSpesaSpedizione();
+        codice = hashCode();
     }
 
     public Dipendente getDipendente(){
@@ -56,6 +60,10 @@ public class Ordine {
         return data;
     }
     
+    public int getCodice(){
+        return codice;
+    }
+            
     public Date getReadableData(){
         return new Date(data);
     }
@@ -101,14 +109,32 @@ public class Ordine {
         }
         return hash;
     }
-   
+    
+    public String getListaQuantitaProdotti(){
+        StringBuilder stringProdotti = new StringBuilder();
+        for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet())
+                stringProdotti.append(val.getValue()).append("\n");
+        return stringProdotti.toString();
+    }
+    
+    public String getListaPrezziProdotti(){
+        StringBuilder stringProdotti = new StringBuilder();
+        for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet())
+                stringProdotti.append(val.getKey().getPrezzo()).append("€").append("\n");
+        return stringProdotti.toString();
+    }
+    
+    public String getListaNomiProdotti(){
+        StringBuilder stringProdotti = new StringBuilder();
+        for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet())
+                stringProdotti.append(val.getKey().getNome()).append("\n");
+        return stringProdotti.toString();
+    }
+    
     private String getListaProdottiAsString(){
         StringBuilder stringProdotti = new StringBuilder();
         for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet())
                 stringProdotti.append(val.getKey().getNome()).append(" x ").append(val.getValue()).append("\n");
-        int last = stringProdotti.lastIndexOf(",");
-        if(last != -1)
-            stringProdotti.delete(last, last + 2);
         return stringProdotti.toString();
     }
         

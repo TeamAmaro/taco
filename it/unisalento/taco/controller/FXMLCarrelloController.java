@@ -17,6 +17,8 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -42,6 +44,11 @@ public class FXMLCarrelloController implements Initializable {
     @FXML HBox topLeft;
     @FXML Label totale;
     @FXML Button ordinaButton;
+    
+    @FXML Label nomeClient;
+    @FXML Label nomeProgetto;
+    @FXML Label saldoProgetto;
+    @FXML Label titoloLabel;
     
     private Main application;
     private Carrello carrello;
@@ -78,10 +85,26 @@ public class FXMLCarrelloController implements Initializable {
         
         int i = 2;
         
-        try {
+        nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
+        String nomeProg = "Nessun Progetto";
+        int numeroProd = 0;
+        double saldo = 0.0;
+
+        try{
+            nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
+            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getSaldo();
+            numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
             carrello = delegate.getCarrello((Dipendente) application.getUtente());
-        } catch (NoIDMatchException e){
-            System.err.println(e.getMessage());
+        }
+        catch(NoIDMatchException e){
+            Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        catch(NoQueryMatchException e){
+            //Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.FINE, null, e);
+        }
+        finally{
+            nomeProgetto.setText(nomeProg);
+            saldoProgetto.setText(Double.toString(saldo) +"€");
         }
         
         Map<Prodotto, Integer> listaProdotti = carrello.getListaProdotti();
@@ -198,14 +221,11 @@ public class FXMLCarrelloController implements Initializable {
             @Override public void handle(MouseEvent arg0) {
                 try{
                     Set<Ordine> listaOrdini = delegate.generaOrdini((Dipendente) application.getUtente());
-                    for(Ordine o : listaOrdini)
-                        System.out.println(o);
+                    application.ordina(listaOrdini);
                 } catch (NoIDMatchException e){
                     System.err.println(e.getMessage());
                 } catch (NoQueryMatchException e){
                     System.err.println("WUT");
-                } finally {
-                    //DO SOMETHING!
                 }
             }
         });

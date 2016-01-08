@@ -18,9 +18,9 @@
                 <Image url="@../img/logo2.jpg" smooth="true" />
               </image>
             </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient" text="Tizio Caio"/>
-            <Label styleClass="top-bar-label" fx:id="nomeProgetto" text="Progetto Taco"/>    
-            <Label styleClass="top-bar-label" fx:id="saldoProgetto" text="999.9€"/>        
+            <Label styleClass="top-bar-label" fx:id="nomeClient"/>
+            <Label styleClass="top-bar-label" fx:id="nomeProgetto" />    
+            <Label styleClass="top-bar-label" fx:id="saldoProgetto"/>        
         </children>
     </HBox>
     <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">

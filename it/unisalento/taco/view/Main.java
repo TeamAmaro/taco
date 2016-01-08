@@ -1,13 +1,17 @@
 package it.unisalento.taco.view;
 
+import it.unisalento.taco.business.DipendenteDelegate;
 import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
+import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Carrello;
+import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -122,9 +126,13 @@ public class Main extends Application{
         }
     }
     
-    private void ordineDettaglioLevel(){
+    private void ordineDettaglioLevel(Set<Ordine> listaOrdini){
         try {
             FXMLOrdineDettaglioController ordineDettaglio = (FXMLOrdineDettaglioController) cambiaLivello("fxml/FXMLOrdineDettaglio.fxml");
+            ordineDettaglio.setListaOrdini(listaOrdini);
+            ordineDettaglio.setApplication(this);
+            ordineDettaglio.initData();
+            
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -203,8 +211,13 @@ public class Main extends Application{
 
     public void lastView() {
         stage.setScene(lastScene);
-        stage.setHeight(lastScene.getHeight());
-        stage.setWidth(lastScene.getWidth());
+        stage.sizeToScene();
+        stage.centerOnScreen();
+
+    }
+
+    public void ordina(Set<Ordine> listaOrdini) {
+        ordineDettaglioLevel(listaOrdini);
     }
     
 }

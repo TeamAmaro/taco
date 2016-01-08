@@ -34,20 +34,19 @@
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
-    <VBox fx:id="leftMenu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" prefWidth="200.0" styleClass="red" alignment="TOP_LEFT" spacing="5.0" >
-        <padding>
-            <Insets bottom="10.0" left="20.0" right="10.0" top="20.0" />
-        </padding>
+    <VBox fx:id="leftMenu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50"
+          AnchorPane.bottomAnchor="0" minWidth="200.0" maxWidth="200.0" styleClass="red" alignment="TOP_LEFT">
         <children>
-            <Label styleClass="left-menu-label" fx:id="categoriaA" text="Cancelleria"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaB" text="Elettronica"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaC" text="Ricambi"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaD" text="Stampanti"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaA" id="categoriaA" text="Cancelleria"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaB" id="categoriaB" text="Elettronica"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaC" id="categoriaC" text="Ricambi"/>
+            <Label styleClass="left-menu-label" fx:id="categoriaD" id="categoriaD" text="Stampanti"/>
         </children>
     </VBox>
     <GridPane fx:id="gridPane" alignment="CENTER" hgap="5"  AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
-        <TextField GridPane.columnIndex="0"  prefHeight="50.0" promptText="Cerca un prodotto.." fx:id="searchBar" styleClass="search-bar" focusTraversable="false" />
-        <ImageView GridPane.columnIndex="1" fitHeight="50.0" preserveRatio="true" id="search-icon" fx:id="searchIcon">
+        <Label styleClass="query-message" fx:id="queryMessage" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="50.0" promptText="Cerca un prodotto.." fx:id="searchBar" styleClass="search-bar" focusTraversable="false" />
+        <ImageView GridPane.columnIndex="1" GridPane.rowIndex="1" fitHeight="50.0" preserveRatio="true" id="search-icon" fx:id="searchIcon">
               <image>
                 <Image url="@../img/search.jpg" smooth="true" />
               </image>

@@ -11,6 +11,8 @@ import it.unisalento.taco.view.Main;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -45,6 +47,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML TextField searchBar;
 
     @FXML Label logout;
+    @FXML Label queryMessage;
 
     @FXML GridPane gridPane;
     @FXML AnchorPane content;
@@ -78,6 +81,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.setPadding(new Insets(20.0,20.0,20.0,20.0));
 
         scrollLeft.getStyleClass().add("green");
+        scrollLeft.getStyleClass().add("scrollpane");
         gridRight.getStyleClass().add("yellow");
         scrollLeft.setContent(vbLeft);
 
@@ -102,7 +106,6 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             }
         });
 
-        
 
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
@@ -115,7 +118,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
-            System.exit(1); //ERRORE GRAVE
+            Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, e);
         }
         catch(NoQueryMatchException e){
             //Non fare nulla
@@ -172,7 +175,11 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
 
                 try {
                     Set<Prodotto> listaProdotti = delegate.cercaProdotti(searchBar.getText());
-                    displayProdotti(listaProdotti);
+                    if(listaProdotti.isEmpty()){
+                        queryMessage.setText("Nessuna corrispondenza trovata per \"" + searchBar.getText() +"\"");
+                    }else {
+                        displayProdotti(listaProdotti);
+                    }
                 }
                 catch (NoIDMatchException e){
                     System.err.println(e.getMessage());
@@ -318,14 +325,13 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.add(descrizione, 0, 7);
         gridRight.add(new Label("Inserire quantità da ordinare (es. 20):"), 0, 8);
         gridRight.add(quantita, 1, 8);
-        GridPane.setValignment(quantita, VPos.CENTER);
-        GridPane.setHalignment(quantita, HPos.RIGHT);
         gridRight.add(add, 1, 9);
         
         if(application.getStage().getWidth() < 1130.0){
             content.setRightAnchor(scrollLeft, 400.0);
             application.getStage().setWidth(1130.0);
             gridRight.setVisible(true);
+            application.getStage().centerOnScreen();
         }
 
         add.setOnMouseClicked(new EventHandler<MouseEvent>(){
