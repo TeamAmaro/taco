@@ -14,7 +14,7 @@ public class Prodotto implements IdentificabileID {
     private final String nome;
     private final double prezzo;
     private final Produttore produttore;
-    
+    private String immagine;
     private String descrizione;
     private Categoria categoria;
     private Set<Fornitore> listaFornitori;
@@ -44,6 +44,10 @@ public class Prodotto implements IdentificabileID {
 
     public Set<Fornitore> getListaFornitori(){
         return listaFornitori;
+    }
+    
+    public String getImmagine() {
+        return immagine;
     }
 
     public String getListaFornitoriAsString(){
@@ -80,7 +84,7 @@ public class Prodotto implements IdentificabileID {
         private final String nome;
         private final double prezzo;
         private final Produttore produttore;
-        
+        private String immagine;
         private String descrizione;
         private Categoria categoria;
         private Set<Fornitore> listaFornitori;
@@ -90,6 +94,7 @@ public class Prodotto implements IdentificabileID {
             this.nome = nome;
             this.prezzo = prezzo;
             this.produttore = produttore;
+            this.immagine = "thumbnail.jpg";
             this.descrizione = "Nessuna descrizione per il prodotto";
             this.categoria = Categoria.CATEGORIA_0;
             listaFornitori = new LinkedHashSet<>();
@@ -111,6 +116,11 @@ public class Prodotto implements IdentificabileID {
             listaFornitori.addAll(Arrays.asList(args));
             return this;
         }
+        
+        public Builder immagine(String val) {
+            immagine = val;
+            return this;
+        }
 
         public Prodotto build(){
             return new Prodotto(this);
@@ -122,6 +132,7 @@ public class Prodotto implements IdentificabileID {
         nome = build.nome;
         prezzo = build.prezzo;
         descrizione = build.descrizione;
+        immagine = build.immagine;
         produttore = build.produttore;
         categoria = build.categoria;
         listaFornitori = build.listaFornitori;
