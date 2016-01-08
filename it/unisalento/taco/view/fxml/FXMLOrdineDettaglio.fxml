@@ -6,8 +6,60 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLOrdineDettaglioController">
+<AnchorPane id="AnchorPane" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.unisalento.taco.controller.FXMLOrdineDettaglioController">
+    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+        <children>
+            <ImageView fx:id="leftLogo" fitHeight="50" preserveRatio="true" id="left-menu-logo">
+              <image>
+                <Image url="@../img/logo2.jpg" smooth="true" />
+              </image>
+            </ImageView>
+            <Label styleClass="top-bar-label" fx:id="nomeClient"/>
+            <Label styleClass="top-bar-label" fx:id="nomeProgetto"/>
+            <Label styleClass="top-bar-label" fx:id="saldoProgetto"/>
+        </children>
+    </HBox>
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+        <children>
+            <Label styleClass="top-bar-label" fx:id="carrello"/>
+            <ImageView fx:id="iconaCarrello" id="icona-carrello" fitHeight="50.0" preserveRatio="true">
+                <image>
+                    <Image url="@../img/cart.jpg" smooth="true" />
+                </image>
+            </ImageView>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
+        </children>
+    </HBox>
+    <GridPane fx:id="gridPane" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" 
+              AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" styleClass="green"
+              hgap="15" vgap="5" >
+        
+        <Label fx:id="titoloLabel" styleClass="titolo" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label styleClass="content" text="Saldo disponibile" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <Label fx:id="saldoLabel" styleClass="content" text="300.0€" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label styleClass="content" text="Totale" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <Label fx:id="totaleLabel" styleClass="content" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label fx:id="errorLabel" styleClass="content" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <Button fx:id="acquistaButton" text="Procedi all'acquisto" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.columnSpan="2" />
+        <Label styleClass="content" text="Resoconto Ordine" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2"/>
+        <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="4" >
+            <columns>
+                <TableColumn text="Codice" fx:id="codice"/>
+                <TableColumn text="Prodotto" fx:id="nomeProdotto"/>
+                <TableColumn text="Quantità" fx:id="quantitaProdotto"/>
+                <TableColumn text="Prezzo(€)" fx:id="prezzoProdotto"/>
+                <TableColumn text="Totale(€)" fx:id="totale"/>
+                <TableColumn text="Spedizione(€)" fx:id="spedizione"/>
+                <TableColumn text="Magazzino" fx:id="magazzino"/>
+            </columns>  
+       </TableView>
+       <Label styleClass="content" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" wrapText="true">
+           Ricorda: è necessario consegnare la distinta al corriere per poter ritirare il prodotto.
+       </Label>
+    </GridPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlordinedettaglio.css"/>
     </stylesheets>
