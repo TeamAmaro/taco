@@ -38,10 +38,7 @@
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
         </padding> 
-        <ImageView preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="5" >
-            <image>
-                <Image url="@../img/thumbnail.jpg" smooth="true" />
-            </image>
+        <ImageView fx:id="thumbnail" fitHeight="250.0" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="5" >
         </ImageView>
         <Label fx:id="nomeProdotto" styleClass="nome-prodotto" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="150"/>
         <Label fx:id="prezzoProdotto" styleClass="prezzo-prodotto" GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="150"/>

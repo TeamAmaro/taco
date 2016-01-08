@@ -28,13 +28,13 @@
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
-    <ScrollPane AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+    <ScrollPane fitToWidth="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
         <content>
             <VBox spacing="10" fillWidth="true">
                 <padding>
                     <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                 </padding> 
-                <HBox spacing="50.0">
+                <HBox spacing="50.0" alignment="CENTER">
                     <Label styleClass="titolo" text="Carrello"/>                    
                  </HBox>
                 <GridPane fx:id="content" alignment="CENTER" vgap="10" hgap="10">
