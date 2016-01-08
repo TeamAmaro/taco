@@ -51,8 +51,9 @@ public class Carrello implements IdentificabileID{
 
     public void addProdotto(Prodotto prodotto, int quantita){
         if(listaProdotti.containsKey(prodotto)) {
-            listaProdotti.put(prodotto, listaProdotti.get(prodotto) + quantita);
-            CarrelloDAO.getInstance().updateQuantita(this, prodotto, listaProdotti.get(prodotto) + quantita);
+            int prevValue = listaProdotti.get(prodotto);
+            listaProdotti.put(prodotto, prevValue + quantita);
+            CarrelloDAO.getInstance().updateQuantita(this, prodotto, prevValue + quantita);
         }
         else {
             listaProdotti.put(prodotto, quantita);
