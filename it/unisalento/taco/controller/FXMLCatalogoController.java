@@ -96,11 +96,14 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         application.getStage().widthProperty().addListener(new ChangeListener<Number>(){
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 if(content.getChildren().contains(scrollLeft) && newSceneWidth.intValue() < 1130){
-                    content.setRightAnchor(scrollLeft, 0.0);
+                    scrollLeft.setMinWidth(newSceneWidth.intValue() - 215);
+                    scrollLeft.setFitToWidth(true);
                     gridRight.setVisible(false);
                 }
                 else{
-                    content.setRightAnchor(scrollLeft, 400.0);
+                    scrollLeft.setMinWidth(400.0);
+                    scrollLeft.setMaxWidth(400.0);
+                    scrollLeft.setFitToWidth(true);
                     gridRight.setVisible(true);
                 }
             }
@@ -217,8 +220,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             hb.setPrefHeight(100.0);
             hb.setSpacing(20.0);
             hb.setMaxWidth(350.0);
-
-            ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/thumbnail.jpg"));
+            ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/" + p.getImmagine()));
             iv.setFitHeight(100.0);
             iv.setPreserveRatio(true);
 
@@ -276,16 +278,20 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         content.setBottomAnchor(scrollLeft, 0.0);
 
         content.setTopAnchor(gridRight,50.0);
-        content.setLeftAnchor(gridRight, 700.0);
+        content.setLeftAnchor(gridRight, 600.0);
         content.setBottomAnchor(gridRight, 0.0);
         content.setRightAnchor(gridRight, 0.0);
 
         if(application.getStage().getWidth() < 1130.0){
-            content.setRightAnchor(scrollLeft, 0.0);
             gridRight.setVisible(false);
+            scrollLeft.setMinWidth(585.0);
+            scrollLeft.setFitToWidth(true);
+            
         }
         else{
-            content.setRightAnchor(scrollLeft, 400.0);
+            scrollLeft.setMaxWidth(400.0);
+            scrollLeft.setMinWidth(400.0);
+            scrollLeft.setFitToWidth(true);
             gridRight.setVisible(true);
         }
 
@@ -297,8 +303,8 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.getChildren().clear();
         
         
-        ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/thumbnail.jpg"));
-        //iv.setFitHeight(200.0);
+        ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
+        iv.setFitHeight(250.0);
         iv.setPreserveRatio(true);
 
         Label nome = new Label(prodotto.getNome());
@@ -328,10 +334,13 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.add(add, 1, 9);
         
         if(application.getStage().getWidth() < 1130.0){
-            content.setRightAnchor(scrollLeft, 400.0);
+            scrollLeft.setMinWidth(400.0);
+            scrollLeft.setMaxWidth(400.0);
+            scrollLeft.setFitToWidth(true);
             application.getStage().setWidth(1130.0);
             gridRight.setVisible(true);
             application.getStage().centerOnScreen();
+            content.setLeftAnchor(gridRight, 600.0);
         }
 
         add.setOnMouseClicked(new EventHandler<MouseEvent>(){
