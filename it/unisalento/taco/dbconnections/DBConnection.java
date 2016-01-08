@@ -23,7 +23,7 @@ public class DBConnection {
 
 	      try {
 	         Class.forName("com.mysql.jdbc.Driver");
-	         db = DriverManager.getConnection("jdbc:mysql://127.0.0.1/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente);
+	         db = DriverManager.getConnection("jdbc:mysql://127.0.0.1/" + nomeDB + "?useSSL=false&user=" + nomeUtente + "&password=" + pwdUtente);
 	         connesso=true;
 	         
 	      } catch (Exception e) {
