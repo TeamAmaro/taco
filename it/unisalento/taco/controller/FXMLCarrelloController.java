@@ -141,8 +141,7 @@ public class FXMLCarrelloController implements Initializable {
                 hb.setAlignment(Pos.CENTER_LEFT);
                 hb.setPrefHeight(100.0);
                 hb.setSpacing(20.0);
-
-                ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/thumbnail.jpg"));
+                ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
                 iv.setFitHeight(100.0);
                 iv.setPreserveRatio(true);
 

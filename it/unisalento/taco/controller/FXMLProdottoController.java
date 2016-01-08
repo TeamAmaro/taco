@@ -51,6 +51,7 @@ public class FXMLProdottoController implements Initializable {
     
     @FXML Label logout;
     @FXML ImageView leftLogo;
+    @FXML ImageView thumbnail;
     
     @FXML HBox topLeft;
     
@@ -92,6 +93,7 @@ public class FXMLProdottoController implements Initializable {
 
     public void initData(){
         
+        thumbnail.setImage(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
         double saldo = 0.0;
