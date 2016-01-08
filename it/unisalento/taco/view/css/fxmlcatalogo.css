@@ -68,9 +68,73 @@
 
 .logout-button {
     -fx-font-size: 18;
+    -fx-padding-right: 5px;
 }
 
-.logout-button:hover, .left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover {
+.logout-button:hover, .left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover, #icona-carrello:hover {
     -fx-cursor: hand;
 }
 
+/*
+    LE REGOLE CHE SEGUONO SONO UN PUGNO IN UN OCCHIO
+    PERO' FUNZIONANO.
+*/
+.left-menu-label {
+    -fx-padding: 30px 59px 30px 50px;
+    -fx-background-color: transparent;
+}
+
+#categoriaB:hover {
+    -fx-padding: 30px 64px 30px 50px;
+}
+#categoriaC:hover {
+    -fx-padding: 30px 84px 30px 50px;
+}
+#categoriaD:hover {
+    -fx-padding: 30px 68px 30px 50px;
+}
+
+.left-menu-label:hover {
+    -fx-background-color: blue;
+}
+
+.scrollpane{
+    -fx-border-color:derive(gray,80%);
+}
+
+.scrollpane .scroll-bar:horizontal , .scrollpane  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+.scrollpane .increment-button ,.scrollpane .decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:derive(gray,80%);
+}
+
+.scrollpane .scroll-bar:horizontal .track , .scrollpane .scroll-bar:vertical .track{
+     -fx-background-color: transparent;
+     -fx-border-color:derive(gray,80%);
+     -fx-background-radius: 0em;
+
+}
+
+.scrollpane .scroll-bar:horizontal .thumb, .scrollpane .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+}
+
+.scrollpane .scroll-bar:horizontal:hover .track , .scrollpane .scroll-bar:horizontal:pressed .track ,
+.scrollpane .scroll-bar:vertical:hover .track, .scrollpane .scroll-bar:vertical:pressed .track{
+     -fx-background-color: derive(#434343,20%);
+     -fx-opacity: 0.2;
+     -fx-background-radius: 0em;
+}
+
+.scrollpane .scroll-bar .thumb:hover, .scrollpane .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(black,50%);
+}
+
+.scrollpane .increment-button:hover ,.scrollpane .decrement-button:hover {
+    -fx-background-color:derive(gray,100%);
+    -fx-border-color:derive(gray,80%); 
+}
