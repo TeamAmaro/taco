@@ -84,7 +84,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     
     //SI SUPPONE CHE CI SIANO PRODOTTI NELL'ORDINE E CHE NON POSSA ESISTE UN ORDINE SENZA UNA LISTA DI PRODOTTI
     public Map<Prodotto,Integer> getListaProdotti(int hashCode) {
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT produttori.nome,prodotti.*,quantita FROM ordini,prodotti,produttori WHERE id = produttori.id_prodotto AND id = ordini.id_prodotto AND codice = " + hashCode);
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT pr.nome,p.*,o.quantita FROM prodotti p JOIN produttori pr ON p.id = pr.id_prodotto JOIN ordini o ON o.id_prodotto = p.id WHERE codice = " + hashCode);
         Iterator<String[]> i = result.iterator();
         Map<Prodotto,Integer> listaProdotti = new LinkedHashMap<>();
         while(i.hasNext()){
