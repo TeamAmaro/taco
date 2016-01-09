@@ -31,6 +31,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_progetto = " + progetto.getID());
         Iterator<String[]> i = result.iterator();
+        int codice = 0;
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
@@ -39,8 +40,12 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[8]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
-                listaOrdini.add(ordine);
+                if(codice != Integer.parseInt(riga[0])){
+                    Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
+                    listaOrdini.add(ordine);
+                    codice = Integer.parseInt(riga[0]);
+                }
+                
             } 
             catch(NoIDMatchException e) {
                 throw e;
