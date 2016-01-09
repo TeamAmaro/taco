@@ -9,6 +9,7 @@ import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
+import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
 import java.util.Set;
@@ -94,9 +95,12 @@ public class Main extends Application{
         }
     }
     
-    private void progettoLevel(){
+    private void progettoLevel(Progetto progetto){
         try {
-            FXMLProgettoController progetto = (FXMLProgettoController) cambiaLivello("fxml/FXMLProgetto.fxml");
+            FXMLProgettoController progettoController = (FXMLProgettoController) cambiaLivello("fxml/FXMLProgetto.fxml");
+            progettoController.setApplication(this);
+            progettoController.setProgetto(progetto);
+            progettoController.initData();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -105,6 +109,8 @@ public class Main extends Application{
     private void progettoElencoLevel(){
         try {
             FXMLProgettoElencoController progettoElenco = (FXMLProgettoElencoController) cambiaLivello("fxml/FXMLProgettoElenco.fxml");
+            progettoElenco.setApplication(this);
+            progettoElenco.initData();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -184,6 +190,11 @@ public class Main extends Application{
     public void getDetails(Prodotto prodotto){
         lastScene = stage.getScene();
         prodottoLevel(prodotto);
+    }
+    
+    public void getDetails(Progetto progetto){
+        lastScene = stage.getScene();
+        progettoLevel(progetto);
     }
     
     public void getCarrello(){
