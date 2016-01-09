@@ -8,14 +8,9 @@ import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.view.Main;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -25,7 +20,6 @@ import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -36,8 +30,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -186,12 +178,6 @@ public class FXMLOrdineDettaglioController implements Initializable {
 
                 File file = fileChooser.showSaveDialog(application.getStage());
                 
-                /* DA includere?
-                if(!file.getName().contains(".")) {
-                    file = new File(file.getAbsolutePath() + ".txt");
-                }
-                */
-                
                 if(file != null){
                     try {
                         
@@ -219,8 +205,8 @@ public class FXMLOrdineDettaglioController implements Initializable {
                                 ricevuta.append(e.getKey().getPrezzo() + "€ " + e.getKey().getNome()+ " x " + e.getValue() + System.lineSeparator());
                             
                             ricevuta.append("MAGAZZINO: " + o.getMagazzino().getNome() + " (" + o.getMagazzino().getSede().nome() +  ")" + System.lineSeparator());
-                            ricevuta.append("TOTALE PARZIALE : " + o.getTotale() + System.lineSeparator());
-                            ricevuta.append("COSTO SPEDIZIONE : " + o.getSpesaSpedizione() + System.lineSeparator());
+                            ricevuta.append("TOTALE PARZIALE: " + o.getTotale() + System.lineSeparator());
+                            ricevuta.append("COSTO SPEDIZIONE: " + o.getSpesaSpedizione() + System.lineSeparator());
                             
                             i++;
                         }
@@ -248,9 +234,6 @@ public class FXMLOrdineDettaglioController implements Initializable {
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-                    
-                    
                 }
             }
         });

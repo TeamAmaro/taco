@@ -21,7 +21,7 @@ public class CapoProgettoDelegate {
         return Progetto.getProgetto(capoProgetto);
     }
     
-     public Set<Ordine> getListaOrdini(Progetto progetto) throws NoIDMatchException {
+    public Set<Ordine> getListaOrdini(Progetto progetto) throws NoIDMatchException {
         return Ordine.getListaOrdini(progetto);
     }
 }
