@@ -182,7 +182,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
-INSERT INTO `ordini` VALUES ('-1099431227',1,'Sede A',1,1,1,12,0,1450212300682),('-1099431227',1,'Sede A',1,2,2,1,0,1450212300682),('2022783208',1,'Sede A',1,1,9,1,0,1451901214018);
+INSERT INTO `ordini` VALUES ('-1099431227',1,'Sede A',1,1,1,12,0,1450212300682),('-1099431227',1,'Sede A',1,2,2,1,0,1450212300682),('2022783208',1,'Sede A',1,1,9,1,0,1451901214018),('611785968',1,'Sede A',1,1,17,2,0,1452351141773);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +234,7 @@ CREATE TABLE `prodotti` (
 
 LOCK TABLES `prodotti` WRITE;
 /*!40000 ALTER TABLE `prodotti` DISABLE KEYS */;
-INSERT INTO `prodotti` VALUES (1,'Stampante MultiJet C460','Stampanti','Stampante con scanner, NFC, WIFI e USB',399.99,NULL),(2,'Stampante Jackpot','Stampanti','Stampante con porta USB e collegamento ethernet',99.99,NULL),(3,'Toner Nero','Ricambi','Toner di colore nero per stampanti',9.99,NULL),(4,'Toner Rosso','Ricambi','Toner di colore rosso per stampanti',9.99,NULL),(5,'Toner Blu','Ricambi','Toner di colore blu per stampanti',9.99,NULL),(6,'Toner Giallo','Ricambi','Toner di colore giallo per stampanti',9.99,NULL),(7,'Toner Verde','Ricambi','Toner di colore verde per stampanti',9.99,NULL),(8,'Matita HB','Cancelleria','Matita HB',0.99,NULL),(9,'Penna Stilo Blu','Cancelleria','Penna Stilo Blu',1.49,NULL),(10,'Penna Stilo Nera','Cancelleria','Penna Stilo Nera',1.49,NULL),(11,'Penna Stilo Rossa','Cancelleria','Penna Stilo Rossa',1.49,NULL),(12,'Righello 15 cm','Cancelleria','Righello in plastica lungo 15 cm',1.2,NULL),(13,'Righello 1 m','Cancelleria','Righello in plastica lungo 1 m',2.5,NULL),(14,'Righello di metallo da 20 cm','Cancelleria','Righello di metallo lungo 20 cm',3,NULL),(16,'Hard Disk 500GB 2.5\'\'','Elettronica','Hard Disk da 500GB da 2.5\'\'',39.99,NULL),(17,'Hard Disk 1TB 2.5\'\'','Elettronica','Hard Disk da 1TB da 2.5\'\'',69.99,NULL),(18,'SSD 1TB 2.5\'\'','Elettronica','SSD da 1TB da 2.5\'\'',399.99,NULL),(19,'SSD 500GB 2.5\'\'','Elettronica','SSD da 500GB da 2.5\'\'',299.99,NULL),(20,'Tastiera Meccanica Pok3r','Elettronica','Tastiera meccanica Pok3r con ingresso micro-USB (cavo incluso)',149.99,NULL),(21,'Tastiera con numpad','Elettronica','Tastiera per computer con numpad con ingresso USB (cavo incluso)',29.99,NULL),(22,'Cavo USB-microUSB 50cm','Elettronica','Cavo USB-microUSB lungo mezzo metro',3.99,NULL),(23,'Cavo USB-typeC 50cm','Elettronica','Cavo USB-typeC lungo mezzo metro',5.99,NULL);
+INSERT INTO `prodotti` VALUES (1,'Stampante MultiJet C460','Stampanti','Stampante con scanner, NFC, WIFI e USB',399.99,'stampantemultijet.jpg'),(2,'Stampante Jackpot','Stampanti','Stampante con porta USB e collegamento ethernet',99.99,'stampantemultijet.jpg'),(3,'Toner Nero','Ricambi','Toner di colore nero per stampanti',9.99,'toner.jpg'),(4,'Toner Rosso','Ricambi','Toner di colore rosso per stampanti',9.99,'toner.jpg'),(5,'Toner Blu','Ricambi','Toner di colore blu per stampanti',9.99,'toner.jpg'),(6,'Toner Giallo','Ricambi','Toner di colore giallo per stampanti',9.99,'toner.jpg'),(7,'Toner Verde','Ricambi','Toner di colore verde per stampanti',9.99,'toner.jpg'),(8,'Matita HB','Cancelleria','Matita HB',0.99,'matita.jpg'),(9,'Penna Stilo Blu','Cancelleria','Penna Stilo Blu',1.49,'penna.jpg'),(10,'Penna Stilo Nera','Cancelleria','Penna Stilo Nera',1.49,'penna.jpg'),(11,'Penna Stilo Rossa','Cancelleria','Penna Stilo Rossa',1.49,'penna.jpg'),(12,'Righello 15 cm','Cancelleria','Righello in plastica lungo 15 cm',1.2,'righello.jpg'),(13,'Righello 1 m','Cancelleria','Righello in plastica lungo 1 m',2.5,'righello.jpg'),(14,'Righello di metallo da 20 cm','Cancelleria','Righello di metallo lungo 20 cm',3,'righello.jpg'),(16,'Hard Disk 500GB 2.5\'\'','Elettronica','Hard Disk da 500GB da 2.5\'\'',39.99,'harddisk.jpg'),(17,'Hard Disk 1TB 2.5\'\'','Elettronica','Hard Disk da 1TB da 2.5\'\'',69.99,'harddisk.jpg'),(18,'SSD 1TB 2.5\'\'','Elettronica','SSD da 1TB da 2.5\'\'',399.99,'harddisk.jpg'),(19,'SSD 500GB 2.5\'\'','Elettronica','SSD da 500GB da 2.5\'\'',299.99,'harddisk.jpg'),(20,'Tastiera Meccanica Pok3r','Elettronica','Tastiera meccanica Pok3r con ingresso micro-USB (cavo incluso)',149.99,'pok3r.jpg'),(21,'Tastiera con numpad','Elettronica','Tastiera per computer con numpad con ingresso USB (cavo incluso)',29.99,'pok3r.jpg'),(22,'Cavo USB-microUSB 50cm','Elettronica','Cavo USB-microUSB lungo mezzo metro',3.99,'cavousb.jpg'),(23,'Cavo USB-typeC 50cm','Elettronica','Cavo USB-typeC lungo mezzo metro',5.99,'cavousb.jpg');
 /*!40000 ALTER TABLE `prodotti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +284,7 @@ CREATE TABLE `progetti` (
 
 LOCK TABLES `progetti` WRITE;
 /*!40000 ALTER TABLE `progetti` DISABLE KEYS */;
-INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,982.53,6700),(2,'Progetto Pizza',3,4500,4500);
+INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,841.55,6700),(2,'Progetto Pizza',3,4500,4500);
 /*!40000 ALTER TABLE `progetti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,4 +371,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-08 18:35:35
+-- Dump completed on 2016-01-09 17:10:43
