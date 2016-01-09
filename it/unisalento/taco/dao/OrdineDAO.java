@@ -38,7 +38,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
                 Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[8]);
-                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[1]));
+                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
                 listaOrdini.add(ordine);
             } 
@@ -90,7 +90,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         while(i.hasNext()){
             String[] riga = i.next();
             Prodotto prodotto = new Prodotto.Builder(Integer.parseInt(riga[1]), riga[2], Double.parseDouble(riga[5]), Produttore.parseProduttore(riga[0])).descrizione(riga[4]).categoria(Categoria.parseCategoria(riga[3])).build();
-            int quantita = Integer.parseInt(riga[6]);
+            int quantita = Integer.parseInt(riga[7]);
             listaProdotti.put(prodotto, quantita);
         }
         return listaProdotti;
