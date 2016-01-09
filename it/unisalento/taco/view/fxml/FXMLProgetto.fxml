@@ -9,9 +9,8 @@
 <?import javafx.scene.image.*?>
 <?import it.unisalento.taco.model.*?>
 
-
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLProgettoController">
-    <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
         <children>
             <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
               <image>
@@ -21,39 +20,48 @@
             <Label styleClass="top-bar-label" fx:id="nomeClient" text="Tizio Caio"/>    
         </children>
     </HBox>
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+        <children>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
+        </children>
+    </HBox>
     <GridPane hgap="10" vgap="20" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" styleClass="green">
-        <Label styleClass="titolo" text="Progetto Taco" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4" />
-        <Label styleClass="content" text="Budget:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <Label styleClass="content" text="1000.0€" GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="100.0" />
-        <Label styleClass="content" text="Saldo:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <Label styleClass="content" text="300.0€" GridPane.columnIndex="3" GridPane.rowIndex="1" minWidth="100.0"/>
+        <Label fx:id="nomeProgetto" styleClass="titolo"  GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4" />
+        <Label styleClass="content" text="Budget:" GridPane.columnIndex="0" GridPane.rowIndex="1" minWidth="100.0" />
+        <Label fx:id="budget" styleClass="content"  GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="100.0" />
+        <Label styleClass="content" text="Saldo:" GridPane.columnIndex="2" GridPane.rowIndex="1" minWidth="100.0" />
+        <Label fx:id="saldo" styleClass="content" GridPane.columnIndex="3" GridPane.rowIndex="1" minWidth="100.0"/>
 
         <Label styleClass="titolo-tabella" GridPane.columnIndex="0" GridPane.rowIndex="2" text="Lista dei dipendenti"/>
         <TableView fx:id="tableViewDip" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
-                 <TableColumn text="Nome">
-                 </TableColumn>
-                 <TableColumn text="Cognome">
-                 </TableColumn>
-                 <TableColumn text="Email">
-                 </TableColumn>
-                 <TableColumn text="">
-                 </TableColumn>
+                <TableColumn text="ID" fx:id="idCol">
+                </TableColumn>
+                <TableColumn text="Nome" fx:id="nomeCol">
+                </TableColumn>
+                <TableColumn text="Cognome" fx:id="cognomeCol">
+                </TableColumn>
+                <TableColumn text="Email" fx:id="emailCol">
+                </TableColumn>
+                <TableColumn text="Sede" fx:id="sedeCol">
+                </TableColumn>
             </columns>  
        </TableView>
        
        <Label styleClass="tabella-titolo" GridPane.columnIndex="5" GridPane.rowIndex="2" text="Ultimi ordini"/>
        <TableView fx:id="tableViewOrd" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
-                 <TableColumn text="Costo">
+                <TableColumn text="Codice" fx:id="codiceCol">
                  </TableColumn>
-                 <TableColumn text="Dipendente">
+                 <TableColumn text="Totale" fx:id="spesaCol">
                  </TableColumn>
-                 <TableColumn text="Prodotto">
+                 <TableColumn text="Dipendente" fx:id="dipendenteCol">
                  </TableColumn>
-                 <TableColumn text="Quantità">
+                 <TableColumn text="Prodotti" fx:id="prodottoCol">
                  </TableColumn>
-                 <TableColumn text="Data">
+                 <TableColumn text="Quantità" fx:id="quantitaCol">
+                 </TableColumn>
+                 <TableColumn text="Data" fx:id="dataCol">
                  </TableColumn>
             </columns>  
        </TableView>

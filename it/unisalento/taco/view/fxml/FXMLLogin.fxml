@@ -23,9 +23,9 @@
         <GridPane alignment="center" hgap="10" vgap="10" AnchorPane.topAnchor ="270" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" 
                   AnchorPane.bottomAnchor="10" styleClass="yellow">
             <children>
-                <TextField fx:id="emailField" GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="35.0" text="guga.rucola@napoli.na"
+                <TextField fx:id="emailField" GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="35.0" text="luke.mynetti@unilento.le"
                            prefWidth="250.0" focusTraversable="false"/>    
-                <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="asdasd"
+                <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="maonna"
                                GridPane.rowIndex="1" prefHeight="35.0" prefWidth="250.0" focusTraversable="false"/>
                 <HBox styleClass="blue" spacing="10" alignment="bottom_right" 
                     GridPane.columnIndex="0" GridPane.rowIndex="2">

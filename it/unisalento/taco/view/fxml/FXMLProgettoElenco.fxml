@@ -18,24 +18,23 @@
                 <Image url="@../img/logo2.jpg" smooth="true" />
               </image>
             </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient" text="Tizio Caio"/>    
+            <Label styleClass="top-bar-label" fx:id="nomeClient"/>    
         </children>
     </HBox>
-    <ScrollPane fx:id="scrollPane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+        <children>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
+        </children>
+    </HBox>
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" 
+                AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
         <content>
             <VBox fx:id="scrollContent" spacing="10"  fillWidth="true">
                 <padding>
                     <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                 </padding> 
-                <Label styleClass="titolo" text="Progetti di Tizio Caio"/>
-                <GridPane alignment="CENTER" vgap="10" hgap="10">
-                    <Label text="Progetto" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="300.0" />
-                    <Label text="Budget" GridPane.columnIndex="1" GridPane.rowIndex="0" minWidth="150.0"/>    
-                    <Label text="Saldo" GridPane.columnIndex="2" GridPane.rowIndex="0" minWidth="150.0"/>
-                   
-                    <Label styleClass="content" text="Progetto Taco" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <Label styleClass="content" text="1000.0€" GridPane.columnIndex="1" GridPane.rowIndex="1"/>    
-                    <Label styleClass="content" text="300.0€" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <GridPane fx:id="gridPane" alignment="CENTER" vgap="10" hgap="10">
+                    <Label fx:id="titolo" styleClass="titolo" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 </GridPane>
             </VBox>
         </content>
