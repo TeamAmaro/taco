@@ -1,8 +1,10 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.OrdineDAO;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 public final class Ordine {
 
@@ -188,5 +190,9 @@ public final class Ordine {
     
     public static void addOrdine(Ordine ordine){
         OrdineDAO.getInstance().create(ordine);
+    }
+    
+    public static Set<Ordine> getListaOrdini(Progetto progetto) throws NoIDMatchException{
+        return OrdineDAO.getInstance().getListaOrdini(progetto);
     }
 }
