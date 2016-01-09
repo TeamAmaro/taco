@@ -124,7 +124,7 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
         Set<Dipendente> listaDipendenti = new LinkedHashSet<>();
         while(i.hasNext()){
             String[] riga = i.next();
-            Dipendente dipendente = new Dipendente(Integer.parseInt(riga[0]), riga[1], riga[2], riga[3], Sede.parseSede(riga[4]));
+            Dipendente dipendente = new Dipendente(Integer.parseInt(riga[0]), riga[1], riga[2], riga[3], Sede.parseSede(riga[5]));
             listaDipendenti.add(dipendente);
         }
         return listaDipendenti;
