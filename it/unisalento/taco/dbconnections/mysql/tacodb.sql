@@ -80,7 +80,7 @@ CREATE TABLE `dipendenti` (
 
 LOCK TABLES `dipendenti` WRITE;
 /*!40000 ALTER TABLE `dipendenti` DISABLE KEYS */;
-INSERT INTO `dipendenti` VALUES (1,1,'Sede A'),(16,NULL,'Sede B'),(17,NULL,'Sede B');
+INSERT INTO `dipendenti` VALUES (1,1,'Sede A'),(16,1,'Sede B'),(17,1,'Sede C'),(24,2,'Sede B'),(25,2,'Sede D');
 /*!40000 ALTER TABLE `dipendenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,8 @@ DROP TABLE IF EXISTS `fornitori`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fornitori` (
   `nome` varchar(60) DEFAULT NULL,
-  `id_prodotto` int(10) unsigned DEFAULT NULL
+  `id_prodotto` int(10) unsigned DEFAULT NULL,
+  UNIQUE KEY `nome` (`nome`,`id_prodotto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,7 +104,7 @@ CREATE TABLE `fornitori` (
 
 LOCK TABLES `fornitori` WRITE;
 /*!40000 ALTER TABLE `fornitori` DISABLE KEYS */;
-INSERT INTO `fornitori` VALUES ('Fornitore A',1),('Fornitore B',1),('Fornitore C',NULL),('Fornitore D',NULL);
+INSERT INTO `fornitori` VALUES ('Fornitore A',2),('Fornitore A',3),('Fornitore A',5),('Fornitore A',7),('Fornitore A',9),('Fornitore A',12),('Fornitore A',16),('Fornitore A',17),('Fornitore A',18),('Fornitore A',21),('Fornitore B',1),('Fornitore B',2),('Fornitore B',3),('Fornitore B',4),('Fornitore B',6),('Fornitore B',8),('Fornitore B',9),('Fornitore B',10),('Fornitore B',11),('Fornitore B',12),('Fornitore B',13),('Fornitore B',14),('Fornitore B',16),('Fornitore B',17),('Fornitore B',18),('Fornitore B',19),('Fornitore B',20),('Fornitore B',21),('Fornitore B',22),('Fornitore C',2),('Fornitore C',4),('Fornitore C',6),('Fornitore C',9),('Fornitore C',10),('Fornitore C',13),('Fornitore C',14),('Fornitore C',16),('Fornitore C',18),('Fornitore C',19),('Fornitore C',20),('Fornitore C',21),('Fornitore C',22),('Fornitore D',2),('Fornitore D',4),('Fornitore D',5),('Fornitore D',6),('Fornitore D',7),('Fornitore D',8),('Fornitore D',9),('Fornitore D',10),('Fornitore D',11),('Fornitore D',12),('Fornitore D',17),('Fornitore D',18),('Fornitore D',19),('Fornitore D',21);
 /*!40000 ALTER TABLE `fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +153,7 @@ CREATE TABLE `magazzinieri` (
 
 LOCK TABLES `magazzinieri` WRITE;
 /*!40000 ALTER TABLE `magazzinieri` DISABLE KEYS */;
-INSERT INTO `magazzinieri` VALUES (4,1),(5,2),(20,3);
+INSERT INTO `magazzinieri` VALUES (4,1),(5,2),(20,3),(26,4);
 /*!40000 ALTER TABLE `magazzinieri` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +207,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
-INSERT INTO `prod_mag` VALUES (1,1,2),(2,2,7),(1,2,14),(1,9,2);
+INSERT INTO `prod_mag` VALUES (1,1,22),(1,2,9),(1,3,18),(1,4,22),(1,5,10),(1,6,2),(1,7,16),(1,8,8),(1,9,24),(1,10,17),(1,11,21),(1,12,10),(1,13,19),(1,14,4),(1,16,21),(1,17,15),(1,18,16),(1,19,13),(1,20,25),(1,21,0),(1,22,19),(1,23,28),(2,1,9),(2,2,27),(2,3,3),(2,4,28),(2,5,19),(2,6,23),(2,7,25),(2,8,0),(2,9,15),(2,10,27),(2,11,23),(2,12,0),(2,13,22),(2,14,23),(2,16,26),(2,17,13),(2,18,23),(2,19,28),(2,20,22),(2,21,27),(2,22,29),(2,23,7),(3,1,17),(3,2,3),(3,3,11),(3,4,22),(3,5,23),(3,6,7),(3,7,5),(3,8,9),(3,9,19),(3,10,28),(3,11,26),(3,12,13),(3,13,1),(3,14,3),(3,16,27),(3,17,18),(3,18,12),(3,19,15),(3,20,21),(3,21,26),(3,22,10),(3,23,22),(4,1,23),(4,2,7),(4,3,26),(4,4,2),(4,5,20),(4,6,20),(4,7,25),(4,8,5),(4,9,5),(4,10,11),(4,11,7),(4,12,11),(4,13,26),(4,14,4),(4,16,3),(4,17,22),(4,18,19),(4,19,23),(4,20,3),(4,21,3),(4,22,19),(4,23,27);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +350,7 @@ CREATE TABLE `utenti` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `email_2` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,7 +359,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3'),(16,'Jim','Questions','jim.questions@ask.com','e7af1c75730aa1184fa928dae1bdf8e'),(17,'John','Cena','john.cena@wwe.com','e7af1c75730aa1184fa928dae1bdf8e'),(20,'Paolino','Paperino','paolino.paperino@topolino.it','e7af1c75730aa1184fa928dae1bdf8e'),(23,'Alfonso','Verde','alfonso.verde@green.ve','2d91bf040b3919d9f743ee80b12377e5');
+INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3'),(16,'Jim','Questions','jim.questions@ask.com','e7af1c75730aa1184fa928dae1bdf8e'),(17,'John','Cena','john.cena@wwe.com','e7af1c75730aa1184fa928dae1bdf8e'),(20,'Paolino','Paperino','paolino.paperino@topolino.it','e7af1c75730aa1184fa928dae1bdf8e'),(23,'Alfonso','Verde','alfonso.verde@green.ve','2d91bf040b3919d9f743ee80b12377e5'),(24,'Rocco','Turrocco','rocco.turrocco@california.ca','2d91bf040b3919d9f743ee80b12377e5'),(25,'Perry','Gerry','perry.gerry@curry.cu','5e8192a9cdd479f16706f145154c7b14'),(26,'Luca','Pera','luca.pera@semplici.it','7af22f55b823f1ccc688b64859177d3e');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -371,4 +372,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-09 17:48:34
+-- Dump completed on 2016-01-10 12:29:54
