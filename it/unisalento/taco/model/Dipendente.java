@@ -31,4 +31,9 @@ public class Dipendente extends Utente  implements IdentificabileID {
     public static Dipendente getDipendente(String email){
         return DipendenteDAO.getInstance().getDipendente(email);
     }
+    
+    public static void setProgetto(Dipendente dipendente, Progetto progetto){
+        DipendenteDAO.getInstance().setProgetto(dipendente, progetto);
+    }
+    
 }

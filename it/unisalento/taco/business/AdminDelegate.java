@@ -54,6 +54,10 @@ public class AdminDelegate {
         Dipendente.addDipendente(dip);
     }
     
+    public void setProgetto(Dipendente dipendente, Progetto progetto){
+        Dipendente.setProgetto(dipendente, progetto);
+    }
+    
     public void creaMagazziniere(String nome, String cognome, String email, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{
         //CREA L'OGGETTO SENZA MAGAZZINO
         Magazziniere mag = new Magazziniere(nome, cognome, email);
