@@ -119,6 +119,7 @@ CREATE TABLE `magazzini` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(60) DEFAULT NULL,
   `nome_sede` varchar(60) DEFAULT NULL,
+  `id_magazziniere` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,7 +130,7 @@ CREATE TABLE `magazzini` (
 
 LOCK TABLES `magazzini` WRITE;
 /*!40000 ALTER TABLE `magazzini` DISABLE KEYS */;
-INSERT INTO `magazzini` VALUES (1,'Magazzino del Sole','Sede A'),(2,'Magazzino della Luna','Sede B'),(3,'Magazzino delle Stelle','Sede C'),(4,'Magazzino del Cielo','Sede D');
+INSERT INTO `magazzini` VALUES (1,'Magazzino del Sole','Sede A',4),(2,'Magazzino della Luna','Sede B',5),(3,'Magazzino delle Stelle','Sede C',20),(4,'Magazzino del Cielo','Sede D',26);
 /*!40000 ALTER TABLE `magazzini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +143,6 @@ DROP TABLE IF EXISTS `magazzinieri`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `magazzinieri` (
   `id_utente` int(11) DEFAULT NULL,
-  `id_magazzino` int(11) DEFAULT NULL,
   UNIQUE KEY `id_utente` (`id_utente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -153,7 +153,7 @@ CREATE TABLE `magazzinieri` (
 
 LOCK TABLES `magazzinieri` WRITE;
 /*!40000 ALTER TABLE `magazzinieri` DISABLE KEYS */;
-INSERT INTO `magazzinieri` VALUES (4,1),(5,2),(20,3),(26,4);
+INSERT INTO `magazzinieri` VALUES (4),(5),(20),(26);
 /*!40000 ALTER TABLE `magazzinieri` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,4 +372,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-10 12:29:54
+-- Dump completed on 2016-01-11 12:18:14
