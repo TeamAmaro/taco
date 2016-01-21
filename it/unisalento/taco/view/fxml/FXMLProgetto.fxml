@@ -32,11 +32,9 @@
         <Label styleClass="content" text="Saldo:" GridPane.columnIndex="2" GridPane.rowIndex="1" minWidth="100.0" />
         <Label fx:id="saldo" styleClass="content" GridPane.columnIndex="3" GridPane.rowIndex="1" minWidth="100.0"/>
 
-        <Label styleClass="titolo-tabella" GridPane.columnIndex="0" GridPane.rowIndex="2" text="Lista dei dipendenti"/>
+        <Label styleClass="titolo-tabella" GridPane.columnIndex="0" GridPane.rowIndex="2" text="Lista dipendenti"/>
         <TableView fx:id="tableViewDip" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
-                <TableColumn text="ID" fx:id="idCol">
-                </TableColumn>
                 <TableColumn text="Nome" fx:id="nomeCol">
                 </TableColumn>
                 <TableColumn text="Cognome" fx:id="cognomeCol">
@@ -46,25 +44,28 @@
                 <TableColumn text="Sede" fx:id="sedeCol">
                 </TableColumn>
             </columns>  
-       </TableView>
-       
-       <Label styleClass="tabella-titolo" GridPane.columnIndex="5" GridPane.rowIndex="2" text="Ultimi ordini"/>
-       <TableView fx:id="tableViewOrd" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.columnSpan="4" >
+        </TableView>
+        <TextField fx:id="dipFiltro" GridPane.columnIndex="0" GridPane.rowIndex="4" promptText="Inserisci info"/>
+        <Button fx:id="dipButton" GridPane.columnIndex="1" GridPane.rowIndex="4" text="Cerca"/>
+        <Label styleClass="tabella-titolo" GridPane.columnIndex="5" GridPane.rowIndex="2" text="Lista ordini"/>
+        <TableView fx:id="tableViewOrd" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
                 <TableColumn text="Codice" fx:id="codiceCol">
-                 </TableColumn>
-                 <TableColumn text="Totale" fx:id="spesaCol">
-                 </TableColumn>
-                 <TableColumn text="Dipendente" fx:id="dipendenteCol">
-                 </TableColumn>
-                 <TableColumn text="Prodotti" fx:id="prodottoCol">
-                 </TableColumn>
-                 <TableColumn text="Quantità" fx:id="quantitaCol">
-                 </TableColumn>
-                 <TableColumn text="Data" fx:id="dataCol">
-                 </TableColumn>
+                </TableColumn>
+                <TableColumn text="Dipendente" fx:id="dipendenteCol">
+                </TableColumn>
+                <TableColumn text="Spesa" fx:id="spesaCol">
+                </TableColumn>
+                <TableColumn text="Prodotti" fx:id="prodottoCol">
+                </TableColumn>
+                <TableColumn text="Quantità" fx:id="quantitaCol">
+                </TableColumn>
+                <TableColumn text="Data" fx:id="dataCol">
+                </TableColumn>
             </columns>  
        </TableView>
+       <TextField fx:id="ordFiltro" GridPane.columnIndex="5" GridPane.rowIndex="4" promptText="Codice ordine"/>
+       <Button fx:id="ordButton" GridPane.columnIndex="6" GridPane.rowIndex="4" text="Cerca"/>
     </GridPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlprogetto.css"/>
