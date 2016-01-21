@@ -6,9 +6,44 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLInventarioController">
+<AnchorPane fx:id="content" xmlns:fx="http://javafx.com/fxml/1" id="anchorPane" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLInventarioController">
+    <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+        <children>
+            <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
+              <image>
+                <Image url="@../img/logo2.jpg" smooth="true" />
+              </image>
+            </ImageView>
+            <Label styleClass="top-bar-label" fx:id="nomeClient"/>
+        </children>
+    </HBox>
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+        <children>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
+        </children>
+    </HBox>
+    <VBox fx:id="leftMenu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50"
+          AnchorPane.bottomAnchor="0" minWidth="200.0" maxWidth="200.0" styleClass="red" alignment="TOP_LEFT">
+        <children>
+            <Label styleClass="left-menu-label" fx:id="spedizioni" id="spedizioni" text="Spedizioni"/>
+            <Label styleClass="left-menu-label" fx:id="inventario" id="inventario" text="Inventario"/>
+        </children>
+    </VBox>
+     <ScrollPane fx:id="scrollPane" fitToWidth="true" 
+                AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+        <content>
+            <VBox fx:id="scrollContent" spacing="10"  fillWidth="true">
+                <padding>
+                    <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                </padding> 
+            </VBox>
+        </content>
+     </ScrollPane>
     <stylesheets>
-        <URL value="@/it/unisalento/taco/view/css/fxmlinventario.css"/>
+        <URL value="@/it/unisalento/taco/view/css/fxmlmagazzino.css"/>
     </stylesheets>
 </AnchorPane>
