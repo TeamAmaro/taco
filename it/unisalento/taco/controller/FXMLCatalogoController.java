@@ -257,6 +257,8 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             catch(NoQueryMatchException e){
                 descrizione.setText("Impossibile reperire disponibilità");
                 descrizione.getStyleClass().add("non-disponibile");
+            } catch (NoIDMatchException ex) {
+                Logger.getLogger(FXMLCatalogoController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             dettagli.setOnMouseClicked(new EventHandler<MouseEvent>(){
