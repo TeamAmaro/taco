@@ -195,4 +195,8 @@ public final class Ordine {
     public static Set<Ordine> getListaOrdini(Progetto progetto) throws NoIDMatchException{
         return OrdineDAO.getInstance().getListaOrdini(progetto);
     }
+    
+    public static Set<Ordine> getListaOrdini(Magazzino magazzino) throws NoIDMatchException{
+        return OrdineDAO.getInstance().getListaOrdini(magazzino);
+    }
 }
