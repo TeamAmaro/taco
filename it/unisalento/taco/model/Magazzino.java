@@ -1,23 +1,28 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.MagazzinoDAO;
+import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import java.util.Map;
 import java.util.Set;
 
 public class Magazzino  implements IdentificabileID {
+   
     private final int id;
     private final String nome;
     private final Sede sede;
-    public static int COSTO_SPEDIZIONE = 5;
     private Map<Prodotto,Integer> inventario;
+    private Magazziniere magazziniere;
 
-    public Magazzino(int id, String nome, Sede sede, Map<Prodotto,Integer> inventario){
+    public Magazzino(int id, String nome, Sede sede, Map<Prodotto,Integer> inventario, Magazziniere magazziniere){
         this.id = id;
         this.nome = nome;
         this.sede = sede;
         this.inventario = inventario;
+        this.magazziniere = magazziniere;
     }
+    /*
+    Eh?
     
     public Magazzino(String nome, Sede sede){
         //ID FITTIZIO
@@ -25,6 +30,8 @@ public class Magazzino  implements IdentificabileID {
         this.nome = nome;
         this.sede = sede;
     }
+    
+    */
 
     public String getNome(){
         return nome;
@@ -46,6 +53,14 @@ public class Magazzino  implements IdentificabileID {
         this.inventario = inventario;
     }
     
+    public Magazziniere getMagazziniere(){
+        return magazziniere;
+    }
+    
+    public void setMagazziniere(Magazziniere magazziniere){
+        this.magazziniere = magazziniere;
+    }
+    
     public void removeFromInventario(Map<Prodotto,Integer> listaProdotti){
         for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet()){
             removeProdotto(val.getKey(),val.getValue());
@@ -53,7 +68,6 @@ public class Magazzino  implements IdentificabileID {
     }
 
     public void addProdotto(Prodotto prodotto, int quantita){
-        System.out.println("Hai aggiunto " + quantita + " " + prodotto.getNome() + " all'inventario");
         if(inventario.containsKey(prodotto)){
             inventario.put(prodotto, inventario.get(prodotto) + quantita);
             MagazzinoDAO.getInstance().updateQuantita(this, prodotto, inventario.get(prodotto) + quantita);
@@ -75,7 +89,6 @@ public class Magazzino  implements IdentificabileID {
                 inventario.put(prodotto, prevValue - quantita);
                 MagazzinoDAO.getInstance().updateQuantita(this, prodotto, prevValue - quantita);
             }
-            System.out.println("Hai rimosso " + quantita + " " + prodotto.getNome() + " dall'inventario");
         }
     }
 
@@ -100,19 +113,23 @@ public class Magazzino  implements IdentificabileID {
         return stringMag.toString();
     }
     
-    public static Magazzino getMagazzino(Sede sede) throws NoQueryMatchException{
+    public static Magazzino getMagazzino(Sede sede) throws NoQueryMatchException, NoIDMatchException{
         return MagazzinoDAO.getInstance().getMagazzino(sede);
+    }
+    
+    public static Magazzino getMagazzino(Magazziniere magazziniere) throws NoQueryMatchException{
+        return MagazzinoDAO.getInstance().getMagazzino(magazziniere);
     }
     
     public static int getQuantita(Magazzino magazzino, Prodotto prodotto){
         return MagazzinoDAO.getInstance().getQuantitaProdotto(magazzino, prodotto);
     }
     
-    public static Set<Magazzino> cercaProdotto(Prodotto prodotto){
+    public static Set<Magazzino> cercaProdotto(Prodotto prodotto) throws NoIDMatchException{
         return MagazzinoDAO.getInstance().cercaProdotto(prodotto);
     }
     
-    public void addNewToDB(Magazzino mag){
+    public void create(Magazzino mag){
         MagazzinoDAO.getInstance().create(mag);
     }
     
