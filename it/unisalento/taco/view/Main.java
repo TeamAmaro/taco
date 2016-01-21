@@ -1,12 +1,10 @@
 package it.unisalento.taco.view;
 
-import it.unisalento.taco.business.DipendenteDelegate;
 import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
-import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
-import it.unisalento.taco.model.Carrello;
+import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
@@ -119,14 +117,30 @@ public class Main extends Application{
     private void magazzinoLevel(){
         try {
             FXMLMagazzinoController magazzino = (FXMLMagazzinoController) cambiaLivello("fxml/FXMLMagazzino.fxml");
+            magazzino.setApplication(this);
+            magazzino.initData();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void inventarioLevel(){
+    private void inventarioLevel(Magazzino magazzino){
         try {
-            FXMLInventarioController carrello = (FXMLInventarioController) cambiaLivello("fxml/FXMLInventario.fxml");
+            FXMLInventarioController inventario = (FXMLInventarioController) cambiaLivello("fxml/FXMLInventario.fxml");
+            inventario.setMagazzino(magazzino);
+            inventario.setApplication(this);
+            inventario.initData();
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void spedizioneLevel(Magazzino magazzino){
+        try {
+            FXMLSpedizioneController spedizione = (FXMLSpedizioneController) cambiaLivello("fxml/FXMLSpedizione.fxml");
+            spedizione.setMagazzino(magazzino);
+            spedizione.setApplication(this);
+            spedizione.initData();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -195,6 +209,16 @@ public class Main extends Application{
     public void getDetails(Progetto progetto){
         lastScene = stage.getScene();
         progettoLevel(progetto);
+    }
+    
+    public void getInventario(Magazzino magazzino){
+        lastScene = stage.getScene();
+        inventarioLevel(magazzino);
+    }
+    
+    public void getSpedizione(Magazzino magazzino){
+        lastScene = stage.getScene();
+        spedizioneLevel(magazzino);
     }
     
     public void getCarrello(){
