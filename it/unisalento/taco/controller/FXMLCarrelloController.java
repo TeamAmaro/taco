@@ -170,7 +170,10 @@ public class FXMLCarrelloController implements Initializable {
                 }
                 catch(NoQueryMatchException e){
                     disponibilita.setText("?");
+                } catch (NoIDMatchException ex) {
+                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 
                 
                 final Button rimuovi = new Button("Rimuovi");
