@@ -11,11 +11,14 @@ import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Sede;
+import it.unisalento.taco.view.Main;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DipendenteDelegate {
 	
@@ -58,12 +61,12 @@ public class DipendenteDelegate {
         carrello.removeProdotto(prodotto);
     }
     
-    public int chiediDisponibilità(Dipendente dipendente, Prodotto prodotto) throws NoQueryMatchException{
+    public int chiediDisponibilità(Dipendente dipendente, Prodotto prodotto) throws NoQueryMatchException, NoIDMatchException{
         Sede sede = dipendente.getSede();
         try{
             Magazzino magVicino = Magazzino.getMagazzino(sede);
             return Magazzino.getQuantita(magVicino, prodotto);
-        }catch(NoQueryMatchException e){
+        }catch(NoQueryMatchException | NoIDMatchException e){
             throw e;
         }
     }
