@@ -16,17 +16,19 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,9 +48,13 @@ public class FXMLProgettoController implements Initializable {
     @FXML Label budget;
     @FXML Label saldo;
     
+    @FXML TextField dipFiltro;
+    @FXML Button dipButton;
+    
+    @FXML TextField ordFiltro;
+    @FXML Button ordButton;
     
     @FXML private TableView<Dipendente> tableViewDip;
-    @FXML private TableColumn<Dipendente, Integer> idCol;
     @FXML private TableColumn<Dipendente, String> nomeCol;
     @FXML private TableColumn<Dipendente, String> cognomeCol;
     @FXML private TableColumn<Dipendente, String> emailCol;
@@ -68,6 +74,8 @@ public class FXMLProgettoController implements Initializable {
     private Main application;
     private Progetto progetto;
     private CapoProgettoDelegate delegate = CapoProgettoDelegate.getInstance();
+    private Set<Ordine> listaOrdini;
+    private Set<Dipendente> listaDipendenti;
     
     public void setApplication(Main application){
         this.application = application;
@@ -99,6 +107,40 @@ public class FXMLProgettoController implements Initializable {
                 application.logout();
             }
         });
+        
+        dipButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                String search = dipFiltro.getText().toLowerCase();
+                String nomeIntero;
+                for(Dipendente d : listaDipendenti){
+                    nomeIntero = d.getNome().toLowerCase() + " " + d.getCognome().toLowerCase();
+                    if(!nomeIntero.contains(search)){
+                        dipendenteData.remove(d);
+                    }
+                    else if (!dipendenteData.contains(d))
+                        dipendenteData.add(d);
+                }
+            }
+        });
+       
+        ordButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                String search = ordFiltro.getText();
+                try{
+                    Integer.parseInt(search);
+                    for(Ordine o : listaOrdini){
+                        if(!Integer.toString(o.getCodice()).contains(search)){
+                            ordineData.remove(o);
+                        }
+                        else if (!ordineData.contains(o))
+                            ordineData.add(o);
+                    }
+                }catch(Exception e){
+                    //CIRO NU TENIM PAUR E NIEND
+                }
+            }
+        });
+        
     }
     
     private void initInfo(){
@@ -112,14 +154,8 @@ public class FXMLProgettoController implements Initializable {
     
     private void initDipTable(){
         
-        dipendenteData.addAll(progetto.getListaDipendenti());
-        
-        idCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Dipendente, Integer>, ObservableValue<Integer>>() {
-            @Override
-            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Dipendente, Integer> p) {
-                return new ReadOnlyObjectWrapper<Integer>(p.getValue().getID());
-            }
-        });
+        listaDipendenti = progetto.getListaDipendenti();
+        dipendenteData.addAll(listaDipendenti);
         
         nomeCol.setCellValueFactory(new PropertyValueFactory<Dipendente, String>("nome"));
         cognomeCol.setCellValueFactory(new PropertyValueFactory<Dipendente, String>("cognome"));
@@ -132,17 +168,30 @@ public class FXMLProgettoController implements Initializable {
             }
         });
         
+        tableViewDip.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Dipendente>() {
+            @Override
+            public void changed(ObservableValue<? extends Dipendente> observable, Dipendente oldValue, Dipendente newValue) {
+                for(Ordine o : listaOrdini){
+                   if(o.getDipendente().getID() != newValue.getID()){
+                       ordineData.remove(o);
+                   }
+                   else if (!ordineData.contains(o))
+                       ordineData.add(o);
+                }
+            }      
+        });
+        
         tableViewDip.setItems(dipendenteData);
     }
     
     private void initOrdTable(){
         try {
-            Set<Ordine> listaOrdini = delegate.getListaOrdini(progetto);
-            ordineData.addAll(delegate.getListaOrdini(progetto));
+            listaOrdini = delegate.getListaOrdini(progetto);
+            ordineData.addAll(listaOrdini);
         } catch (NoIDMatchException e){
             Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, e);
         }
-        
+                
         codiceCol.setCellValueFactory(new PropertyValueFactory<Ordine, Integer>("codice"));
         
         dipendenteCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
@@ -183,8 +232,9 @@ public class FXMLProgettoController implements Initializable {
                 return new ReadOnlyObjectWrapper<Date>(p.getValue().getReadableData());
             }
         });
-        
         tableViewOrd.setItems(ordineData);
+       
+    
     }
     
     private void initArrow(){
