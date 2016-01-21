@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLSpedizioneController">
+    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+        <children>
+            <ImageView fx:id="leftLogo" fitHeight="50" preserveRatio="true" id="left-menu-logo">
+              <image>
+                <Image url="@../img/logo2.jpg" smooth="true" />
+              </image>
+            </ImageView>
+            <Label styleClass="top-bar-label" fx:id="nomeClient"/>       
+        </children>
+    </HBox>
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+        <children>
+            <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
+        </children>
+    </HBox>
+    <ScrollPane fitToWidth="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+        <content>
+            <VBox spacing="10" fillWidth="true">
+                <padding>
+                    <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                </padding> 
+                <HBox spacing="50.0" alignment="CENTER">
+                    <Label styleClass="titolo" text="Ordini da Spedire"/>                    
+                 </HBox>
+                <GridPane fx:id="content" alignment="CENTER" vgap="10" hgap="10">
+                    <Label text="codice" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="table-header"/>
+                    <Label text="prodotto" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="table-header"/>
+                    <Label text="quantita" GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="table-header"/>
+                    <Label text="dipendente" GridPane.columnIndex="3" GridPane.rowIndex="0" styleClass="table-header"/>
+                    <Label text="sede" GridPane.columnIndex="4" GridPane.rowIndex="0" styleClass="table-header"/>
+                </GridPane>
+            </VBox>
+        </content>
+    </ScrollPane>
+    <stylesheets>
+        <URL value="@/it/unisalento/taco/view/css/fxmlspedizione.css"/>
+    </stylesheets>
+</AnchorPane>
