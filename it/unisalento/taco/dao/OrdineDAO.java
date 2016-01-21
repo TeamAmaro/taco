@@ -54,6 +54,34 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         return listaOrdini;
     }
     
+    public Set<Ordine> getListaOrdini(Magazzino magazzino) throws NoIDMatchException{
+        Set<Ordine> listaOrdini = new LinkedHashSet<>();
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_magazzino = " + magazzino.getID() + " AND spedito = 0");
+        Iterator<String[]> i = result.iterator();
+        int codice = 0;
+        while(i.hasNext()) {
+            String[] riga = i.next();
+            try{
+                Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
+                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
+                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
+                long data = Long.parseLong(riga[8]);
+                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
+                if(codice != Integer.parseInt(riga[0])){
+                    Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
+                    listaOrdini.add(ordine);
+                    codice = Integer.parseInt(riga[0]);
+                }
+                
+            } 
+            catch(NoIDMatchException e) {
+                throw e;
+            }
+        }
+        return listaOrdini;
+    }
+    
+    
     @Override public Ordine getByID(int hashCode) throws NoIDMatchException{
         
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE codice = " + hashCode);
