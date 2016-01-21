@@ -57,7 +57,8 @@ public class AdminDelegate {
     public void setProgetto(Dipendente dipendente, Progetto progetto){
         Dipendente.setProgetto(dipendente, progetto);
     }
-    
+    /*
+    DA RISCRIVERE!!
     public void creaMagazziniere(String nome, String cognome, String email, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{
         //CREA L'OGGETTO SENZA MAGAZZINO
         Magazziniere mag = new Magazziniere(nome, cognome, email);
@@ -71,15 +72,17 @@ public class AdminDelegate {
         Magazziniere.addMagazziniere(mag);
         //RICORDARSI POI DI USARE setMagazzino()
     }
-    
+    MANCANO UN SACCO DI INFOOOOOOOOOO
     public void creaMagazzino(String nome, String nomeSede){
         Magazzino mag = new Magazzino(nome, Sede.parseSede(nomeSede));
         mag.addNewToDB(mag);
     }
     
+    Che senso ha un magazziniere senza magazzino?
+    
     public void setMagazzino(Magazziniere magazziniere, Magazzino magazzino){
         Magazziniere.setMagazzino(magazziniere, magazzino);
-    }
+    }*/
     
     public void creaCapoProgetto(String nome, String cognome, String email, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException{
         CapoProgetto capo = new CapoProgetto(nome,cognome,email);
@@ -102,6 +105,12 @@ public class AdminDelegate {
         Prodotto prodotto = new Prodotto.Builder(0, nome, prezzo, produttore).descrizione(descrizione).categoria(categoria).build();
         Prodotto.addProdotto(prodotto);
     }
+    /*
+    UGHHHH
+    meglio un updateProdotto(Prodotto prodotto)
+    che passa il prodotto con nuove caratteristiche..
+    AH! 
+    Se il prodotto non ha immagini deve essere assegnata una di default.
     
     public void addProduttore(Produttore produttore, Prodotto prodotto){
         Prodotto.addProduttore(produttore, prodotto);
@@ -110,5 +119,5 @@ public class AdminDelegate {
     public void addFornitore(Fornitore fornitore, Prodotto prodotto){
         Prodotto.addFornitore(fornitore, prodotto);
     }
-    
+    */
 }
