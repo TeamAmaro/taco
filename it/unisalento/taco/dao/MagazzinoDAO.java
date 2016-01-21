@@ -11,6 +11,7 @@ import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.IdentificabileID;
+import it.unisalento.taco.model.Magazziniere;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Produttore;
@@ -67,7 +68,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     //RESTITUISCE UN SET DI MAGAZZINI IN CUI E' PRESENTE UN PRODOTTO ORDINATI IN ORDINE DISCENDENTE
     //Non è necessario lanciare eccezzioni in quanto viene restituita una lista vuota se
     //non ci sono corrispondenze.
-    public Set<Magazzino> cercaProdotto(Prodotto prodotto){
+    public Set<Magazzino> cercaProdotto(Prodotto prodotto) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT m.*,pm.quantita FROM magazzini m JOIN prod_mag pm ON m.id = pm.id_magazzino JOIN prodotti p ON p.id = pm.id_prodotto WHERE p.id = " + prodotto.getID() + " GROUP BY quantita DESC");
         Iterator<String[]> i = result.iterator();
         Set<Magazzino> magazzini = new LinkedHashSet<>();
@@ -78,46 +79,72 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
             if(Integer.parseInt(riga[3]) == 0)
                 continue;
             int idMag = Integer.parseInt(riga[0]);
-            Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag));
-            magazzini.add(magazzino);
+            int idMagazziniere = Integer.parseInt(riga[3]);
+            try{
+                Magazziniere magazziniere = MagazziniereDAO.getInstance().getByID(idMagazziniere);
+                Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag), magazziniere);
+                magazzini.add(magazzino);
+            } catch(NoIDMatchException e){
+                throw e;
+            }
         }
         return magazzini;
     }
 
-    public Magazzino getMagazzino(Sede sede) throws NoQueryMatchException{
+    public Magazzino getMagazzino(Sede sede) throws NoQueryMatchException, NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE nome_sede = \"" + sede.nome() + "\"");
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()) {
             String[] riga = i.next();
             int idMag = Integer.parseInt(riga[0]);
-            Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag));
-            return magazzino;
+            int idMagazziniere = Integer.parseInt(riga[3]);
+            try{
+                Magazziniere magazziniere = MagazziniereDAO.getInstance().getByID(idMagazziniere);
+                Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag), magazziniere);
+                return magazzino;
+            } catch(NoIDMatchException e){
+                throw e;
+            }
         }
         else {
             throw new NoQueryMatchException(this);
         }
     }
+    
+    public Magazzino getMagazzino(Magazziniere magazziniere) throws NoQueryMatchException{
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id_magazziniere = " + magazziniere.getID());
+        Iterator<String[]> i = result.iterator();
+        if(i.hasNext()) {
+            String[] riga = i.next();
+            int idMag = Integer.parseInt(riga[0]);
+            Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag), magazziniere);
+            return magazzino;
+            
+        }
+        else {
+            throw new NoQueryMatchException(this);
+        }
+    }
+    
     @Override public Magazzino getByID(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id = " + id);
         Iterator<String[]> i = result.iterator();
         Magazzino magazzino;
         if(i.hasNext()) {
             String[] riga = i.next();
-            Map<Prodotto, Integer> inventario = getInventario(id);
-            magazzino = new Magazzino(id, riga[1], Sede.parseSede(riga[2]), inventario);
-            return magazzino;
+            int idMagazziniere = Integer.parseInt(riga[3]);
+            try{
+                Magazziniere magazziniere = MagazziniereDAO.getInstance().getByID(idMagazziniere);
+                Map<Prodotto, Integer> inventario = getInventario(id);
+                magazzino = new Magazzino(id, riga[1], Sede.parseSede(riga[2]), inventario, magazziniere);
+                return magazzino;
+            }catch(NoIDMatchException e){
+                throw e;
+            }
         }
         else {
             throw new NoIDMatchException(this);
         }
-    }
-    
-    public Magazzino getMagazzino(int id){
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id = " + id);
-        Iterator<String[]> i = result.iterator();
-        String[] riga = i.next();
-        Magazzino mag = new Magazzino(Integer.parseInt(riga[0]), riga[1], Sede.parseSede(riga[2]), null);
-        return mag;
     }
     
     public void addProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
