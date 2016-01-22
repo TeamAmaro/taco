@@ -44,7 +44,8 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
 
         while(i.hasNext()) {
             String[] riga = i.next();
-            Prodotto prodotto = new Prodotto.Builder(Integer.parseInt(riga[1]), riga[2], Double.parseDouble(riga[5]), Produttore.parseProduttore(riga[0])).categoria(Categoria.parseCategoria(riga[3])).descrizione(riga[4]).build();
+            Prodotto prodotto = new Prodotto.Builder(Integer.parseInt(riga[1]), riga[2], Double.parseDouble(riga[5]), Produttore.parseProduttore(riga[0])).categoria(Categoria.parseCategoria(riga[3])).descrizione(riga[4]).immagine(riga[6]).build();
+            prodotto.setListaFornitori(ProdottoDAO.getInstance().getFornitore(prodotto));
             int quantita = Integer.parseInt(riga[7]);
             if(quantita == 0)
                 continue;

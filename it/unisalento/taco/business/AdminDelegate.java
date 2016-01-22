@@ -101,8 +101,8 @@ public class AdminDelegate {
         Progetto.setCapoProgetto(prog, capo);
     }
     
-    public void creaProdotto(String nome, double prezzo, Produttore produttore, String descrizione, Categoria categoria){
-        Prodotto prodotto = new Prodotto.Builder(0, nome, prezzo, produttore).descrizione(descrizione).categoria(categoria).build();
+    public void creaProdotto(String nome, double prezzo, Produttore produttore, String descrizione, Categoria categoria, String immagine){
+        Prodotto prodotto = new Prodotto.Builder(0, nome, prezzo, produttore).descrizione(descrizione).categoria(categoria).immagine(immagine).build();
         Prodotto.addProdotto(prodotto);
     }
     /*
