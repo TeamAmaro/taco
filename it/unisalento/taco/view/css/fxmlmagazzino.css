@@ -63,3 +63,7 @@
 .message {
     -fx-font-size: 14;
 }
+
+.warning {
+    -fx-background-color: red;
+}
