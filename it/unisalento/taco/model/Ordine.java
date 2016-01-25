@@ -70,8 +70,9 @@ public final class Ordine {
         return new Date(data);
     }
 
-    public void spedito(boolean bool){
-        spedito = bool;
+    public void setSpedito(boolean spedito){
+        this.spedito = spedito;
+        OrdineDAO.getInstance().update(this);
     }
 
     public boolean isSpedito(){
