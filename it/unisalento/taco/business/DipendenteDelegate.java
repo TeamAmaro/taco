@@ -178,8 +178,6 @@ public class DipendenteDelegate {
                     mag.removeFromInventario(ordine.getListaProdotti());
                     Ordine.addOrdine(ordine);
                 }
-                //Aggiorno il database inviando tutte le informazioni.
-                System.out.println("Ordine completato, nigga!");
             }
         }
         catch(NoQueryMatchException | NoIDMatchException e){
