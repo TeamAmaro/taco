@@ -72,7 +72,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                     listaOrdini.add(ordine);
                     codice = Integer.parseInt(riga[0]);
                 }
-                
             } 
             catch(NoIDMatchException e) {
                 throw e;
@@ -130,7 +129,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     }
     
     @Override public void update(Ordine ordine){
-        DBConnection.getInstance().updateDB("UPDATE ordini SET spedizione = 1 WHERE codice = " + ordine.hashCode());
+        DBConnection.getInstance().updateDB("UPDATE ordini SET spedito = 1 WHERE codice = " + ordine.getCodice());
     }
 
     @Override public void create(Ordine ordine){
