@@ -1,9 +1,6 @@
 package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.MagazziniereDelegate;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
-import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Fornitore;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Prodotto;
@@ -11,8 +8,6 @@ import it.unisalento.taco.view.Main;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -42,6 +37,7 @@ public class FXMLInventarioController implements Initializable {
     @FXML Label inventario;
     @FXML Label logout;
     @FXML VBox scrollContent;
+    @FXML ImageView leftLogo;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -80,6 +76,12 @@ public class FXMLInventarioController implements Initializable {
                 application.getInventario(magazzino);
             }
         });
+        
+        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.magazziniereView();
+            }
+        });
     }
     
     private void initInfo(){
@@ -110,28 +112,6 @@ public class FXMLInventarioController implements Initializable {
             quantitaField.setMaxWidth(100.0);
             rifornisciButton.setMinWidth(100.0);
             
-            //RUDIMENTALEAH
-            rifornisciButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                @Override public void handle(MouseEvent arg0) {
-                    if(comboFornitori.getValue() == null)
-                        comboFornitori.getStyleClass().add("warning");
-                    else if(comboFornitori.getValue() == Fornitore.FORNITORE_0)
-                        comboFornitori.getStyleClass().add("warning");
-                    else{
-                        delegate.rifornisciProdotto(magazzino, pq.getKey(), Integer.parseInt(quantitaField.getText()));
-                        //TEST
-                        System.out.println("Effettuato rifornimento di " + pq.getKey().getNome() + " x " +  quantitaField.getText() + " da: " + comboFornitori.getValue());
-                    }
-                }
-            }); 
-            
-            comboFornitori.valueProperty().addListener(new ChangeListener<Fornitore>(){
-            @Override public void changed(ObservableValue<? extends Fornitore> observableValue, Fornitore oldFornitore, Fornitore newFornitore) {
-                if(newFornitore != Fornitore.FORNITORE_0 && newFornitore != null)
-                    comboFornitori.getStyleClass().remove("warning");
-                }
-            });
-                        
             VBox valori = new VBox();
             VBox funBox = new VBox();
 
@@ -140,7 +120,7 @@ public class FXMLInventarioController implements Initializable {
 
             Label categoria = new Label(pq.getKey().getCategoria().nome());
             categoria.getStyleClass().add("categoria-prodotto");
-            Label quantita = new Label(Integer.toString(pq.getValue()));
+            final Label quantita = new Label(Integer.toString(pq.getValue()));
             
             funBox.getChildren().addAll(comboFornitori, quantitaField, rifornisciButton);
             funBox.setMinWidth(150.0);
@@ -152,6 +132,32 @@ public class FXMLInventarioController implements Initializable {
             hb.getChildren().addAll(iv, valori, funBox);
             
             scrollContent.getChildren().add(hb);
+            
+            //RUDIMENTALEAH
+            rifornisciButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    if(comboFornitori.getValue() == null)
+                        comboFornitori.getStyleClass().add("warning");
+                    else if(comboFornitori.getValue() == Fornitore.FORNITORE_0)
+                        comboFornitori.getStyleClass().add("warning");
+                    else{
+                        int q = Integer.parseInt(quantitaField.getText());
+                        if(q > 0){
+                            delegate.rifornisciProdotto(magazzino, pq.getKey(), q);
+                            int prevQuantita = Integer.parseInt(quantita.getText());
+                            quantita.setText(Integer.toString(prevQuantita + q));
+                            quantitaField.clear();
+                        }
+                    }
+                }
+            }); 
+            
+            comboFornitori.valueProperty().addListener(new ChangeListener<Fornitore>(){
+            @Override public void changed(ObservableValue<? extends Fornitore> observableValue, Fornitore oldFornitore, Fornitore newFornitore) {
+                if(newFornitore != Fornitore.FORNITORE_0 && newFornitore != null)
+                    comboFornitori.getStyleClass().remove("warning");
+                }
+            });
         }
     }
 }
