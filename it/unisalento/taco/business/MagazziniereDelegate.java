@@ -29,6 +29,10 @@ public class MagazziniereDelegate {
     public void spedisciProdotto(Magazzino magazzino, Prodotto prodotto, int quantita){
         magazzino.removeProdotto(prodotto, quantita);
     };
+    
+    public void spedisciOrdine(Ordine ordine){
+        ordine.setSpedito(true);
+    };
     //........ಠ_ಠ
     public Map<Prodotto,Integer> chiediInventario(Magazzino magazzino){
         return magazzino.getInventario();
