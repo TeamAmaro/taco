@@ -6,17 +6,40 @@
 package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.MagazziniereDelegate;
+import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.model.Magazziniere;
 import it.unisalento.taco.model.Magazzino;
+import it.unisalento.taco.model.Ordine;
+import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.view.Main;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 public class FXMLSpedizioneController implements Initializable {
 
     private Main application;
     private MagazziniereDelegate delegate = MagazziniereDelegate.getInstance();
     private Magazzino magazzino;
+    
+    @FXML Label nomeClient;
+    @FXML Label spedizioni;
+    @FXML Label inventario;
+    @FXML Label logout;
+    @FXML ImageView leftLogo;
+    @FXML GridPane gridPane;
     
     public void setApplication(Main application){
         this.application = application;
@@ -28,10 +51,88 @@ public class FXMLSpedizioneController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // EMPTY
+        //Non può fare nulla
     }    
     
     public void initData(){
-        
+        initInfo();
+        initMenu();
+        initContent();
     }
+    
+    private void initContent(){
+        try{
+            Set<Ordine> listaOrdini = delegate.chiediOrdini((Magazziniere) application.getUtente());
+            int i = 1;
+            for(final Ordine o : listaOrdini){
+                
+                Label codice = new Label(Integer.toString(o.getCodice()));
+                Label dipendente = new Label(o.getDipendente().getNome() + " " + o.getDipendente().getCognome());
+                Label sede = new Label(o.getDipendente().getSede().nome());  
+                
+                int j = i;
+                for(Map.Entry<Prodotto,Integer> pq : o.getListaProdotti().entrySet())
+                {
+                    Label nomeProdotto = new Label(pq.getKey().getNome());
+                    Label quantitaProdotto = new Label(Integer.toString(pq.getValue()));
+                    gridPane.add(nomeProdotto, 1, j);
+                    gridPane.add(quantitaProdotto, 2, j);
+                    j++;
+                }
+                
+                gridPane.add(codice, 0, i);
+                gridPane.add(dipendente, 3, i);
+                gridPane.add(sede, 4, i);
+                
+                final Button spedisciButton = new Button("Spedisci");
+                
+                spedisciButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override public void handle(MouseEvent arg0) {
+                        delegate.spedisciOrdine(o);
+                        spedisciButton.setText("Spedito!");
+                        spedisciButton.setDisable(true);
+                    }
+                });
+                
+                gridPane.add(spedisciButton, 5, i);
+                i++;
+            }
+        }catch(NoQueryMatchException e){
+            System.out.println("WUT");
+        } catch (NoIDMatchException ex) {
+            Logger.getLogger(FXMLSpedizioneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
+    private void initMenu(){
+        logout.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.logout();
+            }
+        });
+        
+        spedizioni.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.getSpedizione(magazzino);
+            }
+        });
+        
+        inventario.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.getInventario(magazzino);
+            }
+        });
+        
+        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.magazziniereView();
+            }
+        });
+    }
+    
+    private void initInfo(){
+        nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
+    }
+    
 }
