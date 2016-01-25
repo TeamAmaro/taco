@@ -10,31 +10,37 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 
-<AnchorPane  xmlns:fx="http://javafx.com/fxml/1" id="AnchorPAIN" styleClass="green" 
+<AnchorPane  xmlns:fx="http://javafx.com/fxml/1" id="AnchorPAIN" styleClass="background"
              fx:controller="it.unisalento.taco.controller.FXMLLoginController">
     <children>
-        <HBox alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="0" prefHeight="250" styleClass="blue">
+        <HBox alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="10" 
+              AnchorPane.rightAnchor="0" prefHeight="250">
             <ImageView id="app-login-logo" fitHeight="250.0" preserveRatio="true">
               <image>
                 <Image url="@../img/logo1.jpg" smooth="true" />
               </image>
             </ImageView>
         </HBox>
-        <GridPane alignment="center" hgap="10" vgap="10" AnchorPane.topAnchor ="270" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" 
-                  AnchorPane.bottomAnchor="10" styleClass="yellow">
+        <GridPane alignment="center" hgap="10" vgap="10" AnchorPane.topAnchor ="270" 
+                  AnchorPane.leftAnchor="150" AnchorPane.rightAnchor="150" 
+                  AnchorPane.bottomAnchor="70" styleClass="fieldset">
             <children>
-                <TextField fx:id="emailField" GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="35.0" text="ciccio.brizio@magazzinodellaluna.lun"
-                           prefWidth="250.0" focusTraversable="false"/>    
+                <TextField fx:id="emailField" GridPane.columnIndex="0" GridPane.rowIndex="0" 
+                           prefHeight="35.0" text="ciccio.brizio@magazzinodellaluna.lun"
+                           id="email" prefWidth="250.0" focusTraversable="false"/> 
                 <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="sgocciola"
-                               GridPane.rowIndex="1" prefHeight="35.0" prefWidth="250.0" focusTraversable="false"/>
-                <HBox styleClass="blue" spacing="10" alignment="bottom_right" 
+                               id="password" GridPane.rowIndex="1" prefHeight="35.0" prefWidth="250.0" 
+                               focusTraversable="false"/>
+                <HBox spacing="10" alignment="bottom_right" 
                     GridPane.columnIndex="0" GridPane.rowIndex="2">
-                <Button focusTraversable="false" fx:id="loginButton" onAction="#effettuaLogin"  text="Sign In" prefHeight="35.0" prefWidth="250.0"/>
+                    <Button focusTraversable="false" id="login-button"
+                            fx:id="loginButton" onAction="#effettuaLogin" text="Accedi" 
+                            prefHeight="35.0" prefWidth="250.0"/>
                 </HBox>
-                <HBox  styleClass="blue" spacing="10" alignment="bottom_right" 
+                <HBox spacing="10" alignment="bottom_right" 
                     GridPane.columnIndex="0" GridPane.rowIndex="3" prefHeight="35.0">
                     <children>
-                      <Label id="label2" fx:id="errorMessage" />
+                      <Label id="error-message" fx:id="errorMessage" />
                     </children>
                 </HBox>
             </children>
