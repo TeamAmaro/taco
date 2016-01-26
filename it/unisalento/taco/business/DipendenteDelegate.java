@@ -105,18 +105,24 @@ public class DipendenteDelegate {
                     magConProd.remove(magVicino);
                     int differenza = quantCar - quantMag;
                     int quantMagExt;
+                    Map<Prodotto,Integer> magExtProdPerQuant = new LinkedHashMap<>();
+                    int quantMagUpdated = quantCar;
                     //Chiedo la quantita di prodotto nei magazzini esterni
                     //Assumendo che la lista dei magazzini è già presentata in ordine decrescente
                     for(Magazzino magExt : magConProd){
                         quantMagExt = Magazzino.getQuantita(magExt, prod);
                         if(quantMagExt < differenza){
-                            prodPerQuant.put(prod, quantMagExt);
-                            magPerProd.put(magExt, prodPerQuant);
+                            quantMagUpdated = quantCar - quantMagExt;
+                            prodPerQuant.put(prod, quantMagUpdated);
+                            magExtProdPerQuant.put(prod, quantMagExt);
+                            magPerProd.put(magExt, magExtProdPerQuant);
                             differenza -= quantMagExt;
                         }
                         else {
-                            prodPerQuant.put(prod, differenza);
-                            magPerProd.put(magExt, prodPerQuant);
+                            quantMagUpdated -= differenza;
+                            prodPerQuant.put(prod, quantMagUpdated);
+                            magExtProdPerQuant.put(prod, differenza);
+                            magPerProd.put(magExt, magExtProdPerQuant);
                             //Il break dovrebbe essere riferito al for più interno
                             break;
                         }
