@@ -72,8 +72,9 @@ public class Magazzino  implements IdentificabileID {
             return;
         }
         if(inventario.containsKey(prodotto)){
+            int test = inventario.get(prodotto) + quantita;
             inventario.put(prodotto, inventario.get(prodotto) + quantita);
-            MagazzinoDAO.getInstance().updateQuantita(this, prodotto, inventario.get(prodotto) + quantita);
+            MagazzinoDAO.getInstance().updateQuantita(this, prodotto, inventario.get(prodotto));
         }
         else {
             inventario.put(prodotto, quantita);
@@ -85,8 +86,8 @@ public class Magazzino  implements IdentificabileID {
         if(inventario.containsKey(prodotto)){
             int prevValue = inventario.get(prodotto);
             if(prevValue - quantita <= 0){
-                inventario.remove(prodotto);
-                MagazzinoDAO.getInstance().deleteProdotto(this, prodotto);
+                inventario.put(prodotto, 0);
+                MagazzinoDAO.getInstance().updateQuantita(this, prodotto, 0);
             }
             else {
                 inventario.put(prodotto, prevValue - quantita);
