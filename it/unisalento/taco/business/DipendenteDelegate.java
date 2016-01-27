@@ -74,9 +74,14 @@ public class DipendenteDelegate {
     public Set<Ordine> generaOrdini(Dipendente dipendente) throws NoIDMatchException, NoQueryMatchException{
         
         Map<Magazzino,Map<Prodotto,Integer>> magPerProd = new LinkedHashMap<>();
-        Map<Prodotto,Integer> prodPerQuant = new LinkedHashMap<>();
+        Map<Prodotto,Integer> prodPerQuantMag1 = new LinkedHashMap<>();
+        Map<Prodotto,Integer> prodPerQuantMag2 = new LinkedHashMap<>();
+        Map<Prodotto,Integer> prodPerQuantMag3 = new LinkedHashMap<>();
+        Map<Prodotto,Integer> prodPerQuantMag4 = new LinkedHashMap<>();
         
-        try{
+        int quantMag1, quantMag2, quantMag3, quantMag4, i = 2;
+        
+        try {
             //Recupero il contenuto del carrello
             Carrello carrello = Carrello.getByID(dipendente.getID());
             Map<Prodotto,Integer> contenutoCarrello  = carrello.getListaProdotti();
@@ -94,37 +99,79 @@ public class DipendenteDelegate {
                 Prodotto prod = e.getKey(); //Prodotto nel carrello
                 int quantCar = e.getValue(); //Quantita nel carrello
                 //Prelevo la quantita
-                int quantMag = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
-                prodPerQuant.put(prod, quantCar); //Aggiungo la quantita
-                magPerProd.put(magVicino, prodPerQuant); //Aggiungo nel magazzino vicino
+                quantMag1 = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
+                prodPerQuantMag1.put(prod, quantCar); //Aggiungo la quantita
+                magPerProd.put(magVicino, prodPerQuantMag1); //Aggiungo nel magazzino vicino
                 //Se la quantita di prodotti nel magazzino più vicino non soddisfa la richiesta
-                if (quantMag < quantCar){
+                if (quantMag1 < quantCar){
                     //Chiedo i magazzini esterni che hanno il prodotto
                     Set<Magazzino> magConProd = Magazzino.cercaProdotto(prod);
                     //Rimuovo il magazzino vicino dalla lista dei risultati
                     magConProd.remove(magVicino);
-                    int differenza = quantCar - quantMag;
-                    int quantMagExt;
-                    Map<Prodotto,Integer> magExtProdPerQuant = new LinkedHashMap<>();
-                    int quantMagUpdated = quantCar;
+                    int differenza = quantCar - quantMag1;
+                    int remainingQuant = quantCar;
                     //Chiedo la quantita di prodotto nei magazzini esterni
                     //Assumendo che la lista dei magazzini è già presentata in ordine decrescente
                     for(Magazzino magExt : magConProd){
-                        quantMagExt = Magazzino.getQuantita(magExt, prod);
-                        if(quantMagExt < differenza){
-                            quantMagUpdated = quantCar - quantMagExt;
-                            prodPerQuant.put(prod, quantMagUpdated);
-                            magExtProdPerQuant.put(prod, quantMagExt);
-                            magPerProd.put(magExt, magExtProdPerQuant);
-                            differenza -= quantMagExt;
+                        //Il contatore 'i' tiene traccia del numero di magazzini che si sta passando in rassegna
+                        if(i == 2 && i <= magConProd.size()) {
+                            quantMag2 = Magazzino.getQuantita(magExt, prod);
+                            //Se la quantità nel secondo magazzino è minore di quella richiesta
+                            if(quantMag2 < differenza){
+                                //Sottrai alla quantià richiesta quella presente nel secondo magazzino
+                                remainingQuant = quantCar - quantMag2;
+                                //Metti questa quantità rimanente nel primo magazzino
+                                prodPerQuantMag1.put(prod, remainingQuant);
+                                //Metti tutta la quantità del secondo magazzino nel secondo magazzino
+                                prodPerQuantMag2.put(prod, quantMag2);
+                                //Aggiorna la lista dell'ordine per il secondo magazzino
+                                magPerProd.put(magExt, prodPerQuantMag2);
+                                //Aggiorna la quantità restante da cercare negli altri magazzini
+                                differenza -= quantMag2;
+                                //Aggiorna il contatore perché è necessario passare al terzo magazzino
+                                i++;
+                                continue;
+                            }
+                            //Se nel secondo magazzino la quantità soddisfa la richiesta
+                            else {
+                                remainingQuant -= differenza;
+                                prodPerQuantMag1.put(prod, remainingQuant);
+                                prodPerQuantMag2.put(prod, differenza);
+                                magPerProd.put(magExt, prodPerQuantMag2);
+                                break;
+                            }
                         }
-                        else {
-                            quantMagUpdated -= differenza;
-                            prodPerQuant.put(prod, quantMagUpdated);
-                            magExtProdPerQuant.put(prod, differenza);
-                            magPerProd.put(magExt, magExtProdPerQuant);
-                            //Il break dovrebbe essere riferito al for più interno
-                            break;
+                        if(i == 3 && i <= magConProd.size()){
+                            quantMag3 = Magazzino.getQuantita(magExt, prod);
+                            if(quantMag3 < differenza){
+                                remainingQuant = quantCar - quantMag3;
+                                prodPerQuantMag1.put(prod, remainingQuant);
+                                prodPerQuantMag3.put(prod, quantMag3);
+                                magPerProd.put(magExt, prodPerQuantMag3);
+                                differenza -= quantMag3;
+                                i++;
+                                continue;
+                            }
+                            else{
+                                remainingQuant -= differenza;
+                                prodPerQuantMag1.put(prod, remainingQuant);
+                                prodPerQuantMag3.put(prod, differenza);
+                                magPerProd.put(magExt, prodPerQuantMag3);
+                                break;
+                            }
+                        }
+                        if(i == 4 && i <= magConProd.size()){
+                            quantMag4 = Magazzino.getQuantita(magExt, prod);
+                            if(quantMag4 < differenza){
+                                //ficca tutto e segnala la 
+                            }
+                            else {
+                                remainingQuant -= differenza;
+                                prodPerQuantMag1.put(prod, remainingQuant);
+                                prodPerQuantMag4.put(prod, differenza);
+                                magPerProd.put(magExt, prodPerQuantMag4);
+                                break;
+                            }
                         }
                     }
                 }
