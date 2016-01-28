@@ -79,7 +79,7 @@ public class DipendenteDelegate {
         Map<Prodotto,Integer> prodPerQuantMag3 = new LinkedHashMap<>();
         Map<Prodotto,Integer> prodPerQuantMag4 = new LinkedHashMap<>();
         
-        int quantMag1, quantMag2, quantMag3, quantMag4, i = 2;
+        int quantMag1, quantMag2, quantMag3, quantMag4, quantMagTot = 0, i = 2;
         
         try {
             //Recupero il contenuto del carrello
@@ -100,6 +100,7 @@ public class DipendenteDelegate {
                 int quantCar = e.getValue(); //Quantita nel carrello
                 //Prelevo la quantita
                 quantMag1 = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
+                quantMagTot += quantMag1;
                 prodPerQuantMag1.put(prod, quantCar); //Aggiungo la quantita
                 magPerProd.put(magVicino, prodPerQuantMag1); //Aggiungo nel magazzino vicino
                 //Se la quantita di prodotti nel magazzino più vicino non soddisfa la richiesta
@@ -110,6 +111,12 @@ public class DipendenteDelegate {
                     magConProd.remove(magVicino);
                     int differenza = quantCar - quantMag1;
                     int remainingQuant = quantCar;
+                    
+                    //Prendi la quantità totale ordinabile da tutti i magazzini
+                    for(Magazzino magExt : magConProd) {
+                        quantMagTot += Magazzino.getQuantita(magExt, prod);
+                    }
+                    
                     //Chiedo la quantita di prodotto nei magazzini esterni
                     //Assumendo che la lista dei magazzini è già presentata in ordine decrescente
                     for(Magazzino magExt : magConProd){
@@ -163,7 +170,8 @@ public class DipendenteDelegate {
                         if(i == 4 && i <= magConProd.size()){
                             quantMag4 = Magazzino.getQuantita(magExt, prod);
                             if(quantMag4 < differenza){
-                                //ficca tutto e segnala la 
+                                //Avvisa che è necessario selezionare una quantità minore
+                                //Mostra la quantità massima acquistabile (quantMagTot)
                             }
                             else {
                                 remainingQuant -= differenza;
@@ -173,6 +181,7 @@ public class DipendenteDelegate {
                                 break;
                             }
                         }
+                        
                     }
                 }
             }
