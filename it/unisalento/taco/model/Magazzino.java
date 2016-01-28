@@ -72,7 +72,6 @@ public class Magazzino  implements IdentificabileID {
             return;
         }
         if(inventario.containsKey(prodotto)){
-            int test = inventario.get(prodotto) + quantita;
             inventario.put(prodotto, inventario.get(prodotto) + quantita);
             MagazzinoDAO.getInstance().updateQuantita(this, prodotto, inventario.get(prodotto));
         }
