@@ -105,7 +105,7 @@ CREATE TABLE `fornitori` (
 
 LOCK TABLES `fornitori` WRITE;
 /*!40000 ALTER TABLE `fornitori` DISABLE KEYS */;
-INSERT INTO `fornitori` VALUES ('Fornitore A',2),('Fornitore A',3),('Fornitore A',5),('Fornitore A',7),('Fornitore A',9),('Fornitore A',12),('Fornitore A',16),('Fornitore A',17),('Fornitore A',18),('Fornitore A',21),('Fornitore B',1),('Fornitore B',2),('Fornitore B',3),('Fornitore B',4),('Fornitore B',6),('Fornitore B',8),('Fornitore B',9),('Fornitore B',10),('Fornitore B',11),('Fornitore B',12),('Fornitore B',13),('Fornitore B',14),('Fornitore B',16),('Fornitore B',17),('Fornitore B',18),('Fornitore B',19),('Fornitore B',20),('Fornitore B',21),('Fornitore B',22),('Fornitore C',2),('Fornitore C',4),('Fornitore C',6),('Fornitore C',9),('Fornitore C',10),('Fornitore C',13),('Fornitore C',14),('Fornitore C',16),('Fornitore C',18),('Fornitore C',19),('Fornitore C',20),('Fornitore C',21),('Fornitore C',22),('Fornitore D',2),('Fornitore D',4),('Fornitore D',5),('Fornitore D',6),('Fornitore D',7),('Fornitore D',8),('Fornitore D',9),('Fornitore D',10),('Fornitore D',11),('Fornitore D',12),('Fornitore D',17),('Fornitore D',18),('Fornitore D',19),('Fornitore D',21);
+INSERT INTO `fornitori` VALUES ('Fornitore A',2),('Fornitore A',3),('Fornitore A',5),('Fornitore A',7),('Fornitore A',9),('Fornitore A',12),('Fornitore A',16),('Fornitore A',17),('Fornitore A',18),('Fornitore A',21),('Fornitore B',1),('Fornitore B',2),('Fornitore B',3),('Fornitore B',4),('Fornitore B',6),('Fornitore B',8),('Fornitore B',9),('Fornitore B',10),('Fornitore B',11),('Fornitore B',12),('Fornitore B',13),('Fornitore B',14),('Fornitore B',16),('Fornitore B',17),('Fornitore B',18),('Fornitore B',19),('Fornitore B',20),('Fornitore B',21),('Fornitore B',22),('Fornitore B',23),('Fornitore C',2),('Fornitore C',4),('Fornitore C',6),('Fornitore C',9),('Fornitore C',10),('Fornitore C',13),('Fornitore C',14),('Fornitore C',16),('Fornitore C',18),('Fornitore C',19),('Fornitore C',20),('Fornitore C',21),('Fornitore C',22),('Fornitore C',23),('Fornitore D',2),('Fornitore D',4),('Fornitore D',5),('Fornitore D',6),('Fornitore D',7),('Fornitore D',8),('Fornitore D',9),('Fornitore D',10),('Fornitore D',11),('Fornitore D',12),('Fornitore D',17),('Fornitore D',18),('Fornitore D',19),('Fornitore D',21),('Fornitore D',23);
 /*!40000 ALTER TABLE `fornitori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-28 16:10:10
+-- Dump completed on 2016-01-28 16:15:39
