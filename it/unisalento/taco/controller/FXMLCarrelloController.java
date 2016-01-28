@@ -88,11 +88,11 @@ public class FXMLCarrelloController implements Initializable {
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
-        double saldo = 0.0;
+        String saldo = "0.0€";
 
         try{
             nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getSaldo();
+            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
             numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
             carrello = delegate.getCarrello((Dipendente) application.getUtente());
         }
@@ -104,7 +104,7 @@ public class FXMLCarrelloController implements Initializable {
         }
         finally{
             nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(Double.toString(saldo) +"€");
+            saldoProgetto.setText(saldo);
         }
         
         Map<Prodotto, Integer> listaProdotti = carrello.getListaProdotti();
@@ -129,7 +129,7 @@ public class FXMLCarrelloController implements Initializable {
         }
         else{
             
-            totale.setText(Double.toString(carrello.getTotale()) + "€");
+            totale.setText(carrello.getFormatTotale());
             
             for(Map.Entry<Prodotto,Integer> lp : listaProdotti.entrySet()) {
                 
@@ -151,7 +151,7 @@ public class FXMLCarrelloController implements Initializable {
 
                 Label nomeProdotto = new Label(prodotto.getNome());
                 nomeProdotto.getStyleClass().add("nome-prodotto");
-                Label prezzoProdotto = new Label(Double.toString(prodotto.getPrezzo()));
+                Label prezzoProdotto = new Label(prodotto.getFormatPrezzo());
                 prezzoProdotto.getStyleClass().add("prezzo-prodotto");
                 Label prodProdotto = new Label(prodotto.getProduttore().nome());
                 prodProdotto.getStyleClass().add("info-text");
@@ -184,7 +184,7 @@ public class FXMLCarrelloController implements Initializable {
                         delegate.removeProdotto(carrello, prodotto);
                         rimuovi.setDisable(true);
                         rimuovi.setText("Rimosso!");
-                        totale.setText(Double.toString(carrello.getTotale()) + "€");
+                        totale.setText(carrello.getFormatTotale());
                     }
                 });
 

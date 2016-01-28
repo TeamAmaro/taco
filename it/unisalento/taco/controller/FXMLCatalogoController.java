@@ -113,11 +113,11 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
-        double saldo = 0.0;
+        String saldo = "0.0€";
 
         try{
             nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getSaldo();
+            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
             numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
@@ -128,7 +128,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         }
         finally{
             nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(Double.toString(saldo) +"€");
+            saldoProgetto.setText(saldo);
             carrello.setText(Integer.toString(numeroProd));
         }
 
@@ -234,7 +234,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                 }
             });
 
-            Label prezzo = new Label(Double.toString(p.getPrezzo()) + "€");
+            Label prezzo = new Label(p.getFormatPrezzo());
             prezzo.getStyleClass().add("prezzo-prodotto");
             Label descrizione = new Label();
             Label dettagli = new Label("Dettagli");
@@ -312,7 +312,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         Label nome = new Label(prodotto.getNome());
         nome.getStyleClass().add("nome-prodotto");
         
-        Label prezzo = new Label(Double.toString(prodotto.getPrezzo()) + "€");
+        Label prezzo = new Label(prodotto.getFormatPrezzo());
         prezzo.getStyleClass().add("prezzo-prodotto");
         
         Label produttore = new Label(prodotto.getProduttore().nome());

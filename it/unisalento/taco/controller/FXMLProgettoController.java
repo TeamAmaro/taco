@@ -148,8 +148,8 @@ public class FXMLProgettoController implements Initializable {
         String cognome = application.getUtente().getCognome();
         nomeClient.setText(nome + " " + cognome);
         nomeProgetto.setText(progetto.getNome());
-        budget.setText(Double.toString(progetto.getBudget()));
-        saldo.setText(Double.toString(progetto.getSaldo()));
+        budget.setText(progetto.getFormatBudget());
+        saldo.setText(progetto.getFormatSaldo());
     }
     
     private void initDipTable(){

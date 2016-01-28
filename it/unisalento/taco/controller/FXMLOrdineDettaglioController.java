@@ -11,7 +11,10 @@ import it.unisalento.taco.view.Main;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -120,11 +123,11 @@ public class FXMLOrdineDettaglioController implements Initializable {
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
-        double saldo = 0.0;
+        String saldo = "0.0€";
 
         try{
             nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getSaldo();
+            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
             numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
@@ -136,8 +139,8 @@ public class FXMLOrdineDettaglioController implements Initializable {
         finally{
             titoloLabel.setText("Ordine per " + nomeProg);
             nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(Double.toString(saldo) +"€");
-            saldoLabel.setText(Double.toString(saldo) + "€");
+            saldoProgetto.setText(saldo);
+            saldoLabel.setText(saldo);
             carrello.setText(Integer.toString(numeroProd));
         }
         
@@ -149,7 +152,14 @@ public class FXMLOrdineDettaglioController implements Initializable {
             totale += o.getSpesaSpedizione();
         }
         
-        totaleLabel.setText(Double.toString(totale) + "€");
+        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+        formatoEuro.setMinimumFractionDigits( 2 );
+        formatoEuro.setMaximumFractionDigits( 2 );
+        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+        
+        formatoEuro.format(totale);
+    
+        totaleLabel.setText(formatoEuro.toString());
         
         initTable();
         
@@ -213,12 +223,19 @@ public class FXMLOrdineDettaglioController implements Initializable {
                         
                         double totale = 0;
 
+                        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+                        formatoEuro.setMinimumFractionDigits( 2 );
+                        formatoEuro.setMaximumFractionDigits( 2 );
+                        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+                        
                         for(Ordine o : listaOrdini){
                             totale += o.getTotale();
                             totale += o.getSpesaSpedizione();
                         }
                         
-                        ricevuta.append("TOTALE :" + totale);
+                        formatoEuro.format(totale);
+
+                        ricevuta.append("TOTALE :" + formatoEuro);
                         
                         fileWriter.write(ricevuta.toString());
                         fileWriter.close();

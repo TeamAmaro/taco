@@ -3,8 +3,11 @@ package it.unisalento.taco.model;
 import it.unisalento.taco.dao.ProgettoDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class Progetto implements IdentificabileID {
@@ -75,6 +78,22 @@ public class Progetto implements IdentificabileID {
 
     public double getSaldo(){
         return saldo;
+    }
+    
+    public String getFormatSaldo(){
+        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+        formatoEuro.setMinimumFractionDigits( 2 );
+        formatoEuro.setMaximumFractionDigits( 2 );
+        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+        return formatoEuro.format(saldo);
+    }
+    
+    public String getFormatBudget(){
+        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+        formatoEuro.setMinimumFractionDigits( 2 );
+        formatoEuro.setMaximumFractionDigits( 2 );
+        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+        return formatoEuro.format(budget);
     }
 
     public double getBudget(){

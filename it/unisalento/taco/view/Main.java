@@ -10,6 +10,10 @@ import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +54,7 @@ public class Main extends Application{
         
         loginLevel();
         
-        stage.show(); 
+        stage.show();
     } 
  
     private void loginLevel(){
