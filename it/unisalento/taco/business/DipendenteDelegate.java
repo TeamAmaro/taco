@@ -101,7 +101,8 @@ public class DipendenteDelegate {
                 //Prelevo la quantita
                 quantMag1 = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
                 quantMagTot += quantMag1;
-                prodPerQuantMag1.put(prod, quantCar); //Aggiungo la quantita
+                if(quantMag1 > 0)
+                    prodPerQuantMag1.put(prod, quantCar); //Aggiungo la quantita
                 magPerProd.put(magVicino, prodPerQuantMag1); //Aggiungo nel magazzino vicino
                 //Se la quantita di prodotti nel magazzino più vicino non soddisfa la richiesta
                 if (quantMag1 < quantCar){
@@ -181,7 +182,6 @@ public class DipendenteDelegate {
                                 break;
                             }
                         }
-                        
                     }
                 }
             }
