@@ -79,7 +79,7 @@ public class DipendenteDelegate {
         Map<Prodotto,Integer> prodPerQuantMag3 = new LinkedHashMap<>();
         Map<Prodotto,Integer> prodPerQuantMag4 = new LinkedHashMap<>();
         
-        int quantMag1, quantMag2, quantMag3, quantMag4, quantMagTot = 0, i = 2;
+        int quantMag1 = 0, quantMag2, quantMag3, quantMag4, quantMagTot = 0, i = 2;
         
         try {
             //Recupero il contenuto del carrello
@@ -101,8 +101,7 @@ public class DipendenteDelegate {
                 //Prelevo la quantita
                 quantMag1 = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
                 quantMagTot += quantMag1;
-                if(quantMag1 > 0)
-                    prodPerQuantMag1.put(prod, quantCar); //Aggiungo la quantita
+                prodPerQuantMag1.put(prod, quantCar); //Aggiungo la quantita
                 magPerProd.put(magVicino, prodPerQuantMag1); //Aggiungo nel magazzino vicino
                 //Se la quantita di prodotti nel magazzino più vicino non soddisfa la richiesta
                 if (quantMag1 < quantCar){
@@ -192,8 +191,13 @@ public class DipendenteDelegate {
             //Recupero l'ora di creazione
             Date date = new Date();
             long unixTime = date.getTime();
+            int j = 0;
 
             for(Map.Entry<Magazzino,Map<Prodotto,Integer>> mag : magPerProd.entrySet()){
+                if(quantMag1 == 0 && j == 0) {
+                    j++;
+                    continue;
+                }
                 Ordine ordine = new Ordine(dipendente, Progetto.getProgetto(dipendente), mag.getKey(), unixTime, mag.getValue());
                 listaOrdini.add(ordine);
             }
