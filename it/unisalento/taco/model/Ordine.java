@@ -2,7 +2,10 @@ package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.OrdineDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -87,6 +90,22 @@ public final class Ordine {
         return spesaSpedizione;
     }
 
+    public String getFormatTotale(){
+        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+        formatoEuro.setMinimumFractionDigits( 2 );
+        formatoEuro.setMaximumFractionDigits( 2 );
+        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+        return formatoEuro.format(totale);
+    }
+    
+    public String getFormatSpesaSpedizione(){
+        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+        formatoEuro.setMinimumFractionDigits( 2 );
+        formatoEuro.setMaximumFractionDigits( 2 );
+        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+        return formatoEuro.format(spesaSpedizione);
+    }
+    
     @Override public boolean equals(Object obj){
 
         if(obj == null)

@@ -66,8 +66,8 @@ public class FXMLProgettoElencoController implements Initializable {
                 
 
                 Label nomeProgetto = new Label(p.getNome());
-                Label budgetProgetto = new Label(Double.toString(p.getBudget()));
-                Label saldoProgetto = new Label(Double.toString(p.getSaldo()));
+                Label budgetProgetto = new Label(p.getFormatBudget());
+                Label saldoProgetto = new Label(p.getFormatSaldo());
 
                 nomeProgetto.getStyleClass().add("content");
                 budgetProgetto.getStyleClass().add("content");

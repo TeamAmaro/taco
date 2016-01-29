@@ -3,8 +3,11 @@ package it.unisalento.taco.model;
 import it.unisalento.taco.dao.ProdottoDAO;
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,6 +62,14 @@ public class Prodotto implements IdentificabileID {
             stringFornitori.delete(last, last + 2);
         return stringFornitori.toString();
 
+    }
+    
+    public String getFormatPrezzo(){
+        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+        formatoEuro.setMinimumFractionDigits( 2 );
+        formatoEuro.setMaximumFractionDigits( 2 );
+        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+        return formatoEuro.format(prezzo);
     }
 
     public void setDescrizione(String descrizione){

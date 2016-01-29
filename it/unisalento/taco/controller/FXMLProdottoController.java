@@ -94,11 +94,11 @@ public class FXMLProdottoController implements Initializable {
         thumbnail.setImage(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
-        double saldo = 0.0;
+        String saldo = "0.0€";
         
         try{
             nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getSaldo();
+            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
             numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
@@ -110,10 +110,10 @@ public class FXMLProdottoController implements Initializable {
         finally{
             nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
             nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(Double.toString(saldo) +"€");
+            saldoProgetto.setText(saldo);
             carrello.setText(Integer.toString(numeroProd));
             nomeProdotto.setText(prodotto.getNome());
-            prezzoProdotto.setText(Double.toString(prodotto.getPrezzo()) + "€");
+            prezzoProdotto.setText(prodotto.getFormatPrezzo());
             descrizione.setText(prodotto.getDescrizione());
             prodProdotto.setText(prodotto.getProduttore().toString());
         }

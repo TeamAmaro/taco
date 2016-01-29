@@ -2,6 +2,9 @@ package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.CarrelloDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Map;
 
 public class Carrello implements IdentificabileID{
@@ -36,6 +39,14 @@ public class Carrello implements IdentificabileID{
     
     public double getTotale(){
         return totale;
+    }
+    
+    public String getFormatTotale(){
+        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
+        formatoEuro.setMinimumFractionDigits( 2 );
+        formatoEuro.setMaximumFractionDigits( 2 );
+        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+        return formatoEuro.format(totale);
     }
     
     public void removeListaProdotti(Map<Prodotto,Integer> listaProdotti){
