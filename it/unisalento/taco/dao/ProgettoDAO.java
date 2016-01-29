@@ -27,7 +27,8 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     }
     private ProgettoDAO (){};
 
-
+    //Da riscrivere o eliminare
+    /*
     public List<Progetto> getAllProgetto() throws NoIDMatchException{
 
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM progetti. capiprogetto where id_progetto = id");
@@ -53,7 +54,7 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
             }
         }
         return listProgetto;
-    }
+    }*/
 
     @Override public Progetto getByID(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.*,utenti.nome,cognome,email FROM progetti JOIN utenti ON id_capoprog = utenti.id WHERE progetti.id = " + id);
@@ -129,7 +130,8 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
         }
         return listaDipendenti;
     }
-
+    
+    //Lanciare eccezione nel caso in cui il capo progetto non ha progetti
     public Set<Progetto> getListaProgetti(CapoProgetto capoProgetto) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.* FROM progetti,capiprogetto WHERE id_progetto = progetti.id AND id_utente =" + capoProgetto.getID());
         Iterator<String[]> i = result.iterator();
