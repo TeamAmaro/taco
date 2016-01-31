@@ -1,25 +1,37 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Medium.ttf');
+}
+
 .background{
-    -fx-background-color: #F5F5F5;
+    -fx-background-image: url("../img/geometry.png");
+    -fx-background-repeat: repeat;   
+    -fx-background-position: center center;
 }
 
 #login-button:hover {
     -fx-cursor: hand;
-    -fx-background-color: #29B6F6;
+    -fx-background-color: rgb(19,28,59);
 }
 
 #login-button {
-    -fx-text-fill: #212121;
-    -fx-background-color: #03A9F4;
+    -fx-text-fill: #EEEEEE;
+    -fx-background-color: rgb(23,55,105);
     -fx-font-size: 16px;
-    -fx-focus-color: transparent;    
+    -fx-focus-color: transparent;  
 }
 
 #email, #password {
     -fx-focus-color: transparent;
     -fx-border-width: 2px;
-    -fx-border-color: #03A9F4;
+    -fx-border-color: rgb(23,55,105);
 }
 
-#email:hover, #password:hover {
-    -fx-border-color: #81D4FA;
+#email:hover, #password:hover, #email:focused, #password:focused {
+    -fx-border-color: rgb(19,28,59);
+    -fx-background-color: #EEEEEE;
+}
+
+#error-message {
+    -fx-text-fill: rgb(239,82,98);
 }

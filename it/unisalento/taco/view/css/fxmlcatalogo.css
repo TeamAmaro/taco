@@ -1,29 +1,41 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('OpenSans-Regular.ttf');
+}
+
+#anchorPane {
+    -fx-background-image: url("../img/geometry.png");
+    -fx-background-repeat: repeat;   
+    -fx-background-position: center center;
+}
+
 .mainFxmlClass {
-    -fx-font-family: Arial, Verdana, sans-serif;
+    -fx-font-family: "Roboto";
+    -fx-text-fill: rgb(51,51,51);
+    -fx-font-size: 12;
 }
 
-.blue {
-    -fx-background-color: blue;
+.content {
+    -fx-background-color: transparent;
 }
 
-.red {
-    -fx-background-color: red;
+#top-left, #top-right{
+    -fx-background-color: rgb(249,250,251);
+    -fx-border-color: transparent transparent rgb(204,204,204) transparent;
+    -fx-border-width: 2px;
 }
 
-.yellow {
-    -fx-background-color: yellow;
-}
-
-.green {
-    -fx-background-color: green;
+#left-menu {
+    -fx-background-color: rgb(19,28,59);
 }
 
 .top-bar-label {
-    -fx-font-size: 18;
-}
-
-.left-menu-label {
-    -fx-font-size: 18;
+    -fx-font-size: 16;
 }
 
 .search-bar {
@@ -38,35 +50,34 @@
 }
 
 .nome-prodotto{
-    -fx-font-size: 16;   
-}
-
-.prezzo-prodotto {
-    -fx-font-size: 14;
+    -fx-font-size: 14;   
+    -fx-font-weight: bold;
 }
 
 .disponibile {
-    -fx-font-size: 14;
-    -fx-text-fill: greenyellow;
+    -fx-text-fill: #2E7D32;
 }
 
 .non-disponibile {
-    -fx-font-size: 14;
-    -fx-text-fill: red;
+    -fx-text-fill: rgb(205,70,83);
 }
 
 .esaurimento {
-    -fx-font-size: 14;
-    -fx-text-fill: orangered;
+    -fx-text-fill: rgb(254,208,69);
 }
 
 .logout-button {
-    -fx-font-size: 18;
+    -fx-font-size: 16;
     -fx-padding-right: 5px;
 }
 
-.logout-button:hover, .left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover, #icona-carrello:hover {
+.left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover, #icona-carrello:hover {
     -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-cursor: hand;
+    -fx-border-color: transparent transparent rgb(23,55,105) transparent;
 }
 
 /*
@@ -74,61 +85,99 @@
     PERO' FUNZIONANO.
 */
 .left-menu-label {
-    -fx-padding: 30px 59px 30px 50px;
+    -fx-font-size: 16px;
     -fx-background-color: transparent;
+    -fx-text-fill: rgb(249,250,251);
+    -fx-padding: 30px 59px 30px 60px;
+    -fx-font-weight: bold;
 }
 
+#categoriaA:hover {
+    -fx-padding: 30px 108px 30px 60px;
+}
 #categoriaB:hover {
-    -fx-padding: 30px 64px 30px 50px;
+    -fx-padding: 30px 108px 30px 60px;
 }
 #categoriaC:hover {
-    -fx-padding: 30px 84px 30px 50px;
+    -fx-padding: 30px 129px 30px 60px;
 }
 #categoriaD:hover {
-    -fx-padding: 30px 68px 30px 50px;
+    -fx-padding: 30px 112px 30px 60px;
 }
 
 .left-menu-label:hover {
-    -fx-background-color: blue;
+    -fx-background-color: rgb(23,55,105);
 }
 
-.scrollpane{
+.scroll-left{
+    -fx-background-color:transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.scroll-left:focused{
+    -fx-focus-color: transparent;
+}
+
+.scroll-left .scroll-bar:horizontal , .scroll-left  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+.scroll-left .increment-button ,.scroll-left .decrement-button {
+    -fx-background-color:transparent;
     -fx-border-color:derive(gray,80%);
 }
 
-.scrollpane .scroll-bar:horizontal , .scrollpane  .scroll-bar:vertical{
-    -fx-background-color:transparent;
-}
-.scrollpane .increment-button ,.scrollpane .decrement-button {
-    -fx-background-color:transparent;
-    -fx-border-color:derive(gray,80%);
-}
-
-.scrollpane .scroll-bar:horizontal .track , .scrollpane .scroll-bar:vertical .track{
+.scroll-left .scroll-bar:horizontal .track , .scroll-left .scroll-bar:vertical .track{
      -fx-background-color: transparent;
      -fx-border-color:derive(gray,80%);
      -fx-background-radius: 0em;
 
 }
 
-.scrollpane .scroll-bar:horizontal .thumb, .scrollpane .scroll-bar:vertical .thumb {
+.scroll-left .scroll-bar:horizontal .thumb, .scroll-left .scroll-bar:vertical .thumb {
     -fx-background-color:derive(black,90%);
     -fx-background-insets: 0, 0, 0;
     -fx-background-radius: 0em;
 }
 
-.scrollpane .scroll-bar:horizontal:hover .track , .scrollpane .scroll-bar:horizontal:pressed .track ,
-.scrollpane .scroll-bar:vertical:hover .track, .scrollpane .scroll-bar:vertical:pressed .track{
+.scroll-left .scroll-bar:horizontal:hover .track , .scroll-left .scroll-bar:horizontal:pressed .track ,
+.scroll-left .scroll-bar:vertical:hover .track, .scroll-left .scroll-bar:vertical:pressed .track{
      -fx-background-color: derive(#434343,20%);
      -fx-opacity: 0.2;
      -fx-background-radius: 0em;
 }
 
-.scrollpane .scroll-bar .thumb:hover, .scrollpane .scroll-bar .thumb:pressed{
+.scroll-left .scroll-bar .thumb:hover, .scroll-left .scroll-bar .thumb:pressed{
     -fx-background-color: derive(black,50%);
 }
 
-.scrollpane .increment-button:hover ,.scrollpane .decrement-button:hover {
+.scroll-left .increment-button:hover ,.scroll-left .decrement-button:hover {
     -fx-background-color:derive(gray,100%);
     -fx-border-color:derive(gray,80%); 
+}
+
+.grid-right{
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent transparent rgb(204,204,204);
+    -fx-border-width: 2px;
+}
+
+.carrello-info {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(19,28,59);
+}
+
+.grid-message {
+    -fx-font-size: 16px;
+    -fx-font-family: "OpenSans";
+}
+
+#nome-client {
+    -fx-font-family: "OpenSans";
+    -fx-text-fill: rgb(23,55,105);
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-border-color: transparent rgb(204,204,204) transparent transparent;
+    -fx-padding: 0px 10px 0px 0px;
 }
