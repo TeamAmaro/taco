@@ -18,10 +18,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -242,6 +240,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/" + p.getImmagine()));
             iv.setFitHeight(100.0);
             iv.setPreserveRatio(true);
+            iv.getStyleClass().add("icona-prodotto");
 
             VBox valori = new VBox();
             Label nome = new Label(p.getNome());
@@ -257,6 +256,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             prezzo.getStyleClass().add("prezzo-prodotto");
             Label descrizione = new Label();
             Label dettagli = new Label("Dettagli");
+            dettagli.getStyleClass().add("dettagli-prodotto");
 
             try{
                 int quantita = delegate.chiediDisponibilità((Dipendente) application.getUtente(), p);
@@ -328,28 +328,39 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         iv.setPreserveRatio(true);
 
         Label nome = new Label(prodotto.getNome());
-        nome.getStyleClass().add("nome-prodotto");
+        nome.getStyleClass().add("nome-prodotto-grid");
         
         Label prezzo = new Label(prodotto.getFormatPrezzo());
-        prezzo.getStyleClass().add("prezzo-prodotto");
+        prezzo.getStyleClass().add("prezzo-prodotto-grid");
         
         Label produttore = new Label(prodotto.getProduttore().nome());
-        produttore.getStyleClass().add("produttore");
+        produttore.getStyleClass().add("produttore-prodotto-grid");
         
         Label descrizione = new Label(prodotto.getDescrizione());
-        descrizione.getStyleClass().add("descrizione");
+        descrizione.getStyleClass().add("descrizione-grid");
         
         final TextField quantita = new TextField();
         quantita.setMaxWidth(100);
+        quantita.getStyleClass().add("quantita-field");
         final Button add = new Button("Aggiungi");
+        add.getStyleClass().add("add-button");
+        
         gridRight.add(iv, 0, 0, 1, 5);
         gridRight.add(nome, 1, 0);
         gridRight.add(prezzo,1, 1);
-        gridRight.add(new Label("Produttore"), 1, 2);
-        gridRight.add(produttore, 1, 3);
-        gridRight.add(new Label("Descrizione"), 0, 6);
+        
+        gridRight.add(produttore, 1, 2);
+        
+        Label descrizioneLabel = new Label("Descrizione");
+        descrizioneLabel.getStyleClass().add("right-label");
+        
+        gridRight.add(descrizioneLabel, 0, 6);
         gridRight.add(descrizione, 0, 7);
-        gridRight.add(new Label("Inserire quantità da ordinare (es. 20):"), 0, 8);
+        
+        Label quantitaLabel = new Label("Quantità da ordinare");
+        quantitaLabel.getStyleClass().add("right-label");
+        
+        gridRight.add(quantitaLabel, 0, 8);
         gridRight.add(quantita, 1, 8);
         gridRight.add(add, 1, 9);
         if(application.getStage().getWidth() < 1130.0){
