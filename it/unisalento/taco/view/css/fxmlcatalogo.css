@@ -54,6 +54,10 @@
     -fx-font-weight: bold;
 }
 
+.nome-prodotto:hover {
+    -fx-text-fill:#448AFF;
+}
+
 .disponibile {
     -fx-text-fill: #2E7D32;
 }
@@ -69,15 +73,21 @@
 .logout-button {
     -fx-font-size: 16;
     -fx-padding-right: 5px;
+    -fx-text-fill: rgb(23,55,105);
 }
 
-.left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover, #icona-carrello:hover {
+.left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover, #icona-carrello:hover, #left-logo-case:hover, .icona-prodotto:hover {
     -fx-cursor: hand;
+}
+
+#left-logo-case {
+    -fx-border-color: transparent transparent rgb(23,55,105) transparent;
+    -fx-border-width: 2;
 }
 
 .logout-button:hover {
     -fx-cursor: hand;
-    -fx-border-color: transparent transparent rgb(23,55,105) transparent;
+    -fx-text-fill: #448AFF;
 }
 
 /*
@@ -180,4 +190,63 @@
     -fx-border-width: 2px;
     -fx-border-color: transparent rgb(204,204,204) transparent transparent;
     -fx-padding: 0px 10px 0px 0px;
+}
+
+.icona-prodotto {
+    -fx-border-width: 2px;
+    -fx-border-color: rgb(204,204,204);
+    -fx-border-radius: 2px;
+}
+
+.dettagli-prodotto {
+    -fx-text-fill: rgb(23,55,105);
+    -fx-background-color: inherit;
+}
+
+.dettagli-prodotto:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #448AFF;
+}
+
+.nome-prodotto-grid {
+    -fx-text-fill: rgb(23,55,105);
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.prezzo-prodotto-grid {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(23,55,105);
+}
+
+.produttore-prodotto-grid {
+    -fx-text-fill: rgb(23,55,105);
+}
+
+.quantita-field {
+    -fx-focus-color: transparent;
+    -fx-border-width: 2px;
+    -fx-border-color: rgb(23,55,105);
+}
+
+.quantita-field:hover, .quantita-field:focused {
+    -fx-border-color: rgb(19,28,59);
+    -fx-background-color: #EEEEEE;
+}
+
+.add-button:hover {
+    -fx-cursor: hand;
+    -fx-background-color: rgb(19,28,59);
+}
+
+.add-button {
+    -fx-text-fill: #EEEEEE;
+    -fx-background-color: rgb(23,55,105);
+    -fx-font-size: 16px;
+    -fx-focus-color: transparent;  
+}
+
+.right-label {
+    -fx-font-weight: bold;
 }
