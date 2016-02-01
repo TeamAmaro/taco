@@ -39,11 +39,13 @@
     </HBox>
     <VBox fx:id="leftMenu" id="left-menu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0.0"
           AnchorPane.bottomAnchor="0" minWidth="250.0" maxWidth="250.0" alignment="TOP_LEFT">
-        <ImageView fx:id="leftLogo" fitWidth="250.0" preserveRatio="true" id="left-menu-logo">
-          <image>
-            <Image url="@../img/logo1.png" smooth="true" />
-          </image>
-        </ImageView>
+        <HBox id="left-logo-case" prefHeight="50.0" maxWidth="250.0">
+            <ImageView fx:id="leftLogo" fitWidth="246.0" preserveRatio="true" id="left-menu-logo">
+              <image>
+                <Image url="@../img/logo2.png" smooth="true" />
+              </image>
+            </ImageView>
+        </HBox>
         <Label styleClass="left-menu-label" fx:id="categoriaA" id="categoriaA" text="Cancelleria"/>
         <Label styleClass="left-menu-label" fx:id="categoriaB" id="categoriaB" text="Elettronica"/>
         <Label styleClass="left-menu-label" fx:id="categoriaC" id="categoriaC" text="Ricambi"/>

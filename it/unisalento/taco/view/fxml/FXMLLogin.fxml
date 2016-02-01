@@ -17,7 +17,7 @@
               AnchorPane.rightAnchor="0" prefHeight="250">
             <ImageView id="app-login-logo" fitHeight="350" preserveRatio="true">
               <image>
-                <Image url="@../img/icona.png" smooth="true" />
+                <Image url="@../img/logo3.png" smooth="true" />
               </image>
             </ImageView>
         </HBox>
