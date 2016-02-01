@@ -32,7 +32,7 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
     @Override public void initialize(URL location, ResourceBundle resources) {
         errorMessage.setText("");
         emailField.setPromptText("Email");
-        passwordField.setPromptText("Username");
+        passwordField.setPromptText("Password");
         
     }
     

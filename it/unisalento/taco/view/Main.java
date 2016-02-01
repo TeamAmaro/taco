@@ -42,12 +42,12 @@ public class Main extends Application{
     @Override public void start(Stage primaryStage) { 
         stage = primaryStage;
         
-        stage.setTitle("Taco");
+        stage.setTitle("Galaxy Express");
         
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         
-        stage.getIcons().add(new Image("it/unisalento/taco/view/img/tacoicon.ico"));
+        stage.getIcons().add(new Image("it/unisalento/taco/view/img/icona.png"));
         
         stage.setWidth(MINIMUM_WINDOW_WIDTH);
         stage.setHeight(MINIMUM_WINDOW_HEIGHT);
@@ -161,15 +161,7 @@ public class Main extends Application{
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void ordineElencoLevel(){
-        try {
-            FXMLOrdineElencoController ordineElenco = (FXMLOrdineElencoController) cambiaLivello("fxml/FXMLOrdineElenco.fxml");
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
+
     public Utente getUtente(){
         return utente;
     }

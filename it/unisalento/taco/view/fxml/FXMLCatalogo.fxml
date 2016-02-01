@@ -11,45 +11,51 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="content" xmlns:fx="http://javafx.com/fxml/1" id="anchorPane" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLCatalogoController">
-    <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+    <HBox spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+        <padding>
+            <Insets bottom="0.0" left="20.0" right="0.0" top="0.0" />
+        </padding> 
         <children>
-            <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
-              <image>
-                <Image url="@../img/logo2.jpg" smooth="true" />
-              </image>
-            </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient" text=""/>
-            <Label styleClass="top-bar-label" fx:id="nomeProgetto" text=""/>
-            <Label styleClass="top-bar-label" fx:id="saldoProgetto" text=""/>
+            <Label styleClass="top-bar-label" fx:id="nomeClient" id="nome-client"/>
+            <Label styleClass="top-bar-label" fx:id="nomeProgetto" id="nome-progetto"/>
+            <Label styleClass="top-bar-label" fx:id="saldoProgetto" id="saldo-progetto"/>
         </children>
     </HBox>
-    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="top-right" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+        <padding>
+            <Insets bottom="0.0" left="0.0" right="20.0" top="0.0" />
+        </padding> 
         <children>
-            <Label styleClass="top-bar-label" fx:id="carrello" text=""/>
-            <ImageView fx:id="iconaCarrello" id="icona-carrello" fitHeight="50.0" preserveRatio="true">
-                <image>
-                    <Image url="@../img/cart.jpg" smooth="true" />
-                </image>
-            </ImageView>
+            <StackPane fx:id="iconaCarrello" id="icona-carrello">
+                <ImageView fitHeight="35.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../img/b_cart.png" smooth="true" />
+                    </image>
+                </ImageView>
+                <Label styleClass="carrello-info" fx:id="carrello"/>
+            </StackPane>
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
-    <VBox fx:id="leftMenu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50"
-          AnchorPane.bottomAnchor="0" minWidth="200.0" maxWidth="200.0" styleClass="red" alignment="TOP_LEFT">
-        <children>
-            <Label styleClass="left-menu-label" fx:id="categoriaA" id="categoriaA" text="Cancelleria"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaB" id="categoriaB" text="Elettronica"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaC" id="categoriaC" text="Ricambi"/>
-            <Label styleClass="left-menu-label" fx:id="categoriaD" id="categoriaD" text="Stampanti"/>
-        </children>
+    <VBox fx:id="leftMenu" id="left-menu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0" minWidth="250.0" maxWidth="250.0" alignment="TOP_LEFT">
+        <ImageView fx:id="leftLogo" fitWidth="250.0" preserveRatio="true" id="left-menu-logo">
+          <image>
+            <Image url="@../img/logo1.png" smooth="true" />
+          </image>
+        </ImageView>
+        <Label styleClass="left-menu-label" fx:id="categoriaA" id="categoriaA" text="Cancelleria"/>
+        <Label styleClass="left-menu-label" fx:id="categoriaB" id="categoriaB" text="Elettronica"/>
+        <Label styleClass="left-menu-label" fx:id="categoriaC" id="categoriaC" text="Ricambi"/>
+        <Label styleClass="left-menu-label" fx:id="categoriaD" id="categoriaD" text="Stampanti"/>
     </VBox>
-    <GridPane fx:id="gridPane" alignment="CENTER" hgap="5"  AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+    <GridPane fx:id="gridPane" alignment="CENTER" hgap="5"  AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="content">
         <Label styleClass="query-message" fx:id="queryMessage" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <TextField GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="50.0" promptText="Cerca un prodotto.." fx:id="searchBar" styleClass="search-bar" focusTraversable="false" />
         <ImageView GridPane.columnIndex="1" GridPane.rowIndex="1" fitHeight="50.0" preserveRatio="true" id="search-icon" fx:id="searchIcon">
-              <image>
-                <Image url="@../img/search.jpg" smooth="true" />
-              </image>
+            <image>
+              <Image url="@../img/b_search2.png" smooth="true" />
+            </image>
         </ImageView>
     </GridPane>
     <stylesheets>

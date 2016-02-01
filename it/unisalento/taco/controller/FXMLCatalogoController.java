@@ -33,6 +33,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 
@@ -48,13 +49,17 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
 
     @FXML Label logout;
     @FXML Label queryMessage;
+    @FXML ImageView leftLogo;
+    @FXML ImageView gridImage;
 
     @FXML GridPane gridPane;
     @FXML AnchorPane content;
+    
+    @FXML Label gridMessage;
 
     @FXML VBox leftMenu;
 
-    @FXML ImageView iconaCarrello;
+    @FXML StackPane iconaCarrello;
     
     private ScrollPane scrollLeft;
     private GridPane gridRight;
@@ -70,7 +75,11 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         scrollLeft = new ScrollPane();
         vbLeft = new VBox();
         gridRight = new GridPane();
-
+        gridImage = new ImageView(new Image("it/unisalento/taco/view/img/rocket.png"));
+        gridMessage = new Label("Clicca su un prodotto per visualizzarne i dettagli.");
+        gridMessage.getStyleClass().add("grid-message");
+        gridMessage.setWrapText(true);
+        gridMessage.setMaxWidth(170.0);
         vbLeft.setAlignment(Pos.CENTER);
         vbLeft.setSpacing(10.0);
         vbLeft.setPadding(new Insets(10.0,20.0,10.0,10.0));
@@ -79,10 +88,12 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.setVgap(10.0);
         gridRight.setHgap(20.0);
         gridRight.setPadding(new Insets(20.0,20.0,20.0,20.0));
+        gridRight.add(gridMessage, 0, 1);
+        gridRight.add(gridImage, 0, 0);
+        gridRight.setAlignment(Pos.CENTER);
 
-        scrollLeft.getStyleClass().add("green");
-        scrollLeft.getStyleClass().add("scrollpane");
-        gridRight.getStyleClass().add("yellow");
+        scrollLeft.getStyleClass().add("scroll-left");
+        gridRight.getStyleClass().add("grid-right");
         scrollLeft.setContent(vbLeft);
 
     }
@@ -96,7 +107,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         application.getStage().widthProperty().addListener(new ChangeListener<Number>(){
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 if(content.getChildren().contains(scrollLeft) && newSceneWidth.intValue() < 1130){
-                    scrollLeft.setMinWidth(newSceneWidth.intValue() - 215);
+                    scrollLeft.setMinWidth(newSceneWidth.intValue() - 265);
                     scrollLeft.setFitToWidth(true);
                     gridRight.setVisible(false);
                 }
@@ -132,6 +143,12 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             carrello.setText(Integer.toString(numeroProd));
         }
 
+        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.dipendenteView();
+            }
+        });
+        
         logout.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.logout();
@@ -139,6 +156,8 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         });
 
         for(final Node label : leftMenu.getChildren()){
+            if(label == leftLogo)
+                continue;
             label.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override public void handle(MouseEvent arg0) {
                     Categoria cat;
@@ -276,19 +295,18 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         content.getChildren().add(gridRight);
 
         content.setTopAnchor(scrollLeft,50.0);
-        content.setLeftAnchor(scrollLeft, 200.0);
+        content.setLeftAnchor(scrollLeft, 250.0);
         content.setBottomAnchor(scrollLeft, 0.0);
 
         content.setTopAnchor(gridRight,50.0);
-        content.setLeftAnchor(gridRight, 600.0);
+        content.setLeftAnchor(gridRight, 650.0);
         content.setBottomAnchor(gridRight, 0.0);
         content.setRightAnchor(gridRight, 0.0);
 
         if(application.getStage().getWidth() < 1130.0){
             gridRight.setVisible(false);
-            scrollLeft.setMinWidth(585.0);
+            scrollLeft.setMinWidth(535.0);
             scrollLeft.setFitToWidth(true);
-            
         }
         else{
             scrollLeft.setMaxWidth(400.0);
@@ -303,7 +321,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     private void showOnRightPanel(final Prodotto prodotto){
 
         gridRight.getChildren().clear();
-        
+        gridRight.setAlignment(Pos.TOP_CENTER);
         
         ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
         iv.setFitHeight(250.0);
@@ -334,7 +352,6 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.add(new Label("Inserire quantità da ordinare (es. 20):"), 0, 8);
         gridRight.add(quantita, 1, 8);
         gridRight.add(add, 1, 9);
-        
         if(application.getStage().getWidth() < 1130.0){
             scrollLeft.setMinWidth(400.0);
             scrollLeft.setMaxWidth(400.0);
@@ -342,7 +359,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             application.getStage().setWidth(1130.0);
             gridRight.setVisible(true);
             application.getStage().centerOnScreen();
-            content.setLeftAnchor(gridRight, 600.0);
+            content.setLeftAnchor(gridRight, 650.0);
         }
 
         add.setOnMouseClicked(new EventHandler<MouseEvent>(){

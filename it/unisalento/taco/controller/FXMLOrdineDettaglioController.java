@@ -145,21 +145,18 @@ public class FXMLOrdineDettaglioController implements Initializable {
         }
         
         //Aggiungere totale al label
-        double totale = 0;
+        double totaleOrdine = 0;
 
         for(Ordine o : listaOrdini){
-            totale += o.getTotale();
-            totale += o.getSpesaSpedizione();
+            totaleOrdine += o.getTotale();
+            totaleOrdine += o.getSpesaSpedizione();
         }
         
         NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
         formatoEuro.setMinimumFractionDigits( 2 );
         formatoEuro.setMaximumFractionDigits( 2 );
         formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
-        
-        formatoEuro.format(totale);
-    
-        totaleLabel.setText(formatoEuro.toString());
+        totaleLabel.setText(formatoEuro.format(totaleOrdine));
         
         initTable();
         
@@ -233,9 +230,7 @@ public class FXMLOrdineDettaglioController implements Initializable {
                             totale += o.getSpesaSpedizione();
                         }
                         
-                        formatoEuro.format(totale);
-
-                        ricevuta.append("TOTALE :" + formatoEuro);
+                        ricevuta.append("TOTALE :" + formatoEuro.format(totale));
                         
                         fileWriter.write(ricevuta.toString());
                         fileWriter.close();
