@@ -54,11 +54,13 @@
     <GridPane fx:id="gridPane" alignment="CENTER" hgap="5"  AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="content">
         <Label styleClass="query-message" fx:id="queryMessage" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <TextField GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="50.0" promptText="Cerca un prodotto.." fx:id="searchBar" styleClass="search-bar" focusTraversable="false" />
-        <ImageView GridPane.columnIndex="1" GridPane.rowIndex="1" fitHeight="50.0" preserveRatio="true" id="search-icon" fx:id="searchIcon">
-            <image>
-              <Image url="@../img/b_search2.png" smooth="true" />
-            </image>
-        </ImageView>
+        <HBox fx:id="searchIconBox" id="search-icon-box" GridPane.columnIndex="1" GridPane.rowIndex="1" >
+            <ImageView fitHeight="50.0" preserveRatio="true" id="search-icon">
+                <image>
+                  <Image url="@../img/b_search2.png" smooth="true"/>
+                </image>
+            </ImageView>
+        </HBox>
     </GridPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlcatalogo.css"/>

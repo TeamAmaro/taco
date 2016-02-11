@@ -76,8 +76,22 @@
     -fx-text-fill: rgb(23,55,105);
 }
 
-.left-menu-label:hover, #search-icon:hover , .nome-prodotto:hover, #icona-carrello:hover, #left-logo-case:hover, .icona-prodotto:hover {
+.left-menu-label:hover, #search-icon-box:hover , .nome-prodotto:hover, #left-logo-case:hover, .icona-prodotto:hover {
     -fx-cursor: hand;
+}
+
+.carrello-info {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(19,28,59);
+}
+
+#icona-carrello:hover {
+    -fx-cursor: hand;
+}
+
+#icona-carrello:hover .carrello-info{
+    -fx-text-fill: #448AFF;
 }
 
 #left-logo-case {
@@ -94,6 +108,7 @@
     LE REGOLE CHE SEGUONO SONO UN PUGNO IN UN OCCHIO
     PERO' FUNZIONANO.
 */
+
 .left-menu-label {
     -fx-font-size: 16px;
     -fx-background-color: transparent;
@@ -119,49 +134,49 @@
     -fx-background-color: rgb(23,55,105);
 }
 
-.scroll-left{
+.scrollpane{
     -fx-background-color:transparent;
     -fx-border-color: transparent;
     -fx-border-width: 0;
 }
 
-.scroll-left:focused{
+.scrollpane:focused{
     -fx-focus-color: transparent;
 }
 
-.scroll-left .scroll-bar:horizontal , .scroll-left  .scroll-bar:vertical{
+.scrollpane .scroll-bar:horizontal , .scrollpane  .scroll-bar:vertical{
     -fx-background-color:transparent;
 }
-.scroll-left .increment-button ,.scroll-left .decrement-button {
+.scrollpane .increment-button ,.scrollpane .decrement-button {
     -fx-background-color:transparent;
     -fx-border-color:derive(gray,80%);
 }
 
-.scroll-left .scroll-bar:horizontal .track , .scroll-left .scroll-bar:vertical .track{
+.scrollpane .scroll-bar:horizontal .track , .scrollpane .scroll-bar:vertical .track{
      -fx-background-color: transparent;
      -fx-border-color:derive(gray,80%);
      -fx-background-radius: 0em;
 
 }
 
-.scroll-left .scroll-bar:horizontal .thumb, .scroll-left .scroll-bar:vertical .thumb {
+.scrollpane .scroll-bar:horizontal .thumb, .scrollpane .scroll-bar:vertical .thumb {
     -fx-background-color:derive(black,90%);
     -fx-background-insets: 0, 0, 0;
     -fx-background-radius: 0em;
 }
 
-.scroll-left .scroll-bar:horizontal:hover .track , .scroll-left .scroll-bar:horizontal:pressed .track ,
-.scroll-left .scroll-bar:vertical:hover .track, .scroll-left .scroll-bar:vertical:pressed .track{
+.scrollpane .scroll-bar:horizontal:hover .track , .scrollpane .scroll-bar:horizontal:pressed .track ,
+.scrollpane .scroll-bar:vertical:hover .track, .scrollpane .scroll-bar:vertical:pressed .track{
      -fx-background-color: derive(#434343,20%);
      -fx-opacity: 0.2;
      -fx-background-radius: 0em;
 }
 
-.scroll-left .scroll-bar .thumb:hover, .scroll-left .scroll-bar .thumb:pressed{
+.scrollpane .scroll-bar .thumb:hover, .scrollpane .scroll-bar .thumb:pressed{
     -fx-background-color: derive(black,50%);
 }
 
-.scroll-left .increment-button:hover ,.scroll-left .decrement-button:hover {
+.scrollpane .increment-button:hover ,.scrollpane .decrement-button:hover {
     -fx-background-color:derive(gray,100%);
     -fx-border-color:derive(gray,80%); 
 }
@@ -170,12 +185,6 @@
     -fx-background-color: #FFFFFF;
     -fx-border-color: transparent transparent transparent rgb(204,204,204);
     -fx-border-width: 2px;
-}
-
-.carrello-info {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: rgb(19,28,59);
 }
 
 .grid-message {
@@ -197,6 +206,7 @@
     -fx-border-color: rgb(204,204,204);
     -fx-border-radius: 2px;
 }
+
 
 .dettagli-prodotto {
     -fx-text-fill: rgb(23,55,105);

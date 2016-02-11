@@ -1,70 +1,98 @@
-/*
- * Empty Stylesheet file.
- */
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Medium.ttf');
+}
 
+@font-face {
+    font-family: 'OpenSans';
+    src: url('OpenSans-Regular.ttf');
+}
 
 .mainFxmlClass {
-    -fx-font-family: Arial, Verdana, sans-serif;
-}
-
-.blue {
-    -fx-background-color: blue;
-}
-
-.red {
-    -fx-background-color: red;
-}
-
-.yellow {
-    -fx-background-color: yellow;
-}
-
-.green {
-    -fx-background-color: green;
+    -fx-font-family: "Roboto";
+    -fx-text-fill: rgb(51,51,51);
+    -fx-font-size: 12;
+    -fx-background-image: url("../img/geometry.png");
+    -fx-background-repeat: repeat;   
+    -fx-background-position: center center;
 }
 
 .top-bar-label {
     -fx-font-size: 18;
 }
 
-.left-menu-label {
-    -fx-font-size: 18;
-}
-
-.search-bar {
-    -fx-border: none;
-    -fx-background-color: transparent;
-    -fx-font-size: 30;
-}
-
-
-.search-bar:active {
-    -fx-border: none;
-    -fx-background-color: transparent;
+#nome-client {
+    -fx-font-family: "OpenSans";
+    -fx-text-fill: rgb(23,55,105);
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-border-color: transparent rgb(204,204,204) transparent transparent;
+    -fx-padding: 0px 10px 0px 0px;
 }
 
 .nome-prodotto{
-    -fx-font-size: 24;
+    -fx-font-size: 14;   
+    -fx-font-weight: bold;
 }
 
-.prezzo-prodotto {
-    -fx-font-size: 18;
+#top-right, #top-left{
+    -fx-background-color: rgb(249,250,251);
 }
 
-.disponibile {
-    -fx-font-size: 14;
-    -fx-text-fill: greenyellow;
+#top-left{
+    -fx-border-color: transparent transparent rgb(204,204,204) transparent;
+    -fx-border-width: 2px;
 }
 
-.non-disponibile {
-    -fx-font-size: 14;
-    -fx-text-fill: red;
+.logout-button {
+    -fx-font-size: 16;
+    -fx-padding-right: 5px;
+    -fx-text-fill: rgb(23,55,105);
 }
 
-.prod-prodotto {
-    -fx-font-size: 18;
-    
+.logout-button:hover{
+    -fx-cursor: hand;
+    -fx-text-fill: #448AFF;
 }
-.descrizione {
-    -fx-font-size: 18;
+
+#back-arrow-box:hover{
+    -fx-cursor: hand;
+}
+
+
+.carrello-info {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(19,28,59);
+}
+
+#icona-carrello:hover {
+    -fx-cursor: hand;
+}
+
+#icona-carrello:hover .carrello-info{
+    -fx-text-fill: #448AFF;
+}
+
+.quantita-field {
+    -fx-focus-color: transparent;
+    -fx-border-width: 2px;
+    -fx-border-color: rgb(23,55,105);
+}
+
+.quantita-field:hover, .quantita-field:focused {
+    -fx-border-color: rgb(19,28,59);
+    -fx-background-color: #EEEEEE;
+}
+
+.add-button:hover {
+    -fx-cursor: hand;
+    -fx-background-color: rgb(19,28,59);
+}
+
+.add-button {
+    -fx-text-fill: #EEEEEE;
+    -fx-background-color: rgb(23,55,105);
+    -fx-font-size: 16px;
+    -fx-focus-color: transparent;  
 }

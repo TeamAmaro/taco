@@ -11,26 +11,36 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="anchorPane" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLProdottoController">
-    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+        <padding>
+            <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
+        </padding> 
         <children>
-            <ImageView fx:id="leftLogo" fitHeight="50" preserveRatio="true" id="left-menu-logo">
-              <image>
-                <Image url="@../img/logo2.jpg" smooth="true" />
-              </image>
-            </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient" text=""/>
-            <Label styleClass="top-bar-label" fx:id="nomeProgetto" text=""/>    
-            <Label styleClass="top-bar-label" fx:id="saldoProgetto" text=""/>        
+            <HBox fx:id="backArrowBox" id="back-arrow-box">
+                <ImageView fx:id="backArrow" fitHeight="50.0" preserveRatio="true" id="back-arrow">
+                  <image>
+                    <Image url="@../img/b_back.png" smooth="true" />
+                  </image>
+                </ImageView>
+            </HBox>
+            <Label styleClass="top-bar-label" fx:id="nomeClient" id="nome-client"/>
+            <Label styleClass="top-bar-label" fx:id="nomeProgetto" id="nome-progetto"/>
+            <Label styleClass="top-bar-label" fx:id="saldoProgetto" id="saldo-progetto"/>
         </children>
     </HBox>
-    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="top-right" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+        <padding>
+            <Insets bottom="0.0" left="0.0" right="20.0" top="0.0" />
+        </padding> 
         <children>
-            <Label styleClass="top-bar-label" fx:id="carrello" text=""/>
-            <ImageView fx:id="iconaCarrello" id="icona-carrello" fitHeight="50.0" preserveRatio="true">
-                <image>
-                    <Image url="@../img/cart.jpg" smooth="true" />
-                </image>
-            </ImageView>
+            <StackPane fx:id="iconaCarrello" id="icona-carrello">
+                <ImageView fitHeight="35.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../img/b_cart.png" smooth="true" />
+                    </image>
+                </ImageView>
+                <Label styleClass="carrello-info" fx:id="carrello"/>
+            </StackPane>
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
@@ -46,10 +56,10 @@
         <Label fx:id="prodProdotto" styleClass="prod-prodotto" GridPane.columnIndex="1" GridPane.rowIndex="3" minWidth="150"/>
         <Label fx:id="disponibilita" styleClass="disponibile" GridPane.columnIndex="1" GridPane.rowIndex="4" minWidth="150"/>
         <HBox GridPane.columnIndex="2" GridPane.rowIndex="1" minWidth="150" maxWidth="150" GridPane.halignment="RIGHT"  spacing="10">
-            <Label styleClass="quantita" text="Quantità:"/>
-            <TextField fx:id="quantita" minHeight="20" prefHeight="20" prefWidth="90" />
+            <Label text="Quantità:"/>
+            <TextField fx:id="quantita" styleClass="quantita-field" minHeight="20" prefHeight="20" prefWidth="90" />
         </HBox>
-        <Button fx:id="addButton" text="Aggiungi" minWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.halignment="RIGHT"/> 
+        <Button fx:id="addButton" styleClass="add-button" text="Aggiungi" minWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.halignment="RIGHT"/> 
         <Label text="Descrizione" styleClass="descrizione" GridPane.columnIndex="0" GridPane.rowIndex="5" minWidth="150"/>
         <HBox GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="3" maxWidth="1000" >
             <Label fx:id="descrizione" styleClass="descrizione" wrapText="true"/>
