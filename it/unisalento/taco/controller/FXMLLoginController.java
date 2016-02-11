@@ -16,6 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+
 public class FXMLLoginController extends AnchorPane implements Initializable {
 
     @FXML TextField emailField;
@@ -33,7 +34,6 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
         errorMessage.setText("");
         emailField.setPromptText("Email");
         passwordField.setPromptText("Password");
-        
     }
     
     public void effettuaLogin(ActionEvent event) {

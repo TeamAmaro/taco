@@ -39,31 +39,25 @@ import javafx.util.Duration;
 public class FXMLCarrelloController implements Initializable {
 
     @FXML GridPane content;
-    @FXML ImageView leftLogo;
     @FXML Label logout;
     @FXML HBox topLeft;
     @FXML Label totale;
     @FXML Button ordinaButton;
-    
+    @FXML ImageView backArrow;
     @FXML Label nomeClient;
     @FXML Label nomeProgetto;
     @FXML Label saldoProgetto;
     @FXML Label titoloLabel;
+    @FXML HBox ordinaBox;
+    @FXML VBox scrollContent;
+    @FXML HBox backArrowBox;
     
     private Main application;
     private Carrello carrello;
     private DipendenteDelegate delegate = DipendenteDelegate.getInstance();
-
-    @FXML ImageView iv;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        iv = new ImageView(new Image("it/unisalento/taco/view/img/back.jpg"));
-        iv.setFitHeight(50.0);
-        iv.setPreserveRatio(true);
-        
-        topLeft.getChildren().add(0, iv);
 
         FadeTransition ft = new FadeTransition(Duration.millis(1000));
         ft.setFromValue(0.3f);
@@ -72,7 +66,7 @@ public class FXMLCarrelloController implements Initializable {
         tt.setFromX(-100f);
         tt.setToX(0);
         
-        ParallelTransition pt = new ParallelTransition(iv, ft, tt);
+        ParallelTransition pt = new ParallelTransition(backArrow, ft, tt);
         pt.play();
         
     }    
@@ -83,7 +77,7 @@ public class FXMLCarrelloController implements Initializable {
     
     public void initData(){
         
-        int i = 2;
+        int i = 3;
         
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
@@ -112,9 +106,11 @@ public class FXMLCarrelloController implements Initializable {
         if(listaProdotti.isEmpty()){
             
             content.getChildren().clear();
+            scrollContent.getChildren().remove(ordinaBox);
             
             Label message = new Label("Il tuo carrello è vuoto!");
             Label message2 = new Label("Visita il catalogo per aggiungere prodotti al carrello.");
+            message2.getStyleClass().add("message");
             
             message2.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override public void handle(MouseEvent arg0) {
@@ -124,8 +120,6 @@ public class FXMLCarrelloController implements Initializable {
             
             content.add(message, 0, 0);
             content.add(message2, 0, 1);
-            
-            ordinaButton.setDisable(true);
         }
         else{
             
@@ -144,6 +138,7 @@ public class FXMLCarrelloController implements Initializable {
                 ImageView iv = new ImageView(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
                 iv.setFitHeight(100.0);
                 iv.setPreserveRatio(true);
+                iv.getStyleClass().add("icona-prodotto");
 
                 VBox vb = new VBox();
                 vb.setAlignment(Pos.CENTER_LEFT);
@@ -151,6 +146,7 @@ public class FXMLCarrelloController implements Initializable {
 
                 Label nomeProdotto = new Label(prodotto.getNome());
                 nomeProdotto.getStyleClass().add("nome-prodotto");
+                
                 Label prezzoProdotto = new Label(prodotto.getFormatPrezzo());
                 prezzoProdotto.getStyleClass().add("prezzo-prodotto");
                 Label prodProdotto = new Label(prodotto.getProduttore().nome());
@@ -174,8 +170,6 @@ public class FXMLCarrelloController implements Initializable {
                     Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                
-                
                 final Button rimuovi = new Button("Rimuovi");
                 rimuovi.getStyleClass().add("remove-button");
                 
@@ -185,9 +179,26 @@ public class FXMLCarrelloController implements Initializable {
                         rimuovi.setDisable(true);
                         rimuovi.setText("Rimosso!");
                         totale.setText(carrello.getFormatTotale());
+                        if(carrello.getListaProdotti().isEmpty())
+                            ordinaButton.setDisable(true);
                     }
                 });
-
+                
+                
+                nomeProdotto.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override public void handle(MouseEvent arg0) {
+                        application.getDetails(prodotto);
+                    }
+                });
+                
+                
+                iv.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override public void handle(MouseEvent arg0) {
+                        application.getDetails(prodotto);
+                    }
+                });
+                
+                
                 vb.getChildren().addAll(nomeProdotto, prezzoProdotto, prodProdotto);
                 hb.getChildren().addAll(iv, vb);
 
@@ -199,23 +210,15 @@ public class FXMLCarrelloController implements Initializable {
             }
         }
         
-        
-        
-        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                application.dipendenteView();
-            }
-        });
-        
         logout.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.logout();
             }
         });
         
-        iv.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        backArrowBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                application.lastView();
+                application.dipendenteView();
             }
         });
         

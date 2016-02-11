@@ -42,7 +42,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML Label saldoProgetto;
     @FXML Label carrello;
 
-    @FXML ImageView searchIcon;
+    @FXML HBox searchIconBox;
     @FXML TextField searchBar;
 
     @FXML Label logout;
@@ -90,7 +90,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         gridRight.add(gridImage, 0, 0);
         gridRight.setAlignment(Pos.CENTER);
 
-        scrollLeft.getStyleClass().add("scroll-left");
+        scrollLeft.getStyleClass().add("scrollpane");
         gridRight.getStyleClass().add("grid-right");
         scrollLeft.setContent(vbLeft);
 
@@ -187,7 +187,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             });
         }
 
-        searchIcon.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        searchIconBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
 
                 if(searchBar.getText().isEmpty())
@@ -247,6 +247,12 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             nome.getStyleClass().add("nome-prodotto");
 
             nome.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    showOnRightPanel(p);
+                }
+            });
+            
+            iv.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override public void handle(MouseEvent arg0) {
                     showOnRightPanel(p);
                 }

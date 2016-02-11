@@ -27,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 
@@ -48,16 +49,15 @@ public class FXMLProdottoController implements Initializable {
     @FXML Label disponibilita;
     
     @FXML Label logout;
-    @FXML ImageView leftLogo;
     @FXML ImageView thumbnail;
     
     @FXML HBox topLeft;
     
-    @FXML ImageView iv;
+    @FXML HBox backArrowBox;
     @FXML Button addButton;
     @FXML TextField quantita;
     
-    @FXML ImageView iconaCarrello;
+    @FXML StackPane iconaCarrello;
     
     public void setApplication(Main application){
         this.application = application;
@@ -69,24 +69,14 @@ public class FXMLProdottoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        iv = new ImageView(new Image("it/unisalento/taco/view/img/back.jpg"));
-        iv.setFitHeight(50.0);
-        iv.setPreserveRatio(true);
-        
-        topLeft.getChildren().add(0, iv);
-
         FadeTransition ft = new FadeTransition(Duration.millis(1000));
         ft.setFromValue(0.3f);
         ft.setToValue(1.0f);
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
         tt.setFromX(-100f);
         tt.setToX(0);
-        
-        ParallelTransition pt = new ParallelTransition(iv, ft, tt);
+        ParallelTransition pt = new ParallelTransition(backArrowBox, ft, tt);
         pt.play();
-        
-        
     }    
 
     public void initData(){
@@ -124,15 +114,9 @@ public class FXMLProdottoController implements Initializable {
             }
         });
         
-        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        backArrowBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override public void handle(MouseEvent arg0) {
                     application.dipendenteView();
-                }
-        });
-        
-        iv.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                @Override public void handle(MouseEvent arg0) {
-                    application.lastView();
                 }
         });
 
