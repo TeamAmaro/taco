@@ -69,17 +69,16 @@ public class FXMLProdottoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        FadeTransition ft = new FadeTransition(Duration.millis(1000));
-        ft.setFromValue(0.3f);
-        ft.setToValue(1.0f);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
-        tt.setFromX(-100f);
-        tt.setToX(0);
-        ParallelTransition pt = new ParallelTransition(backArrowBox, ft, tt);
-        pt.play();
+        //Nulla da fà
     }    
 
     public void initData(){
+        initMenu();
+        initContent();
+        initAnimation();
+    }
+
+    private void initContent(){
         
         thumbnail.setImage(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
         String nomeProg = "Nessun Progetto";
@@ -107,6 +106,10 @@ public class FXMLProdottoController implements Initializable {
             descrizione.setText(prodotto.getDescrizione());
             prodProdotto.setText(prodotto.getProduttore().toString());
         }
+        
+    }
+    
+    private void initMenu(){
         
         logout.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
@@ -142,6 +145,16 @@ public class FXMLProdottoController implements Initializable {
             }
         });
     }
-
+    
+    private void initAnimation(){
+        FadeTransition ft = new FadeTransition(Duration.millis(1000));
+        ft.setFromValue(0.3f);
+        ft.setToValue(1.0f);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
+        tt.setFromX(-100f);
+        tt.setToX(0);
+        ParallelTransition pt = new ParallelTransition(backArrowBox, ft, tt);
+        pt.play();
+    }
 
 }

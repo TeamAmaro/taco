@@ -10,7 +10,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="content" xmlns:fx="http://javafx.com/fxml/1" id="anchorPane" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLCatalogoController">
+<AnchorPane fx:id="content" xmlns:fx="http://javafx.com/fxml/1" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLCatalogoController">
     <HBox spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
         <padding>
             <Insets bottom="0.0" left="20.0" right="0.0" top="0.0" />
@@ -39,7 +39,7 @@
     </HBox>
     <VBox fx:id="leftMenu" id="left-menu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0.0"
           AnchorPane.bottomAnchor="0" minWidth="250.0" maxWidth="250.0" alignment="TOP_LEFT">
-        <HBox id="left-logo-case" prefHeight="50.0" maxWidth="250.0">
+        <HBox id="left-logo-box" prefHeight="50.0" maxWidth="250.0">
             <ImageView fx:id="leftLogo" fitWidth="246.0" preserveRatio="true" id="left-menu-logo">
               <image>
                 <Image url="@../img/logo2.png" smooth="true" />
@@ -57,7 +57,7 @@
         <HBox fx:id="searchIconBox" id="search-icon-box" GridPane.columnIndex="1" GridPane.rowIndex="1" >
             <ImageView fitHeight="50.0" preserveRatio="true" id="search-icon">
                 <image>
-                  <Image url="@../img/b_search2.png" smooth="true"/>
+                  <Image url="@../img/b_search.png" smooth="true"/>
                 </image>
             </ImageView>
         </HBox>

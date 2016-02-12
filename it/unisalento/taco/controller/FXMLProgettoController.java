@@ -30,7 +30,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -42,17 +41,20 @@ public class FXMLProgettoController implements Initializable {
 
     @FXML Label logout;
     @FXML Label nomeClient;
-    @FXML ImageView iv;
     @FXML HBox topLeft;
     @FXML Label nomeProgetto;
     @FXML Label budget;
     @FXML Label saldo;
+    
+    @FXML HBox backArrowBox;
     
     @FXML TextField dipFiltro;
     @FXML Button dipButton;
     
     @FXML TextField ordFiltro;
     @FXML Button ordButton;
+    
+    @FXML ImageView backArrow;
     
     @FXML private TableView<Dipendente> tableViewDip;
     @FXML private TableColumn<Dipendente, String> nomeCol;
@@ -87,18 +89,31 @@ public class FXMLProgettoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initArrow();
+        
     }    
     
     public void initData(){
-        
         initInfo();
+        initMenu();
         initDipTable();
         initOrdTable();
-        
-        iv.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        initAnimation();
+    }
+    
+    private void initInfo(){
+        String nome = application.getUtente().getNome();
+        String cognome = application.getUtente().getCognome();
+        nomeClient.setText(nome + " " + cognome);
+        nomeProgetto.setText(progetto.getNome());
+        budget.setText(progetto.getFormatBudget());
+        saldo.setText(progetto.getFormatSaldo());
+    }
+    
+    private void initMenu(){
+    
+        backArrowBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                application.lastView();
+                application.capoProgettoView();
             }
         });
         
@@ -140,18 +155,7 @@ public class FXMLProgettoController implements Initializable {
                 }
             }
         });
-        
     }
-    
-    private void initInfo(){
-        String nome = application.getUtente().getNome();
-        String cognome = application.getUtente().getCognome();
-        nomeClient.setText(nome + " " + cognome);
-        nomeProgetto.setText(progetto.getNome());
-        budget.setText(progetto.getFormatBudget());
-        saldo.setText(progetto.getFormatSaldo());
-    }
-    
     private void initDipTable(){
         
         listaDipendenti = progetto.getListaDipendenti();
@@ -182,6 +186,9 @@ public class FXMLProgettoController implements Initializable {
         });
         
         tableViewDip.setItems(dipendenteData);
+        tableViewDip.setMaxHeight(200.0);
+        tableViewDip.setMaxWidth(200.0);
+        tableViewDip.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     
     private void initOrdTable(){
@@ -233,25 +240,20 @@ public class FXMLProgettoController implements Initializable {
             }
         });
         tableViewOrd.setItems(ordineData);
+        tableViewOrd.setMaxHeight(200.0);
+        tableViewOrd.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
        
     
     }
     
-    private void initArrow(){
-        iv = new ImageView(new Image("it/unisalento/taco/view/img/back.jpg"));
-        iv.setFitHeight(50.0);
-        iv.setPreserveRatio(true);
-        
-        topLeft.getChildren().add(0, iv);
-
+    private void initAnimation(){
         FadeTransition ft = new FadeTransition(Duration.millis(1000));
         ft.setFromValue(0.3f);
         ft.setToValue(1.0f);
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
         tt.setFromX(-100f);
         tt.setToX(0);
-        
-        ParallelTransition pt = new ParallelTransition(iv, ft, tt);
+        ParallelTransition pt = new ParallelTransition(backArrow, ft, tt);
         pt.play();
     }
 }

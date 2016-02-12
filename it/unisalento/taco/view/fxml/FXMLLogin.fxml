@@ -10,7 +10,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 
-<AnchorPane  xmlns:fx="http://javafx.com/fxml/1" id="AnchorPAIN" styleClass="background"
+<AnchorPane  xmlns:fx="http://javafx.com/fxml/1" id="AnchorPAIN" styleClass="mainFxmlClass"
              fx:controller="it.unisalento.taco.controller.FXMLLoginController">
     <children>
         <HBox alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="20" 
@@ -26,11 +26,12 @@
                   AnchorPane.bottomAnchor="10" styleClass="fieldset">
             <children>
                 <TextField fx:id="emailField" GridPane.columnIndex="0" GridPane.rowIndex="0" 
-                           prefHeight="35.0" text="guga.rucola@napoli.na"
-                           id="email" prefWidth="250.0" focusTraversable="false"/> 
-                <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="asdasd"
+                           prefHeight="35.0" text="luke.mynetti@unilento.le"
+                           id="email" prefWidth="250.0" focusTraversable="false"
+                           promptText="Email" /> 
+                <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="maonna"
                                id="password" GridPane.rowIndex="1" prefHeight="35.0" prefWidth="250.0" 
-                               focusTraversable="false"/>
+                               focusTraversable="false" promptText="Password"/>
                 <HBox spacing="10" alignment="bottom_right" 
                     GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <Button focusTraversable="false" id="login-button"
@@ -40,7 +41,6 @@
                 <HBox spacing="10" alignment="bottom_right" 
                     GridPane.columnIndex="0" GridPane.rowIndex="3" prefHeight="35.0">
                     <children>
-                        
                         <Label id="error-message" fx:id="errorMessage"/>
                     </children>
                 </HBox>

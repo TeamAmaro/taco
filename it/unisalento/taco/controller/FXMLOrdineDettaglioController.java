@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,6 +41,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -48,16 +50,13 @@ import javafx.util.Duration;
 public class FXMLOrdineDettaglioController implements Initializable {
 
     @FXML Label logout;
-    @FXML ImageView leftLogo;
-    @FXML ImageView iconaCarrello;
+    @FXML StackPane iconaCarrello;
     
     @FXML Label nomeClient;
     @FXML Label nomeProgetto;
     @FXML Label saldoProgetto;
     @FXML Label carrello;
 
-    
-    @FXML ImageView iv;
     @FXML HBox topLeft;
     
     @FXML Button acquistaButton;
@@ -67,6 +66,7 @@ public class FXMLOrdineDettaglioController implements Initializable {
     @FXML Label errorLabel;
     @FXML GridPane gridPane;
     
+    @FXML HBox backArrowBox;
     /*
     *   Table View sembra poco adeguato a trattare
         tipi di dato omogeneo. 
@@ -99,27 +99,63 @@ public class FXMLOrdineDettaglioController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        iv = new ImageView(new Image("it/unisalento/taco/view/img/back.jpg"));
-        iv.setFitHeight(50.0);
-        iv.setPreserveRatio(true);
-        
-        topLeft.getChildren().add(0, iv);
-
-        FadeTransition ft = new FadeTransition(Duration.millis(1000));
-        ft.setFromValue(0.3f);
-        ft.setToValue(1.0f);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
-        tt.setFromX(-100f);
-        tt.setToX(0);
-        
-        ParallelTransition pt = new ParallelTransition(iv, ft, tt);
-        pt.play();
-        
+        //Nulla da fà
     }    
     
     public void initData(){
+        initInfo();
+        initContent();
+        initMenu();
+        initTable();
+        initAnimation();
+    }
+    
+    private void initTable(){
         
+        ordineData.addAll(listaOrdini);
+        
+        codice.setCellValueFactory(new PropertyValueFactory<Ordine, Integer>("codice"));
+        spedizione.setCellValueFactory(new PropertyValueFactory<Ordine, Double>("spesaSpedizione"));
+        totale.setCellValueFactory(new PropertyValueFactory<Ordine, Double>("totale"));
+        
+        nomeProdotto.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
+                return new SimpleStringProperty(p.getValue().getListaNomiProdotti());
+            }
+        });
+        
+        quantitaProdotto.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
+                return new SimpleStringProperty(p.getValue().getListaQuantitaProdotti());
+            }
+        });
+        
+        prezzoProdotto.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
+                return new SimpleStringProperty(p.getValue().getListaPrezziProdotti());
+            }
+        });
+        
+        magazzino.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
+                return new SimpleStringProperty(p.getValue().getMagazzino().getSede().nome());
+            }
+        });
+        
+        tableView.setItems(ordineData);
+        tableView.setMaxHeight(200.0);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+    
+    private void initInfo(){
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
@@ -143,7 +179,10 @@ public class FXMLOrdineDettaglioController implements Initializable {
             saldoLabel.setText(saldo);
             carrello.setText(Integer.toString(numeroProd));
         }
-        
+    }
+    
+    private void initContent(){
+         
         //Aggiungere totale al label
         double totaleOrdine = 0;
 
@@ -158,7 +197,21 @@ public class FXMLOrdineDettaglioController implements Initializable {
         formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
         totaleLabel.setText(formatoEuro.format(totaleOrdine));
         
-        initTable();
+    }
+    
+    private void initAnimation(){
+        FadeTransition ft = new FadeTransition(Duration.millis(1000));
+        ft.setFromValue(0.3f);
+        ft.setToValue(1.0f);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
+        tt.setFromX(-100f);
+        tt.setToX(0);
+        
+        ParallelTransition pt = new ParallelTransition(backArrowBox, ft, tt);
+        pt.play();
+    }
+    
+    private void initMenu(){
         
         iconaCarrello.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
@@ -250,15 +303,9 @@ public class FXMLOrdineDettaglioController implements Initializable {
             }
         });
         
-        iv.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        backArrowBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                application.lastView();
-            }
-        });
-        
-        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                application.dipendenteView();
+                application.getCarrello();
             }
         });
         
@@ -267,50 +314,6 @@ public class FXMLOrdineDettaglioController implements Initializable {
                 application.logout();
             }
         });
-        
-    }
-    
-    private void initTable(){
-        
-        ordineData.addAll(listaOrdini);
-        
-        codice.setCellValueFactory(new PropertyValueFactory<Ordine, Integer>("codice"));
-        spedizione.setCellValueFactory(new PropertyValueFactory<Ordine, Double>("spesaSpedizione"));
-        totale.setCellValueFactory(new PropertyValueFactory<Ordine, Double>("totale"));
-        
-        nomeProdotto.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
-                return new SimpleStringProperty(p.getValue().getListaNomiProdotti());
-            }
-        });
-        
-        quantitaProdotto.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
-                return new SimpleStringProperty(p.getValue().getListaQuantitaProdotti());
-            }
-        });
-        
-        prezzoProdotto.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
-                return new SimpleStringProperty(p.getValue().getListaPrezziProdotti());
-            }
-        });
-        
-        magazzino.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
-                return new SimpleStringProperty(p.getValue().getMagazzino().getSede().nome());
-            }
-        });
-        
-        tableView.setItems(ordineData);
         
     }
 }

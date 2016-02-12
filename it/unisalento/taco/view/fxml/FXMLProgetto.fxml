@@ -7,33 +7,43 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import it.unisalento.taco.model.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLProgettoController">
-    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+    <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
         <children>
-            <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
-              <image>
-                <Image url="@../img/logo2.jpg" smooth="true" />
-              </image>
-            </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient" text="Tizio Caio"/>    
+            <HBox fx:id="backArrowBox" id="back-arrow-box">
+                <ImageView fx:id="backArrow" fitHeight="50.0" preserveRatio="true" id="back-arrow">
+                  <image>
+                    <Image url="@../img/b_back.png" smooth="true" />
+                  </image>
+                </ImageView>
+            </HBox>
+            <Label styleClass="top-bar-label" fx:id="nomeClient" id="nome-client"/>
         </children>
     </HBox>
-    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="top-right" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+        <padding>
+            <Insets bottom="0.0" left="0.0" right="20.0" top="0.0" />
+        </padding> 
         <children>
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
-    <GridPane hgap="10" vgap="20" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" styleClass="green">
+    <GridPane hgap="5" vgap="10" alignment="TOP_CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" styleClass="green">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        </padding> 
         <Label fx:id="nomeProgetto" styleClass="titolo"  GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4" />
         <Label styleClass="content" text="Budget:" GridPane.columnIndex="0" GridPane.rowIndex="1" minWidth="100.0" />
         <Label fx:id="budget" styleClass="content"  GridPane.columnIndex="1" GridPane.rowIndex="1" minWidth="100.0" />
-        <Label styleClass="content" text="Saldo:" GridPane.columnIndex="2" GridPane.rowIndex="1" minWidth="100.0" />
-        <Label fx:id="saldo" styleClass="content" GridPane.columnIndex="3" GridPane.rowIndex="1" minWidth="100.0"/>
+        <Label styleClass="content" text="Saldo:" GridPane.columnIndex="5" GridPane.rowIndex="1" minWidth="100.0" />
+        <Label fx:id="saldo" styleClass="content" GridPane.columnIndex="6" GridPane.rowIndex="1" minWidth="100.0"/>
 
         <Label styleClass="titolo-tabella" GridPane.columnIndex="0" GridPane.rowIndex="2" text="Lista dipendenti"/>
-        <TableView fx:id="tableViewDip" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4" >
+        <TableView fx:id="tableViewDip" styleClass="table-view" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
                 <TableColumn text="Nome" fx:id="nomeCol">
                 </TableColumn>
@@ -45,10 +55,10 @@
                 </TableColumn>
             </columns>  
         </TableView>
-        <TextField fx:id="dipFiltro" GridPane.columnIndex="0" GridPane.rowIndex="4" promptText="Inserisci info"/>
-        <Button fx:id="dipButton" GridPane.columnIndex="1" GridPane.rowIndex="4" text="Cerca"/>
+        <TextField fx:id="dipFiltro" styleClass="text-field" GridPane.columnIndex="0" GridPane.rowIndex="4" promptText="Inserisci info"/>
+        <Button fx:id="dipButton" styleClass="regular-button"  GridPane.columnIndex="1" GridPane.rowIndex="4" text="Cerca"/>
         <Label styleClass="tabella-titolo" GridPane.columnIndex="5" GridPane.rowIndex="2" text="Lista ordini"/>
-        <TableView fx:id="tableViewOrd" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.columnSpan="4" >
+        <TableView fx:id="tableViewOrd" styleClass="table-view" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.columnSpan="4" >
             <columns>
                 <TableColumn text="Codice" fx:id="codiceCol">
                 </TableColumn>
@@ -64,8 +74,8 @@
                 </TableColumn>
             </columns>  
        </TableView>
-       <TextField fx:id="ordFiltro" GridPane.columnIndex="5" GridPane.rowIndex="4" promptText="Codice ordine"/>
-       <Button fx:id="ordButton" GridPane.columnIndex="6" GridPane.rowIndex="4" text="Cerca"/>
+       <TextField fx:id="ordFiltro" styleClass="text-field" GridPane.columnIndex="5" GridPane.rowIndex="4" promptText="Codice ordine"/>
+       <Button fx:id="ordButton" styleClass="regular-button" GridPane.columnIndex="6" GridPane.rowIndex="4" text="Cerca"/>
     </GridPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlprogetto.css"/>

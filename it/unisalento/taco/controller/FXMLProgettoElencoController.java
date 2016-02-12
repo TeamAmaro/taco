@@ -69,9 +69,7 @@ public class FXMLProgettoElencoController implements Initializable {
                 Label budgetProgetto = new Label(p.getFormatBudget());
                 Label saldoProgetto = new Label(p.getFormatSaldo());
 
-                nomeProgetto.getStyleClass().add("content");
-                budgetProgetto.getStyleClass().add("content");
-                saldoProgetto.getStyleClass().add("content");
+                nomeProgetto.getStyleClass().add("nome-progetto");
 
                 gridPane.add(nomeProgetto, 0, i);
                 gridPane.add(budgetProgetto, 1, i);

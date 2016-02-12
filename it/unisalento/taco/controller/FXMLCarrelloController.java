@@ -58,17 +58,7 @@ public class FXMLCarrelloController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        FadeTransition ft = new FadeTransition(Duration.millis(1000));
-        ft.setFromValue(0.3f);
-        ft.setToValue(1.0f);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
-        tt.setFromX(-100f);
-        tt.setToX(0);
-        
-        ParallelTransition pt = new ParallelTransition(backArrow, ft, tt);
-        pt.play();
-        
+        //Nulla da fà
     }    
     
     public void setApplication(Main application){
@@ -76,8 +66,13 @@ public class FXMLCarrelloController implements Initializable {
     }
     
     public void initData(){
-        
-        int i = 3;
+        initInfo();
+        initMenu();
+        initContent();
+        initAnimation();
+    }
+    
+    private void initInfo(){
         
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
@@ -100,6 +95,39 @@ public class FXMLCarrelloController implements Initializable {
             nomeProgetto.setText(nomeProg);
             saldoProgetto.setText(saldo);
         }
+        
+    }
+    
+    private void initMenu(){
+        logout.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.logout();
+            }
+        });
+        
+        backArrowBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.dipendenteView();
+            }
+        });
+        
+        ordinaButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                try{
+                    Set<Ordine> listaOrdini = delegate.generaOrdini((Dipendente) application.getUtente());
+                    application.ordina(listaOrdini);
+                } catch (NoIDMatchException e){
+                    System.err.println(e.getMessage());
+                } catch (NoQueryMatchException e){
+                    System.err.println("WUT");
+                }
+            }
+        });
+    }
+    
+    private void initContent(){
+        
+        int i = 3;
         
         Map<Prodotto, Integer> listaProdotti = carrello.getListaProdotti();
         
@@ -209,30 +237,17 @@ public class FXMLCarrelloController implements Initializable {
                 i++;
             }
         }
+    }
+    
+    private void initAnimation(){
+        FadeTransition ft = new FadeTransition(Duration.millis(1000));
+        ft.setFromValue(0.3f);
+        ft.setToValue(1.0f);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000));
+        tt.setFromX(-100f);
+        tt.setToX(0);
         
-        logout.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                application.logout();
-            }
-        });
-        
-        backArrowBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                application.dipendenteView();
-            }
-        });
-        
-        ordinaButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                try{
-                    Set<Ordine> listaOrdini = delegate.generaOrdini((Dipendente) application.getUtente());
-                    application.ordina(listaOrdini);
-                } catch (NoIDMatchException e){
-                    System.err.println(e.getMessage());
-                } catch (NoQueryMatchException e){
-                    System.err.println("WUT");
-                }
-            }
-        });
+        ParallelTransition pt = new ParallelTransition(backArrow, ft, tt);
+        pt.play();
     }
 }

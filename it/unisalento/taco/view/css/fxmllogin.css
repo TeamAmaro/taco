@@ -3,7 +3,9 @@
     src: url('Roboto-Medium.ttf');
 }
 
-.background{
+.mainFxmlClass{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 12px;
     -fx-background-image: url("../img/geometry.png");
     -fx-background-repeat: repeat;   
     -fx-background-position: center center;

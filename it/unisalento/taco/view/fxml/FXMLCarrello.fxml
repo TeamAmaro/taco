@@ -12,9 +12,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLCarrelloController">
     <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
-        <padding>
-            <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
-        </padding> 
         <children>
             <HBox fx:id="backArrowBox" id="back-arrow-box">
                 <ImageView fx:id="backArrow" fitHeight="50.0" preserveRatio="true" id="back-arrow">
@@ -36,11 +33,11 @@
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
-    <ScrollPane fitToWidth="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="scrollpane">
+    <ScrollPane fitToWidth="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="52.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="scrollpane">
         <content>
             <VBox fx:id="scrollContent" spacing="10" fillWidth="true">
                 <padding>
-                    <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                    <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
                 </padding> 
                 <HBox spacing="50.0" alignment="CENTER">
                     <Label styleClass="titolo" text="Carrello"/>                    

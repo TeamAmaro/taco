@@ -1,35 +1,110 @@
-/*
- * Empty Stylesheet file.
- */
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('OpenSans-Regular.ttf');
+}
 
 .mainFxmlClass {
-    -fx-font-family: Arial, Verdana, sans-serif;
+    -fx-font-family: "Roboto";
+    -fx-text-fill: rgb(51,51,51);
+    -fx-font-size: 12;
+    -fx-background-image: url("../img/geometry.png");
+    -fx-background-repeat: repeat;   
+    -fx-background-position: center center;
 }
 
-.blue {
-    -fx-background-color: blue;
-}
-
-.red {
-    -fx-background-color: red;
-}
-
-.yellow {
-    -fx-background-color: yellow;
-}
-
-.green {
-    -fx-background-color: green;
+#top-left, #top-right{
+    -fx-background-color: rgb(249,250,251);
+    -fx-border-color: transparent transparent rgb(204,204,204) transparent;
+    -fx-border-width: 2px;
 }
 
 .top-bar-label {
-    -fx-font-size: 18;
+    -fx-font-size: 16;
+}
+
+.logout-button {
+    -fx-font-size: 16;
+    -fx-padding-right: 5px;
+    -fx-text-fill: rgb(23,55,105);
+}
+
+.logout-button:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #448AFF;
+}
+
+
+#nome-client {
+    -fx-font-family: "OpenSans";
+    -fx-text-fill: rgb(23,55,105);
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-padding: 0px 10px 0px 0px;
 }
 
 .titolo {
-    -fx-font-size: 30;
+    -fx-font-size: 24px;
 }
 
-.content {
-    -fx-font-size: 20;
+.nome-progetto {
+    -fx-font-family: "OpenSans";
+    -fx-text-fill: rgb(23,55,105);
+    -fx-font-weight: bold;
+}
+
+.nome-progetto:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #448AFF;
+}
+
+.scrollpane {
+    -fx-background-color:transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.scrollpane:focused{
+    -fx-focus-color: transparent;
+}
+
+.scrollpane .scroll-bar:horizontal , .scrollpane  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+.scrollpane .increment-button ,.scrollpane .decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:derive(gray,80%);
+}
+
+.scrollpane .scroll-bar:horizontal .track , .scrollpane .scroll-bar:vertical .track{
+     -fx-background-color: transparent;
+     -fx-border-color:derive(gray,80%);
+     -fx-background-radius: 0em;
+
+}
+
+.scrollpane .scroll-bar:horizontal .thumb, .scrollpane .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+}
+
+.scrollpane .scroll-bar:horizontal:hover .track , .scrollpane .scroll-bar:horizontal:pressed .track ,
+.scrollpane .scroll-bar:vertical:hover .track, .scrollpane .scroll-bar:vertical:pressed .track{
+     -fx-background-color: derive(#434343,20%);
+     -fx-opacity: 0.2;
+     -fx-background-radius: 0em;
+}
+
+.scrollpane .scroll-bar .thumb:hover, .scrollpane .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(black,50%);
+}
+
+.scrollpane .increment-button:hover ,.scrollpane .decrement-button:hover {
+    -fx-background-color:derive(gray,100%);
+    -fx-border-color:derive(gray,80%); 
 }

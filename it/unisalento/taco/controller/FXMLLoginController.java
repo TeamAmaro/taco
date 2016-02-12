@@ -31,26 +31,20 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
     }
     
     @Override public void initialize(URL location, ResourceBundle resources) {
-        errorMessage.setText("");
-        emailField.setPromptText("Email");
-        passwordField.setPromptText("Password");
+        //Nulla da fà
     }
     
     public void effettuaLogin(ActionEvent event) {
         if (!application.setUtente(emailField.getText(), passwordField.getText())){
             errorMessage.setText("Combinazione Email/Password non corretta!");
         }
-        else {
-            errorMessage.setText("Benvenuto a TACO " + emailField.getText());
-            
+        else {            
             if(application.getUtente() instanceof Dipendente)
                 application.dipendenteView();
             else if(application.getUtente() instanceof CapoProgetto)
                 application.capoProgettoView();
             else if(application.getUtente() instanceof Magazziniere)
                 application.magazziniereView();
-            else if(application.getUtente() instanceof Admin)
-               ;//application.adminView();
         }
     }
 }
