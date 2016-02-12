@@ -37,7 +37,7 @@ public class FXMLInventarioController implements Initializable {
     @FXML Label inventario;
     @FXML Label logout;
     @FXML VBox scrollContent;
-    @FXML ImageView leftLogo;
+    @FXML HBox leftLogoBox;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,7 +77,7 @@ public class FXMLInventarioController implements Initializable {
             }
         });
         
-        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        leftLogoBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.magazziniereView();
             }
@@ -109,8 +109,11 @@ public class FXMLInventarioController implements Initializable {
             Button rifornisciButton = new Button("Rifornisci");
             
             comboFornitori.setMinWidth(100.0);
+            comboFornitori.getStyleClass().add("combo-fornitori");
             quantitaField.setMaxWidth(100.0);
+            quantitaField.getStyleClass().add("quantita-field");
             rifornisciButton.setMinWidth(100.0);
+            rifornisciButton.getStyleClass().add("rifornisci-button");
             
             VBox valori = new VBox();
             VBox funBox = new VBox();
@@ -127,7 +130,7 @@ public class FXMLInventarioController implements Initializable {
             funBox.setSpacing(10.0);
             
             valori.getChildren().addAll(nome, categoria, quantita);
-            valori.setMinWidth(300.0);
+            valori.setMinWidth(250.0);
             
             hb.getChildren().addAll(iv, valori, funBox);
             

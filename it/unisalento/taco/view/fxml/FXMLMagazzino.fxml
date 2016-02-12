@@ -11,29 +11,35 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1" id="anchorPane" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLMagazzinoController">
-    <HBox spacing="10.0" alignment="CENTER_LEFT" id="topLeft" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="blue">
+   <HBox spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+        <padding>
+            <Insets bottom="0.0" left="20.0" right="0.0" top="0.0" />
+        </padding> 
         <children>
-            <ImageView fitHeight="50" preserveRatio="true" id="left-menu-logo">
-              <image>
-                <Image url="@../img/logo2.jpg" smooth="true" />
-              </image>
-            </ImageView>
-            <Label styleClass="top-bar-label" fx:id="nomeClient"/>
+            <Label styleClass="top-bar-label" fx:id="nomeClient" id="nome-client"/>
         </children>
     </HBox>
-    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="topRight" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" styleClass="violet">
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="top-right" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+        <padding>
+            <Insets bottom="0.0" left="0.0" right="20.0" top="0.0" />
+        </padding> 
         <children>
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>
-    <VBox fx:id="leftMenu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50"
-          AnchorPane.bottomAnchor="0" minWidth="200.0" maxWidth="200.0" styleClass="red" alignment="TOP_LEFT">
-        <children>
-            <Label styleClass="left-menu-label" fx:id="spedizioni" id="spedizioni" text="Spedizioni"/>
-            <Label styleClass="left-menu-label" fx:id="inventario" id="inventario" text="Inventario"/>
-        </children>
+    <VBox fx:id="leftMenu" id="left-menu" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0" minWidth="250.0" maxWidth="250.0" alignment="TOP_LEFT">
+        <HBox fx:id="leftLogoBox" id="left-logo-box" prefHeight="50.0" maxWidth="250.0">
+            <ImageView fx:id="leftLogo" fitWidth="246.0" preserveRatio="true" id="left-menu-logo">
+              <image>
+                <Image url="@../img/logo2.png" smooth="true" />
+              </image>
+            </ImageView>
+        </HBox>
+        <Label styleClass="left-menu-label" fx:id="spedizioni" id="spedizioni" text="Spedizioni"/>
+        <Label styleClass="left-menu-label" fx:id="inventario" id="inventario" text="Inventario"/>
     </VBox>
-    <VBox fx:id="content" spacing="10" alignment="TOP_LEFT" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
+    <VBox fx:id="content" spacing="10" alignment="TOP_LEFT" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="green">
         <padding>
             <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
         </padding> 

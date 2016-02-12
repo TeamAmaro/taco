@@ -27,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 public class FXMLSpedizioneController implements Initializable {
 
@@ -38,7 +39,7 @@ public class FXMLSpedizioneController implements Initializable {
     @FXML Label spedizioni;
     @FXML Label inventario;
     @FXML Label logout;
-    @FXML ImageView leftLogo;
+    @FXML HBox leftLogoBox;
     @FXML GridPane gridPane;
     
     public void setApplication(Main application){
@@ -63,45 +64,56 @@ public class FXMLSpedizioneController implements Initializable {
     private void initContent(){
         try{
             Set<Ordine> listaOrdini = delegate.chiediOrdini((Magazziniere) application.getUtente());
-            int i = 1;
-            for(final Ordine o : listaOrdini){
+            if(listaOrdini.isEmpty()){
+                gridPane.getChildren().clear();
+                Label message = new Label("Non ci sono ordini da spedire.");
+                gridPane.add(message, 0, 0);
+            }
+            else {
                 
-                Label codice = new Label(Integer.toString(o.getCodice()));
-                Label dipendente = new Label(o.getDipendente().getNome() + " " + o.getDipendente().getCognome());
-                Label sede = new Label(o.getDipendente().getSede().nome());  
+                int i = 1;
                 
-                int j = i;
-                for(Map.Entry<Prodotto,Integer> pq : o.getListaProdotti().entrySet())
-                {
-                    Label nomeProdotto = new Label(pq.getKey().getNome());
-                    Label quantitaProdotto = new Label(Integer.toString(pq.getValue()));
-                    gridPane.add(nomeProdotto, 1, j);
-                    gridPane.add(quantitaProdotto, 2, j);
-                    j++;
-                }
-                
-                gridPane.add(codice, 0, i);
-                gridPane.add(dipendente, 3, i);
-                gridPane.add(sede, 4, i);
-                
-                final Button spedisciButton = new Button("Spedisci");
-                
-                spedisciButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                    @Override public void handle(MouseEvent arg0) {
-                        delegate.spedisciOrdine(o);
-                        spedisciButton.setText("Spedito!");
-                        spedisciButton.setDisable(true);
+                for(final Ordine o : listaOrdini){
+
+                    Label codice = new Label(Integer.toString(o.getCodice()));
+                    Label dipendente = new Label(o.getDipendente().getNome() + " " + o.getDipendente().getCognome());
+                    Label sede = new Label(o.getDipendente().getSede().nome());  
+
+                    int j = i;
+                    for(Map.Entry<Prodotto,Integer> pq : o.getListaProdotti().entrySet())
+                    {
+                        Label nomeProdotto = new Label(pq.getKey().getNome());
+                        Label quantitaProdotto = new Label(Integer.toString(pq.getValue()));
+                        gridPane.add(nomeProdotto, 1, j);
+                        gridPane.add(quantitaProdotto, 2, j);
+                        j++;
                     }
-                });
-                
-                gridPane.add(spedisciButton, 5, i);
-                i++;
+
+                    gridPane.add(codice, 0, i);
+                    gridPane.add(dipendente, 3, i);
+                    gridPane.add(sede, 4, i);
+
+                    final Button spedisciButton = new Button("Spedisci");
+                    spedisciButton.getStyleClass().add("spedisci-button");
+
+                    spedisciButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                        @Override public void handle(MouseEvent arg0) {
+                            delegate.spedisciOrdine(o);
+                            spedisciButton.setText("Spedito!");
+                            spedisciButton.setDisable(true);
+                        }
+                    });
+
+                    gridPane.add(spedisciButton, 5, i);
+                    i++;
+                }
             }
         }catch(NoQueryMatchException e){
-            System.out.println("WUT");
+            //Non fare niente
         } catch (NoIDMatchException ex) {
             Logger.getLogger(FXMLSpedizioneController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     
@@ -124,7 +136,7 @@ public class FXMLSpedizioneController implements Initializable {
             }
         });
         
-        leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        leftLogoBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.magazziniereView();
             }
