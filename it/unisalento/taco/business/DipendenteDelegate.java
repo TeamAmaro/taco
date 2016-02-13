@@ -98,6 +98,7 @@ public class DipendenteDelegate {
             for (Map.Entry<Prodotto, Integer> e : contenutoCarrello.entrySet()){
                 Prodotto prod = e.getKey(); //Prodotto nel carrello
                 int quantCar = e.getValue(); //Quantita nel carrello
+                int remainingQuant = quantCar;
                 //Prelevo la quantita
                 quantMag1 = Magazzino.getQuantita(magVicino, prod); //Quantita nel magazzino
                 quantMagTot += quantMag1;
@@ -110,7 +111,6 @@ public class DipendenteDelegate {
                     //Rimuovo il magazzino vicino dalla lista dei risultati
                     magConProd.remove(magVicino);
                     int differenza = quantCar - quantMag1;
-                    int remainingQuant = quantCar;
                     
                     //Prendi la quantità totale ordinabile da tutti i magazzini
                     for(Magazzino magExt : magConProd) {
@@ -184,6 +184,8 @@ public class DipendenteDelegate {
                     }
                 }
             }
+            
+            
             
             //Lista degli ordini
             Set<Ordine> listaOrdini = new LinkedHashSet<>();

@@ -7,7 +7,6 @@ import java.util.List;
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
-import it.unisalento.taco.model.Admin;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Utente;
 import it.unisalento.taco.security.Password;
@@ -55,32 +54,17 @@ public class UtenteDAO implements DAOInterface<Utente>{
             throw new NoSuchUserException("Login: Nessuna corrispondenza tra mail e password.");
         }
     }
-    
-    public Admin admin(int id) throws NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.id,utenti.nome,utenti.cognome,utenti.email FROM utenti,superadmin WHERE utenti.id = id_utente AND utenti.id = " + id);
-        Iterator<String[]> i = result.iterator();
-        if(i.hasNext()){
-            String[] riga = i.next();
-            Admin admin = new Admin(Integer.parseInt(riga[0]), riga[1], riga[2], riga[3]);
-            return admin;
-        }
-        else {
-            throw new NoIDMatchException(this);
-        }
-    }
 
     @Override public Utente getByID(int id) throws NoIDMatchException{
 
         String tabella = "";
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 3; i++){
             switch(i){
                 case 0: tabella = "dipendenti";
                     break;
                 case 1: tabella = "capiprogetto";
                     break;
                 case 2: tabella = "magazzinieri";
-                    break;
-                case 3: tabella = "superadmin";
                     break;
             }
 
@@ -91,7 +75,6 @@ public class UtenteDAO implements DAOInterface<Utente>{
                     case 0: return DipendenteDAO.getInstance().getByID(id);
                     case 1: return CapoProgettoDAO.getInstance().getByID(id);
                     case 2: return MagazziniereDAO.getInstance().getByID(id);
-                    case 3: return admin(id);
                 }
         }
         throw new NoIDMatchException(this);

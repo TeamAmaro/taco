@@ -9,10 +9,6 @@ public class CapoProgetto extends Utente implements IdentificabileID {
         super(id,nome,cognome,email);
     }
     
-    public CapoProgetto(String nome, String cognome, String email){
-        super(nome,cognome,email);
-    }
-    
     public static void addCapoProgetto(CapoProgetto capo){
         CapoProgettoDAO.getInstance().create(capo);
     }

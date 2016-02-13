@@ -1,6 +1,5 @@
 package it.unisalento.taco.controller;
 
-import it.unisalento.taco.model.Admin;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Magazziniere;

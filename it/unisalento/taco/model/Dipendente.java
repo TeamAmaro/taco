@@ -10,11 +10,6 @@ public class Dipendente extends Utente  implements IdentificabileID {
         super(id,nome,cognome,email);
         this.sede = sede;
     }
-    
-    public Dipendente(String nome, String cognome, String email, Sede sede){
-        super(nome,cognome,email);
-        this.sede = sede;
-    }
 
     public void setSede(Sede sede) {
         this.sede = sede;

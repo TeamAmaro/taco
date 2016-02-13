@@ -8,10 +8,6 @@ public class Magazziniere extends Utente implements IdentificabileID {
         super(id,nome,cognome,email);
     }
     
-    public Magazziniere(String nome,String cognome,String email){
-        super(nome,cognome,email);
-    }
-    
     public static void addMagazziniere(Magazziniere mag){
         MagazziniereDAO.getInstance().create(mag);
     }

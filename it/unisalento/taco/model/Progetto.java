@@ -37,14 +37,6 @@ public class Progetto implements IdentificabileID {
         this.saldo = saldo;
         this.listaDipendenti = listaDipendenti;
     }
-    
-    public Progetto(String nome, CapoProgetto capoProgetto, double budget){
-        id = 0;
-        this.nome = nome;
-        this.capoProgetto = capoProgetto;
-        this.budget = budget;
-        this.saldo = budget;
-    }
         
     public void setSaldo(double saldo){
         this.saldo = saldo;
@@ -65,7 +57,7 @@ public class Progetto implements IdentificabileID {
     /*
     NOTA BENE
     L'OGGETTO PROGETTO HA LISTADIPENDENTI MA NEL DB E' DIPENDENTE AD AVERE L'ID DEL PROGETTO
-    LA FUNZIONE setProgetto() PER IL DB E' LOCATA IN DIPENDENTEDAO
+    LA FUNZIONE setProgetto() PER IL DB E' IN DIPENDENTEDAO
     */
 
     @Override public int getID() {

@@ -21,17 +21,6 @@ public class Magazzino  implements IdentificabileID {
         this.inventario = inventario;
         this.magazziniere = magazziniere;
     }
-    /*
-    Eh?
-    
-    public Magazzino(String nome, Sede sede){
-        //ID FITTIZIO
-        id = 0;
-        this.nome = nome;
-        this.sede = sede;
-    }
-    
-    */
 
     public String getNome(){
         return nome;

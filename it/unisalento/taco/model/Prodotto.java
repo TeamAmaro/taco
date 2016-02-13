@@ -1,14 +1,12 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.ProdottoDAO;
-import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 public class Prodotto implements IdentificabileID {
@@ -17,7 +15,7 @@ public class Prodotto implements IdentificabileID {
     private final String nome;
     private final double prezzo;
     private final Produttore produttore;
-    private String immagine;
+    private final String immagine;
     private String descrizione;
     private Categoria categoria;
     private Set<Fornitore> listaFornitori;
