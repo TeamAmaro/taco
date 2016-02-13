@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 public class FXMLMagazzinoController implements Initializable {
     
@@ -32,6 +33,7 @@ public class FXMLMagazzinoController implements Initializable {
     @FXML Label notificaSpedizione;
     @FXML Label notificaInventario;
     @FXML Label logout;
+    @FXML HBox leftLogoBox;
     
     private Main application;
     private MagazziniereDelegate delegate = MagazziniereDelegate.getInstance();
@@ -94,6 +96,12 @@ public class FXMLMagazzinoController implements Initializable {
         inventario.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.getInventario(magazzino);
+            }
+        });
+        
+        leftLogoBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                application.magazziniereView();
             }
         });
     }

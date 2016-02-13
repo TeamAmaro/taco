@@ -26,10 +26,10 @@
                   AnchorPane.bottomAnchor="10" styleClass="fieldset">
             <children>
                 <TextField fx:id="emailField" GridPane.columnIndex="0" GridPane.rowIndex="0" 
-                           prefHeight="35.0" text="luke.mynetti@unilento.le"
+                           prefHeight="35.0" text="tizio.caio@magazzinodelsole.sol"
                            id="email" prefWidth="250.0" focusTraversable="false"
                            promptText="Email" /> 
-                <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="maonna"
+                <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="lezzo"
                                id="password" GridPane.rowIndex="1" prefHeight="35.0" prefWidth="250.0" 
                                focusTraversable="false" promptText="Password"/>
                 <HBox spacing="10" alignment="bottom_right" 
