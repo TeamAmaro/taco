@@ -68,7 +68,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     //Non è necessario lanciare eccezzioni in quanto viene restituita una lista vuota se
     //non ci sono corrispondenze.
     public Set<Magazzino> cercaProdotto(Prodotto prodotto) throws NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT m.*,pm.quantita FROM magazzini m JOIN prod_mag pm ON m.id = pm.id_magazzino JOIN prodotti p ON p.id = pm.id_prodotto WHERE p.id = " + prodotto.getID() + " GROUP BY quantita DESC");
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT m.*,pm.quantita FROM magazzini m JOIN prod_mag pm ON m.id = pm.id_magazzino JOIN prodotti p ON p.id = pm.id_prodotto WHERE p.id = " + prodotto.getID() + " ORDER BY quantita DESC");
         Iterator<String[]> i = result.iterator();
         Set<Magazzino> magazzini = new LinkedHashSet<>();
 
