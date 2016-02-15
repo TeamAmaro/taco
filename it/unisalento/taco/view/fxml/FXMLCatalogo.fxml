@@ -10,7 +10,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="content" xmlns:fx="http://javafx.com/fxml/1" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLCatalogoController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="content" styleClass="mainFxmlClass" fx:controller="it.unisalento.taco.controller.FXMLCatalogoController">
     <HBox spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
         <padding>
             <Insets bottom="0.0" left="20.0" right="0.0" top="0.0" />
@@ -21,11 +21,21 @@
             <Label styleClass="top-bar-label" fx:id="saldoProgetto" id="saldo-progetto"/>
         </children>
     </HBox>
-    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="top-right" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" id="top-right" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0" >
         <padding>
             <Insets bottom="0.0" left="0.0" right="20.0" top="0.0" />
         </padding> 
         <children>
+            <StackPane fx:id="stackSearch" id="stack-search">
+                <TextField prefHeight="35.0" prefWidth="100.0" promptText="Ricerca" fx:id="searchBar" styleClass="search-bar" focusTraversable="false" />
+                <HBox fx:id="searchBox" id="search-icon-box" alignment="CENTER" translateX="35.0" maxWidth="20.0" maxHeight="20.0">
+                    <ImageView fitHeight="20.0" preserveRatio="true" id="search-icon">
+                        <image>
+                          <Image url="@../img/b_search.png" smooth="true"/>
+                        </image>
+                    </ImageView>
+                </HBox>
+            </StackPane>
             <StackPane fx:id="iconaCarrello" id="icona-carrello">
                 <ImageView fitHeight="35.0" preserveRatio="true">
                     <image>
@@ -51,10 +61,10 @@
         <Label styleClass="left-menu-label" fx:id="categoriaC" id="categoriaC" text="Ricambi"/>
         <Label styleClass="left-menu-label" fx:id="categoriaD" id="categoriaD" text="Stampanti"/>
     </VBox>
-    <GridPane fx:id="gridPane" alignment="CENTER" hgap="5"  AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0" styleClass="content">
+    <GridPane fx:id="gridPane" alignment="CENTER" hgap="5"  AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0">
         <Label styleClass="query-message" fx:id="queryMessage" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="50.0" promptText="Cerca un prodotto.." fx:id="searchBar" styleClass="search-bar" focusTraversable="false" />
-        <HBox fx:id="searchIconBox" id="search-icon-box" GridPane.columnIndex="1" GridPane.rowIndex="1" >
+        <TextField GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="50.0" promptText="Cerca un prodotto.." fx:id="gridSearchBar" styleClass="grid-search-bar" focusTraversable="false" />
+        <HBox fx:id="gridSearchBox" id="grid-search-box" GridPane.columnIndex="1" GridPane.rowIndex="1" >
             <ImageView fitHeight="50.0" preserveRatio="true" id="search-icon">
                 <image>
                   <Image url="@../img/b_search.png" smooth="true"/>
