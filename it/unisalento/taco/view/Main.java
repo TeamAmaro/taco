@@ -1,5 +1,6 @@
 package it.unisalento.taco.view;
 
+import it.unisalento.taco.business.DocumentManager;
 import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
 import it.unisalento.taco.exceptions.NoIDMatchException;
@@ -9,18 +10,25 @@ import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Utente;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.apache.pdfbox.exceptions.COSVisitorException;
 
 public class Main extends Application{
     
@@ -28,8 +36,8 @@ public class Main extends Application{
     private Utente utente;
     private Scene lastScene;
     
-    private final double MINIMUM_WINDOW_WIDTH = 800.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 600.0;
+    private final double MINIMUM_WINDOW_WIDTH = 900.0;
+    private final double MINIMUM_WINDOW_HEIGHT = 650.0;
     
     public static void main(String[] args) { 
         launch(args); 
@@ -49,7 +57,7 @@ public class Main extends Application{
         stage.setHeight(MINIMUM_WINDOW_HEIGHT);
         
         loginLevel();
-        
+       
         stage.show();
     } 
  
