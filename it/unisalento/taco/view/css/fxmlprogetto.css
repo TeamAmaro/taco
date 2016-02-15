@@ -159,3 +159,9 @@
     -fx-border-color: rgb(19,28,59);
     -fx-background-color: #EEEEEE;
 }
+
+
+.label-button:hover {
+    -fx-text-fill: #448AFF;
+    -fx-cursor: hand;
+}
