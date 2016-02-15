@@ -21,18 +21,24 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class FXMLCatalogoController extends AnchorPane implements Initializable{
@@ -42,9 +48,12 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML Label saldoProgetto;
     @FXML Label carrello;
 
-    @FXML HBox searchIconBox;
-    @FXML TextField searchBar;
+    @FXML HBox gridSearchBox;
+    @FXML TextField gridSearchBar;
 
+    @FXML HBox searchBox;
+    @FXML TextField searchBar;
+    
     @FXML Label logout;
     @FXML Label queryMessage;
     @FXML ImageView leftLogo;
@@ -58,6 +67,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML VBox leftMenu;
 
     @FXML StackPane iconaCarrello;
+    @FXML StackPane stackSearch;
     
     private ScrollPane scrollLeft;
     private GridPane gridRight;
@@ -102,23 +112,13 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
 
     public void initData() {
 
-        application.getStage().widthProperty().addListener(new ChangeListener<Number>(){
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                if(content.getChildren().contains(scrollLeft) && newSceneWidth.intValue() < 1130){
-                    scrollLeft.setMinWidth(newSceneWidth.intValue() - 265);
-                    scrollLeft.setFitToWidth(true);
-                    gridRight.setVisible(false);
-                }
-                else{
-                    scrollLeft.setMinWidth(400.0);
-                    scrollLeft.setMaxWidth(400.0);
-                    scrollLeft.setFitToWidth(true);
-                    gridRight.setVisible(true);
-                }
-            }
-        });
+        initInfo();
+        initMenu();
+        initListener();
+        
+    }
 
-
+    private void initInfo(){
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
@@ -130,7 +130,31 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
-            Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, e);
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.WINDOW_MODAL);
+            
+            Label msg = new Label("Codice Errore: 1");
+            Label msg2 = new Label("Non risulti associato ad un progetto");
+            Button okBtn = new Button("Ok");
+            
+            okBtn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override public void handle(MouseEvent arg0) {
+                    dialog.close();
+                    application.logout();
+                }
+            });
+            
+            dialog.setOnCloseRequest(new EventHandler<WindowEvent>(){
+                @Override public void handle(WindowEvent arg0) {
+                    dialog.close();
+                    application.logout();
+                }
+            });
+            
+            VBox vb = new VBox();
+            vb.getChildren().addAll(msg, msg2, okBtn);
+            
+            
         }
         catch(NoQueryMatchException e){
             //Non fare nulla
@@ -141,6 +165,10 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             carrello.setText(Integer.toString(numeroProd));
         }
 
+    }
+    
+    private void initMenu(){
+        
         leftLogo.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.dipendenteView();
@@ -187,16 +215,16 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             });
         }
 
-        searchIconBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        gridSearchBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-
-                if(searchBar.getText().isEmpty())
+                
+                if(gridSearchBar.getText().isEmpty())
                     return;
 
                 try {
-                    Set<Prodotto> listaProdotti = delegate.cercaProdotti(searchBar.getText());
+                    Set<Prodotto> listaProdotti = delegate.cercaProdotti(gridSearchBar.getText());
                     if(listaProdotti.isEmpty()){
-                        queryMessage.setText("Nessuna corrispondenza trovata per \"" + searchBar.getText() +"\"");
+                        queryMessage.setText("Nessuna corrispondenza trovata per \"" + gridSearchBar.getText() +"\"");
                     }else {
                         displayProdotti(listaProdotti);
                     }
@@ -207,14 +235,88 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             }
         });
         
+        gridSearchBar.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override public void handle(KeyEvent arg0) {
+                if(arg0.getCode() == KeyCode.ENTER){
+                    if(gridSearchBar.getText().isEmpty() || !gridSearchBar.isFocused())
+                        return;
+                    try {
+                        Set<Prodotto> listaProdotti = delegate.cercaProdotti(gridSearchBar.getText());
+                        if(listaProdotti.isEmpty()){
+                            queryMessage.setText("Nessuna corrispondenza trovata per \"" + gridSearchBar.getText() +"\"");
+                        }else {
+                            displayProdotti(listaProdotti);
+                        }
+                    }
+                    catch (NoIDMatchException e){
+                        System.err.println(e.getMessage());
+                    }
+                }
+            }
+        });
+        
+        searchBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+
+                if(searchBar.getText().isEmpty())
+                    return;
+
+                try {
+                    Set<Prodotto> listaProdotti = delegate.cercaProdotti(searchBar.getText());
+                    if(!listaProdotti.isEmpty()){
+                        displayProdotti(listaProdotti);
+                    }
+                }
+                catch (NoIDMatchException e){
+                    System.err.println(e.getMessage());
+                }
+            }
+        });
+        
+        searchBar.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override public void handle(KeyEvent arg0) {
+                if(arg0.getCode() == KeyCode.ENTER){
+                    
+                    if(searchBar.getText().isEmpty() || !searchBar.isFocused())
+                        return;
+                    try {
+                        Set<Prodotto> listaProdotti = delegate.cercaProdotti(searchBar.getText());
+                        if(!listaProdotti.isEmpty()){
+                            displayProdotti(listaProdotti);
+                        }
+                    }
+                    catch (NoIDMatchException e){
+                        System.err.println(e.getMessage());
+                    }
+                }
+            }
+        });
+        
         iconaCarrello.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.getCarrello();
             }
         });
     }
-
-
+    
+    private void initListener(){
+        application.getStage().widthProperty().addListener(new ChangeListener<Number>(){
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                if(content.getChildren().contains(scrollLeft) && newSceneWidth.intValue() < 1130){
+                    scrollLeft.setMinWidth(newSceneWidth.intValue() - 265);
+                    scrollLeft.setFitToWidth(true);
+                    gridRight.setVisible(false);
+                }
+                else
+                {
+                    scrollLeft.setMinWidth(400.0);
+                    scrollLeft.setMaxWidth(400.0);
+                    scrollLeft.setFitToWidth(true);
+                    gridRight.setVisible(true);
+                }
+            }
+        });
+    }
 
     private void displayProdotti(Set<Prodotto> listaProdotti){
 
@@ -311,7 +413,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
 
         if(application.getStage().getWidth() < 1130.0){
             gridRight.setVisible(false);
-            scrollLeft.setMinWidth(535.0);
+            scrollLeft.setMinWidth(635.0);
             scrollLeft.setFitToWidth(true);
         }
         else{
@@ -320,7 +422,6 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             scrollLeft.setFitToWidth(true);
             gridRight.setVisible(true);
         }
-
     }
 
 
