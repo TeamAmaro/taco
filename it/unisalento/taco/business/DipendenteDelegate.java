@@ -11,14 +11,11 @@ import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Sede;
-import it.unisalento.taco.view.Main;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DipendenteDelegate {
 	
