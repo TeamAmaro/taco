@@ -4,8 +4,6 @@ import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoSuchUserException;
 import it.unisalento.taco.model.Utente;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import it.unisalento.taco.security.Password;
 
