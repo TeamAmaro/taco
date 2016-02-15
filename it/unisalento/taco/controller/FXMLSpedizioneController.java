@@ -105,6 +105,7 @@ public class FXMLSpedizioneController implements Initializable {
                     });
 
                     gridPane.add(spedisciButton, 5, i);
+                    i = j;
                     i++;
                 }
             }
