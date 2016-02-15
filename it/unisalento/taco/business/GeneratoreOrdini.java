@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GeneratoreOrdini {
+    
     private static GeneratoreOrdini instance;
     
     private static GeneratoreOrdini getInstance(){
@@ -58,7 +59,7 @@ public class GeneratoreOrdini {
                     
                     listaMag.remove(magDipendente);
                                         
-                    for(Magazzino magExt : listaMag && quantRichiesta != 0){
+                    for(Magazzino magExt : listaMag){
                         
                         int quantMagExt = magExt.getInventario().get(prodRichiesto);
                         if(quantMagExt < quantRichiesta){
@@ -72,6 +73,8 @@ public class GeneratoreOrdini {
                             magPerProdQuant.put(magExt, prodQuantMagExt);
                             break;
                         }
+			if(quantRichiesta <= 0)
+				break;
                     }
                 } else {
                     //Soddisfa la richiesta e passa al prossimo prodotto
