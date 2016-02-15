@@ -1,6 +1,7 @@
 package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.DipendenteDelegate;
+import it.unisalento.taco.business.DocumentManager;
 import it.unisalento.taco.exceptions.InsufficientFundException;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
@@ -23,7 +24,6 @@ import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,20 +31,22 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 
 public class FXMLOrdineDettaglioController implements Initializable {
@@ -52,12 +54,17 @@ public class FXMLOrdineDettaglioController implements Initializable {
     @FXML Label logout;
     @FXML StackPane iconaCarrello;
     
+    @FXML AnchorPane anchorPane;
+    
     @FXML Label nomeClient;
     @FXML Label nomeProgetto;
     @FXML Label saldoProgetto;
     @FXML Label carrello;
 
     @FXML HBox topLeft;
+    
+    @FXML Label prcButton;
+    @FXML Label scsButton;
     
     @FXML Button acquistaButton;
     @FXML Label titoloLabel;
@@ -67,8 +74,9 @@ public class FXMLOrdineDettaglioController implements Initializable {
     @FXML GridPane gridPane;
     
     @FXML HBox backArrowBox;
+    
     /*
-    *   Table View sembra poco adeguato a trattare
+    *   Table View è inadeguato a trattare
         tipi di dato omogeneo. 
     */
     
@@ -212,6 +220,18 @@ public class FXMLOrdineDettaglioController implements Initializable {
     }
     
     private void initMenu(){
+        /*
+        prcButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+               //Implementare
+            }
+        });
+        
+        scsButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                //Implementare
+            }
+        });*/
         
         iconaCarrello.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
@@ -220,86 +240,87 @@ public class FXMLOrdineDettaglioController implements Initializable {
         });
         
         acquistaButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
+            @Override public void handle(MouseEvent arg0) {                
                 
-                try{
-                    delegate.acquista((Dipendente) application.getUtente(), listaOrdini);
-                } catch (InsufficientFundException ex) { 
-                    acquistaButton.setDisable(true);
-                    errorLabel.setText("Fondi insufficenti per completare l'acquisto.");
-                    errorLabel.setWrapText(true);
-                    return;
-                }
+                final GridPane grid = new GridPane();
                 
-                FileChooser fileChooser = new FileChooser();
-  
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT (*.txt)", "*.txt");
-                fileChooser.getExtensionFilters().add(extFilter);
-
-                File file = fileChooser.showSaveDialog(application.getStage());
+                anchorPane.getChildren().add(grid);
+                anchorPane.setBottomAnchor(grid, 0.0);
+                anchorPane.setTopAnchor(grid, 0.0);
+                anchorPane.setRightAnchor(grid, 0.0);
+                anchorPane.setLeftAnchor(grid, 0.0);
                 
-                if(file != null){
-                    try {
-                        
-                        FileWriter fileWriter = new FileWriter(file);
-                        
-                        char desinenza ;
-                        
-                        if(listaOrdini.size() > 1)
-                            desinenza = 'i';
-                        else
-                            desinenza = 'e';
-                        StringBuilder ricevuta = new StringBuilder();
-                        ricevuta.append("Ricevuta ordin" + desinenza + " di " + application.getUtente().getNome() + " " + application.getUtente().getCognome() + System.lineSeparator());
-                        int i = 1;
-                        
-                        for(Ordine o : listaOrdini){
-                            ricevuta.append("ORDINE #" + i + System.lineSeparator());
-                            ricevuta.append("CODICE: " + o.getCodice() + System.lineSeparator());
-                            ricevuta.append("DIPENDENTE: " + o.getDipendente().getNome() +" " + o.getDipendente().getCognome() + System.lineSeparator());
-                            ricevuta.append("PROGETTO: " + o.getProgetto().getNome() + " - " + o.getProgetto().getCapoProgetto().getNome() +" " + o.getProgetto().getCapoProgetto().getCognome() + System.lineSeparator());
-                            ricevuta.append("DATA: " + o.getReadableData() + System.lineSeparator());
-                            ricevuta.append("PRODOTTI: " + System.lineSeparator());
-                            
-                            for(Map.Entry<Prodotto,Integer> e : o.getListaProdotti().entrySet())
-                                ricevuta.append(e.getKey().getPrezzo() + "€ " + e.getKey().getNome()+ " x " + e.getValue() + System.lineSeparator());
-                            
-                            ricevuta.append("MAGAZZINO: " + o.getMagazzino().getNome() + " (" + o.getMagazzino().getSede().nome() +  ")" + System.lineSeparator());
-                            ricevuta.append("TOTALE PARZIALE: " + o.getTotale() + System.lineSeparator());
-                            ricevuta.append("COSTO SPEDIZIONE: " + o.getSpesaSpedizione() + System.lineSeparator());
-                            
-                            i++;
+                grid.getStyleClass().add("dialog-blur");
+                HBox hb = new HBox();
+                hb.getStyleClass().add("dialog-box");
+                grid.setAlignment(Pos.CENTER);
+                
+                Button okBtn = new Button("Ok");
+                Button cncBtn = new Button("Annulla");
+                
+                okBtn.getStyleClass().add("ok-button");
+                cncBtn.getStyleClass().add("cnc-button");
+                
+                String msg = "L'acquisto sarà effettuato su " + nomeProgetto.getText();
+                
+                Label warn = new Label(msg);
+                
+                grid.add(hb, 0, 0, 5, 4);
+                grid.add(warn, 1, 1, 3, 1);
+                grid.add(cncBtn, 1, 2);
+                grid.add(okBtn, 3, 2);
+                                
+                grid.setVgap(30.0);
+                grid.setHgap(20.0);
+                
+                okBtn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override public void handle(MouseEvent arg0) {
+                        anchorPane.getChildren().remove(grid);
+                        try{
+                            delegate.acquista((Dipendente) application.getUtente(), listaOrdini);
+                        } catch (InsufficientFundException ex) { 
+                            acquistaButton.setDisable(true);
+                            errorLabel.setText("Fondi insufficenti per completare l'acquisto.");
+                            errorLabel.setWrapText(true);
+                            return;
                         }
                         
-                        double totale = 0;
-
-                        NumberFormat formatoEuro = NumberFormat.getCurrencyInstance(Locale.ITALY);
-                        formatoEuro.setMinimumFractionDigits( 2 );
-                        formatoEuro.setMaximumFractionDigits( 2 );
-                        formatoEuro.setRoundingMode(RoundingMode.HALF_EVEN);
+                        File file = null;
                         
-                        for(Ordine o : listaOrdini){
-                            totale += o.getTotale();
-                            totale += o.getSpesaSpedizione();
+                        FileChooser fileChooser = new FileChooser();
+                        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+                        fileChooser.getExtensionFilters().add(extFilter);
+                        fileChooser.setInitialFileName("ricevuta.pdf");
+                        fileChooser.setTitle("Salva con nome");
+                        
+                        while(file == null){
+                            file = fileChooser.showSaveDialog(application.getStage());
                         }
-                        
-                        ricevuta.append("TOTALE :" + formatoEuro.format(totale));
-                        
-                        fileWriter.write(ricevuta.toString());
-                        fileWriter.close();
-                        
-                        gridPane.getChildren().clear();
-                        Label result = new Label();
-                        result.setText("Ordine effettuato. La ricevuta è stata salvata al percorso\n" + file.getAbsolutePath() + "\n"
-                                + "Ricorda di stampare la ricevuta e presentarla al magazziniere al momento della consegna della merce.\n"
-                                + "Continua a usare TACO!");
-                        result.setWrapText(true);
-                        gridPane.add(result, 0, 0);
-                        
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, ex);
+                        if(file != null){
+                            try {
+                                DocumentManager.getInstance().generaRicevuta(listaOrdini, file);
+                               
+                                gridPane.getChildren().clear();
+                                Label result = new Label();
+                                result.setText("Ordine effettuato. La ricevuta è stata salvata al percorso\n" + file.getAbsolutePath() + "\n"
+                                        + "Ricorda di stampare la ricevuta e presentarla al magazziniere al momento della consegna della merce.\n"
+                                        + "Continua a usare Galaxy Express!");
+                                result.setWrapText(true);
+                                gridPane.add(result, 0, 0);
+                                
+                            } catch (IOException | COSVisitorException ex) {
+                                Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                     }
-                }
+                });
+                
+                cncBtn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override public void handle(MouseEvent arg0) {
+                        anchorPane.getChildren().remove(grid);
+                    }
+                });
+                
             }
         });
         
