@@ -6,7 +6,6 @@
 
 package it.unisalento.taco.view;
 
-import it.unisalento.taco.business.AdminDelegate;
 import it.unisalento.taco.dao.CarrelloDAO;
 import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.dao.MagazzinoDAO;
