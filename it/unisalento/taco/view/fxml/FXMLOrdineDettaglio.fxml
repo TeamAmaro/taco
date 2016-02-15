@@ -9,7 +9,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 
-<AnchorPane id="AnchorPane" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="anchorPane" id="AnchorPane" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.unisalento.taco.controller.FXMLOrdineDettaglioController">
     <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
         <children>
