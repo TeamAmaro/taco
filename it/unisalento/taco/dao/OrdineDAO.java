@@ -38,7 +38,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
                 Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
                 Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
-                long data = Long.parseLong(riga[8]);
+                long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 if(codice != Integer.parseInt(riga[0])){
                     Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
@@ -65,7 +65,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
                 Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
                 Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
-                long data = Long.parseLong(riga[8]);
+                long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 if(codice != Integer.parseInt(riga[0])){
                     Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
@@ -94,7 +94,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
             
                 long data = Long.parseLong(riga[8]);
                 Map<Prodotto,Integer> listaProd = new LinkedHashMap<>();
-                result = DBConnection.getInstance().queryDB("SELECT id_prodotto, quantita FROM ordini WHERE codice = " + hashCode);
+                result = DBConnection.getInstance().queryDB("SELECT id_prodotto, quantita FROM dettagliordini WHERE codice = " + hashCode);
                 i = result.iterator();
                 while(i.hasNext()){
                     riga = i.next();
@@ -116,7 +116,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     
     //SI SUPPONE CHE CI SIANO PRODOTTI NELL'ORDINE E CHE NON POSSA ESISTE UN ORDINE SENZA UNA LISTA DI PRODOTTI
     public Map<Prodotto,Integer> getListaProdotti(int hashCode) {
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT pr.nome,p.*,o.quantita FROM prodotti p JOIN produttori pr ON p.id = pr.id_prodotto JOIN ordini o ON o.id_prodotto = p.id WHERE codice = " + hashCode);
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT pr.nome,p.*,d.quantita FROM prodotti p JOIN produttori pr ON p.id = pr.id_prodotto JOIN dettagliordini d ON d.id_prodotto = p.id WHERE codice = " + hashCode);
         Iterator<String[]> i = result.iterator();
         Map<Prodotto,Integer> listaProdotti = new LinkedHashMap<>();
         while(i.hasNext()){
@@ -133,15 +133,16 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     }
 
     @Override public void create(Ordine ordine){
+        int hashCode = ordine.hashCode();
+        DBConnection.getInstance().updateDB("INSERT INTO ordini VALUES(" + hashCode + ", " + ordine.getDipendente().getID() + ", '" + ordine.getDipendente().getSede() + "', " + ordine.getProgetto().getID() + ", " + ordine.getMagazzino().getID() + ", " + 0 + ", " + ordine.getData() + ")");
         for(Map.Entry<Prodotto,Integer> val : ordine.getListaProdotti().entrySet()) {
-            int hashCode = ordine.hashCode();
-            DBConnection.getInstance().updateDB("INSERT INTO ordini VALUES(" + hashCode + ", " + ordine.getDipendente().getID() + ", '" + ordine.getDipendente().getSede() + "', " + ordine.getProgetto().getID() + ", " + ordine.getMagazzino().getID() + ", " + val.getKey().getID() + ", " + val.getValue() + ", " + 0 + ", " + ordine.getData() + ")");
+            DBConnection.getInstance().updateDB("INSERT INTO dettagliordini VALUES(" + hashCode + ", " + val.getKey().getID() + ", " + val.getValue() + ")");
         }
     }
     
     //Da utilizzare ai soli fini di debug
     @Override public void delete(IdentificabileID obj){
-        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
+        //DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
     }
     
 }

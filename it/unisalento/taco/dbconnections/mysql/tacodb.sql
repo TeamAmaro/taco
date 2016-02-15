@@ -57,8 +57,32 @@ CREATE TABLE `carrelli` (
 
 LOCK TABLES `carrelli` WRITE;
 /*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
-INSERT INTO `carrelli` VALUES (1,8,5);
+INSERT INTO `carrelli` VALUES (1,8,10),(1,6,10);
 /*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dettagliordini`
+--
+
+DROP TABLE IF EXISTS `dettagliordini`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dettagliordini` (
+  `codice` varchar(128) DEFAULT NULL,
+  `id_prodotto` int(11) DEFAULT NULL,
+  `quantita` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dettagliordini`
+--
+
+LOCK TABLES `dettagliordini` WRITE;
+/*!40000 ALTER TABLE `dettagliordini` DISABLE KEYS */;
+INSERT INTO `dettagliordini` VALUES ('-1268359798',1,1),('-1268359798',2,1),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-2104777059',9,2),('-322712807',8,5),('-322712807',6,5),('-294083656',8,5),('-294083656',6,5),('-236825354',8,5),('-236825354',6,5);
+/*!40000 ALTER TABLE `dettagliordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -168,11 +192,9 @@ DROP TABLE IF EXISTS `ordini`;
 CREATE TABLE `ordini` (
   `codice` varchar(128) DEFAULT NULL,
   `id_dipendente` int(11) DEFAULT NULL,
-  `nome_sede` varchar(60) DEFAULT NULL,
+  `nome_sede_dip` varchar(60) DEFAULT NULL,
   `id_progetto` int(11) DEFAULT NULL,
   `id_magazzino` int(11) DEFAULT NULL,
-  `id_prodotto` int(11) DEFAULT NULL,
-  `quantita` int(11) DEFAULT NULL,
   `spedito` tinyint(4) DEFAULT '0',
   `data` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -184,7 +206,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
-INSERT INTO `ordini` VALUES ('-1099431227',1,'Sede A',1,1,1,12,1,1450212300682),('2022783208',1,'Sede A',1,1,9,1,1,1451901214018),('611785968',1,'Sede A',1,1,17,2,1,1452351141773),('991678100',1,'Sede A',1,1,16,3,1,1452356006003),('2072962939',1,'Sede A',1,1,9,1,1,1452356175749),('2072962939',1,'Sede A',1,1,8,1,1,1452356175749),('2072962939',1,'Sede A',1,1,10,3,1,1452356175749),('2072962939',1,'Sede A',1,1,12,15,1,1452356175749),('2072962939',1,'Sede A',1,1,13,12,1,1452356175749),('2072962939',1,'Sede A',1,1,14,1,1,1452356175749),('2072962939',1,'Sede A',1,1,4,1,1,1452356175749),('2072962939',1,'Sede A',1,1,7,1,1,1452356175749),('2072962939',1,'Sede A',1,1,20,2,1,1452356175749),('-1523246818',1,'Sede A',1,1,8,20,1,1453801432448),('-1523246818',1,'Sede A',1,1,8,20,1,1453801432448),('2054068069',1,'Sede A',1,1,9,2,1,1453802003200),('2054068069',1,'Sede A',1,1,12,0,1,1453802003200),('2054068069',1,'Sede A',1,1,14,20,1,1453802003200),('1244721443',1,'Sede A',1,3,9,2,0,1453802003200),('1244721443',1,'Sede A',1,3,12,0,0,1453802003200),('1244721443',1,'Sede A',1,3,14,20,0,1453802003200),('-498088892',1,'Sede A',1,2,9,2,1,1453802003200),('-498088892',1,'Sede A',1,2,12,0,1,1453802003200),('-498088892',1,'Sede A',1,2,14,20,1,1453802003200),('-1307435518',1,'Sede A',1,4,9,2,0,1453802003200),('-1307435518',1,'Sede A',1,4,12,0,0,1453802003200),('-1307435518',1,'Sede A',1,4,14,20,0,1453802003200),('892456754',1,'Sede A',1,1,8,200,1,1453808415584),('-1211031978',1,'Sede A',1,1,8,68,1,1453909019272),('-1210972455',1,'Sede A',1,3,8,9,0,1453909019272),('-1210942671',1,'Sede A',1,4,8,2,0,1453909019272);
+INSERT INTO `ordini` VALUES ('-322712807',1,'Sede A',1,1,0,1455549733391),('-294083656',1,'Sede A',1,2,0,1455549733391),('-236825354',1,'Sede A',1,4,0,1455549733391);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +230,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
-INSERT INTO `prod_mag` VALUES (1,1,22),(1,2,9),(1,3,18),(1,4,22),(1,5,10),(1,6,2),(1,7,16),(1,9,162),(1,10,17),(1,11,21),(1,12,10),(1,13,19),(1,16,21),(1,17,15),(1,18,16),(1,19,13),(1,20,25),(1,21,0),(1,22,19),(1,23,28),(2,1,13),(2,2,27),(2,3,3),(2,4,28),(2,5,19),(2,6,23),(2,7,25),(2,9,13),(2,10,27),(2,11,23),(2,12,100),(2,13,22),(2,14,3),(2,16,26),(2,17,13),(2,18,23),(2,19,28),(2,20,22),(2,21,27),(2,22,29),(2,23,7),(3,1,17),(3,2,3),(3,3,11),(3,4,22),(3,5,23),(3,6,7),(3,7,5),(3,9,17),(3,10,28),(3,11,26),(3,12,13),(3,13,1),(3,16,27),(3,17,18),(3,18,12),(3,19,15),(3,20,21),(3,21,26),(3,22,10),(3,23,22),(4,1,23),(4,2,7),(4,3,26),(4,4,2),(4,5,20),(4,6,20),(4,7,25),(4,8,3),(4,9,3),(4,10,11),(4,11,7),(4,12,11),(4,13,26),(4,16,3),(4,17,22),(4,18,19),(4,19,23),(4,20,3),(4,21,3),(4,22,19),(4,23,27),(1,8,0),(2,8,16),(3,8,0);
+INSERT INTO `prod_mag` VALUES (1,1,19),(1,2,8),(1,3,18),(1,4,12),(1,5,10),(1,6,5),(1,7,16),(1,9,143),(1,10,17),(1,11,21),(1,12,3),(1,13,19),(1,16,21),(1,17,15),(1,18,16),(1,19,13),(1,20,25),(1,21,0),(1,22,19),(1,23,28),(2,1,13),(2,2,27),(2,3,3),(2,4,28),(2,5,19),(2,6,2),(2,7,25),(2,9,13),(2,10,27),(2,11,23),(2,12,100),(2,13,22),(2,14,3),(2,16,26),(2,17,13),(2,18,23),(2,19,28),(2,20,22),(2,21,27),(2,22,29),(2,23,7),(3,1,17),(3,2,3),(3,3,11),(3,4,22),(3,5,23),(3,6,7),(3,7,5),(3,9,17),(3,10,28),(3,11,26),(3,12,13),(3,13,1),(3,16,27),(3,17,18),(3,18,12),(3,19,15),(3,20,21),(3,21,26),(3,22,10),(3,23,22),(4,1,23),(4,2,7),(4,3,26),(4,4,2),(4,5,20),(4,6,15),(4,7,25),(4,8,0),(4,9,3),(4,10,11),(4,11,7),(4,12,11),(4,13,26),(4,16,3),(4,17,22),(4,18,19),(4,19,23),(4,20,3),(4,21,3),(4,22,19),(4,23,27),(1,8,5),(2,8,4),(3,8,0);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +308,7 @@ CREATE TABLE `progetti` (
 
 LOCK TABLES `progetti` WRITE;
 /*!40000 ALTER TABLE `progetti` DISABLE KEYS */;
-INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,19411.270000000004,6700),(2,'Progetto Pizza',3,4500,4500);
+INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,6528.3,6700),(2,'Progetto Pizza',3,4500,4500);
 /*!40000 ALTER TABLE `progetti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,28 +333,6 @@ LOCK TABLES `sedi` WRITE;
 /*!40000 ALTER TABLE `sedi` DISABLE KEYS */;
 INSERT INTO `sedi` VALUES ('Sede A','Parco della Vittoria 5'),('Sede B','Viale dei Giardini 7'),('Sede C','Largo Augusto 10'),('Sede D','Corso Impero 22');
 /*!40000 ALTER TABLE `sedi` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `superadmin`
---
-
-DROP TABLE IF EXISTS `superadmin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `superadmin` (
-  `id_utente` int(10) unsigned DEFAULT NULL,
-  UNIQUE KEY `id_utente` (`id_utente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `superadmin`
---
-
-LOCK TABLES `superadmin` WRITE;
-/*!40000 ALTER TABLE `superadmin` DISABLE KEYS */;
-/*!40000 ALTER TABLE `superadmin` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -373,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-28 16:15:39
+-- Dump completed on 2016-02-15 16:30:34
