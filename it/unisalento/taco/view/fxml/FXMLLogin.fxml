@@ -26,15 +26,15 @@
                   AnchorPane.bottomAnchor="10" styleClass="fieldset">
             <children>
                 <TextField fx:id="emailField" GridPane.columnIndex="0" GridPane.rowIndex="0" 
-                           prefHeight="35.0" text="tizio.caio@magazzinodelsole.sol"
-                           id="email" prefWidth="250.0" focusTraversable="false"
+                           prefHeight="35.0"
+                           id="email" prefWidth="250.0"
                            promptText="Email" /> 
-                <PasswordField fx:id="passwordField" GridPane.columnIndex="0" text="lezzo"
+                <PasswordField fx:id="passwordField" GridPane.columnIndex="0"
                                id="password" GridPane.rowIndex="1" prefHeight="35.0" prefWidth="250.0" 
-                               focusTraversable="false" promptText="Password"/>
+                                promptText="Password"/>
                 <HBox spacing="10" alignment="bottom_right" 
                     GridPane.columnIndex="0" GridPane.rowIndex="2">
-                    <Button focusTraversable="false" id="login-button"
+                    <Button id="login-button"
                             fx:id="loginButton" onAction="#effettuaLogin" text="Accedi" 
                             prefHeight="35.0" prefWidth="250.0"/>
                 </HBox>
