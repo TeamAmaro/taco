@@ -37,6 +37,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -292,11 +294,27 @@ public class FXMLOrdineDettaglioController implements Initializable {
                                
                                 gridPane.getChildren().clear();
                                 Label result = new Label();
-                                result.setText("Ordine effettuato. La ricevuta è stata salvata al percorso\n" + file.getAbsolutePath() + "\n"
+                                Label titolo = new Label("Ordine effettuato!");
+                                result.setText("La ricevuta è stata salvata al percorso\n" + file.getAbsolutePath() + "\n"
                                         + "Ricorda di stampare la ricevuta e presentarla al magazziniere al momento della consegna della merce.\n"
                                         + "Continua a usare Galaxy Express!");
                                 result.setWrapText(true);
-                                gridPane.add(result, 0, 0);
+                                ImageView img = new ImageView(new Image("it/unisalento/taco/view/img/shuttle2.png"));
+                                
+                                Label lbl = new Label("Torna al catalogo!");
+                                lbl.getStyleClass().add("label-blue");
+                                
+                                lbl.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                                    @Override public void handle(MouseEvent arg0){
+                                        application.dipendenteView();
+                                    }
+                                });
+                                titolo.getStyleClass().add("titolo");
+                                
+                                gridPane.add(titolo, 0, 0, 2, 1);
+                                gridPane.add(result, 0, 1, 2, 1);
+                                gridPane.add(lbl, 0, 2);
+                                gridPane.add(img, 0, 3, 2, 2);                                
                                 
                             } catch (IOException | COSVisitorException ex) {
                                 Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, ex);
