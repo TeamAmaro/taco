@@ -350,13 +350,14 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
 
             try{
                 int quantita = delegate.chiediDisponibilita((Dipendente) application.getUtente(), p);
-                if(quantita < 10){
-                    descrizione.setText("In esaurimento");
-                    descrizione.getStyleClass().add("esaurimento");
-                }
-                else if(quantita == 0){
-                    descrizione.setText("Non disponibile");
-                    descrizione.getStyleClass().add("non-disponibile");
+                if(quantita <= 10){
+                    if(quantita == 0){
+                        descrizione.setText("Non disponibile presso la tua sede");
+                        descrizione.getStyleClass().add("non-disponibile");
+                    } else {
+                        descrizione.setText("Solo " + quantita + " in magazzino!");
+                        descrizione.getStyleClass().add("esaurimento");
+                    }
                 }
                 else{
                     descrizione.setText("Disponibile");
