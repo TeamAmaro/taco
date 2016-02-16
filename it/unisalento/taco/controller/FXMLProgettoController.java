@@ -122,19 +122,20 @@ public class FXMLProgettoController implements Initializable {
     
         moreButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                if (numOrdini < offset){
-                    moreButton.setVisible(false);
-                    moreButton.setManaged(false);
-                }
-                else {
-                    offset += 10;
-                    try {
-                        listaOrdini.addAll(delegate.getListaOrdini(progetto, offset));
-                        ordineData.addAll(listaOrdini);
-                    } catch (NoIDMatchException ex) {
-                        Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                offset += 10;
+                try {
+                    listaOrdini.addAll(delegate.getListaOrdini(progetto, offset));
+                    ordineData.clear();
+                    ordineData.addAll(listaOrdini);
+                    if (numOrdini - offset < 10){
+                        moreButton.setVisible(false);
+                        moreButton.setManaged(false);
                     }
+                } catch (NoIDMatchException ex) {
+                    Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             }
         });
         
