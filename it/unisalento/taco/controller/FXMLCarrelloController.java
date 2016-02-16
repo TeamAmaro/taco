@@ -6,6 +6,7 @@
 package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.DipendenteDelegate;
+import it.unisalento.taco.business.GeneratoreOrdini;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
@@ -114,12 +115,12 @@ public class FXMLCarrelloController implements Initializable {
         ordinaButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 try{
-                    Set<Ordine> listaOrdini = delegate.generaOrdini((Dipendente) application.getUtente());
+                    Set<Ordine> listaOrdini = GeneratoreOrdini.getInstance().generaOrdini((Dipendente) application.getUtente());
                     application.ordina(listaOrdini);
-                } catch (NoIDMatchException e){
-                    System.err.println(e.getMessage());
-                } catch (NoQueryMatchException e){
-                    System.err.println("WUT");
+                }catch (NoQueryMatchException ex){
+                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoIDMatchException ex) {
+                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -186,7 +187,7 @@ public class FXMLCarrelloController implements Initializable {
                 disponibilita.getStyleClass().add("info-text");
 
                 try{
-                    int quantitaMag = delegate.chiediDisponibilità((Dipendente) application.getUtente(), prodotto);
+                    int quantitaMag = delegate.chiediDisponibilita((Dipendente) application.getUtente(), prodotto);
                     if(quantitaMag <= 0)
                         disponibilita.setText("No");
                     else 
