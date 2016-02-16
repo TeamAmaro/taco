@@ -1,6 +1,5 @@
 package it.unisalento.taco.view;
 
-import it.unisalento.taco.business.DocumentManager;
 import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
 import it.unisalento.taco.exceptions.NoIDMatchException;
@@ -10,7 +9,6 @@ import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Utente;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 import java.util.logging.Level;
@@ -20,15 +18,19 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.apache.pdfbox.exceptions.COSVisitorException;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application{
     
@@ -76,7 +78,7 @@ public class Main extends Application{
             catalogo.setApplication(this);
             catalogo.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -253,6 +255,41 @@ public class Main extends Application{
 
     public void ordina(Set<Ordine> listaOrdini) {
         ordineDettaglioLevel(listaOrdini);
+    }
+    
+    private void errorDialog(Exception ex){
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Attenzione!");        
+        Label msg = new Label(ex.getMessage());
+        msg.setWrapText(true);
+        Button okBtn = new Button("Ok");
+
+        okBtn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                dialog.close();
+                utente = null;
+                loginLevel();
+            }
+        });
+
+        dialog.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override public void handle(WindowEvent arg0) {
+                dialog.close();
+                utente = null;
+                loginLevel();
+            }
+        });
+
+        GridPane grid = new GridPane();
+        grid.add(msg, 0, 0);
+        grid.add(okBtn, 0, 1);
+        grid.setAlignment(Pos.CENTER);
+        grid.setVgap(20.0);
+        Scene scene = new Scene(grid, 400, 300);
+        dialog.setScene(scene);
+        dialog.show();
+        dialog.setResizable(false);
     }
     
 }
