@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Magazzino  implements IdentificabileID {
+
+    
    
     private final int id;
     private final String nome;
@@ -122,6 +124,10 @@ public class Magazzino  implements IdentificabileID {
     
     public static int getQuantita(Magazzino magazzino, Prodotto prodotto){
         return MagazzinoDAO.getInstance().getQuantitaProdotto(magazzino, prodotto);
+    }
+    
+    public static int getQuantitaAll(Prodotto prodotto) {
+        return MagazzinoDAO.getInstance().getQuantitaAll(prodotto);
     }
     
     public static Set<Magazzino> cercaProdotto(Prodotto prodotto) throws NoIDMatchException{
