@@ -30,14 +30,6 @@
             <Insets bottom="0.0" left="0.0" right="20.0" top="0.0" />
         </padding> 
         <children>
-            <StackPane fx:id="iconaCarrello" id="icona-carrello">
-                <ImageView fitHeight="35.0" preserveRatio="true">
-                    <image>
-                        <Image url="@../img/b_cart.png" smooth="true" />
-                    </image>
-                </ImageView>
-                <Label styleClass="carrello-info" fx:id="carrello"/>
-            </StackPane>
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
     </HBox>

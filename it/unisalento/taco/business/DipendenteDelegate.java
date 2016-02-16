@@ -67,6 +67,11 @@ public class DipendenteDelegate {
             throw e;
         }
     }
+    
+    public int chiediDisponibilitaAll(Prodotto prodotto) throws NoQueryMatchException, NoIDMatchException{
+        return Magazzino.getQuantitaAll(prodotto);
+    }
+
 
     public void acquista(Dipendente dipendente, Set<Ordine> listaOrdini) throws InsufficientFundException{
         
@@ -109,6 +114,10 @@ public class DipendenteDelegate {
             System.err.println(e.getMessage());
         }
         
+    }
+
+    public void modificaQuantita(Carrello carrello, Prodotto prodotto, int q) {
+        carrello.updateQuantita(prodotto, q);
     }
     
 }

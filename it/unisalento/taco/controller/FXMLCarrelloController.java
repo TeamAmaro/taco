@@ -15,6 +15,7 @@ import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.view.Main;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -29,9 +30,13 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,7 +47,7 @@ public class FXMLCarrelloController implements Initializable {
     @FXML GridPane content;
     @FXML Label logout;
     @FXML HBox topLeft;
-    @FXML Label totale;
+    @FXML Label subtotale;
     @FXML Button ordinaButton;
     @FXML ImageView backArrow;
     @FXML Label nomeClient;
@@ -52,6 +57,7 @@ public class FXMLCarrelloController implements Initializable {
     @FXML HBox ordinaBox;
     @FXML VBox scrollContent;
     @FXML HBox backArrowBox;
+    @FXML AnchorPane anchorPane;
     
     private Main application;
     private Carrello carrello;
@@ -112,15 +118,92 @@ public class FXMLCarrelloController implements Initializable {
             }
         });
         
+        
         ordinaButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                try{
-                    Set<Ordine> listaOrdini = GeneratoreOrdini.getInstance().generaOrdini((Dipendente) application.getUtente());
-                    application.ordina(listaOrdini);
-                }catch (NoQueryMatchException ex){
-                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoIDMatchException ex) {
-                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+            @Override public void handle(MouseEvent arg0) {                
+                
+                Map<Prodotto, Integer> prodottiInsufficienti = new LinkedHashMap<>();
+                for(Map.Entry<Prodotto,Integer> listaProdotti : carrello.getListaProdotti().entrySet()){
+                    int quantitaRichiesta = listaProdotti.getValue();
+                    Prodotto prodottoRichiesto = listaProdotti.getKey();
+                    int quantitaDisponibile;
+                    try {
+                        quantitaDisponibile = delegate.chiediDisponibilitaAll(prodottoRichiesto);
+                        if (quantitaRichiesta > quantitaDisponibile)
+                        prodottiInsufficienti.put(prodottoRichiesto, quantitaDisponibile);
+                    } catch (NoQueryMatchException ex) {
+                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NoIDMatchException ex) {
+                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if(prodottiInsufficienti.isEmpty()){
+                    Set<Ordine> listaOrdini;
+                    try {
+                        listaOrdini = GeneratoreOrdini.getInstance().generaOrdini((Dipendente) application.getUtente());
+                        application.ordina(listaOrdini);
+                    } catch (NoQueryMatchException ex) {
+                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NoIDMatchException ex) {
+                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                } else {
+                    final GridPane grid = new GridPane();
+
+                    anchorPane.getChildren().add(grid);
+                    anchorPane.setBottomAnchor(grid, 0.0);
+                    anchorPane.setTopAnchor(grid, 0.0);
+                    anchorPane.setRightAnchor(grid, 0.0);
+                    anchorPane.setLeftAnchor(grid, 0.0);
+
+                    grid.getStyleClass().add("dialog-blur");
+                    HBox hb = new HBox();
+                    hb.getStyleClass().add("dialog-box");
+                    grid.setAlignment(Pos.CENTER);
+
+                    Button okBtn = new Button("Ok");
+                    Button cncBtn = new Button("Annulla");
+
+                    okBtn.getStyleClass().add("ok-button");
+                    cncBtn.getStyleClass().add("cnc-button");
+
+                    StringBuilder warnMsg = new StringBuilder();
+                    warnMsg.append("Attenzione! Le quantità dei seguenti prodotti non soddisfano la richiesta:").append(System.lineSeparator());
+                    for(Map.Entry<Prodotto,Integer> pInsEntry : prodottiInsufficienti.entrySet()){
+                        warnMsg.append("\"" + pInsEntry.getKey().getNome() + "\" in magazzino: " + pInsEntry.getValue() + System.lineSeparator());
+                    }
+                    warnMsg.append("Proseguire comunque con l'ordine?");
+
+                    Label warn = new Label(warnMsg.toString());
+
+                    grid.add(hb, 0, 0, 5, 4);
+                    grid.add(warn, 1, 1, 3, 1);
+                    grid.add(cncBtn, 1, 2);
+                    grid.add(okBtn, 3, 2);
+
+                    grid.setVgap(30.0);
+                    grid.setHgap(20.0);
+
+                    okBtn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                        @Override public void handle(MouseEvent arg0) {
+                             try{
+                                Set<Ordine> listaOrdini = GeneratoreOrdini.getInstance().generaOrdini((Dipendente) application.getUtente());
+                                application.ordina(listaOrdini);
+                                anchorPane.getChildren().remove(grid);
+                            }catch (NoQueryMatchException ex){
+                                Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (NoIDMatchException ex) {
+                                Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+
+                    cncBtn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                        @Override public void handle(MouseEvent arg0) {
+                            anchorPane.getChildren().remove(grid);
+                        }
+                    });
                 }
             }
         });
@@ -152,7 +235,7 @@ public class FXMLCarrelloController implements Initializable {
         }
         else{
             
-            totale.setText(carrello.getFormatTotale());
+            subtotale.setText(carrello.getFormatTotale());
             
             for(Map.Entry<Prodotto,Integer> lp : listaProdotti.entrySet()) {
                 
@@ -181,8 +264,69 @@ public class FXMLCarrelloController implements Initializable {
                 Label prodProdotto = new Label(prodotto.getProduttore().nome());
                 prodProdotto.getStyleClass().add("info-text");
 
-                Label quantitaLabel = new Label(Integer.toString(quantita));
-                quantitaLabel.getStyleClass().add("info-text");
+                final Label quantitaLabel = new Label(Integer.toString(quantita));
+                quantitaLabel.getStyleClass().add("quantita-text");
+                
+                final int position = i;
+                
+                final Button rimuovi = new Button("Rimuovi");
+                rimuovi.getStyleClass().add("remove-button");
+                
+                rimuovi.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override public void handle(MouseEvent arg0) {
+                        delegate.removeProdotto(carrello, prodotto);
+                        rimuovi.setDisable(true);
+                        rimuovi.setText("Rimosso!");
+                        subtotale.setText(carrello.getFormatTotale());
+                        if(carrello.getListaProdotti().isEmpty())
+                            ordinaButton.setDisable(true);
+                        
+                        quantitaLabel.setVisible(false);
+                        quantitaLabel.setManaged(false);
+                    }
+                });
+                
+                quantitaLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override public void handle(MouseEvent arg0) {
+                        
+                        quantitaLabel.setVisible(false);
+                        quantitaLabel.setManaged(false);
+                        
+                        rimuovi.setVisible(false);
+                        
+                        
+                        final TextField newQuantita = new TextField();
+                        newQuantita.setMaxWidth(50.0);
+                        content.add(newQuantita, 1, position);
+                        
+                        newQuantita.setOnKeyPressed(new EventHandler<KeyEvent>(){
+                            @Override public void handle(KeyEvent arg0) {
+                                if(arg0.getCode() == KeyCode.ENTER){
+                                    try {
+                                        int q = Integer.parseInt(newQuantita.getText());
+                                        if(q > 0){
+                                            delegate.modificaQuantita(carrello, prodotto, q);
+                                            content.getChildren().remove(newQuantita);
+                                            quantitaLabel.setVisible(true);
+                                            quantitaLabel.setManaged(true);
+                                            quantitaLabel.setText(newQuantita.getText());
+                                            subtotale.setText(delegate.getCarrello((Dipendente) application.getUtente()).getFormatTotale());
+                                            rimuovi.setVisible(true);
+                                        }
+                                    } catch(NumberFormatException e){
+                                        content.getChildren().remove(newQuantita);
+                                        quantitaLabel.setVisible(true);
+                                        quantitaLabel.setManaged(true);
+                                    } catch (NoIDMatchException ex) {
+                                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }
+                        });
+
+                    }
+                });
+                
                 Label disponibilita = new Label();
                 disponibilita.getStyleClass().add("info-text");
 
@@ -199,19 +343,6 @@ public class FXMLCarrelloController implements Initializable {
                     Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                final Button rimuovi = new Button("Rimuovi");
-                rimuovi.getStyleClass().add("remove-button");
-                
-                rimuovi.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                    @Override public void handle(MouseEvent arg0) {
-                        delegate.removeProdotto(carrello, prodotto);
-                        rimuovi.setDisable(true);
-                        rimuovi.setText("Rimosso!");
-                        totale.setText(carrello.getFormatTotale());
-                        if(carrello.getListaProdotti().isEmpty())
-                            ordinaButton.setDisable(true);
-                    }
-                });
                 
                 
                 nomeProdotto.setOnMouseClicked(new EventHandler<MouseEvent>(){

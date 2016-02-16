@@ -46,7 +46,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML Label nomeClient;
     @FXML Label nomeProgetto;
     @FXML Label saldoProgetto;
-    @FXML Label carrello;
+    @FXML Label numCarrello;
 
     @FXML HBox gridSearchBox;
     @FXML TextField gridSearchBar;
@@ -69,12 +69,16 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
     @FXML StackPane iconaCarrello;
     @FXML StackPane stackSearch;
     
+    @FXML Label quantitaMsg;
+    
     private ScrollPane scrollLeft;
     private GridPane gridRight;
     private VBox vbLeft;
 
     private Main application;
     private DipendenteDelegate delegate = DipendenteDelegate.getInstance();
+    
+    private Carrello carrello;
 
 
     @Override public void initialize(URL location, ResourceBundle resources){
@@ -127,7 +131,9 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         try{
             nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
             saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
-            numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
+            carrello = delegate.getCarrello((Dipendente) application.getUtente());
+            numeroProd = carrello.numeroProdotti();
+            
         }
         catch(NoIDMatchException e){
             throw e;
@@ -138,7 +144,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         finally{
             nomeProgetto.setText(nomeProg);
             saldoProgetto.setText(saldo);
-            carrello.setText(Integer.toString(numeroProd));
+            numCarrello.setText(Integer.toString(numeroProd));
         }
 
     }
@@ -428,6 +434,8 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         final Button add = new Button("Aggiungi");
         add.getStyleClass().add("add-button");
         
+        quantitaMsg = new Label();
+        
         gridRight.add(iv, 0, 0, 1, 5);
         gridRight.add(nome, 1, 0);
         gridRight.add(prezzo,1, 1);
@@ -443,7 +451,10 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         Label quantitaLabel = new Label("Quantità da ordinare");
         quantitaLabel.getStyleClass().add("right-label");
         
+        quantitaMsg.getStyleClass().add("error-message");
+         
         gridRight.add(quantitaLabel, 0, 8);
+        gridRight.add(quantitaMsg, 0, 9);
         gridRight.add(quantita, 1, 8);
         gridRight.add(add, 1, 9);
         if(application.getStage().getWidth() < 1130.0){
@@ -458,17 +469,17 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
 
         add.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                int q = Integer.parseInt(quantita.getText());
-                if(q > 0){
-                    try{
-                        Carrello carrello = delegate.getCarrello((Dipendente) application.getUtente());
+                try {
+                    int q = Integer.parseInt(quantita.getText());
+                    if(q > 0){
                         delegate.addProdotto(carrello, prodotto, q);
                         add.setDisable(true);
                         add.setText("Aggiunto!");
-                        
-                    } catch (NoIDMatchException e){
-                        System.err.println(e.getMessage());
+                        quantitaMsg.setText("");
+                        numCarrello.setText(Integer.toString(carrello.numeroProdotti()));
                     }
+                } catch(NumberFormatException e){
+                    quantitaMsg.setText("Inserisci una quantità valida.");
                 }
             }
         });

@@ -49,6 +49,18 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         }
         return inventario;
     }
+    
+    public int getQuantitaAll(Prodotto prodotto) {
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT SUM(quantita) FROM prod_mag WHERE id_prodotto = " + prodotto.getID());
+        Iterator<String[]> i = result.iterator();
+        int quantita = 0;
+        if(i.hasNext()) {
+            String[] riga = i.next();
+            quantita = Integer.parseInt(riga[0]);
+        }
+        return quantita;
+    }
+    
     public int getQuantitaProdotto(Magazzino magazzino, Prodotto prodotto) {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT quantita FROM prod_mag WHERE id_magazzino = " + magazzino.getID() + " AND id_prodotto = " + prodotto.getID());
         Iterator<String[]> i = result.iterator();
