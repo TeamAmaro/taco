@@ -57,7 +57,6 @@ CREATE TABLE `carrelli` (
 
 LOCK TABLES `carrelli` WRITE;
 /*!40000 ALTER TABLE `carrelli` DISABLE KEYS */;
-INSERT INTO `carrelli` VALUES (1,8,10),(1,6,10);
 /*!40000 ALTER TABLE `carrelli` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +80,7 @@ CREATE TABLE `dettagliordini` (
 
 LOCK TABLES `dettagliordini` WRITE;
 /*!40000 ALTER TABLE `dettagliordini` DISABLE KEYS */;
-INSERT INTO `dettagliordini` VALUES ('-1268359798',1,1),('-1268359798',2,1),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-2104777059',9,2),('-322712807',8,5),('-322712807',6,5),('-294083656',8,5),('-294083656',6,5),('-236825354',8,5),('-236825354',6,5);
+INSERT INTO `dettagliordini` VALUES ('-1268359798',1,1),('-1268359798',2,1),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-2104777059',9,2),('-322712807',8,5),('-322712807',6,5),('-294083656',8,5),('-294083656',6,5),('-236825354',8,5),('-236825354',6,5),('-1623333860',8,5),('-1623333860',6,5),('1160350460',8,5),('1160409980',6,5);
 /*!40000 ALTER TABLE `dettagliordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +205,6 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
-INSERT INTO `ordini` VALUES ('-322712807',1,'Sede A',1,1,0,1455549733391),('-294083656',1,'Sede A',1,2,0,1455549733391),('-236825354',1,'Sede A',1,4,0,1455549733391);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +228,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
-INSERT INTO `prod_mag` VALUES (1,1,19),(1,2,8),(1,3,18),(1,4,12),(1,5,10),(1,6,5),(1,7,16),(1,9,143),(1,10,17),(1,11,21),(1,12,3),(1,13,19),(1,16,21),(1,17,15),(1,18,16),(1,19,13),(1,20,25),(1,21,0),(1,22,19),(1,23,28),(2,1,13),(2,2,27),(2,3,3),(2,4,28),(2,5,19),(2,6,2),(2,7,25),(2,9,13),(2,10,27),(2,11,23),(2,12,100),(2,13,22),(2,14,3),(2,16,26),(2,17,13),(2,18,23),(2,19,28),(2,20,22),(2,21,27),(2,22,29),(2,23,7),(3,1,17),(3,2,3),(3,3,11),(3,4,22),(3,5,23),(3,6,7),(3,7,5),(3,9,17),(3,10,28),(3,11,26),(3,12,13),(3,13,1),(3,16,27),(3,17,18),(3,18,12),(3,19,15),(3,20,21),(3,21,26),(3,22,10),(3,23,22),(4,1,23),(4,2,7),(4,3,26),(4,4,2),(4,5,20),(4,6,15),(4,7,25),(4,8,0),(4,9,3),(4,10,11),(4,11,7),(4,12,11),(4,13,26),(4,16,3),(4,17,22),(4,18,19),(4,19,23),(4,20,3),(4,21,3),(4,22,19),(4,23,27),(1,8,5),(2,8,4),(3,8,0);
+INSERT INTO `prod_mag` VALUES (1,1,70),(1,2,45),(1,3,10),(1,4,1),(1,5,6),(1,6,55),(1,7,65),(1,9,29),(1,10,79),(1,11,81),(1,12,95),(1,13,59),(1,16,9),(1,17,93),(1,18,84),(1,19,48),(1,20,31),(1,21,24),(1,22,82),(1,23,15),(2,1,93),(2,2,47),(2,3,21),(2,4,21),(2,5,25),(2,6,0),(2,7,81),(2,9,54),(2,10,29),(2,11,87),(2,12,48),(2,13,2),(2,14,14),(2,16,10),(2,17,53),(2,18,44),(2,19,16),(2,20,85),(2,21,9),(2,22,3),(2,23,12),(3,1,22),(3,2,83),(3,3,18),(3,4,86),(3,5,22),(3,6,4),(3,7,68),(3,9,16),(3,10,60),(3,11,68),(3,12,65),(3,13,37),(3,16,57),(3,17,76),(3,18,98),(3,19,60),(3,20,67),(3,21,49),(3,22,24),(3,23,77),(4,1,69),(4,2,71),(4,3,48),(4,4,95),(4,5,44),(4,6,59),(4,7,88),(4,8,5),(4,9,70),(4,10,66),(4,11,46),(4,12,51),(4,13,77),(4,16,48),(4,17,48),(4,18,39),(4,19,19),(4,20,30),(4,21,96),(4,22,49),(4,23,82),(1,8,52),(2,8,55),(3,8,81);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,7 +306,7 @@ CREATE TABLE `progetti` (
 
 LOCK TABLES `progetti` WRITE;
 /*!40000 ALTER TABLE `progetti` DISABLE KEYS */;
-INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,6528.3,6700),(2,'Progetto Pizza',3,4500,4500);
+INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,6700,6700),(2,'Progetto Pizza',3,4500,4500);
 /*!40000 ALTER TABLE `progetti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,7 +358,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817'),(2,'Luke','Mynetti','luke.mynetti@unilento.le','834576ff97df524f60d8690e0519e866'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3'),(16,'Jim','Questions','jim.questions@ask.com','e7af1c75730aa1184fa928dae1bdf8e'),(17,'John','Cena','john.cena@wwe.com','e7af1c75730aa1184fa928dae1bdf8e'),(20,'Paolino','Paperino','paolino.paperino@topolino.it','e7af1c75730aa1184fa928dae1bdf8e'),(23,'Alfonso','Verde','alfonso.verde@green.ve','2d91bf040b3919d9f743ee80b12377e5'),(24,'Rocco','Turrocco','rocco.turrocco@california.ca','2d91bf040b3919d9f743ee80b12377e5'),(25,'Perry','Gerry','perry.gerry@curry.cu','5e8192a9cdd479f16706f145154c7b14'),(26,'Luca','Pera','luca.pera@semplici.it','7af22f55b823f1ccc688b64859177d3e');
+INSERT INTO `utenti` VALUES (1,'Guga','Rucola','guga.rucola@napoli.na','f67c2bcbfcfa30fccb36f72dca22a817'),(2,'Luke','Skywalker','luke.skywalker@jedi.je','834576ff97df524f60d8690e0519e866'),(3,'Mario','Rossi','mario.rossi@asd.asd','d614bc3109a30c1d30fb502eaade04e3'),(4,'Tizio','Caio','tizio.caio@magazzinodelsole.sol','29ddd676c753140581f97add2b52eadc'),(5,'Ciccio','Brizio','ciccio.brizio@magazzinodellaluna.lun','ffb170398ce21be68c2118d25f29e5d3'),(16,'Jim','Questions','jim.questions@ask.com','e7af1c75730aa1184fa928dae1bdf8e'),(17,'John','Cena','john.cena@wwe.com','e7af1c75730aa1184fa928dae1bdf8e'),(20,'Paolino','Paperino','paolino.paperino@topolino.it','e7af1c75730aa1184fa928dae1bdf8e'),(23,'Alfonso','Verde','alfonso.verde@green.ve','2d91bf040b3919d9f743ee80b12377e5'),(24,'Rocco','Turrocco','rocco.turrocco@california.ca','2d91bf040b3919d9f743ee80b12377e5'),(25,'Perry','Gerry','perry.gerry@curry.cu','5e8192a9cdd479f16706f145154c7b14'),(26,'Luca','Pera','luca.pera@semplici.it','7af22f55b823f1ccc688b64859177d3e');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -373,4 +371,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-15 16:30:34
+-- Dump completed on 2016-02-16 17:57:31
