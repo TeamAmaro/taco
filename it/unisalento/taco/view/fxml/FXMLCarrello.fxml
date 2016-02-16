@@ -10,7 +10,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLCarrelloController">
+<AnchorPane fx:id="anchorPane" id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.taco.controller.FXMLCarrelloController">
     <HBox fx:id="topLeft" spacing="10.0" alignment="CENTER_LEFT" id="top-left" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" prefHeight="50.0">
         <children>
             <HBox fx:id="backArrowBox" id="back-arrow-box">
@@ -44,8 +44,8 @@
                 </HBox>
                 <HBox spacing="10.0" alignment="CENTER" fx:id="ordinaBox">
                     <Button fx:id="ordinaButton" styleClass="ordina-button" text="Completa Ordine"/>                  
-                    <Label text="Totale Parziale:"/>
-                    <Label fx:id="totale" styleClass="totale"/>                 
+                    <Label text="Subtotale:"/>
+                    <Label fx:id="subtotale" styleClass="totale"/>                 
                 </HBox>
                 <GridPane fx:id="content" alignment="CENTER" vgap="10" hgap="10">
                     <Label styleClass="info-text" text="Prodotto" GridPane.columnIndex="0" GridPane.rowIndex="0" minWidth="400.0" />

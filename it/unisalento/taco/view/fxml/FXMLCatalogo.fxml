@@ -42,7 +42,7 @@
                         <Image url="@../img/b_cart.png" smooth="true" />
                     </image>
                 </ImageView>
-                <Label styleClass="carrello-info" fx:id="carrello"/>
+                <Label styleClass="carrello-info" fx:id="numCarrello"/>
             </StackPane>
             <Label styleClass="logout-button" text="Logout" fx:id="logout"/>
         </children>
