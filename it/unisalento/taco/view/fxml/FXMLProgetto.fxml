@@ -76,7 +76,7 @@
        </TableView>
        <TextField fx:id="ordFiltro" styleClass="text-field" GridPane.columnIndex="6" GridPane.rowIndex="4" promptText="Codice ordine"/>
        <Button fx:id="ordButton" styleClass="regular-button" GridPane.columnIndex="7" GridPane.rowIndex="4" text="Cerca"/>
-        <Label fx:id="moreButton" styleClass="label-button-right" text="Successivo" GridPane.columnIndex="8" GridPane.rowIndex="4" GridPane.halignment="RIGHT" />
+        <Label fx:id="moreButton" styleClass="label-button-right" text="Carica altri" GridPane.columnIndex="8" GridPane.rowIndex="4" GridPane.halignment="RIGHT" />
     </GridPane>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlprogetto.css"/>
