@@ -78,7 +78,7 @@
 }
 
 .esaurimento {
-    -fx-text-fill: rgb(254,208,69);
+    -fx-text-fill: #ff9900;
 }
 
 .logout-button {
@@ -223,6 +223,7 @@
 .dettagli-prodotto {
     -fx-text-fill: rgb(23,55,105);
     -fx-background-color: inherit;
+    -fx-font-weight: bold;
 }
 
 .dettagli-prodotto:hover {

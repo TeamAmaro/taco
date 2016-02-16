@@ -58,6 +58,10 @@
     -fx-text-fill: rgb(23,55,105);
 }
 
+.message {
+    -fx-font-weight: bold;
+}
+
 .logout-button:hover, .message:hover, .quantita-text:hover{
     -fx-cursor: hand;
     -fx-text-fill: #448AFF;

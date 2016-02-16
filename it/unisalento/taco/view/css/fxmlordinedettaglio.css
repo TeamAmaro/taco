@@ -159,3 +159,12 @@
     -fx-font-size: 14px;
     -fx-focus-color: transparent;  
 }
+.label-blue{
+    -fx-text-fill: rgb(23,55,105);
+    -fx-font-weight: bold;
+}
+
+.label-blue:hover{
+    -fx-cursor: hand;
+    -fx-text-fill: #448AFF;
+}

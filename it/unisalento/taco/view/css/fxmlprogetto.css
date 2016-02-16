@@ -160,8 +160,11 @@
     -fx-background-color: #EEEEEE;
 }
 
+.label-button-left, .label-button-right{
+    -fx-font-weight: bold;
+}
 
-.label-button:hover {
+.label-button-left:hover, .label-button-right:hover {
     -fx-text-fill: #448AFF;
     -fx-cursor: hand;
 }
