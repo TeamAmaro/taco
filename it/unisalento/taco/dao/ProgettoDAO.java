@@ -83,12 +83,12 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
-            int idProgetto = Integer.parseInt(riga[0]);
             try{
+                int idProgetto = Integer.parseInt(riga[0]);
                 Progetto progetto = getByID(idProgetto);
                 return progetto;
             }
-            catch(NoIDMatchException e){
+            catch(NumberFormatException | NoIDMatchException e){
                 throw e;
             }
         }
