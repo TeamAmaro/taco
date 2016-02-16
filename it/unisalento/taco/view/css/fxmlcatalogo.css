@@ -276,3 +276,7 @@
 #search-icon-box {
     -fx-background-color: #FFFFFF;
 }
+
+.error-message {
+    -fx-text-fill: rgb(239,82,98);
+}
