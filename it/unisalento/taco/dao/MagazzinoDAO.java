@@ -75,12 +75,37 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         while(i.hasNext()){
             String[] riga = i.next();
             //SE LA QUANTITA' E' 0, SALTA IL MAGAZZINO
-            if(Integer.parseInt(riga[3]) == 0)
+            if(Integer.parseInt(riga[4]) == 0)
                 continue;
             int idMag = Integer.parseInt(riga[0]);
             int idMagazziniere = Integer.parseInt(riga[3]);
             try{
                 Magazziniere magazziniere = MagazziniereDAO.getInstance().getByID(idMagazziniere);
+                Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag), magazziniere);
+                magazzini.add(magazzino);
+            } catch(NoIDMatchException e){
+                throw e;
+            }
+        }
+        return magazzini;
+    }
+    
+        public Set<Magazzino> cercaProdottoTest(Prodotto prodotto) throws NoIDMatchException{
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT m.*,pm.quantita FROM magazzini m JOIN prod_mag pm ON m.id = pm.id_magazzino JOIN prodotti p ON p.id = pm.id_prodotto WHERE p.id = " + prodotto.getID() + " ORDER BY quantita DESC");
+        Iterator<String[]> i = result.iterator();
+        Set<Magazzino> magazzini = new LinkedHashSet<>();
+
+        while(i.hasNext()){
+            String[] riga = i.next();
+            //SE LA QUANTITA' E' 0, SALTA IL MAGAZZINO
+            if(Integer.parseInt(riga[4]) == 0)
+                continue;
+            int idMag = Integer.parseInt(riga[0]);
+            int idMagazziniere = Integer.parseInt(riga[3]);
+            try{
+                Magazziniere magazziniere = MagazziniereDAO.getInstance().getByID(idMagazziniere);
+                Map<Prodotto,Integer> inventario = new LinkedHashMap<>();
+                inventario.put(prodotto, Integer.parseInt(riga[4]));
                 Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag), magazziniere);
                 magazzini.add(magazzino);
             } catch(NoIDMatchException e){
