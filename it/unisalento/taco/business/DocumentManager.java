@@ -39,7 +39,6 @@ public class DocumentManager {
         try {
             
             PDDocument document = new PDDocument();
-            PDPage page = new PDPage(PDPage.PAGE_SIZE_A4);
             PDFont font = PDType1Font.HELVETICA;
             
             BufferedImage logoBuffer = ImageIO.read(new File("src/it/unisalento/taco/view/img/logo2.png"));
@@ -48,7 +47,7 @@ public class DocumentManager {
             for(Ordine o : listaOrdini){
                 
                 int i = 730;
-                
+                PDPage page = new PDPage(PDPage.PAGE_SIZE_A4);
                 document.addPage(page);
                 
                 try (PDPageContentStream cos = new PDPageContentStream(document, page)) {
@@ -103,9 +102,23 @@ public class DocumentManager {
                     for(Map.Entry<Prodotto,Integer> e : o.getListaProdotti().entrySet()){
                         cos.beginText();
                         cos.moveTextPositionByAmount(50, i);
-                        cos.drawString(e.getKey().getFormatPrezzo().replace('€', ' ') + " euro \""  + e.getKey().getNome()+ "\" x " + e.getValue());
+                        cos.drawString("\"" + e.getKey().getNome() + "\" " + e.getKey().getFormatPrezzo().replace('€', ' ') + " euro"  +  " x " + e.getValue());
                         cos.endText();
                         i -= 20;
+                        /*
+                        //Se si raggiunge il fondo della pagina
+                        if(i <= 80)
+                        {
+                            cos.close();
+                            i = 730;
+                            page = new PDPage(PDPage.PAGE_SIZE_A4);
+                            document.addPage(page);
+
+                            
+                            cos.drawImage(logo, 130, i);
+                            cos.setFont(font, 12);
+                            i-=40;
+                        }*/
                     }
                       
                     cos.beginText();
@@ -138,6 +151,7 @@ public class DocumentManager {
                     cos.moveTextPositionByAmount(50, i);
                     cos.drawString("TOTALE: " + formatoEuro.format(totale).replace('€', ' ') + " euro");
                     cos.endText();
+                    cos.close();
                 }
             }
             document.save(file);
