@@ -110,7 +110,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         this.application = application;
     }
 
-    public void initData() {
+    public void initData() throws NoIDMatchException {
 
         initInfo();
         initMenu();
@@ -118,7 +118,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         
     }
 
-    private void initInfo(){
+    private void initInfo() throws NoIDMatchException{
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
@@ -130,34 +130,10 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.WINDOW_MODAL);
-            
-            Label msg = new Label("Codice Errore: 1");
-            Label msg2 = new Label("Non risulti associato ad un progetto");
-            Button okBtn = new Button("Ok");
-            
-            okBtn.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                @Override public void handle(MouseEvent arg0) {
-                    dialog.close();
-                    application.logout();
-                }
-            });
-            
-            dialog.setOnCloseRequest(new EventHandler<WindowEvent>(){
-                @Override public void handle(WindowEvent arg0) {
-                    dialog.close();
-                    application.logout();
-                }
-            });
-            
-            VBox vb = new VBox();
-            vb.getChildren().addAll(msg, msg2, okBtn);
-            
-            
+            throw e;
         }
         catch(NoQueryMatchException e){
-            //Non fare nulla
+            //La gestisco qui
         }
         finally{
             nomeProgetto.setText(nomeProg);
@@ -367,7 +343,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             dettagli.getStyleClass().add("dettagli-prodotto");
 
             try{
-                int quantita = delegate.chiediDisponibilità((Dipendente) application.getUtente(), p);
+                int quantita = delegate.chiediDisponibilita((Dipendente) application.getUtente(), p);
                 if(quantita < 10){
                     descrizione.setText("In esaurimento");
                     descrizione.getStyleClass().add("esaurimento");
@@ -489,6 +465,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                         delegate.addProdotto(carrello, prodotto, q);
                         add.setDisable(true);
                         add.setText("Aggiunto!");
+                        
                     } catch (NoIDMatchException e){
                         System.err.println(e.getMessage());
                     }
