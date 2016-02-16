@@ -31,16 +31,15 @@ public class GeneratoreOrdini {
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
         try {
             Map<Prodotto,Integer> listaProdotti = Carrello.getCarrello(dipendente).getListaProdotti();
-            Magazzino magDipendente = Magazzino.getMagazzino(dipendente.getSede());
+            Magazzino magDip = Magazzino.getMagazzino(dipendente.getSede());
             
             Map<Magazzino, Map<Prodotto,Integer>> magPerProdQuant = new LinkedHashMap<>();
             Map<Prodotto,Integer> prodQuantMagDip = new LinkedHashMap<>();
-            magPerProdQuant.put(magDipendente, prodQuantMagDip);
             
             for(Map.Entry<Prodotto,Integer> prodQuantEntry : listaProdotti.entrySet()){
                 
                 Prodotto prodRichiesto = prodQuantEntry.getKey();
-                int quantMagDip = magDipendente.getInventario().get(prodRichiesto);
+                int quantMagDip = magDip.getInventario().get(prodRichiesto);
                 int quantRichiesta = prodQuantEntry.getValue();
                                 
                 if(quantMagDip < quantRichiesta){
@@ -51,7 +50,7 @@ public class GeneratoreOrdini {
                     
                     //Chiedi agli altri di soddisfare la richiesta
                     Set<Magazzino> listaMag = Magazzino.cercaProdotto(prodRichiesto);
-                    listaMag.remove(magDipendente);
+                    listaMag.remove(magDip);
                                         
                     for(Magazzino magExt : listaMag){
                         int quantMagExt = magExt.getInventario().get(prodRichiesto);
@@ -84,7 +83,12 @@ public class GeneratoreOrdini {
                     }
                 } else {
                     //Soddisfa la richiesta e passa al prossimo prodotto
-                    prodQuantMagDip.put(prodRichiesto, quantRichiesta);
+                    if(magPerProdQuant.containsKey(magDip))
+                        magPerProdQuant.get(magDip).put(prodRichiesto, quantRichiesta);
+                    else {
+                        prodQuantMagDip.put(prodRichiesto, quantRichiesta);
+                        magPerProdQuant.put(magDip, prodQuantMagDip);
+                    }
                 }
             }
             Date date = new Date();
