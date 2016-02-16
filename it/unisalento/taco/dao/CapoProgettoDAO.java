@@ -21,19 +21,6 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
     }
 	
     private CapoProgettoDAO (){};
-
-    public ArrayList getAllCapoProgetto() {
-        //FUN FACT: QUESTA QUERY NON SI ABBINA CON LE POLACCHINE
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.id,utenti.nome,utenti.cognome,utenti.email FROM capiprogetto JOIN utenti ON id = id_utente");
-        Iterator<String[]> i = result.iterator();
-        ArrayList<CapoProgetto> capiProgetto = new ArrayList<>();;
-        while(i.hasNext()){
-            String[] riga = i.next();
-            CapoProgetto capo = new CapoProgetto(Integer.parseInt(riga[0]), riga[1], riga[2], riga[3]);
-            capiProgetto.add(capo);
-        }
-        return capiProgetto;
-    }
     
     public CapoProgetto getCapoProgetto(String email) throws NoQueryMatchException {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti WHERE email = '" + email + "'");
@@ -49,9 +36,8 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
         }
     }
 
-    //OTTIENE IL CAPOPROGETTO TRAMITE IL PROGETTO
     public CapoProgetto getCapoProgetto(Progetto progetto) throws NoQueryMatchException {
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email FROM utenti,capiprogetto WHERE id_progetto = " + progetto.getID() + " AND utenti.id = capiprogetto.id_utente");
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email FROM utenti JOIN capiprogetto ON utenti.id = capiprogetto.id_utente WHERE id_progetto = " + progetto.getID());
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();

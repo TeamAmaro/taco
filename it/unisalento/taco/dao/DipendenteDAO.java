@@ -6,7 +6,6 @@ import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Progetto;
@@ -26,26 +25,8 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
 
     private DipendenteDAO(){};
 
-    public List<Dipendente> getAllDipendenti() throws NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.*, nome_sede FROM dipendenti,utenti WHERE id_utente = utenti.id");
-        Iterator<String[]> i = result.iterator();
-        List<Dipendente> listaDipendenti = new ArrayList<>();
-
-        while(i.hasNext()) {
-            String[] riga = i.next();
-            int id = Integer.parseInt(riga[0]);
-            try{
-            Dipendente dipendente = getByID(id);
-            listaDipendenti.add(dipendente);
-            }
-            catch(NoIDMatchException e){
-                throw e;
-            }
-        }
-        return listaDipendenti;
-}
-
-    @Override public Dipendente getByID(int id) throws NoIDMatchException{
+    @Override 
+    public Dipendente getByID(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email,nome_sede FROM utenti,dipendenti WHERE id = id_utente AND id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){

@@ -108,7 +108,8 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     }
     
     
-    @Override public Ordine getByID(int hashCode) throws NoIDMatchException{
+    @Override
+    public Ordine getByID(int hashCode) throws NoIDMatchException{
         
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE codice = " + hashCode);
         Iterator<String[]> i = result.iterator();
@@ -141,7 +142,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         }
     }
     
-    //SI SUPPONE CHE CI SIANO PRODOTTI NELL'ORDINE E CHE NON POSSA ESISTE UN ORDINE SENZA UNA LISTA DI PRODOTTI
     public Map<Prodotto,Integer> getListaProdotti(int hashCode) {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT pr.nome,p.*,d.quantita FROM prodotti p JOIN produttori pr ON p.id = pr.id_prodotto JOIN dettagliordini d ON d.id_prodotto = p.id WHERE codice = " + hashCode);
         Iterator<String[]> i = result.iterator();
@@ -167,9 +167,9 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         }
     }
     
-    //Da utilizzare ai soli fini di debug
+    //Solo debug, metodo pericoloso
     @Override public void delete(IdentificabileID obj){
-        //DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
     }
     
 }

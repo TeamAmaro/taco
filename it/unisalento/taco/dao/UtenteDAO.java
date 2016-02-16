@@ -23,7 +23,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
     }
     private UtenteDAO (){};
 
-    public List<? super Utente> getAllUtenti() {
+    public List<? super Utente> getAllUtenti() throws NoIDMatchException {
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM utenti");
         Iterator<String[]> i = result.iterator();
         List<Utente> listaUtenti = new ArrayList<>();
@@ -31,13 +31,12 @@ public class UtenteDAO implements DAOInterface<Utente>{
         while(i.hasNext()) {
             String[] riga = i.next();
             int id = Integer.parseInt(riga[0]);
-            //Chiedo al database che tipo di istanza è
             try{
             Utente utente = getByID(id);
             listaUtenti.add(utente);
             }
             catch(NoIDMatchException e){
-                e.printStackTrace();
+                throw e;
             }
         }
         return listaUtenti;

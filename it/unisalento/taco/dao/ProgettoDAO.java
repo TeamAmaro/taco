@@ -10,7 +10,6 @@ import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.IdentificabileID;
-import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Sede;
 import java.util.LinkedHashSet;
@@ -27,36 +26,8 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     }
     private ProgettoDAO (){};
 
-    //Da riscrivere o eliminare
-    /*
-    public List<Progetto> getAllProgetto() throws NoIDMatchException{
-
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM progetti. capiprogetto where id_progetto = id");
-        Iterator<String[]> i = result.iterator();
-        List<Progetto> listProgetto = new ArrayList<>();
-        CapoProgettoDAO capProgDAO = CapoProgettoDAO.getInstance();
-        Set<Ordine> listaOrdini = new LinkedHashSet<>();
-
-        while(i.hasNext()) {
-            String[] riga = i.next();
-            int id = Integer.parseInt(riga[0]);
-            double saldo = Double.parseDouble(riga[2]);
-            double budget = Double.parseDouble(riga[3]);
-            int idCapo = Integer.parseInt(riga[4]);
-            try{
-                Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
-                CapoProgetto capoProgetto = CapoProgettoDAO.getInstance().getByID(idCapo);
-                Progetto progetto = new Progetto(id, riga[1], capoProgetto, saldo, budget, listaDipendenti);
-                listProgetto.add(progetto);
-            }
-            catch (NoIDMatchException e){
-                throw e;
-            }
-        }
-        return listProgetto;
-    }*/
-
-    @Override public Progetto getByID(int id) throws NoIDMatchException{
+    @Override 
+    public Progetto getByID(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.*,utenti.nome,cognome,email FROM progetti JOIN utenti ON id_capoprog = utenti.id WHERE progetti.id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
@@ -131,7 +102,6 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
         return listaDipendenti;
     }
     
-    //Lanciare eccezione nel caso in cui il capo progetto non ha progetti
     public Set<Progetto> getListaProgetti(CapoProgetto capoProgetto) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.* FROM progetti,capiprogetto WHERE id_progetto = progetti.id AND id_utente =" + capoProgetto.getID());
         Iterator<String[]> i = result.iterator();

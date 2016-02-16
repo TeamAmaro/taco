@@ -31,8 +31,8 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
     
     private ProdottoDAO(){}
     
-    @Override public Prodotto getByID(int id) throws NoIDMatchException{
-        //FUN FACT: QUESTA NUOVA QUERY E' PIU' ELEGANTE DI QUELLA DI PRIMA DEL 67%
+    @Override
+    public Prodotto getByID(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT produttori.nome,prodotti.* FROM prodotti JOIN produttori ON id_prodotto = id WHERE id = " + id);
         Iterator<String[]> i = result.iterator();
 
@@ -107,7 +107,6 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
             }catch(NoIDMatchException e){
                 throw e;
             }
-            //TROVARE UN MODO PIU' ELENGANTE 
             j++;
         }
         return listaProdotti;

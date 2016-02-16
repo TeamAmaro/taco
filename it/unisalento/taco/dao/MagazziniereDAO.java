@@ -10,8 +10,6 @@ import it.unisalento.taco.dbconnections.DBConnection;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Magazziniere;
-import it.unisalento.taco.model.Magazzino;
-import it.unisalento.taco.model.Sede;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -49,11 +47,7 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
     }
     
     @Override public void create(Magazziniere magazziniere){
-        /*if(magazziniere.getMagazzino() != null)
-            DBConnection.getInstance().updateDB("INSERT INTO magazzinieri VALUES(" + magazziniere.getID() + "," + magazziniere.getMagazzino().getID() + ")");
-        else
-            DBConnection.getInstance().updateDB("INSERT INTO magazzinieri VALUES(" + magazziniere.getID() + ", 0)");
-        */
+        //Niente
     }
     
     @Override public void delete(IdentificabileID obj){
@@ -61,6 +55,6 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
     }
     
     @Override public void update(Magazziniere magazziniere){
-        //nulla da scrivere al momento
+        //Niente
     }
 }
