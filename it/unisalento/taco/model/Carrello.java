@@ -88,6 +88,13 @@ public class Carrello implements IdentificabileID{
         setTotale();
     }
     
+    public void updateQuantita(Prodotto prodotto, int quantita){
+        if(listaProdotti.containsKey(prodotto)){
+            listaProdotti.put(prodotto, quantita);
+            CarrelloDAO.getInstance().updateQuantita(this, prodotto, quantita);
+        }
+    }
+    
     public void removeProdotto(Prodotto prodotto){
         if(listaProdotti.containsKey(prodotto)){
                 listaProdotti.remove(prodotto);
