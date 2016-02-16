@@ -34,9 +34,8 @@ import javafx.stage.WindowEvent;
 
 public class Main extends Application{
     
-    private Stage stage;
+    private Stage primaryStage;
     private Utente utente;
-    private Scene lastScene;
     
     private final double MINIMUM_WINDOW_WIDTH = 900.0;
     private final double MINIMUM_WINDOW_HEIGHT = 650.0;
@@ -46,21 +45,21 @@ public class Main extends Application{
     } 
     
     @Override public void start(Stage primaryStage) { 
-        stage = primaryStage;
+        this.primaryStage = primaryStage;
         
-        stage.setTitle("Galaxy Express");
+        this.primaryStage.setTitle("Galaxy Express");
         
-        stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
-        stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
+        this.primaryStage.setMinWidth(MINIMUM_WINDOW_WIDTH);
+        this.primaryStage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         
-        stage.getIcons().add(new Image("it/unisalento/taco/view/img/icona.png"));
+        this.primaryStage.getIcons().add(new Image("it/unisalento/taco/view/img/icona.png"));
         
-        stage.setWidth(MINIMUM_WINDOW_WIDTH);
-        stage.setHeight(MINIMUM_WINDOW_HEIGHT);
+        this.primaryStage.setWidth(MINIMUM_WINDOW_WIDTH);
+        this.primaryStage.setHeight(MINIMUM_WINDOW_HEIGHT);
         
         loginLevel();
        
-        stage.show();
+        this.primaryStage.show();
     } 
  
     private void loginLevel(){
@@ -68,7 +67,7 @@ public class Main extends Application{
             FXMLLoginController login = (FXMLLoginController) cambiaLivello("fxml/FXMLLogin.fxml");
             login.setApplication(this);
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -89,7 +88,7 @@ public class Main extends Application{
             prodottoController.setProdotto(prodotto);
             prodottoController.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -99,7 +98,7 @@ public class Main extends Application{
             carrello.setApplication(this);
             carrello.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -110,7 +109,7 @@ public class Main extends Application{
             progettoController.setProgetto(progetto);
             progettoController.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -120,7 +119,7 @@ public class Main extends Application{
             progettoElenco.setApplication(this);
             progettoElenco.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -130,7 +129,7 @@ public class Main extends Application{
             magazzino.setApplication(this);
             magazzino.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -141,7 +140,7 @@ public class Main extends Application{
             inventario.setApplication(this);
             inventario.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -152,7 +151,7 @@ public class Main extends Application{
             spedizione.setApplication(this);
             spedizione.initData();
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
     
@@ -162,9 +161,8 @@ public class Main extends Application{
             ordineDettaglio.setListaOrdini(listaOrdini);
             ordineDettaglio.setApplication(this);
             ordineDettaglio.initData();
-            
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            errorDialog(ex);
         }
     }
 
@@ -173,7 +171,7 @@ public class Main extends Application{
     }
     
     public Stage getStage(){
-        return stage;
+        return primaryStage;
     }
     
     public boolean setUtente(String email, String password){
@@ -204,27 +202,22 @@ public class Main extends Application{
     }
     
     public void getDetails(Prodotto prodotto){
-        lastScene = stage.getScene();
         prodottoLevel(prodotto);
     }
     
     public void getDetails(Progetto progetto){
-        lastScene = stage.getScene();
         progettoLevel(progetto);
     }
     
     public void getInventario(Magazzino magazzino){
-        lastScene = stage.getScene();
         inventarioLevel(magazzino);
     }
     
     public void getSpedizione(Magazzino magazzino){
-        lastScene = stage.getScene();
         spedizioneLevel(magazzino);
     }
     
     public void getCarrello(){
-        lastScene = stage.getScene();
         carrelloLevel();
     }
     
@@ -240,17 +233,10 @@ public class Main extends Application{
             in.close();
         } 
         //Non so perché, ma ci sono 15 px di differenza ..
-        Scene scene = new Scene(root, stage.getWidth() - 15, stage.getHeight() - 15);
-        stage.setScene(scene);
-        stage.centerOnScreen();
+        Scene scene = new Scene(root, primaryStage.getWidth() - 15, primaryStage.getHeight() - 15);
+        primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
         return (Initializable) loader.getController();
-    }
-
-    public void lastView() {
-        stage.setScene(lastScene);
-        stage.sizeToScene();
-        stage.centerOnScreen();
-
     }
 
     public void ordina(Set<Ordine> listaOrdini) {
