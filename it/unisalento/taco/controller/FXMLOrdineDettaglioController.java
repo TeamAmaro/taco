@@ -52,14 +52,12 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 public class FXMLOrdineDettaglioController implements Initializable {
 
     @FXML Label logout;
-    @FXML StackPane iconaCarrello;
     
     @FXML AnchorPane anchorPane;
     
     @FXML Label nomeClient;
     @FXML Label nomeProgetto;
     @FXML Label saldoProgetto;
-    @FXML Label carrello;
 
     @FXML HBox topLeft;
     
@@ -172,7 +170,6 @@ public class FXMLOrdineDettaglioController implements Initializable {
         try{
             nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
             saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
-            numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
         }
         catch(NoIDMatchException e){
             Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, e);
@@ -185,7 +182,6 @@ public class FXMLOrdineDettaglioController implements Initializable {
             nomeProgetto.setText(nomeProg);
             saldoProgetto.setText(saldo);
             saldoLabel.setText(saldo);
-            carrello.setText(Integer.toString(numeroProd));
         }
     }
     
@@ -232,12 +228,6 @@ public class FXMLOrdineDettaglioController implements Initializable {
                 //Implementare
             }
         });*/
-        
-        iconaCarrello.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                application.getCarrello();
-            }
-        });
         
         acquistaButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {                
