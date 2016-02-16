@@ -24,4 +24,13 @@ public class CapoProgettoDelegate {
     public Set<Ordine> getListaOrdini(Progetto progetto) throws NoIDMatchException {
         return Ordine.getListaOrdini(progetto);
     }
+    
+    public Set<Ordine> getListaOrdini(Progetto progetto, int offset) throws NoIDMatchException {
+        return Ordine.getListaOrdini(progetto, offset);
+    }
+    
+    public int chiediNumeroOrdini(Progetto progetto) throws NoIDMatchException {
+        return Ordine.getNumeroOrdini(progetto);
+    }
+
 }

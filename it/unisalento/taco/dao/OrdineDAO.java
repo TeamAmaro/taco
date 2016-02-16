@@ -107,6 +107,13 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         return listaOrdini;
     }
     
+    public int getNumeroOrdini(Progetto progetto) throws NoIDMatchException{
+        //select count(*) from ordini where id_progetto = 1;
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT COUNT(*) FROM ordini WHERE id_progetto = " + progetto.getID());
+        Iterator<String[]> i = result.iterator();
+        String[] riga = i.next();
+        return Integer.parseInt(riga[0]);
+    }
     
     @Override
     public Ordine getByID(int hashCode) throws NoIDMatchException{

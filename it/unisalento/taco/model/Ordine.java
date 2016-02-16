@@ -216,7 +216,15 @@ public final class Ordine {
         return OrdineDAO.getInstance().getListaOrdini(progetto);
     }
     
+    public static Set<Ordine> getListaOrdini(Progetto progetto, int offset) throws NoIDMatchException{
+        return OrdineDAO.getInstance().getListaOrdini(progetto, offset);
+    }
+    
     public static Set<Ordine> getListaOrdini(Magazzino magazzino) throws NoIDMatchException{
         return OrdineDAO.getInstance().getListaOrdini(magazzino);
+    }
+    
+    public static int getNumeroOrdini(Progetto progetto) throws NoIDMatchException{
+        return OrdineDAO.getInstance().getNumeroOrdini(progetto);
     }
 }
