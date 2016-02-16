@@ -35,7 +35,7 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
             return dip; 
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     

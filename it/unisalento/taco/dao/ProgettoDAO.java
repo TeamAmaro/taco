@@ -45,7 +45,7 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
             }
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     

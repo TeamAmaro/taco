@@ -137,7 +137,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
             }
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     

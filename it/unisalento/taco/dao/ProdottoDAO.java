@@ -45,7 +45,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
             return prodotto;
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     

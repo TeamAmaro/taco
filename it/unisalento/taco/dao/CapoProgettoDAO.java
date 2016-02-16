@@ -59,7 +59,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProgetto;
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     
