@@ -32,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -45,6 +46,10 @@ public class FXMLProgettoController implements Initializable {
     @FXML Label nomeProgetto;
     @FXML Label budget;
     @FXML Label saldo;
+    
+    @FXML AnchorPane anchorPane;
+    
+    @FXML Label moreButton;
     
     @FXML HBox backArrowBox;
     
@@ -79,6 +84,9 @@ public class FXMLProgettoController implements Initializable {
     private Set<Ordine> listaOrdini;
     private Set<Dipendente> listaDipendenti;
     
+    private int offset;
+    private int numOrdini;
+    
     public void setApplication(Main application){
         this.application = application;
     }
@@ -101,6 +109,7 @@ public class FXMLProgettoController implements Initializable {
     }
     
     private void initInfo(){
+        offset = 0;
         String nome = application.getUtente().getNome();
         String cognome = application.getUtente().getCognome();
         nomeClient.setText(nome + " " + cognome);
@@ -111,6 +120,24 @@ public class FXMLProgettoController implements Initializable {
     
     private void initMenu(){
     
+        moreButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent arg0) {
+                if (numOrdini < offset){
+                    moreButton.setVisible(false);
+                    moreButton.setManaged(false);
+                }
+                else {
+                    offset += 10;
+                    try {
+                        listaOrdini.addAll(delegate.getListaOrdini(progetto, offset));
+                        ordineData.addAll(listaOrdini);
+                    } catch (NoIDMatchException ex) {
+                        Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        
         backArrowBox.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
                 application.capoProgettoView();
@@ -187,13 +214,19 @@ public class FXMLProgettoController implements Initializable {
         
         tableViewDip.setItems(dipendenteData);
         tableViewDip.setMaxHeight(200.0);
-        tableViewDip.setMaxWidth(200.0);
+        tableViewDip.setMaxWidth(300.0);
         tableViewDip.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     
     private void initOrdTable(){
         try {
-            listaOrdini = delegate.getListaOrdini(progetto);
+            if((numOrdini = delegate.chiediNumeroOrdini(progetto)) < 10){
+                listaOrdini = delegate.getListaOrdini(progetto);
+                anchorPane.getChildren().remove(moreButton);
+            }
+            else{
+                listaOrdini = delegate.getListaOrdini(progetto, offset);
+            }
             ordineData.addAll(listaOrdini);
         } catch (NoIDMatchException e){
             Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, e);
@@ -212,7 +245,7 @@ public class FXMLProgettoController implements Initializable {
             @Override
             public ObservableValue<Double> call(TableColumn.CellDataFeatures<Ordine, Double> p) {
                 Double tot = p.getValue().getTotale() + p.getValue().getSpesaSpedizione();
-                return new ReadOnlyObjectWrapper<Double>(tot);
+                return new ReadOnlyObjectWrapper<>(tot);
             }
         });
         
@@ -236,14 +269,13 @@ public class FXMLProgettoController implements Initializable {
 
             @Override
             public ObservableValue<Date> call(TableColumn.CellDataFeatures<Ordine, Date> p) {
-                return new ReadOnlyObjectWrapper<Date>(p.getValue().getReadableData());
+                return new ReadOnlyObjectWrapper<>(p.getValue().getReadableData());
             }
         });
+        
         tableViewOrd.setItems(ordineData);
         tableViewOrd.setMaxHeight(200.0);
-        tableViewOrd.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-       
-    
+        tableViewOrd.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);    
     }
     
     private void initAnimation(){
