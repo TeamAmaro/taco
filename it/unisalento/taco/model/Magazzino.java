@@ -21,6 +21,13 @@ public class Magazzino  implements IdentificabileID {
         this.inventario = inventario;
         this.magazziniere = magazziniere;
     }
+    
+    public Magazzino(int id, String nome, Sede sede, Map<Prodotto,Integer> inventario) {
+        this.id = id;
+        this.nome = nome;
+        this.sede = sede;
+        this.inventario = inventario;
+    }
 
     public String getNome(){
         return nome;
@@ -66,7 +73,7 @@ public class Magazzino  implements IdentificabileID {
         }
         else {
             inventario.put(prodotto, quantita);
-            MagazzinoDAO.getInstance().addProdotto(this, prodotto, quantita);
+            MagazzinoDAO.getInstance().updateQuantita(this, prodotto, quantita);
         }
     }
 
@@ -137,7 +144,6 @@ public class Magazzino  implements IdentificabileID {
     }
 
     @Override public int hashCode() {
-        //PARACULATA
         return id;
     }
     
