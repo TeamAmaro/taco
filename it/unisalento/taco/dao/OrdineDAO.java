@@ -40,12 +40,8 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                if(codice != Integer.parseInt(riga[0])){
-                    Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
-                    listaOrdini.add(ordine);
-                    codice = Integer.parseInt(riga[0]);
-                }
-                
+                Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
+                listaOrdini.add(ordine);
             } 
             catch(NoIDMatchException e) {
                 throw e;
@@ -54,11 +50,10 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         return listaOrdini;
     }
     
-        public Set<Ordine> getListaOrdini(Progetto progetto, int offset) throws NoIDMatchException{
+    public Set<Ordine> getListaOrdini(Progetto progetto, int offset) throws NoIDMatchException{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_progetto = " + progetto.getID() + " LIMIT 10 OFFSET " + offset);
         Iterator<String[]> i = result.iterator();
-        int codice = 0;
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
@@ -67,12 +62,8 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                if(codice != Integer.parseInt(riga[0])){
-                    Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
-                    listaOrdini.add(ordine);
-                    codice = Integer.parseInt(riga[0]);
-                }
-                
+                Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
+                listaOrdini.add(ordine);
             } 
             catch(NoIDMatchException e) {
                 throw e;
@@ -94,11 +85,8 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                if(codice != Integer.parseInt(riga[0])){
-                    Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
-                    listaOrdini.add(ordine);
-                    codice = Integer.parseInt(riga[0]);
-                }
+                Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
+                listaOrdini.add(ordine);
             } 
             catch(NoIDMatchException e) {
                 throw e;
@@ -124,10 +112,9 @@ public class OrdineDAO implements DAOInterface<Ordine>{
             String[] riga = i.next();
             try{
                 Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
-                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[5]));
-            
-                long data = Long.parseLong(riga[8]);
+                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
+                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
+                long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProd = new LinkedHashMap<>();
                 result = DBConnection.getInstance().queryDB("SELECT id_prodotto, quantita FROM dettagliordini WHERE codice = " + hashCode);
                 i = result.iterator();
