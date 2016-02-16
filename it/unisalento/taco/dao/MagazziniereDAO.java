@@ -25,7 +25,7 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
     
     private MagazziniereDAO(){}
         
-    @Override public Magazziniere getByID(int id) throws NoIDMatchException{
+    @Override public Magazziniere getById(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.id,utenti.nome,utenti.cognome,utenti.email FROM utenti WHERE utenti.id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
@@ -51,7 +51,7 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
     }
     
     @Override public void delete(IdentificabileID obj){
-        DBConnection.getInstance().updateDB("DELETE FROM magazzinieri WHERE id_utente = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM magazzinieri WHERE id_utente = " + obj.getId());
     }
     
     @Override public void update(Magazziniere magazziniere){

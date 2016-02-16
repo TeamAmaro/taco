@@ -7,6 +7,6 @@ package it.unisalento.taco.model;
 
 public interface IdentificabileID {
     
-    public int getID();
+    public int getId();
     
 }

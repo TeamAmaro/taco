@@ -39,7 +39,7 @@ public abstract class Utente implements IdentificabileID {
         return email;
     }
 
-    @Override public int getID(){
+    @Override public int getId(){
         return id;
     }
     
@@ -52,7 +52,7 @@ public abstract class Utente implements IdentificabileID {
     }
 
     public static Utente getByID(int id) throws NoIDMatchException{
-        return UtenteDAO.getInstance().getByID(id);
+        return UtenteDAO.getInstance().getById(id);
     }
     
     public static void setPassword(Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException {

@@ -3,6 +3,7 @@ package it.unisalento.taco.model;
 import it.unisalento.taco.dao.OrdineDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -69,8 +70,10 @@ public final class Ordine {
         return codice;
     }
             
-    public Date getReadableData(){
-        return new Date(data);
+    public String getReadableData(){
+        DateFormat formattatore = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.ITALY);
+        String data = formattatore.format(new Date(this.data));
+        return data;
     }
 
     public void setSpedito(boolean spedito){
@@ -121,12 +124,12 @@ public final class Ordine {
 
     @Override public int hashCode() {
         int hash = 1;
-        hash = 31 * hash + dipendente.getID();
-        hash = 31 * hash + progetto.getID();
-        hash = 31 * hash + magazzino.getID();
+        hash = 31 * hash + dipendente.getId();
+        hash = 31 * hash + progetto.getId();
+        hash = 31 * hash + magazzino.getId();
         hash = 31 * hash + (int) (data ^ (data >>> 32));
         for(Map.Entry<Prodotto,Integer> val : listaProdotti.entrySet()){
-            hash = 31 * hash + val.getKey().getID();
+            hash = 31 * hash + val.getKey().getId();
             hash = 31 * hash + val.getValue();
         }
         return hash;

@@ -32,7 +32,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
             String[] riga = i.next();
             int id = Integer.parseInt(riga[0]);
             try{
-            Utente utente = getByID(id);
+            Utente utente = getById(id);
             listaUtenti.add(utente);
             }
             catch(NoIDMatchException e){
@@ -54,7 +54,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
         }
     }
 
-    @Override public Utente getByID(int id) throws NoIDMatchException{
+    @Override public Utente getById(int id) throws NoIDMatchException{
 
         String tabella = "";
         for(int i = 0; i < 3; i++){
@@ -71,9 +71,9 @@ public class UtenteDAO implements DAOInterface<Utente>{
             Iterator<String[]> j = result.iterator();
             if(j.hasNext())
                 switch(i){
-                    case 0: return DipendenteDAO.getInstance().getByID(id);
-                    case 1: return CapoProgettoDAO.getInstance().getByID(id);
-                    case 2: return MagazziniereDAO.getInstance().getByID(id);
+                    case 0: return DipendenteDAO.getInstance().getById(id);
+                    case 1: return CapoProgettoDAO.getInstance().getById(id);
+                    case 2: return MagazziniereDAO.getInstance().getById(id);
                 }
         }
         throw new NoIDMatchException(id);
@@ -86,7 +86,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
             String[] riga = i.next();
             return Integer.parseInt(riga[0]);
         }
-        throw new NoIDMatchException(utente.getID());
+        throw new NoIDMatchException(utente.getId());
     }
     
     public void setPsw (Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{
@@ -96,23 +96,23 @@ public class UtenteDAO implements DAOInterface<Utente>{
         catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
             throw e;
         }
-        DBConnection.getInstance().updateDB("UPDATE utenti SET password = '" + psw + "' WHERE id = " + utente.getID());
+        DBConnection.getInstance().updateDB("UPDATE utenti SET password = '" + psw + "' WHERE id = " + utente.getId());
     }
     
     public void updateEmail(Utente utente, String email){
-        DBConnection.getInstance().updateDB("UPDATE utenti SET email = '" + email + "' WHERE id = " + utente.getID());
+        DBConnection.getInstance().updateDB("UPDATE utenti SET email = '" + email + "' WHERE id = " + utente.getId());
     }
     
     @Override public void create(Utente utente){
-        if(utente.getID() == 0)
+        if(utente.getId() == 0)
             DBConnection.getInstance().updateDB("INSERT INTO utenti(nome,cognome,email,password) VALUES('" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getEmail() + "', 'asd')");
     }
     
     @Override public void update(Utente utente){
-        DBConnection.getInstance().updateDB("UPDATE utenti SET nome = " + utente.getNome() + ", cognome = " + utente.getCognome() + ", email = " + utente.getEmail() + "WHERE id = " + utente.getID());
+        DBConnection.getInstance().updateDB("UPDATE utenti SET nome = " + utente.getNome() + ", cognome = " + utente.getCognome() + ", email = " + utente.getEmail() + "WHERE id = " + utente.getId());
     }
     
     @Override public void delete(IdentificabileID utente){
-        DBConnection.getInstance().updateDB("DELETE FROM utenti WHERE id = " + utente.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM utenti WHERE id = " + utente.getId());
     }
 }

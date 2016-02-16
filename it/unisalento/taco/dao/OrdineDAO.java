@@ -29,14 +29,14 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     
     public Set<Ordine> getListaOrdini(Progetto progetto) throws NoIDMatchException{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_progetto = " + progetto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_progetto = " + progetto.getId());
         Iterator<String[]> i = result.iterator();
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
-                Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
-                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
+                Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
+                Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
+                Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
@@ -51,14 +51,14 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     
     public Set<Ordine> getListaOrdini(Progetto progetto, int offset) throws NoIDMatchException{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_progetto = " + progetto.getID() + " LIMIT 10 OFFSET " + offset);
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_progetto = " + progetto.getId() + " LIMIT 5 OFFSET " + offset);
         Iterator<String[]> i = result.iterator();
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
-                Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
-                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
+                Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
+                Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
+                Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
@@ -73,14 +73,14 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     
     public Set<Ordine> getListaOrdini(Magazzino magazzino) throws NoIDMatchException{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_magazzino = " + magazzino.getID() + " AND spedito = 0");
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE id_magazzino = " + magazzino.getId() + " AND spedito = 0");
         Iterator<String[]> i = result.iterator();
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
-                Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
-                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
+                Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
+                Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
+                Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
@@ -94,30 +94,30 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     }
     
     public int getNumeroOrdini(Progetto progetto) throws NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT COUNT(*) FROM ordini WHERE id_progetto = " + progetto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT COUNT(*) FROM ordini WHERE id_progetto = " + progetto.getId());
         Iterator<String[]> i = result.iterator();
         String[] riga = i.next();
         return Integer.parseInt(riga[0]);
     }
     
     @Override
-    public Ordine getByID(int hashCode) throws NoIDMatchException{
+    public Ordine getById(int hashCode) throws NoIDMatchException{
         
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM ordini WHERE codice = " + hashCode);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
             try{
-                Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
-                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
+                Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
+                Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
+                Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProd = new LinkedHashMap<>();
                 result = DBConnection.getInstance().queryDB("SELECT id_prodotto, quantita FROM dettagliordini WHERE codice = " + hashCode);
                 i = result.iterator();
                 while(i.hasNext()){
                     riga = i.next();
-                    Prodotto prod = ProdottoDAO.getInstance().getByID(Integer.parseInt(riga[0]));
+                    Prodotto prod = ProdottoDAO.getInstance().getById(Integer.parseInt(riga[0]));
                     int quantProd = Integer.parseInt(riga[1]);
                     listaProd.put(prod, quantProd);
                 }
@@ -152,15 +152,15 @@ public class OrdineDAO implements DAOInterface<Ordine>{
 
     @Override public void create(Ordine ordine){
         int hashCode = ordine.hashCode();
-        DBConnection.getInstance().updateDB("INSERT INTO ordini VALUES(" + hashCode + ", " + ordine.getDipendente().getID() + ", '" + ordine.getDipendente().getSede() + "', " + ordine.getProgetto().getID() + ", " + ordine.getMagazzino().getID() + ", " + 0 + ", " + ordine.getData() + ")");
+        DBConnection.getInstance().updateDB("INSERT INTO ordini VALUES(" + hashCode + ", " + ordine.getDipendente().getId() + ", '" + ordine.getDipendente().getSede() + "', " + ordine.getProgetto().getId() + ", " + ordine.getMagazzino().getId() + ", " + 0 + ", " + ordine.getData() + ")");
         for(Map.Entry<Prodotto,Integer> val : ordine.getListaProdotti().entrySet()) {
-            DBConnection.getInstance().updateDB("INSERT INTO dettagliordini VALUES(" + hashCode + ", " + val.getKey().getID() + ", " + val.getValue() + ")");
+            DBConnection.getInstance().updateDB("INSERT INTO dettagliordini VALUES(" + hashCode + ", " + val.getKey().getId() + ", " + val.getValue() + ")");
         }
     }
     
     //Solo debug, metodo pericoloso
     @Override public void delete(IdentificabileID obj){
-        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE codice = " + obj.getId());
     }
     
 }

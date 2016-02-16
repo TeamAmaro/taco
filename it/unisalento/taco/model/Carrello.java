@@ -21,8 +21,8 @@ public class Carrello implements IdentificabileID{
     }
     
     @Override
-    public int getID(){
-        return dipendente.getID();
+    public int getId(){
+        return dipendente.getId();
     }
 
     public Dipendente getDipendente(){
@@ -112,7 +112,7 @@ public class Carrello implements IdentificabileID{
     }
     
     public static Carrello getByID(int id) throws NoIDMatchException{
-        return CarrelloDAO.getInstance().getByID(id);
+        return CarrelloDAO.getInstance().getById(id);
     }
     
     public static Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{

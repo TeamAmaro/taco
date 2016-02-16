@@ -60,7 +60,7 @@ public class Progetto implements IdentificabileID {
     LA FUNZIONE setProgetto() PER IL DB E' IN DIPENDENTEDAO
     */
 
-    @Override public int getID() {
+    @Override public int getId() {
         return id;
     }
 

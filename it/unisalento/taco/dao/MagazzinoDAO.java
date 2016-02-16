@@ -51,7 +51,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     }
     
     public int getQuantitaAll(Prodotto prodotto) {
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT SUM(quantita) FROM prod_mag WHERE id_prodotto = " + prodotto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT SUM(quantita) FROM prod_mag WHERE id_prodotto = " + prodotto.getId());
         Iterator<String[]> i = result.iterator();
         int quantita = 0;
         if(i.hasNext()) {
@@ -62,7 +62,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     }
     
     public int getQuantitaProdotto(Magazzino magazzino, Prodotto prodotto) {
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT quantita FROM prod_mag WHERE id_magazzino = " + magazzino.getID() + " AND id_prodotto = " + prodotto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT quantita FROM prod_mag WHERE id_magazzino = " + magazzino.getId() + " AND id_prodotto = " + prodotto.getId());
         Iterator<String[]> i = result.iterator();
         int quantita = 0;
         if(i.hasNext()) {
@@ -73,7 +73,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     }
     
     public Set<Magazzino> cercaProdotto(Prodotto prodotto){
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT m.*,pm.quantita FROM magazzini m JOIN prod_mag pm ON m.id = pm.id_magazzino JOIN prodotti p ON p.id = pm.id_prodotto WHERE p.id = " + prodotto.getID() + " ORDER BY quantita DESC");
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT m.*,pm.quantita FROM magazzini m JOIN prod_mag pm ON m.id = pm.id_magazzino JOIN prodotti p ON p.id = pm.id_prodotto WHERE p.id = " + prodotto.getId() + " ORDER BY quantita DESC");
         Iterator<String[]> i = result.iterator();
         Set<Magazzino> magazzini = new LinkedHashSet<>();
 
@@ -107,7 +107,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     }
     
     public Magazzino getMagazzino(Magazziniere magazziniere) throws NoQueryMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id_magazziniere = " + magazziniere.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id_magazziniere = " + magazziniere.getId());
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()) {
             String[] riga = i.next();
@@ -120,7 +120,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         }
     }
     
-    @Override public Magazzino getByID(int id) throws NoIDMatchException{
+    @Override public Magazzino getById(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id = " + id);
         Iterator<String[]> i = result.iterator();
         Magazzino magazzino;
@@ -128,7 +128,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
             String[] riga = i.next();
             int idMagazziniere = Integer.parseInt(riga[3]);
             try{
-                Magazziniere magazziniere = MagazziniereDAO.getInstance().getByID(idMagazziniere);
+                Magazziniere magazziniere = MagazziniereDAO.getInstance().getById(idMagazziniere);
                 Map<Prodotto, Integer> inventario = getInventario(id);
                 magazzino = new Magazzino(id, riga[1], Sede.parseSede(riga[2]), inventario, magazziniere);
                 return magazzino;
@@ -142,7 +142,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     }
     
     public void updateQuantita(Magazzino magazzino, Prodotto prodotto, int quantita){
-        DBConnection.getInstance().updateDB("UPDATE prod_mag SET quantita = " + quantita + " WHERE id_magazzino = " + magazzino.getID() + " AND id_prodotto = " + prodotto.getID());
+        DBConnection.getInstance().updateDB("UPDATE prod_mag SET quantita = " + quantita + " WHERE id_magazzino = " + magazzino.getId() + " AND id_prodotto = " + prodotto.getId());
     }
     
     @Override public void create(Magazzino magazzino){
@@ -151,12 +151,12 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
     
     @Override public void update(Magazzino magazzino){
         if(magazzino.getMagazziniere() != null)
-            DBConnection.getInstance().updateDB("UPDATE magazzini SET nome = " + magazzino.getNome() + ", nome_sede = " + magazzino.getSede() + ", id_magazziniere = " + magazzino.getMagazziniere().getID() + " WHERE id = " + magazzino.getID());
+            DBConnection.getInstance().updateDB("UPDATE magazzini SET nome = " + magazzino.getNome() + ", nome_sede = " + magazzino.getSede() + ", id_magazziniere = " + magazzino.getMagazziniere().getId() + " WHERE id = " + magazzino.getId());
         else
-            DBConnection.getInstance().updateDB("UPDATE magazzini SET nome = " + magazzino.getNome() + ", nome_sede = " + magazzino.getSede() + " WHERE id = " + magazzino.getID());
+            DBConnection.getInstance().updateDB("UPDATE magazzini SET nome = " + magazzino.getNome() + ", nome_sede = " + magazzino.getSede() + " WHERE id = " + magazzino.getId());
     }
     
     @Override public void delete(IdentificabileID obj){
-        DBConnection.getInstance().updateDB("DELETE FROM magazzini WHERE id = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM magazzini WHERE id = " + obj.getId());
     }
 }
