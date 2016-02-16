@@ -90,6 +90,25 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         return magazzini;
     }
 
+    public Set<Magazzino> getAllMagazzino() throws NoQueryMatchException, NoIDMatchException{
+        Set<Magazzino> listaMagazzini = new LinkedHashSet<>();
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini");
+        Iterator<String[]> i = result.iterator();
+        while(i.hasNext()) {
+            String[] riga = i.next();
+            int idMag = Integer.parseInt(riga[0]);
+            int idMagazziniere = Integer.parseInt(riga[3]);
+            try{
+                Magazziniere magazziniere = MagazziniereDAO.getInstance().getByID(idMagazziniere);
+                Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag), magazziniere);
+                listaMagazzini.add(magazzino);
+            } catch(NoIDMatchException e){
+                throw e;
+            }
+        }
+        return listaMagazzini;
+    }
+    
     public Magazzino getMagazzino(Sede sede) throws NoQueryMatchException, NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE nome_sede = \"" + sede.nome() + "\"");
         Iterator<String[]> i = result.iterator();
