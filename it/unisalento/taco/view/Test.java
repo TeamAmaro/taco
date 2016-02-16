@@ -10,6 +10,7 @@ import it.unisalento.taco.dao.CarrelloDAO;
 import it.unisalento.taco.dao.DipendenteDAO;
 import it.unisalento.taco.dao.MagazzinoDAO;
 import it.unisalento.taco.dao.MagazziniereDAO;
+import it.unisalento.taco.dao.OrdineDAO;
 import it.unisalento.taco.dao.ProdottoDAO;
 import it.unisalento.taco.dao.ProgettoDAO;
 import it.unisalento.taco.exceptions.InsufficientFundException;
@@ -26,11 +27,11 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 public class Test {
-
+/*
     public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, NoQueryMatchException, NoIDMatchException, InsufficientFundException{
         
         
     }
-    
+  */  
     
 }
