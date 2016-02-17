@@ -34,15 +34,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
-<<<<<<< HEAD
-                Dipendente dipendente = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Magazzino magazzino = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
-                long data = Long.parseLong(riga[6]);
-                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                Ordine ordine = new Ordine(dipendente,progetto,magazzino,data,listaProdotti);
-                listaOrdini.add(ordine);
-                
-=======
                 Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
                 Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
                 Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
@@ -50,7 +41,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
                 listaOrdini.add(ordine);
->>>>>>> 72f7e956e95229636cbb12ce1d43bb9f2c4a8d8b
             } 
             catch(NoIDMatchException e) {
                 throw e;
@@ -66,15 +56,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
-<<<<<<< HEAD
-                Dipendente dipendente = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Magazzino magazzino = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
-                long data = Long.parseLong(riga[6]);
-                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                Ordine ordine = new Ordine(dipendente,progetto,magazzino,data,listaProdotti);
-                listaOrdini.add(ordine);
-                
-=======
                 Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
                 Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
                 Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
@@ -82,7 +63,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
                 listaOrdini.add(ordine);
->>>>>>> 72f7e956e95229636cbb12ce1d43bb9f2c4a8d8b
             } 
             catch(NoIDMatchException e) {
                 throw e;
@@ -98,20 +78,12 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         while(i.hasNext()) {
             String[] riga = i.next();
             try{
-<<<<<<< HEAD
-                Dipendente dipendente = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Progetto progetto = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[3]));
-                long data = Long.parseLong(riga[6]);
-                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                Ordine ordine = new Ordine(dipendente,progetto,magazzino,data,listaProdotti);
-=======
                 Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
                 Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
                 Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
                 long data = Long.parseLong(riga[6]);
                 Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
                 Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
->>>>>>> 72f7e956e95229636cbb12ce1d43bb9f2c4a8d8b
                 listaOrdini.add(ordine);
             } 
             catch(NoIDMatchException e) {
@@ -122,11 +94,7 @@ public class OrdineDAO implements DAOInterface<Ordine>{
     }
     
     public int getNumeroOrdini(Progetto progetto) throws NoIDMatchException{
-<<<<<<< HEAD
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT COUNT(*) FROM ordini WHERE id_progetto = " + progetto.getID());
-=======
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT COUNT(*) FROM ordini WHERE id_progetto = " + progetto.getId());
->>>>>>> 72f7e956e95229636cbb12ce1d43bb9f2c4a8d8b
         Iterator<String[]> i = result.iterator();
         String[] riga = i.next();
         return Integer.parseInt(riga[0]);
@@ -140,13 +108,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         if(i.hasNext()){
             String[] riga = i.next();
             try{
-<<<<<<< HEAD
-                Dipendente dip = DipendenteDAO.getInstance().getByID(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getByID(Integer.parseInt(riga[4]));
-                Magazzino mag = MagazzinoDAO.getInstance().getByID(Integer.parseInt(riga[5]));
-                long data = Long.parseLong(riga[8]);
-                Map<Prodotto,Integer> listaProd = getListaProdotti(hashCode);
-=======
                 Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
                 Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
                 Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
@@ -160,7 +121,6 @@ public class OrdineDAO implements DAOInterface<Ordine>{
                     int quantProd = Integer.parseInt(riga[1]);
                     listaProd.put(prod, quantProd);
                 }
->>>>>>> 72f7e956e95229636cbb12ce1d43bb9f2c4a8d8b
                 Ordine ordine = new Ordine(dip, prog, mag, data, listaProd);
                 return ordine;
             }
