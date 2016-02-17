@@ -101,7 +101,7 @@ public class DipendenteDelegate {
                 progetto.setSaldo(saldo - totale);
                 Progetto.updateSaldo(progetto, saldo - totale);
                 //rimuovi la merce acquistata dal carrello
-                Carrello cart = Carrello.getByID(dipendente.getID());
+                Carrello cart = Carrello.getByID(dipendente.getId());
                 for(Ordine ordine : listaOrdini){
                     cart.removeListaProdotti(ordine.getListaProdotti());
                     Magazzino mag = ordine.getMagazzino();

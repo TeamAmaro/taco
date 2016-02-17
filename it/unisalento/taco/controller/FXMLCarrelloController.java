@@ -11,6 +11,7 @@ import it.unisalento.taco.exceptions.NoIDMatchException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
+import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.view.Main;
@@ -333,13 +334,12 @@ public class FXMLCarrelloController implements Initializable {
                 try{
                     int quantitaMag = delegate.chiediDisponibilita((Dipendente) application.getUtente(), prodotto);
                     if(quantitaMag <= 0)
-                        disponibilita.setText("No");
+                        disponibilita.setText("Disponibile" + System.lineSeparator() + "presso altre" + System.lineSeparator() + "sedi");
                     else 
-                        disponibilita.setText("Sì");
-                }
-                catch(NoQueryMatchException e){
-                    disponibilita.setText("?");
+                        disponibilita.setText("Disponibile");
                 } catch (NoIDMatchException ex) {
+                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoQueryMatchException ex) {
                     Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 

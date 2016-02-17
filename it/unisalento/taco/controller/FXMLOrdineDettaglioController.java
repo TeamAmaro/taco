@@ -218,18 +218,7 @@ public class FXMLOrdineDettaglioController implements Initializable {
     }
     
     private void initMenu(){
-        /*
-        prcButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-               //Implementare
-            }
-        });
-        
-        scsButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override public void handle(MouseEvent arg0) {
-                //Implementare
-            }
-        });*/
+
         
         acquistaButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {                
@@ -312,9 +301,9 @@ public class FXMLOrdineDettaglioController implements Initializable {
                                 titolo.getStyleClass().add("titolo");
                                 
                                 gridPane.add(titolo, 0, 0, 2, 1);
-                                gridPane.add(result, 0, 1, 2, 1);
+                                gridPane.add(result, 0, 1);
                                 gridPane.add(lbl, 0, 2);
-                                gridPane.add(img, 0, 3, 2, 2);                                
+                                gridPane.add(img, 0, 3);                                
                                 
                             } catch (IOException | COSVisitorException ex) {
                                 Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, ex);

@@ -73,7 +73,7 @@ public class FXMLProgettoController implements Initializable {
     @FXML private TableColumn<Ordine, Integer> codiceCol;
     @FXML private TableColumn<Ordine, String> prodottoCol;
     @FXML private TableColumn<Ordine, String> quantitaCol;
-    @FXML private TableColumn<Ordine, Date> dataCol;
+    @FXML private TableColumn<Ordine, String> dataCol;
     
     private ObservableList<Ordine> ordineData = FXCollections.observableArrayList();
     private ObservableList<Dipendente> dipendenteData = FXCollections.observableArrayList();
@@ -122,19 +122,20 @@ public class FXMLProgettoController implements Initializable {
     
         moreButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                if (numOrdini < offset){
-                    moreButton.setVisible(false);
-                    moreButton.setManaged(false);
-                }
-                else {
-                    offset += 10;
-                    try {
-                        listaOrdini.addAll(delegate.getListaOrdini(progetto, offset));
-                        ordineData.addAll(listaOrdini);
-                    } catch (NoIDMatchException ex) {
-                        Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                offset += 5;
+                try {
+                    listaOrdini.addAll(delegate.getListaOrdini(progetto, offset));
+                    ordineData.clear();
+                    ordineData.addAll(listaOrdini);
+                    if (numOrdini - offset < 5){
+                        moreButton.setVisible(false);
+                        moreButton.setManaged(false);
                     }
+                } catch (NoIDMatchException ex) {
+                    Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             }
         });
         
@@ -203,7 +204,7 @@ public class FXMLProgettoController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Dipendente> observable, Dipendente oldValue, Dipendente newValue) {
                 for(Ordine o : listaOrdini){
-                   if(o.getDipendente().getID() != newValue.getID()){
+                   if(o.getDipendente().getId() != newValue.getId()){
                        ordineData.remove(o);
                    }
                    else if (!ordineData.contains(o))
@@ -220,7 +221,7 @@ public class FXMLProgettoController implements Initializable {
     
     private void initOrdTable(){
         try {
-            if((numOrdini = delegate.chiediNumeroOrdini(progetto)) < 10){
+            if((numOrdini = delegate.chiediNumeroOrdini(progetto)) < 5){
                 listaOrdini = delegate.getListaOrdini(progetto);
                 anchorPane.getChildren().remove(moreButton);
             }
@@ -265,10 +266,10 @@ public class FXMLProgettoController implements Initializable {
             }
         });
         
-        dataCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, Date>, ObservableValue<Date>>() {
+        dataCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ordine, String>, ObservableValue<String>>() {
 
             @Override
-            public ObservableValue<Date> call(TableColumn.CellDataFeatures<Ordine, Date> p) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ordine, String> p) {
                 return new ReadOnlyObjectWrapper<>(p.getValue().getReadableData());
             }
         });

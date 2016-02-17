@@ -20,7 +20,7 @@ public class Prodotto implements IdentificabileID {
     private Categoria categoria;
     private Set<Fornitore> listaFornitori;
 
-    @Override public int getID(){
+    @Override public int getId(){
         return id;
     }
     public String getNome() {

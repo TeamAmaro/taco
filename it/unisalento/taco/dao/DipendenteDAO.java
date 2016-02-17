@@ -26,7 +26,7 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
     private DipendenteDAO(){};
 
     @Override 
-    public Dipendente getByID(int id) throws NoIDMatchException{
+    public Dipendente getById(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email,nome_sede FROM utenti,dipendenti WHERE id = id_utente AND id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
@@ -35,7 +35,7 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
             return dip; 
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     
@@ -55,7 +55,7 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
         while(i.hasNext()){
             try{
                 String[] riga = i.next();
-                Dipendente dipendente = getByID(Integer.parseInt(riga[0]));
+                Dipendente dipendente = getById(Integer.parseInt(riga[0]));
                 listaDipendenti.add(dipendente);
             }
             catch (NoIDMatchException e){
@@ -66,18 +66,18 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
     }
     
     public void setProgetto(Dipendente dip, Progetto progetto){
-        DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_progetto = " + progetto.getID() + " WHERE id_utente = " + dip.getID());
+        DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_progetto = " + progetto.getId() + " WHERE id_utente = " + dip.getId());
     }
 
     @Override public void create(Dipendente dip){
-        DBConnection.getInstance().updateDB("INSERT INTO dipendenti(id_utente, nome_sede) VALUES(" + dip.getID() + ",'" + dip.getSede() + "')");
+        DBConnection.getInstance().updateDB("INSERT INTO dipendenti(id_utente, nome_sede) VALUES(" + dip.getId() + ",'" + dip.getSede() + "')");
     }
     
     @Override public void update(Dipendente dip) {
-        DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_utente = " + dip.getID() + ", nome_sede = " + dip.getSede() + "WHERE id = " + dip.getID());
+        DBConnection.getInstance().updateDB("UPDATE dipendenti SET id_utente = " + dip.getId() + ", nome_sede = " + dip.getSede() + "WHERE id = " + dip.getId());
     }
 
     @Override public void delete(IdentificabileID obj) {
-        DBConnection.getInstance().updateDB("DELETE FROM dipendenti WHERE id_utente = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM dipendenti WHERE id_utente = " + obj.getId());
     }
 }

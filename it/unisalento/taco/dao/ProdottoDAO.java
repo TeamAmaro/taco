@@ -32,7 +32,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
     private ProdottoDAO(){}
     
     @Override
-    public Prodotto getByID(int id) throws NoIDMatchException{
+    public Prodotto getById(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT produttori.nome,prodotti.* FROM prodotti JOIN produttori ON id_prodotto = id WHERE id = " + id);
         Iterator<String[]> i = result.iterator();
 
@@ -45,12 +45,12 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
             return prodotto;
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     
     public Set<Fornitore> getFornitore(Prodotto prodotto){
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM fornitori WHERE id_prodotto = " + prodotto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM fornitori WHERE id_prodotto = " + prodotto.getId());
         Iterator<String[]> i = result.iterator();
         Set<Fornitore> listaFornitori = new LinkedHashSet<>();
         while(i.hasNext()){
@@ -61,11 +61,11 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
     }
     
     public void addProduttore(Produttore produttore, Prodotto prodotto){
-        DBConnection.getInstance().updateDB("INSERT INTO produttori(nome,id_prodotto) VALUES(nome = '" + produttore.nome() + "', id_prodotto = " + prodotto.getID() + ")");
+        DBConnection.getInstance().updateDB("INSERT INTO produttori(nome,id_prodotto) VALUES(nome = '" + produttore.nome() + "', id_prodotto = " + prodotto.getId() + ")");
     }
     
     public void addFornitore(Fornitore fornitore, Prodotto prodotto){
-        DBConnection.getInstance().updateDB("INSERT INTO fornitori(nome, id_prodotto) VALUES(nome = '" + fornitore.nome() + "', id_prodotto = " + prodotto.getID() + ")");
+        DBConnection.getInstance().updateDB("INSERT INTO fornitori(nome, id_prodotto) VALUES(nome = '" + fornitore.nome() + "', id_prodotto = " + prodotto.getId() + ")");
     }
     
     public void addImmagine(Prodotto prodotto, String immagine){
@@ -73,7 +73,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
     }
     
     public String getImmagine(Prodotto prodotto){
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT immagine FROM prodotti WHERE id = " + prodotto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT immagine FROM prodotti WHERE id = " + prodotto.getId());
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
@@ -88,11 +88,11 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
     }
     
     @Override public void update(Prodotto prodotto){
-        DBConnection.getInstance().updateDB("UPDATE prodotti SET nome = " + prodotto.getNome() + ", categoria = " + prodotto.getCategoria() + ", descrizione = " + prodotto.getDescrizione() + ", prezzo = " + prodotto.getPrezzo() + " WHERE id = " + prodotto.getID());
+        DBConnection.getInstance().updateDB("UPDATE prodotti SET nome = " + prodotto.getNome() + ", categoria = " + prodotto.getCategoria() + ", descrizione = " + prodotto.getDescrizione() + ", prezzo = " + prodotto.getPrezzo() + " WHERE id = " + prodotto.getId());
     }
     
     @Override public void delete(IdentificabileID obj){
-        DBConnection.getInstance().updateDB("DELETE FROM prodotti WHERE id = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM prodotti WHERE id = " + obj.getId());
     }
 
     public Set<Prodotto> cerca(String ricerca) throws NoIDMatchException {
@@ -103,7 +103,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
         while(i.hasNext() && j < 100){
             String[] riga = i.next();
             try{
-                listaProdotti.add(getByID(Integer.parseInt(riga[0])));
+                listaProdotti.add(getById(Integer.parseInt(riga[0])));
             }catch(NoIDMatchException e){
                 throw e;
             }
@@ -119,7 +119,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
         while(i.hasNext()){
             String[] riga = i.next();
             try{
-                listaProdotti.add(getByID(Integer.parseInt(riga[0])));
+                listaProdotti.add(getById(Integer.parseInt(riga[0])));
             }catch(NoIDMatchException e){
                 throw e;
             }

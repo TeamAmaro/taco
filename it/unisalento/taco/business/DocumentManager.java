@@ -45,6 +45,7 @@ public class DocumentManager {
             int offsetY = 730;
             PDPage page = new PDPage(PDPage.PAGE_SIZE_A4);
             document.addPage(page);
+            
             try(PDPageContentStream cos = new PDPageContentStream(document,page)){
                 cos.drawImage(logo, 130, offsetY);
                 cos.setFont(font, 12);
@@ -111,10 +112,13 @@ public class DocumentManager {
                        throw ex;
                     }
                 }
-            }
-            document.save(file);
-            document.close();
+                cos.close();
+            }  
+
         }
+                    
+        document.save(file);
+        document.close();
     }
     
     

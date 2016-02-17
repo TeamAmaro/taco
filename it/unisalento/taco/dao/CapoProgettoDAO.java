@@ -37,7 +37,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
     }
 
     public CapoProgetto getCapoProgetto(Progetto progetto) throws NoQueryMatchException {
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email FROM utenti JOIN capiprogetto ON utenti.id = capiprogetto.id_utente WHERE id_progetto = " + progetto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id,nome,cognome,email FROM utenti JOIN capiprogetto ON utenti.id = capiprogetto.id_utente WHERE id_progetto = " + progetto.getId());
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
@@ -50,7 +50,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
         }
     }
 
-    @Override public CapoProgetto getByID(int id) throws NoIDMatchException{
+    @Override public CapoProgetto getById(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT utenti.id,utenti.nome,utenti.cognome,utenti.email FROM utenti WHERE utenti.id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
@@ -59,12 +59,12 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProgetto;
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     
     @Override public void create(CapoProgetto capoProgetto){
-        DBConnection.getInstance().updateDB("INSERT INTO capiprogetto(id_utente) VALUES(" + capoProgetto.getID() + ")");
+        DBConnection.getInstance().updateDB("INSERT INTO capiprogetto(id_utente) VALUES(" + capoProgetto.getId() + ")");
     }
     
     @Override public void update(CapoProgetto capoProgetto){
@@ -72,7 +72,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
     }
     
     @Override public void delete(IdentificabileID obj){
-        DBConnection.getInstance().updateDB("DELETE FROM capiprogetto WHERE id_utente = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM capiprogetto WHERE id_utente = " + obj.getId());
     }
     
 }

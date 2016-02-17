@@ -39,7 +39,7 @@ public class Magazzino  implements IdentificabileID {
         return sede;
     }
 
-    @Override public int getID(){
+    @Override public int getId(){
         return id;
     }
     

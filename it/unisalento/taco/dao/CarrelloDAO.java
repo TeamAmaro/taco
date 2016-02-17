@@ -40,7 +40,7 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
             String[] riga = i.next();
             try{
                 int idProdotto = Integer.parseInt(riga[1]);
-                Prodotto prodotto = ProdottoDAO.getInstance().getByID(idProdotto);
+                Prodotto prodotto = ProdottoDAO.getInstance().getById(idProdotto);
                 int quantita = Integer.parseInt(riga[7]);
                 if(quantita == 0)
                     continue;
@@ -56,7 +56,7 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
     
     public Carrello getCarrello(Dipendente dipendente) throws NoIDMatchException{
         try{
-            Carrello carrello = new Carrello(dipendente, getListaProdotti(dipendente.getID()));
+            Carrello carrello = new Carrello(dipendente, getListaProdotti(dipendente.getId()));
             return carrello;
         }
         catch (NoIDMatchException e){
@@ -65,9 +65,9 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
     }
 
     @Override 
-    public Carrello getByID(int idDip) throws NoIDMatchException{
+    public Carrello getById(int idDip) throws NoIDMatchException{
         try {
-            Dipendente dipendente = DipendenteDAO.getInstance().getByID(idDip);
+            Dipendente dipendente = DipendenteDAO.getInstance().getById(idDip);
             Carrello carrello = new Carrello(dipendente, getListaProdotti(idDip));
             return carrello;
         }
@@ -77,21 +77,21 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
     }
     
     public void addProdotto(Carrello carrello, Prodotto prodotto, int quantita){
-        DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getID() + "," + prodotto.getID() + "," + quantita + ")");
+        DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getId() + "," + prodotto.getId() + "," + quantita + ")");
     }
     
     public void updateQuantita(Carrello carrello, Prodotto prodotto, int quantita){
-        DBConnection.getInstance().updateDB("UPDATE carrelli SET quantita = " + quantita + " WHERE id_dipendente = " + carrello.getDipendente().getID() + " AND id_prodotto = " + prodotto.getID());
+        DBConnection.getInstance().updateDB("UPDATE carrelli SET quantita = " + quantita + " WHERE id_dipendente = " + carrello.getDipendente().getId() + " AND id_prodotto = " + prodotto.getId());
     }
     
     public void deleteProdotto(Carrello carrello, Prodotto prodotto){
-        DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + carrello.getDipendente().getID() + " AND id_prodotto = " + prodotto.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + carrello.getDipendente().getId() + " AND id_prodotto = " + prodotto.getId());
     }
     
     //Solo debug, metodo pericoloso
     @Override public void create(Carrello carrello) {
         for(Map.Entry<Prodotto,Integer> val : carrello.getListaProdotti().entrySet()) {
-            DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getID() + "," + val.getKey().getID() + "," + val.getValue() + ")");
+            DBConnection.getInstance().updateDB("INSERT INTO carrelli VALUES(" + carrello.getDipendente().getId() + "," + val.getKey().getId() + "," + val.getValue() + ")");
         }
     }
     
@@ -103,7 +103,7 @@ public class CarrelloDAO implements DAOInterface<Carrello>{
     }
     @Override public void delete(IdentificabileID dipendente){
         if(dipendente instanceof Dipendente)
-            DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + dipendente.getID());
+            DBConnection.getInstance().updateDB("DELETE FROM carrelli WHERE id_dipendente = " + dipendente.getId());
     }
     
     

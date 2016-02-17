@@ -27,7 +27,7 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     private ProgettoDAO (){};
 
     @Override 
-    public Progetto getByID(int id) throws NoIDMatchException{
+    public Progetto getById(int id) throws NoIDMatchException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.*,utenti.nome,cognome,email FROM progetti JOIN utenti ON id_capoprog = utenti.id WHERE progetti.id = " + id);
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
@@ -45,18 +45,18 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
             }
         }
         else {
-            throw new NoIDMatchException(this);
+            throw new NoIDMatchException(id);
         }
     }
     
     public Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id_progetto FROM dipendenti WHERE id_utente = " + dipendente.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id_progetto FROM dipendenti WHERE id_utente = " + dipendente.getId());
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
             try{
                 int idProgetto = Integer.parseInt(riga[0]);
-                Progetto progetto = getByID(idProgetto);
+                Progetto progetto = getById(idProgetto);
                 return progetto;
             }
             catch(NumberFormatException | NoIDMatchException e){
@@ -78,7 +78,7 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     }
     
     public List<Progetto> getProgetto(CapoProgetto capoProgetto){
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT p.*,u.* FROM progetti p JOIN utenti u ON u.id = p.id_capoprog WHERE id_capoprog = " + capoProgetto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT p.*,u.* FROM progetti p JOIN utenti u ON u.id = p.id_capoprog WHERE id_capoprog = " + capoProgetto.getId());
         Iterator<String[]> i = result.iterator();
         List<Progetto> listaProgetti = new ArrayList<>();
         while(i.hasNext()){
@@ -91,7 +91,7 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     }
     
     public Set<Dipendente> getListaDipendenti(Progetto prog){
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT u.*,d.nome_sede FROM utenti u JOIN dipendenti d ON u.id = d.id_utente WHERE d.id_progetto = " + prog.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT u.*,d.nome_sede FROM utenti u JOIN dipendenti d ON u.id = d.id_utente WHERE d.id_progetto = " + prog.getId());
         Iterator<String[]> i = result.iterator();
         Set<Dipendente> listaDipendenti = new LinkedHashSet<>();
         while(i.hasNext()){
@@ -103,7 +103,7 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     }
     
     public Set<Progetto> getListaProgetti(CapoProgetto capoProgetto) throws NoIDMatchException{
-        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.* FROM progetti,capiprogetto WHERE id_progetto = progetti.id AND id_utente =" + capoProgetto.getID());
+        ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT progetti.* FROM progetti,capiprogetto WHERE id_progetto = progetti.id AND id_utente =" + capoProgetto.getId());
         Iterator<String[]> i = result.iterator();
         Set<Progetto> listaProgetti = new LinkedHashSet<>();
         while(i.hasNext()) {
@@ -122,23 +122,23 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
     }
     
     public void setCapoProgetto(Progetto prog, CapoProgetto capo){
-        DBConnection.getInstance().updateDB("UPDATE progetti SET id_capoprog = " + capo.getID() + " WHERE id = " + prog.getID());
+        DBConnection.getInstance().updateDB("UPDATE progetti SET id_capoprog = " + capo.getId() + " WHERE id = " + prog.getId());
     }
     
     public void updateSaldo(Progetto prog, double saldo){
-        DBConnection.getInstance().updateDB("UPDATE progetti SET saldo = " + saldo + " WHERE id = " + prog.getID());
+        DBConnection.getInstance().updateDB("UPDATE progetti SET saldo = " + saldo + " WHERE id = " + prog.getId());
     }
 
     @Override public void create(Progetto prog){
-        DBConnection.getInstance().updateDB("INSERT INTO progetti(nome,id_capoprog,saldo,budget) VALUES(nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getID() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget() + ")");
+        DBConnection.getInstance().updateDB("INSERT INTO progetti(nome,id_capoprog,saldo,budget) VALUES(nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getId() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget() + ")");
     }
     
     @Override public void update(Progetto prog) {
-        DBConnection.getInstance().updateDB("UPDATE progetti SET nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getID() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget());
+        DBConnection.getInstance().updateDB("UPDATE progetti SET nome = '" + prog.getNome() + "', id_capoprog = " + prog.getCapoProgetto().getId() + ", saldo = " + prog.getSaldo() + ", budget = " + prog.getBudget());
     }
 
     @Override public void delete(IdentificabileID obj) {
-        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE id = " + obj.getID());
+        DBConnection.getInstance().updateDB("DELETE FROM progetti WHERE id = " + obj.getId());
     }
 	
 }
