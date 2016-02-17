@@ -122,7 +122,6 @@ public class FXMLProgettoController implements Initializable {
     
         moreButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent arg0) {
-                
                 offset += 5;
                 try {
                     listaOrdini.addAll(delegate.getListaOrdini(progetto, offset));
@@ -133,9 +132,8 @@ public class FXMLProgettoController implements Initializable {
                         moreButton.setManaged(false);
                     }
                 } catch (NoIDMatchException ex) {
-                    Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, ex);
+                    //Non fare nulla in questo caso
                 }
-                
             }
         });
         
