@@ -31,13 +31,9 @@ public class UtenteDAO implements DAOInterface<Utente>{
         while(i.hasNext()) {
             String[] riga = i.next();
             int id = Integer.parseInt(riga[0]);
-            try{
             Utente utente = getById(id);
             listaUtenti.add(utente);
-            }
-            catch(NoIDMatchException e){
-                throw e;
-            }
+
         }
         return listaUtenti;
     }
@@ -76,7 +72,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
                     case 2: return MagazziniereDAO.getInstance().getById(id);
                 }
         }
-        throw new NoIDMatchException(id);
+        throw new NoIDMatchException(this, id);
     }
     
     public int getID(Utente utente) throws NoIDMatchException{
@@ -86,7 +82,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
             String[] riga = i.next();
             return Integer.parseInt(riga[0]);
         }
-        throw new NoIDMatchException(utente.getId());
+        throw new NoIDMatchException(this, utente.getId());
     }
     
     public void setPsw (Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{

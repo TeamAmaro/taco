@@ -1,6 +1,7 @@
 package it.unisalento.taco.business;
 
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoMagazzinoException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Magazziniere;
 import java.util.Map;
@@ -42,11 +43,11 @@ public class MagazziniereDelegate {
         return magazzino.cercaProdotto(prodotto, quantita);
     }
 
-    public Magazzino getMagazzino(Magazziniere magazziniere) throws NoQueryMatchException{
+    public Magazzino getMagazzino(Magazziniere magazziniere) throws NoMagazzinoException{
         return Magazzino.getMagazzino(magazziniere);
     }
     
-    public Set<Ordine> chiediOrdini(Magazziniere magazziniere) throws NoQueryMatchException, NoIDMatchException{
+    public Set<Ordine> chiediOrdini(Magazziniere magazziniere) throws NoIDMatchException, NoMagazzinoException{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
         Magazzino magazzino = Magazzino.getMagazzino(magazziniere);
         listaOrdini = Ordine.getListaOrdini(magazzino);

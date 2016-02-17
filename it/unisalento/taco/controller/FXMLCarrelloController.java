@@ -8,6 +8,7 @@ package it.unisalento.taco.controller;
 import it.unisalento.taco.business.DipendenteDelegate;
 import it.unisalento.taco.business.GeneratoreOrdini;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoProgettoException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
@@ -25,6 +26,8 @@ import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -73,37 +76,29 @@ public class FXMLCarrelloController implements Initializable {
         this.application = application;
     }
     
-    public void initData(){
+    public void initData() throws NoIDMatchException, NoProgettoException{
         initInfo();
         initMenu();
         initContent();
         initAnimation();
     }
     
-    private void initInfo(){
+    private void initInfo() throws NoIDMatchException, NoProgettoException{
         
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
         String saldo = "0.0€";
 
-        try{
-            nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
-            numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
-            carrello = delegate.getCarrello((Dipendente) application.getUtente());
-        }
-        catch(NoIDMatchException e){
-            Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, e);
-        }
-        catch(NoQueryMatchException e){
-            //Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.FINE, null, e);
-        }
-        finally{
-            nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(saldo);
-        }
-        
+
+        nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
+        saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
+        numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
+        carrello = delegate.getCarrello((Dipendente) application.getUtente());
+
+        nomeProgetto.setText(nomeProg);
+        saldoProgetto.setText(saldo);
+
     }
     
     private void initMenu(){
@@ -132,23 +127,18 @@ public class FXMLCarrelloController implements Initializable {
                         quantitaDisponibile = delegate.chiediDisponibilitaAll(prodottoRichiesto);
                         if (quantitaRichiesta > quantitaDisponibile)
                         prodottiInsufficienti.put(prodottoRichiesto, quantitaDisponibile);
-                    } catch (NoQueryMatchException ex) {
-                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NoIDMatchException ex) {
-                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    } catch (NoQueryMatchException | NoIDMatchException ex) {
+                        //Salta richiesta
+                    }                    
                 }
                 if(prodottiInsufficienti.isEmpty()){
                     Set<Ordine> listaOrdini;
                     try {
                         listaOrdini = GeneratoreOrdini.getInstance().generaOrdini((Dipendente) application.getUtente());
                         application.ordina(listaOrdini);
-                    } catch (NoQueryMatchException ex) {
-                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NoIDMatchException ex) {
-                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NoQueryMatchException | NoIDMatchException | NoProgettoException ex) {
+                        application.errorDialog(ex);
                     }
-                    
                 } else {
                     final GridPane grid = new GridPane();
 
@@ -192,10 +182,8 @@ public class FXMLCarrelloController implements Initializable {
                                 Set<Ordine> listaOrdini = GeneratoreOrdini.getInstance().generaOrdini((Dipendente) application.getUtente());
                                 application.ordina(listaOrdini);
                                 anchorPane.getChildren().remove(grid);
-                            }catch (NoQueryMatchException ex){
-                                Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (NoIDMatchException ex) {
-                                Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                            }catch (NoQueryMatchException | NoIDMatchException | NoProgettoException ex){
+                                application.errorDialog(ex);
                             }
                         }
                     });
@@ -210,7 +198,7 @@ public class FXMLCarrelloController implements Initializable {
         });
     }
     
-    private void initContent(){
+    private void initContent() throws NoIDMatchException{
         
         int i = 3;
         
@@ -294,11 +282,27 @@ public class FXMLCarrelloController implements Initializable {
                         quantitaLabel.setManaged(false);
                         
                         rimuovi.setVisible(false);
-                        
-                        
+                                                
                         final TextField newQuantita = new TextField();
+                        newQuantita.setText(quantitaLabel.getText());
                         newQuantita.setMaxWidth(50.0);
+ 
                         content.add(newQuantita, 1, position);
+                        
+                        newQuantita.focusedProperty().addListener(new ChangeListener<Boolean>()
+                            {
+                                @Override
+                                public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+                                {
+                                    if (!newPropertyValue)
+                                    {
+                                        rimuovi.setVisible(true);
+                                        content.getChildren().remove(newQuantita);
+                                        quantitaLabel.setVisible(true);
+                                        quantitaLabel.setManaged(true);
+                                    }
+                                }
+                            });
                         
                         newQuantita.setOnKeyPressed(new EventHandler<KeyEvent>(){
                             @Override public void handle(KeyEvent arg0) {
@@ -319,7 +323,7 @@ public class FXMLCarrelloController implements Initializable {
                                         quantitaLabel.setVisible(true);
                                         quantitaLabel.setManaged(true);
                                     } catch (NoIDMatchException ex) {
-                                        Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                                        application.errorDialog(ex);
                                     }
                                 }
                             }
@@ -337,10 +341,8 @@ public class FXMLCarrelloController implements Initializable {
                         disponibilita.setText("Disponibile" + System.lineSeparator() + "presso altre" + System.lineSeparator() + "sedi");
                     else 
                         disponibilita.setText("Disponibile");
-                } catch (NoIDMatchException ex) {
-                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NoQueryMatchException ex) {
-                    Logger.getLogger(FXMLCarrelloController.class.getName()).log(Level.SEVERE, null, ex);
+                    disponibilita.setText("Errore nel reperire disponibilità");
                 }
                 
                 

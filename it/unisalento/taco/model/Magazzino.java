@@ -2,6 +2,7 @@ package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.MagazzinoDAO;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoMagazzinoException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import java.util.Map;
 import java.util.Set;
@@ -118,7 +119,7 @@ public class Magazzino  implements IdentificabileID {
         return MagazzinoDAO.getInstance().getMagazzino(sede);
     }
     
-    public static Magazzino getMagazzino(Magazziniere magazziniere) throws NoQueryMatchException{
+    public static Magazzino getMagazzino(Magazziniere magazziniere) throws NoMagazzinoException{
         return MagazzinoDAO.getInstance().getMagazzino(magazziniere);
     }
     

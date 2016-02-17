@@ -34,7 +34,7 @@ public class MagazziniereDAO implements DAOInterface<Magazziniere>{
             return magazziniere;
         }
         else {
-            throw new NoIDMatchException(id);
+            throw new NoIDMatchException(this, id);
         }
     }
     

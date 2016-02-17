@@ -2,6 +2,7 @@ package it.unisalento.taco.business;
 
 import it.unisalento.taco.exceptions.InsufficientFundException;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoProgettoException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Categoria;
@@ -28,7 +29,7 @@ public class DipendenteDelegate {
     }
     private DipendenteDelegate(){};
 
-    public Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
+    public Progetto getProgetto(Dipendente dipendente) throws NoIDMatchException, NoProgettoException{
         return Progetto.getProgetto(dipendente);
     }
     
@@ -73,7 +74,7 @@ public class DipendenteDelegate {
     }
 
 
-    public void acquista(Dipendente dipendente, Set<Ordine> listaOrdini) throws InsufficientFundException{
+    public void acquista(Dipendente dipendente, Set<Ordine> listaOrdini) throws InsufficientFundException, NoProgettoException, NoIDMatchException{
         
         //Controlla possibilità del dipendente di effettuare l'ordine
         //Calcolare il TOTALE
@@ -87,32 +88,29 @@ public class DipendenteDelegate {
             totale += val.getSpesaSpedizione();
         }
         
-        try{
-            //prendi il progetto e il saldo
-            Progetto progetto = Progetto.getProgetto(dipendente);
-            double saldo = progetto.getSaldo();
-            //Se il progetto non ha fondi sufficienti interrompi l'acquisto
-            if(saldo <= totale){ 
-                throw new InsufficientFundException("Acquisto: Impossibile completare l'acquisto per insufficienza di fondi. \nControlla il budget e riprova.");
-            }
-            else {
-                //FINALIZZO L'ACQUISTO
-                //cambia il saldo del progetto corrispondente
-                progetto.setSaldo(saldo - totale);
-                Progetto.updateSaldo(progetto, saldo - totale);
-                //rimuovi la merce acquistata dal carrello
-                Carrello cart = Carrello.getByID(dipendente.getId());
-                for(Ordine ordine : listaOrdini){
-                    cart.removeListaProdotti(ordine.getListaProdotti());
-                    Magazzino mag = ordine.getMagazzino();
-                    mag.removeFromInventario(ordine.getListaProdotti());
-                    Ordine.addOrdine(ordine);
-                }
+        
+        //prendi il progetto e il saldo
+        Progetto progetto = Progetto.getProgetto(dipendente);
+        double saldo = progetto.getSaldo();
+        //Se il progetto non ha fondi sufficienti interrompi l'acquisto
+        if(saldo <= totale){ 
+            throw new InsufficientFundException("Acquisto: Impossibile completare l'acquisto per insufficienza di fondi. \nControlla il budget e riprova.");
+        }
+        else {
+            //FINALIZZO L'ACQUISTO
+            //cambia il saldo del progetto corrispondente
+            progetto.setSaldo(saldo - totale);
+            Progetto.updateSaldo(progetto, saldo - totale);
+            //rimuovi la merce acquistata dal carrello
+            Carrello cart = Carrello.getByID(dipendente.getId());
+            for(Ordine ordine : listaOrdini){
+                cart.removeListaProdotti(ordine.getListaProdotti());
+                Magazzino mag = ordine.getMagazzino();
+                mag.removeFromInventario(ordine.getListaProdotti());
+                Ordine.addOrdine(ordine);
             }
         }
-        catch(NoQueryMatchException | NoIDMatchException e){
-            System.err.println(e.getMessage());
-        }
+        
         
     }
 

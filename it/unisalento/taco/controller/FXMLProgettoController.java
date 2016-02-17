@@ -125,15 +125,16 @@ public class FXMLProgettoController implements Initializable {
                 offset += 5;
                 try {
                     listaOrdini.addAll(delegate.getListaOrdini(progetto, offset));
-                    ordineData.clear();
-                    ordineData.addAll(listaOrdini);
-                    if (numOrdini - offset < 5){
-                        moreButton.setVisible(false);
-                        moreButton.setManaged(false);
-                    }
                 } catch (NoIDMatchException ex) {
-                    //Non fare nulla in questo caso
+                    application.errorDialog(ex);
                 }
+                ordineData.clear();
+                ordineData.addAll(listaOrdini);
+                if (numOrdini - offset < 5){
+                    moreButton.setVisible(false);
+                    moreButton.setManaged(false);
+                }
+                
             }
         });
         
@@ -176,8 +177,8 @@ public class FXMLProgettoController implements Initializable {
                         else if (!ordineData.contains(o))
                             ordineData.add(o);
                     }
-                }catch(Exception e){
-                    //CIRO NU TENIM PAUR E NIEND
+                }catch(NumberFormatException e){
+                    //Non fare nulla
                 }
             }
         });
@@ -201,14 +202,16 @@ public class FXMLProgettoController implements Initializable {
         tableViewDip.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Dipendente>() {
             @Override
             public void changed(ObservableValue<? extends Dipendente> observable, Dipendente oldValue, Dipendente newValue) {
+                if(newValue != null){
                 for(Ordine o : listaOrdini){
                    if(o.getDipendente().getId() != newValue.getId()){
                        ordineData.remove(o);
                    }
                    else if (!ordineData.contains(o))
                        ordineData.add(o);
-                }
-            }      
+                    }
+                }      
+            }
         });
         
         tableViewDip.setItems(dipendenteData);
@@ -228,7 +231,7 @@ public class FXMLProgettoController implements Initializable {
             }
             ordineData.addAll(listaOrdini);
         } catch (NoIDMatchException e){
-            Logger.getLogger(FXMLProgettoController.class.getName()).log(Level.SEVERE, null, e);
+            application.errorDialog(e);
         }
                 
         codiceCol.setCellValueFactory(new PropertyValueFactory<Ordine, Integer>("codice"));

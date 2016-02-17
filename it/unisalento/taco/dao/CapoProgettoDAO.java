@@ -32,7 +32,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProg;
         }
         else {
-            throw new NoQueryMatchException(this);
+            throw new NoQueryMatchException("(#5) Nessun capoprogetto trovato per " + email);
         }
     }
 
@@ -46,7 +46,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProg;
         }
         else {
-            throw new NoQueryMatchException(this);
+            throw new NoQueryMatchException("(#5) Nessun capoprogetto trovato per " + progetto.getNome());
         }
     }
 
@@ -59,7 +59,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProgetto;
         }
         else {
-            throw new NoIDMatchException(id);
+            throw new NoIDMatchException(this, id);
         }
     }
     

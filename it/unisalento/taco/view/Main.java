@@ -11,15 +11,12 @@ import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,7 +24,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -58,7 +54,7 @@ public class Main extends Application{
         this.primaryStage.setHeight(MINIMUM_WINDOW_HEIGHT);
         
         loginLevel();
-       
+        
         this.primaryStage.show();
     } 
  
@@ -243,7 +239,7 @@ public class Main extends Application{
         ordineDettaglioLevel(listaOrdini);
     }
     
-    private void errorDialog(Exception ex){
+    public void errorDialog(Exception ex){
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Attenzione!");        
@@ -266,7 +262,7 @@ public class Main extends Application{
                 loginLevel();
             }
         });
-
+        
         GridPane grid = new GridPane();
         grid.add(msg, 0, 0);
         grid.add(okBtn, 0, 1);

@@ -30,7 +30,7 @@ public class FXMLLoginController extends AnchorPane implements Initializable {
     }
     
     @Override public void initialize(URL location, ResourceBundle resources) {
-        //Nulla da fà
+        //Non utilizzato
     }
     
     public void effettuaLogin(ActionEvent event) {

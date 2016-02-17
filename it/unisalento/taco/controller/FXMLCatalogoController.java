@@ -2,6 +2,7 @@ package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.DipendenteDelegate;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoProgettoException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Categoria;
@@ -114,7 +115,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         this.application = application;
     }
 
-    public void initData() throws NoIDMatchException {
+    public void initData() throws NoIDMatchException, NoProgettoException {
 
         initInfo();
         initMenu();
@@ -122,30 +123,22 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         
     }
 
-    private void initInfo() throws NoIDMatchException{
+    private void initInfo() throws NoIDMatchException, NoProgettoException{
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
-        String nomeProg = "Nessun Progetto";
+        String nomeProg;
         int numeroProd = 0;
-        String saldo = "0.0€";
+        String saldo;
 
-        try{
-            nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
-            carrello = delegate.getCarrello((Dipendente) application.getUtente());
-            numeroProd = carrello.numeroProdotti();
-            
-        }
-        catch(NoIDMatchException e){
-            throw e;
-        }
-        catch(NoQueryMatchException e){
-            //La gestisco qui
-        }
-        finally{
-            nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(saldo);
-            numCarrello.setText(Integer.toString(numeroProd));
-        }
+        nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
+        saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
+        carrello = delegate.getCarrello((Dipendente) application.getUtente());
+        numeroProd = carrello.numeroProdotti();
+
+
+        nomeProgetto.setText(nomeProg);
+        saldoProgetto.setText(saldo);
+        numCarrello.setText(Integer.toString(numeroProd));
+
 
     }
     
@@ -191,7 +184,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                         displayProdotti(listaProdotti);
                     }
                     catch(NoIDMatchException e){
-                        System.err.println(e.getMessage());
+                        //Salta il prodotto
                     }
                 }
             });
@@ -212,7 +205,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                     }
                 }
                 catch (NoIDMatchException e){
-                    System.err.println(e.getMessage());
+                    //Salta il prodotto
                 }
             }
         });
@@ -231,7 +224,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                         }
                     }
                     catch (NoIDMatchException e){
-                        System.err.println(e.getMessage());
+                        //Salta il prodotto 
                     }
                 }
             }
@@ -250,7 +243,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                     }
                 }
                 catch (NoIDMatchException e){
-                    System.err.println(e.getMessage());
+                    //Salta il prodotto
                 }
             }
         });
@@ -268,7 +261,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                         }
                     }
                     catch (NoIDMatchException e){
-                        System.err.println(e.getMessage());
+                        //Salta il prodotto
                     }
                 }
             }
@@ -300,7 +293,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
         });
     }
 
-    private void displayProdotti(Set<Prodotto> listaProdotti){
+    private void displayProdotti(Set<Prodotto> listaProdotti) throws NoIDMatchException{
 
         if(content.getChildren().contains(gridPane))
             content.getChildren().remove(gridPane);
@@ -367,8 +360,6 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             catch(NoQueryMatchException e){
                 descrizione.setText("Impossibile reperire disponibilità");
                 descrizione.getStyleClass().add("non-disponibile");
-            } catch (NoIDMatchException ex) {
-                Logger.getLogger(FXMLCatalogoController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             dettagli.setOnMouseClicked(new EventHandler<MouseEvent>(){

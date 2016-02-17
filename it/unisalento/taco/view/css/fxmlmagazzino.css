@@ -89,3 +89,7 @@
 .titolo {
     -fx-font-size: 24;
 }
+
+.notifica-spedizione, .notifica-inventario {
+    -fx-font-size: 14;
+}

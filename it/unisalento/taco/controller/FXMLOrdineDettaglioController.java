@@ -4,19 +4,17 @@ import it.unisalento.taco.business.DipendenteDelegate;
 import it.unisalento.taco.business.DocumentManager;
 import it.unisalento.taco.exceptions.InsufficientFundException;
 import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exceptions.NoProgettoException;
 import it.unisalento.taco.exceptions.NoQueryMatchException;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Ordine;
-import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.view.Main;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
@@ -110,7 +108,7 @@ public class FXMLOrdineDettaglioController implements Initializable {
         //Nulla da fà
     }    
     
-    public void initData(){
+    public void initData() throws NoIDMatchException, NoProgettoException{
         initInfo();
         initContent();
         initMenu();
@@ -163,28 +161,19 @@ public class FXMLOrdineDettaglioController implements Initializable {
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     
-    private void initInfo(){
+    private void initInfo() throws NoIDMatchException, NoProgettoException{
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
         String saldo = "0.0€";
 
-        try{
-            nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
-        }
-        catch(NoIDMatchException e){
-            Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, e);
-        }
-        catch(NoQueryMatchException e){
-            //Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.FINE, null, e);
-        }
-        finally{
-            titoloLabel.setText("Ordine per " + nomeProg);
-            nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(saldo);
-            saldoLabel.setText(saldo);
-        }
+        nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
+        saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
+
+        titoloLabel.setText("Ordine per " + nomeProg);
+        nomeProgetto.setText(nomeProg);
+        saldoProgetto.setText(saldo);
+        saldoLabel.setText(saldo);
     }
     
     private void initContent(){
@@ -264,6 +253,8 @@ public class FXMLOrdineDettaglioController implements Initializable {
                             errorLabel.setText("Fondi insufficenti per completare l'acquisto.");
                             errorLabel.setWrapText(true);
                             return;
+                        } catch (NoProgettoException | NoIDMatchException ex) {
+                            application.errorDialog(ex);
                         }
                         
                         File file = null;
@@ -306,7 +297,7 @@ public class FXMLOrdineDettaglioController implements Initializable {
                                 gridPane.add(img, 0, 3);                                
                                 
                             } catch (IOException | COSVisitorException ex) {
-                                Logger.getLogger(FXMLOrdineDettaglioController.class.getName()).log(Level.SEVERE, null, ex);
+                                application.errorDialog(ex);
                             }
                         }
                     }

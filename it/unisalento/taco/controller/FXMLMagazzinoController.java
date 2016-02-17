@@ -2,7 +2,7 @@ package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.MagazziniereDelegate;
 import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exceptions.NoMagazzinoException;
 import it.unisalento.taco.model.Magazziniere;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
@@ -12,8 +12,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,36 +46,31 @@ public class FXMLMagazzinoController implements Initializable {
         // TODO
     }    
     
-    public void initData(){
+    public void initData() throws NoMagazzinoException, NoIDMatchException{
         initInfo();
         initMenu();
     }
     
-    private void initInfo(){
+    private void initInfo() throws NoMagazzinoException, NoIDMatchException{
         nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
-        try{
-            magazzino = MagazziniereDelegate.getInstance().getMagazzino((Magazziniere) application.getUtente());
-            nomeMagazzino.setText(magazzino.getNome());
-            Set<Ordine> listaOrdini = delegate.chiediOrdini((Magazziniere) application.getUtente());
-            notificaSpedizione.setText("Hai " + listaOrdini.size() + " ordini da spedire.");
-            boolean check = false;
-            StringBuilder sb = new StringBuilder();
-            sb.append("Esaurimento scorte dei seguenti prodotti:").append(System.lineSeparator());
-            for(Map.Entry<Prodotto,Integer> k : magazzino.getInventario().entrySet()){
-                if(k.getValue() < 10){
-                    check = true;
-                    sb.append(k.getKey().getNome() + " : " + k.getValue() + " in magazzino." + System.lineSeparator());
-                }    
-            }
-            if(check == false)
-                notificaInventario.setText("Nessun prodotto in esaurimento scorte.");
-            else
-                notificaInventario.setText(sb.toString());
-        }catch(NoQueryMatchException e){
-            //DA DEFINIRE!!
-        } catch (NoIDMatchException ex) {
-            Logger.getLogger(FXMLMagazzinoController.class.getName()).log(Level.SEVERE, null, ex);
+        
+        magazzino = MagazziniereDelegate.getInstance().getMagazzino((Magazziniere) application.getUtente());
+        nomeMagazzino.setText(magazzino.getNome());
+        Set<Ordine> listaOrdini = delegate.chiediOrdini((Magazziniere) application.getUtente());
+        notificaSpedizione.setText("Hai " + listaOrdini.size() + " ordini da spedire.");
+        boolean check = false;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Esaurimento scorte dei seguenti prodotti:").append(System.lineSeparator());
+        for(Map.Entry<Prodotto,Integer> k : magazzino.getInventario().entrySet()){
+            if(k.getValue() < 10){
+                check = true;
+                sb.append(k.getKey().getNome()).append(" : ").append(k.getValue()).append(" in magazzino.").append(System.lineSeparator());
+            }    
         }
+        if(check == false)
+            notificaInventario.setText("Nessun prodotto in esaurimento scorte.");
+        else
+            notificaInventario.setText(sb.toString());
     }
 
     private void initMenu(){

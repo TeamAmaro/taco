@@ -55,18 +55,13 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         Iterator<String[]> i = result.iterator();
         while(i.hasNext()) {
             String[] riga = i.next();
-            try{
-                Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
-                Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
-                long data = Long.parseLong(riga[6]);
-                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
-                listaOrdini.add(ordine);
-            } 
-            catch(NoIDMatchException e) {
-                throw e;
-            }
+            Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
+            Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
+            Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
+            long data = Long.parseLong(riga[6]);
+            Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
+            Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
+            listaOrdini.add(ordine);
         }
         return listaOrdini;
     }
@@ -77,18 +72,13 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         Iterator<String[]> i = result.iterator();
         while(i.hasNext()) {
             String[] riga = i.next();
-            try{
-                Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
-                Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
-                long data = Long.parseLong(riga[6]);
-                Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
-                Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
-                listaOrdini.add(ordine);
-            } 
-            catch(NoIDMatchException e) {
-                throw e;
-            }
+            Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
+            Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
+            Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
+            long data = Long.parseLong(riga[6]);
+            Map<Prodotto,Integer> listaProdotti = getListaProdotti(Integer.parseInt(riga[0]));
+            Ordine ordine = new Ordine(dip,prog,mag,data,listaProdotti);
+            listaOrdini.add(ordine);
         }
         return listaOrdini;
     }
@@ -107,29 +97,24 @@ public class OrdineDAO implements DAOInterface<Ordine>{
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
-            try{
-                Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
-                Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
-                Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
-                long data = Long.parseLong(riga[6]);
-                Map<Prodotto,Integer> listaProd = new LinkedHashMap<>();
-                result = DBConnection.getInstance().queryDB("SELECT id_prodotto, quantita FROM dettagliordini WHERE codice = " + hashCode);
-                i = result.iterator();
-                while(i.hasNext()){
-                    riga = i.next();
-                    Prodotto prod = ProdottoDAO.getInstance().getById(Integer.parseInt(riga[0]));
-                    int quantProd = Integer.parseInt(riga[1]);
-                    listaProd.put(prod, quantProd);
-                }
-                Ordine ordine = new Ordine(dip, prog, mag, data, listaProd);
-                return ordine;
+            Dipendente dip = DipendenteDAO.getInstance().getById(Integer.parseInt(riga[1]));
+            Progetto prog = ProgettoDAO.getInstance().getById(Integer.parseInt(riga[3]));
+            Magazzino mag = MagazzinoDAO.getInstance().getById(Integer.parseInt(riga[4]));
+            long data = Long.parseLong(riga[6]);
+            Map<Prodotto,Integer> listaProd = new LinkedHashMap<>();
+            result = DBConnection.getInstance().queryDB("SELECT id_prodotto, quantita FROM dettagliordini WHERE codice = " + hashCode);
+            i = result.iterator();
+            while(i.hasNext()){
+                riga = i.next();
+                Prodotto prod = ProdottoDAO.getInstance().getById(Integer.parseInt(riga[0]));
+                int quantProd = Integer.parseInt(riga[1]);
+                listaProd.put(prod, quantProd);
             }
-            catch(NoIDMatchException e) {
-                throw e;
-            }
+            Ordine ordine = new Ordine(dip, prog, mag, data, listaProd);
+            return ordine;
         }
         else {
-            throw new NoIDMatchException(hashCode);
+            throw new NoIDMatchException(this, hashCode);
         }
     }
     
