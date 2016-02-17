@@ -46,7 +46,12 @@ public class GeneratoreOrdini {
                                         
                     quantRichiesta -= quantMagDip;
                     if(quantMagDip != 0)
-                        prodQuantMagDip.put(prodRichiesto, quantMagDip);
+                        if(magPerProdQuant.containsKey(magDip))
+                            magPerProdQuant.get(magDip).put(prodRichiesto, quantMagDip);
+                        else {
+                            prodQuantMagDip.put(prodRichiesto, quantMagDip);
+                            magPerProdQuant.put(magDip, prodQuantMagDip);
+                        }
                     
                     //Chiedi agli altri di soddisfare la richiesta
                     Set<Magazzino> listaMag = Magazzino.cercaProdotto(prodRichiesto);
