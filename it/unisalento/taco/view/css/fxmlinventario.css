@@ -89,6 +89,9 @@
     -fx-background-color: rgb(239,82,98);
 }
 
+.warning-msg {
+    -fx-text-fill: rgb(239,82,98);
+}
 
 .rifornisci-button:hover {
     -fx-cursor: hand;

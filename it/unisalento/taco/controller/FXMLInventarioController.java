@@ -111,6 +111,7 @@ public class FXMLInventarioController implements Initializable {
             comboFornitori.setMinWidth(100.0);
             comboFornitori.getStyleClass().add("combo-fornitori");
             quantitaField.setMaxWidth(100.0);
+            quantitaField.setMinHeight(20.0);
             quantitaField.getStyleClass().add("quantita-field");
             rifornisciButton.setMinWidth(100.0);
             rifornisciButton.getStyleClass().add("rifornisci-button");
@@ -125,18 +126,22 @@ public class FXMLInventarioController implements Initializable {
             categoria.getStyleClass().add("categoria-prodotto");
             final Label quantita = new Label(Integer.toString(pq.getValue()));
             
-            funBox.getChildren().addAll(comboFornitori, quantitaField, rifornisciButton);
+            final Label warnMsg = new Label("");
+            funBox.getChildren().addAll(comboFornitori, quantitaField, rifornisciButton, warnMsg);
             funBox.setMinWidth(150.0);
             funBox.setSpacing(10.0);
             
             valori.getChildren().addAll(nome, categoria, quantita);
             valori.setMinWidth(250.0);
             
+            
             hb.getChildren().addAll(iv, valori, funBox);
             
             scrollContent.getChildren().add(hb);
             
-            //RUDIMENTALEAH
+            warnMsg.getStyleClass().add("warning-msg");
+            warnMsg.setMinWidth(100.0);
+            
             rifornisciButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override public void handle(MouseEvent arg0) {
                     if(comboFornitori.getValue() == null)
@@ -144,12 +149,18 @@ public class FXMLInventarioController implements Initializable {
                     else if(comboFornitori.getValue() == Fornitore.FORNITORE_0)
                         comboFornitori.getStyleClass().add("warning");
                     else{
-                        int q = Integer.parseInt(quantitaField.getText());
-                        if(q > 0){
-                            delegate.rifornisciProdotto(magazzino, pq.getKey(), q);
-                            int prevQuantita = Integer.parseInt(quantita.getText());
-                            quantita.setText(Integer.toString(prevQuantita + q));
-                            quantitaField.clear();
+                        try {
+                            int q = Integer.parseInt(quantitaField.getText());
+                            if(q > 0){
+                                delegate.rifornisciProdotto(magazzino, pq.getKey(), q);
+                                int prevQuantita = Integer.parseInt(quantita.getText());
+                                quantita.setText(Integer.toString(prevQuantita + q));
+                                quantitaField.clear();
+                                warnMsg.setText("");
+                            }
+                        }
+                        catch(NumberFormatException e){
+                            warnMsg.setText("Inserisci una quantità valida");
                         }
                     }
                 }
