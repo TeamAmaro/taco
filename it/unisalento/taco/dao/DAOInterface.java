@@ -5,7 +5,7 @@
  */
 package it.unisalento.taco.dao;
 
-import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
 import it.unisalento.taco.model.IdentificabileID;
 
 public interface DAOInterface<T>{

@@ -2,14 +2,16 @@ package it.unisalento.taco.view;
 
 import it.unisalento.taco.business.UtenteDelegate;
 import it.unisalento.taco.controller.*;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoSuchUserException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoSuchUserException;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Prodotto;
 import it.unisalento.taco.model.Progetto;
 import it.unisalento.taco.model.Utente;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -176,6 +178,8 @@ public class Main extends Application{
             return true;
         }
         catch (NoSuchUserException | NoIDMatchException e) {
+            return false;
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             return false;
         }
     }

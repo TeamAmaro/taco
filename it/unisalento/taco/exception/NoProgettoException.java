@@ -1,4 +1,4 @@
-package it.unisalento.taco.exceptions;
+package it.unisalento.taco.exception;
 
 public class NoProgettoException extends Exception{
     public NoProgettoException(int id){

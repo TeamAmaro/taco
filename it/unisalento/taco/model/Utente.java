@@ -1,8 +1,8 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.UtenteDAO;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoSuchUserException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoSuchUserException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 

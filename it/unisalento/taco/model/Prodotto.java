@@ -1,7 +1,7 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.ProdottoDAO;
-import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Arrays;

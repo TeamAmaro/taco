@@ -4,7 +4,7 @@
  * Professore: Luca Mainetti
  */
 
-package it.unisalento.taco.exceptions;
+package it.unisalento.taco.exception;
 
 public class NoIDMatchException extends Exception{
     public NoIDMatchException(Object obj, int id){

@@ -1,7 +1,7 @@
 package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
 import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;

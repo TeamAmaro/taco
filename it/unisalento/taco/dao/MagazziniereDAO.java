@@ -7,7 +7,7 @@
 package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Magazziniere;
 import java.util.ArrayList;

@@ -6,8 +6,8 @@
 package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.MagazziniereDelegate;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoMagazzinoException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoMagazzinoException;
 import it.unisalento.taco.model.Magazziniere;
 import it.unisalento.taco.model.Magazzino;
 import it.unisalento.taco.model.Ordine;

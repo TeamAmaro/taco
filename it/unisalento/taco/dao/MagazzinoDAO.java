@@ -7,9 +7,9 @@
 package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoMagazzinoException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoMagazzinoException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Magazziniere;
