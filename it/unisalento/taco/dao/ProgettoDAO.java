@@ -5,8 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoProgettoException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.IdentificabileID;
@@ -34,37 +35,28 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
             String[] riga = i.next();
             double saldo = Double.parseDouble(riga[3]);
             double budget = Double.parseDouble(riga[4]);
-            try {
-                CapoProgetto capoProg = new CapoProgetto(Integer.parseInt(riga[2]), riga[5], riga[6], riga[7]);
-                Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
-                Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget, listaDipendenti);
-                return prog;
-            }
-            catch (NoIDMatchException e){
-                throw e;
-            }
+            CapoProgetto capoProg = new CapoProgetto(Integer.parseInt(riga[2]), riga[5], riga[6], riga[7]);
+            Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(id);
+            Progetto prog = new Progetto(id, riga[1], capoProg, saldo, budget, listaDipendenti);
+            return prog;
         }
         else {
-            throw new NoIDMatchException(id);
+            throw new NoIDMatchException(this, id);
         }
     }
     
-    public Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
+    public Progetto getProgetto(Dipendente dipendente) throws NoIDMatchException, NoProgettoException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT id_progetto FROM dipendenti WHERE id_utente = " + dipendente.getId());
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()){
             String[] riga = i.next();
-            try{
-                int idProgetto = Integer.parseInt(riga[0]);
-                Progetto progetto = getById(idProgetto);
-                return progetto;
-            }
-            catch(NumberFormatException | NoIDMatchException e){
-                throw e;
-            }
+            int idProgetto = Integer.parseInt(riga[0]);
+            Progetto progetto = getById(idProgetto);
+            return progetto;
+
         }
         else
-            throw new NoQueryMatchException(this);
+            throw new NoProgettoException(dipendente.getId());
     }
     
     public Progetto getProgetto(String nome){
@@ -109,14 +101,10 @@ public class ProgettoDAO implements DAOInterface<Progetto>{
         while(i.hasNext()) {
             String[] riga = i.next();
             int idProg = Integer.parseInt(riga[0]);
-            try{
-                Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(idProg);
-                Progetto progetto = new Progetto(idProg, riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), listaDipendenti);
-                listaProgetti.add(progetto);
-            }
-            catch (NoIDMatchException e) {
-                throw e;
-            }
+            Set<Dipendente> listaDipendenti = DipendenteDAO.getInstance().getListaDipendenti(idProg);
+            Progetto progetto = new Progetto(idProg, riga[1], capoProgetto, Double.parseDouble(riga[2]), Double.parseDouble(riga[3]), listaDipendenti);
+            listaProgetti.add(progetto);
+
         }
         return listaProgetti;
     }

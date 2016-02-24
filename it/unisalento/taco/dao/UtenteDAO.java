@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoSuchUserException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoSuchUserException;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Utente;
 import it.unisalento.taco.security.Password;
@@ -31,13 +31,9 @@ public class UtenteDAO implements DAOInterface<Utente>{
         while(i.hasNext()) {
             String[] riga = i.next();
             int id = Integer.parseInt(riga[0]);
-            try{
             Utente utente = getById(id);
             listaUtenti.add(utente);
-            }
-            catch(NoIDMatchException e){
-                throw e;
-            }
+
         }
         return listaUtenti;
     }
@@ -76,7 +72,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
                     case 2: return MagazziniereDAO.getInstance().getById(id);
                 }
         }
-        throw new NoIDMatchException(id);
+        throw new NoIDMatchException(this, id);
     }
     
     public int getID(Utente utente) throws NoIDMatchException{
@@ -86,7 +82,7 @@ public class UtenteDAO implements DAOInterface<Utente>{
             String[] riga = i.next();
             return Integer.parseInt(riga[0]);
         }
-        throw new NoIDMatchException(utente.getId());
+        throw new NoIDMatchException(this, utente.getId());
     }
     
     public void setPsw (Utente utente, String psw) throws NoSuchAlgorithmException, UnsupportedEncodingException{

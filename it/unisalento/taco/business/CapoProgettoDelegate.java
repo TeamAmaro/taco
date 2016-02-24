@@ -1,6 +1,6 @@
 package it.unisalento.taco.business;
 
-import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.Ordine;
 import it.unisalento.taco.model.Progetto;

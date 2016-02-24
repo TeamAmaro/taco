@@ -7,8 +7,9 @@
 package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoMagazzinoException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 import it.unisalento.taco.model.Categoria;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Magazziniere;
@@ -97,16 +98,15 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         if(i.hasNext()) {
             String[] riga = i.next();
             int idMag = Integer.parseInt(riga[0]);
-            int idMagazziniere = Integer.parseInt(riga[3]);
             Magazzino magazzino = new Magazzino(idMag, riga[1], Sede.parseSede(riga[2]), getInventario(idMag));
             return magazzino;
         }
         else {
-            throw new NoQueryMatchException(this);
+            throw new NoQueryMatchException("(#5) Nessun magazzino trovato per " + sede.nome());
         }
     }
     
-    public Magazzino getMagazzino(Magazziniere magazziniere) throws NoQueryMatchException{
+    public Magazzino getMagazzino(Magazziniere magazziniere) throws NoMagazzinoException{
         ArrayList<String[]> result = DBConnection.getInstance().queryDB("SELECT * FROM magazzini WHERE id_magazziniere = " + magazziniere.getId());
         Iterator<String[]> i = result.iterator();
         if(i.hasNext()) {
@@ -116,7 +116,7 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
             return magazzino;
         }
         else {
-            throw new NoQueryMatchException(this);
+            throw new NoMagazzinoException(magazziniere.getId());
         }
     }
     
@@ -127,17 +127,13 @@ public class MagazzinoDAO implements DAOInterface<Magazzino>{
         if(i.hasNext()) {
             String[] riga = i.next();
             int idMagazziniere = Integer.parseInt(riga[3]);
-            try{
-                Magazziniere magazziniere = MagazziniereDAO.getInstance().getById(idMagazziniere);
-                Map<Prodotto, Integer> inventario = getInventario(id);
-                magazzino = new Magazzino(id, riga[1], Sede.parseSede(riga[2]), inventario, magazziniere);
-                return magazzino;
-            }catch(NoIDMatchException e){
-                throw e;
-            }
+            Magazziniere magazziniere = MagazziniereDAO.getInstance().getById(idMagazziniere);
+            Map<Prodotto, Integer> inventario = getInventario(id);
+            magazzino = new Magazzino(id, riga[1], Sede.parseSede(riga[2]), inventario, magazziniere);
+            return magazzino;
         }
         else {
-            throw new NoIDMatchException(id);
+            throw new NoIDMatchException(this, id);
         }
     }
     

@@ -1,7 +1,8 @@
 package it.unisalento.taco.business;
 
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoProgettoException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Magazzino;
@@ -27,9 +28,8 @@ public class GeneratoreOrdini {
     
     private GeneratoreOrdini(){}
     
-    public Set<Ordine> generaOrdini(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
+    public Set<Ordine> generaOrdini(Dipendente dipendente) throws NoIDMatchException, NoProgettoException, NoQueryMatchException{
         Set<Ordine> listaOrdini = new LinkedHashSet<>();
-        try {
             Map<Prodotto,Integer> listaProdotti = Carrello.getCarrello(dipendente).getListaProdotti();
             Magazzino magDip = Magazzino.getMagazzino(dipendente.getSede());
             
@@ -103,8 +103,6 @@ public class GeneratoreOrdini {
                 listaOrdini.add(ordine);
             }
             return listaOrdini;
-        } catch (NoQueryMatchException ex) {
-            throw ex;
-        }
+        
     }
 }

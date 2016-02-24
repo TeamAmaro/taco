@@ -6,8 +6,9 @@
 package it.unisalento.taco.controller;
 
 import it.unisalento.taco.business.DipendenteDelegate;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoProgettoException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 import it.unisalento.taco.model.Carrello;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.Prodotto;
@@ -72,41 +73,33 @@ public class FXMLProdottoController implements Initializable {
         //Nulla da fà
     }    
 
-    public void initData(){
+    public void initData() throws NoIDMatchException, NoProgettoException{
         initMenu();
         initContent();
         initAnimation();
     }
 
-    private void initContent(){
+    private void initContent() throws NoIDMatchException, NoProgettoException{
         
         thumbnail.setImage(new Image("it/unisalento/taco/view/img/" + prodotto.getImmagine()));
         String nomeProg = "Nessun Progetto";
         int numeroProd = 0;
         String saldo = "0.0€";
         
-        try{
-            nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
-            saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
-            numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
-        }
-        catch(NoIDMatchException e){
-            System.exit(1); //ERRORE GRAVE
-        }
-        catch(NoQueryMatchException e){
-            //Non fare nulla
-        }
-        finally{
-            nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
-            nomeProgetto.setText(nomeProg);
-            saldoProgetto.setText(saldo);
-            carrello.setText(Integer.toString(numeroProd));
-            nomeProdotto.setText(prodotto.getNome());
-            prezzoProdotto.setText(prodotto.getFormatPrezzo());
-            descrizione.setText(prodotto.getDescrizione());
-            prodProdotto.setText(prodotto.getProduttore().toString());
-        }
-        
+        nomeProg = delegate.getProgetto((Dipendente) application.getUtente()).getNome();
+        saldo = delegate.getProgetto((Dipendente) application.getUtente()).getFormatSaldo();
+        numeroProd = delegate.getCarrello((Dipendente) application.getUtente()).numeroProdotti();
+
+        nomeClient.setText(application.getUtente().getNome() + " " + application.getUtente().getCognome());
+        nomeProgetto.setText(nomeProg);
+        saldoProgetto.setText(saldo);
+        carrello.setText(Integer.toString(numeroProd));
+        nomeProdotto.setText(prodotto.getNome());
+        prezzoProdotto.setText(prodotto.getFormatPrezzo());
+        descrizione.setText(prodotto.getDescrizione());
+        prodProdotto.setText(prodotto.getProduttore().toString());
+
+
     }
     
     private void initMenu(){
@@ -133,7 +126,7 @@ public class FXMLProdottoController implements Initializable {
                         addButton.setDisable(true);
                         addButton.setText("Aggiunto!");
                     } catch (NoIDMatchException e){
-                        System.err.println(e.getMessage());
+                        application.errorDialog(e);
                     }
                 }
             }

@@ -1,7 +1,7 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.CapoProgettoDAO;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 
 public class CapoProgetto extends Utente implements IdentificabileID {
     

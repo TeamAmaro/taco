@@ -44,8 +44,8 @@
             <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
         </padding> 
         <Label fx:id="nomeMagazzino" text="Magazzino" styleClass="titolo"/>
-        <Label fx:id="notificaSpedizione" styleClass="message"/>
-        <Label fx:id="notificaInventario" text="La media delle scorte dei prodotti è 40" styleClass="message"/>
+        <Label fx:id="notificaSpedizione" styleClass="message-spedizione"/>
+        <Label fx:id="notificaInventario" text="La media delle scorte dei prodotti è 40" styleClass="message-inventario"/>
     </VBox>
     <stylesheets>
         <URL value="@/it/unisalento/taco/view/css/fxmlmagazzino.css"/>

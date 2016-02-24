@@ -7,7 +7,7 @@
 package it.unisalento.taco.dao;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
 import it.unisalento.taco.model.Categoria;
 import static it.unisalento.taco.model.Categoria.parseCategoria;
 import it.unisalento.taco.model.Fornitore;
@@ -45,7 +45,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
             return prodotto;
         }
         else {
-            throw new NoIDMatchException(id);
+            throw new NoIDMatchException(this, id);
         }
     }
     
@@ -102,11 +102,7 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
         int j = 0;
         while(i.hasNext() && j < 100){
             String[] riga = i.next();
-            try{
-                listaProdotti.add(getById(Integer.parseInt(riga[0])));
-            }catch(NoIDMatchException e){
-                throw e;
-            }
+            listaProdotti.add(getById(Integer.parseInt(riga[0])));
             j++;
         }
         return listaProdotti;

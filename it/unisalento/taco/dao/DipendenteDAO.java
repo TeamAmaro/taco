@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
 import it.unisalento.taco.model.Dipendente;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Progetto;
@@ -35,7 +35,7 @@ public class DipendenteDAO implements DAOInterface<Dipendente>{
             return dip; 
         }
         else {
-            throw new NoIDMatchException(id);
+            throw new NoIDMatchException(this, id);
         }
     }
     

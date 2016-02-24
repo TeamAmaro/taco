@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import it.unisalento.taco.dbconnections.DBConnection;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 import it.unisalento.taco.model.CapoProgetto;
 import it.unisalento.taco.model.IdentificabileID;
 import it.unisalento.taco.model.Progetto;
@@ -32,7 +32,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProg;
         }
         else {
-            throw new NoQueryMatchException(this);
+            throw new NoQueryMatchException("(#5) Nessun capoprogetto trovato per " + email);
         }
     }
 
@@ -46,7 +46,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProg;
         }
         else {
-            throw new NoQueryMatchException(this);
+            throw new NoQueryMatchException("(#5) Nessun capoprogetto trovato per " + progetto.getNome());
         }
     }
 
@@ -59,7 +59,7 @@ public class CapoProgettoDAO implements DAOInterface<CapoProgetto>{
             return capoProgetto;
         }
         else {
-            throw new NoIDMatchException(id);
+            throw new NoIDMatchException(this, id);
         }
     }
     

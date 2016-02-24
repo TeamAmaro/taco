@@ -1,8 +1,9 @@
 package it.unisalento.taco.model;
 
 import it.unisalento.taco.dao.ProgettoDAO;
-import it.unisalento.taco.exceptions.NoIDMatchException;
-import it.unisalento.taco.exceptions.NoQueryMatchException;
+import it.unisalento.taco.exception.NoIDMatchException;
+import it.unisalento.taco.exception.NoProgettoException;
+import it.unisalento.taco.exception.NoQueryMatchException;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Arrays;
@@ -113,7 +114,7 @@ public class Progetto implements IdentificabileID {
         return stringDipendenti.toString();
     }
 
-    public static Progetto getProgetto(Dipendente dipendente) throws NoQueryMatchException, NoIDMatchException{
+    public static Progetto getProgetto(Dipendente dipendente) throws NoIDMatchException, NoProgettoException{
         return ProgettoDAO.getInstance().getProgetto(dipendente);
     }
     
