@@ -80,7 +80,7 @@ CREATE TABLE `dettagliordini` (
 
 LOCK TABLES `dettagliordini` WRITE;
 /*!40000 ALTER TABLE `dettagliordini` DISABLE KEYS */;
-INSERT INTO `dettagliordini` VALUES ('-1268359798',1,1),('-1268359798',2,1),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-1486330459',9,2),('-1486330459',12,5),('-1486330459',6,2),('1700112824',6,8),('-2104777059',9,2),('-322712807',8,5),('-322712807',6,5),('-294083656',8,5),('-294083656',6,5),('-236825354',8,5),('-236825354',6,5),('-1623333860',8,5),('-1623333860',6,5),('1160350460',8,5),('1160409980',6,5);
+INSERT INTO `dettagliordini` VALUES ('929696472',8,16),('171012662',8,29),('171012662',22,10);
 /*!40000 ALTER TABLE `dettagliordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,6 +205,7 @@ CREATE TABLE `ordini` (
 
 LOCK TABLES `ordini` WRITE;
 /*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
+INSERT INTO `ordini` VALUES ('929696472',1,'Sede A',1,1,0,1455707893570),('171012662',1,'Sede A',1,4,0,1455707893570);
 /*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,7 +229,7 @@ CREATE TABLE `prod_mag` (
 
 LOCK TABLES `prod_mag` WRITE;
 /*!40000 ALTER TABLE `prod_mag` DISABLE KEYS */;
-INSERT INTO `prod_mag` VALUES (1,1,27),(1,2,42),(1,3,52),(1,4,38),(1,5,90),(1,6,19),(1,7,64),(1,9,27),(1,10,26),(1,11,76),(1,12,22),(1,13,94),(1,16,58),(1,17,24),(1,18,40),(1,19,25),(1,20,86),(1,21,80),(1,22,5),(1,23,35),(2,1,66),(2,2,87),(2,3,34),(2,4,85),(2,5,29),(2,6,72),(2,7,47),(2,9,80),(2,10,36),(2,11,51),(2,12,33),(2,13,61),(2,14,4),(2,16,99),(2,17,39),(2,18,68),(2,19,84),(2,20,36),(2,21,11),(2,22,47),(2,23,71),(3,1,64),(3,2,74),(3,3,12),(3,4,38),(3,5,53),(3,6,28),(3,7,71),(3,9,38),(3,10,81),(3,11,79),(3,12,83),(3,13,23),(3,16,99),(3,17,86),(3,18,24),(3,19,13),(3,20,2),(3,21,96),(3,22,53),(3,23,25),(4,1,26),(4,2,71),(4,3,85),(4,4,8),(4,5,35),(4,6,38),(4,7,41),(4,8,90),(4,9,24),(4,10,50),(4,11,17),(4,12,89),(4,13,24),(4,16,70),(4,17,2),(4,18,6),(4,19,68),(4,20,47),(4,21,90),(4,22,98),(4,23,15),(1,8,17),(2,8,18),(3,8,74),(1,14,24),(3,14,97),(4,14,45);
+INSERT INTO `prod_mag` VALUES (1,1,27),(1,2,42),(1,3,52),(1,4,38),(1,5,90),(1,6,19),(1,7,64),(1,9,27),(1,10,26),(1,11,76),(1,12,22),(1,13,94),(1,16,58),(1,17,24),(1,18,40),(1,19,25),(1,20,86),(1,21,80),(1,22,0),(1,23,35),(2,1,66),(2,2,87),(2,3,34),(2,4,85),(2,5,29),(2,6,72),(2,7,47),(2,9,80),(2,10,36),(2,11,51),(2,12,33),(2,13,61),(2,14,4),(2,16,99),(2,17,39),(2,18,68),(2,19,84),(2,20,36),(2,21,11),(2,22,47),(2,23,71),(3,1,64),(3,2,74),(3,3,12),(3,4,38),(3,5,53),(3,6,28),(3,7,71),(3,9,38),(3,10,81),(3,11,79),(3,12,83),(3,13,23),(3,16,99),(3,17,86),(3,18,24),(3,19,13),(3,20,2),(3,21,96),(3,22,53),(3,23,25),(4,1,26),(4,2,71),(4,3,85),(4,4,8),(4,5,35),(4,6,38),(4,7,41),(4,8,61),(4,9,24),(4,10,50),(4,11,17),(4,12,89),(4,13,24),(4,16,70),(4,17,2),(4,18,6),(4,19,68),(4,20,47),(4,21,90),(4,22,68),(4,23,15),(1,8,0),(2,8,18),(3,8,74),(1,14,24),(3,14,97),(4,14,45);
 /*!40000 ALTER TABLE `prod_mag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,6 +247,7 @@ CREATE TABLE `prodotti` (
   `descrizione` text,
   `prezzo` double DEFAULT NULL,
   `immagine` varchar(60) DEFAULT NULL,
+  `anno_produzione` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -256,7 +258,7 @@ CREATE TABLE `prodotti` (
 
 LOCK TABLES `prodotti` WRITE;
 /*!40000 ALTER TABLE `prodotti` DISABLE KEYS */;
-INSERT INTO `prodotti` VALUES (1,'Stampante MultiJet C460','Stampanti','Stampante con scanner, NFC, WIFI e USB',399.99,'stampantemultijet.jpg'),(2,'Stampante Jackpot','Stampanti','Stampante con porta USB e collegamento ethernet',99.99,'stampantemultijet.jpg'),(3,'Toner Nero','Ricambi','Toner di colore nero per stampanti',9.99,'toner.jpg'),(4,'Toner Rosso','Ricambi','Toner di colore rosso per stampanti',9.99,'toner.jpg'),(5,'Toner Blu','Ricambi','Toner di colore blu per stampanti',9.99,'toner.jpg'),(6,'Toner Giallo','Ricambi','Toner di colore giallo per stampanti',9.99,'toner.jpg'),(7,'Toner Verde','Ricambi','Toner di colore verde per stampanti',9.99,'toner.jpg'),(8,'Matita HB','Cancelleria','Matita HB',0.99,'matita.jpg'),(9,'Penna Stilo Blu','Cancelleria','Penna Stilo Blu',1.49,'penna.jpg'),(10,'Penna Stilo Nera','Cancelleria','Penna Stilo Nera',1.49,'penna.jpg'),(11,'Penna Stilo Rossa','Cancelleria','Penna Stilo Rossa',1.49,'penna.jpg'),(12,'Righello 15 cm','Cancelleria','Righello in plastica lungo 15 cm',1.2,'righello.jpg'),(13,'Righello 1 m','Cancelleria','Righello in plastica lungo 1 m',2.5,'righello.jpg'),(14,'Righello di metallo da 20 cm','Cancelleria','Righello di metallo lungo 20 cm',3,'righello.jpg'),(16,'Hard Disk 500GB 2.5\'\'','Elettronica','Hard Disk da 500GB da 2.5\'\'',39.99,'harddisk.jpg'),(17,'Hard Disk 1TB 2.5\'\'','Elettronica','Hard Disk da 1TB da 2.5\'\'',69.99,'harddisk.jpg'),(18,'SSD 1TB 2.5\'\'','Elettronica','SSD da 1TB da 2.5\'\'',399.99,'harddisk.jpg'),(19,'SSD 500GB 2.5\'\'','Elettronica','SSD da 500GB da 2.5\'\'',299.99,'harddisk.jpg'),(20,'Tastiera Meccanica Pok3r','Elettronica','Tastiera meccanica Pok3r con ingresso micro-USB (cavo incluso)',149.99,'pok3r.jpg'),(21,'Tastiera con numpad','Elettronica','Tastiera per computer con numpad con ingresso USB (cavo incluso)',29.99,'pok3r.jpg'),(22,'Cavo USB-microUSB 50cm','Elettronica','Cavo USB-microUSB lungo mezzo metro',3.99,'cavousb.jpg'),(23,'Cavo USB-typeC 50cm','Elettronica','Cavo USB-typeC lungo mezzo metro',5.99,'cavousb.jpg');
+INSERT INTO `prodotti` VALUES (1,'Stampante MultiJet C460','Stampanti','Stampante con scanner, NFC, WIFI e USB',399.99,'stampantemultijet.jpg',0),(2,'Stampante Jackpot','Stampanti','Stampante con porta USB e collegamento ethernet',99.99,'stampantemultijet.jpg',0),(3,'Toner Nero','Ricambi','Toner di colore nero per stampanti',9.99,'toner.jpg',0),(4,'Toner Rosso','Ricambi','Toner di colore rosso per stampanti',9.99,'toner.jpg',0),(5,'Toner Blu','Ricambi','Toner di colore blu per stampanti',9.99,'toner.jpg',0),(6,'Toner Giallo','Ricambi','Toner di colore giallo per stampanti',9.99,'toner.jpg',0),(7,'Toner Verde','Ricambi','Toner di colore verde per stampanti',9.99,'toner.jpg',0),(8,'Matita HB','Cancelleria','Matita HB',0.99,'matita.jpg',0),(9,'Penna Stilo Blu','Cancelleria','Penna Stilo Blu',1.49,'penna.jpg',0),(10,'Penna Stilo Nera','Cancelleria','Penna Stilo Nera',1.49,'penna.jpg',0),(11,'Penna Stilo Rossa','Cancelleria','Penna Stilo Rossa',1.49,'penna.jpg',0),(12,'Righello 15 cm','Cancelleria','Righello in plastica lungo 15 cm',1.2,'righello.jpg',0),(13,'Righello 1 m','Cancelleria','Righello in plastica lungo 1 m',2.5,'righello.jpg',0),(14,'Righello di metallo da 20 cm','Cancelleria','Righello di metallo lungo 20 cm',3,'righello.jpg',0),(16,'Hard Disk 500GB 2.5\'\'','Elettronica','Hard Disk da 500GB da 2.5\'\'',39.99,'harddisk.jpg',0),(17,'Hard Disk 1TB 2.5\'\'','Elettronica','Hard Disk da 1TB da 2.5\'\'',69.99,'harddisk.jpg',0),(18,'SSD 1TB 2.5\'\'','Elettronica','SSD da 1TB da 2.5\'\'',399.99,'harddisk.jpg',0),(19,'SSD 500GB 2.5\'\'','Elettronica','SSD da 500GB da 2.5\'\'',299.99,'harddisk.jpg',0),(20,'Tastiera Meccanica Pok3r','Elettronica','Tastiera meccanica Pok3r con ingresso micro-USB (cavo incluso)',149.99,'pok3r.jpg',0),(21,'Tastiera con numpad','Elettronica','Tastiera per computer con numpad con ingresso USB (cavo incluso)',29.99,'pok3r.jpg',0),(22,'Cavo USB-microUSB 50cm','Elettronica','Cavo USB-microUSB lungo mezzo metro',3.99,'cavousb.jpg',0),(23,'Cavo USB-typeC 50cm','Elettronica','Cavo USB-typeC lungo mezzo metro',5.99,'cavousb.jpg',0);
 /*!40000 ALTER TABLE `prodotti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +308,7 @@ CREATE TABLE `progetti` (
 
 LOCK TABLES `progetti` WRITE;
 /*!40000 ALTER TABLE `progetti` DISABLE KEYS */;
-INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,6700,6700),(2,'Progetto Pizza',3,4500,4500);
+INSERT INTO `progetti` VALUES (1,'Progetto Taco',2,6435.960000000002,6700),(2,'Progetto Pizza',3,4500,4500);
 /*!40000 ALTER TABLE `progetti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-16 18:10:34
+-- Dump completed on 2016-02-24 16:06:46
