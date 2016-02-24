@@ -340,6 +340,9 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
             Label descrizione = new Label();
             Label dettagli = new Label("Dettagli");
             dettagli.getStyleClass().add("dettagli-prodotto");
+            
+            Label annoDiProduzione = new Label();
+            annoDiProduzione.setText(Integer.toString(p.getAnnoDiProduzione()));
 
             try{
                 int quantita = delegate.chiediDisponibilita((Dipendente) application.getUtente(), p);
@@ -368,7 +371,7 @@ public class FXMLCatalogoController extends AnchorPane implements Initializable{
                 }
             });
 
-            valori.getChildren().addAll(nome, prezzo, descrizione, dettagli);
+            valori.getChildren().addAll(nome, prezzo, annoDiProduzione, descrizione, dettagli);
             hb.getChildren().addAll(iv, valori);
             vbLeft.getChildren().add(hb);
         }

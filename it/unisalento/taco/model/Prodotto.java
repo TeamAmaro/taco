@@ -19,6 +19,7 @@ public class Prodotto implements IdentificabileID {
     private String descrizione;
     private Categoria categoria;
     private Set<Fornitore> listaFornitori;
+    private int annoDiProduzione;
 
     @Override public int getId(){
         return id;
@@ -49,6 +50,10 @@ public class Prodotto implements IdentificabileID {
     
     public String getImmagine() {
         return immagine;
+    }
+    
+    public int getAnnoDiProduzione(){
+        return annoDiProduzione;
     }
 
     public String getListaFornitoriAsString(){
@@ -97,6 +102,7 @@ public class Prodotto implements IdentificabileID {
         private String descrizione;
         private Categoria categoria;
         private Set<Fornitore> listaFornitori;
+        private int annoDiProduzione;
 
         public Builder(int id, String nome, double prezzo, Produttore produttore){
             this.id = id;
@@ -130,6 +136,11 @@ public class Prodotto implements IdentificabileID {
             immagine = val;
             return this;
         }
+        
+        public Builder annoDiProduzione(int val){
+            annoDiProduzione = val;
+            return this;
+        }
 
         public Prodotto build(){
             return new Prodotto(this);
@@ -145,6 +156,7 @@ public class Prodotto implements IdentificabileID {
         produttore = build.produttore;
         categoria = build.categoria;
         listaFornitori = build.listaFornitori;
+        annoDiProduzione = build.annoDiProduzione;
     }
     
     public static void addProdotto(Prodotto prodotto){
@@ -171,7 +183,8 @@ public class Prodotto implements IdentificabileID {
         StringBuilder prodottoString = new StringBuilder();
         prodottoString.append("ID: ").append(id).append(", Nome: ").append(nome).append(", Prezzo: ").
                        append(prezzo).append(", Produttore: ").append(produttore).append(", Descrizione: ").
-                       append(descrizione).append(", Categoria: ").append(categoria).append(", Fornitori: ").
+                       append(descrizione).append(", Categoria: ").append(categoria).append(", Anno: ").
+                       append(annoDiProduzione).append(", Fornitori: ").
                        append(getListaFornitoriAsString());
         return prodottoString.toString();
     }

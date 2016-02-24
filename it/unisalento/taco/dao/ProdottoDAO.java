@@ -39,9 +39,10 @@ public class ProdottoDAO implements DAOInterface<Prodotto>{
         if(i.hasNext()) {
             String[] riga = i.next();
             Produttore produttore = Produttore.parseProduttore(riga[0]);
-            Prodotto prodotto = new Prodotto.Builder(id, riga[2], Double.parseDouble(riga[5]), produttore).descrizione(riga[4]).categoria(parseCategoria(riga[2])).immagine(riga[6]).build();
+            Prodotto prodotto = new Prodotto.Builder(id, riga[2], Double.parseDouble(riga[5]), produttore).descrizione(riga[4]).categoria(parseCategoria(riga[2])).immagine(riga[6]).annoDiProduzione(Integer.parseInt(riga[7])).build();
             Set<Fornitore> listaFornitori = getFornitore(prodotto);
             prodotto.setListaFornitori(listaFornitori);
+            
             return prodotto;
         }
         else {
