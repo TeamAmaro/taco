@@ -15,5 +15,5 @@ Diciamo nulla, considerando che il progetto è stato portato a termine e non ci 
 
 ### Ho bisogno di aiuto, a chi chiedo? ###
 
-* GoodNello (Giulio - giulio.albanese (at) outlook.com)
-* saucermann (Tommaso - tommaso.paladini (at) outlook.com)
+* GoodNello (Giulio - giulio.albanese@outlook.com)
+* saucermann (Tommaso - tommaso.paladini@outlook.com)
