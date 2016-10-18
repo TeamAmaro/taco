@@ -20,10 +20,10 @@ Il progetto è stato realizzato utilizzando la tecnica di sviluppo agile Scrum, 
 - CamScanner (Android App)
 
 Il software è stato realizzato utilizzando i seguenti linguaggi:
-Java 7
-SQL 
-FXML*
-JavaFX CSS ** 
+- Java 7
+- SQL
+- FXML*
+- JavaFX CSS ** 
 
 *FXML è un linguaggio di markup basato su XML e creato da Oracle Corporation per definire l’interfaccia utente di un’applicazione JavaFX 2.0. [http://www.zdnet.com/article/javafx-2-0-arrives-and-heads-for-open-source/]
 
